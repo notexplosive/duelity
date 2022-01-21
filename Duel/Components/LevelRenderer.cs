@@ -24,9 +24,9 @@ namespace Duel.Components
             RequireComponent<ActorRoot>().EntityActorSpawned += SetupActorRenderer;
 
             this.level = level;
-            ContentChanged();
+            RecomputeCorners();
 
-            this.level.TilemapChanged += ContentChanged;
+            this.level.TilemapChanged += RecomputeCorners;
         }
 
         private void SetupActorRenderer(Actor entityActor, Entity entity)
@@ -34,7 +34,7 @@ namespace Duel.Components
             new EntityRenderer(entityActor, this, entity);
         }
 
-        private void ContentChanged()
+        private void RecomputeCorners()
         {
             this.levelCorners = this.level.CalculateCorners();
         }
