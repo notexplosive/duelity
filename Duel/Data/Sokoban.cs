@@ -26,8 +26,8 @@ namespace Duel.Data
             CurrentLevel = new Level();
             this.rootActor = scene.AddActor("Level");
 
+            new Grid(this.rootActor, CurrentLevel);
             new ActorRoot(this.rootActor, CurrentLevel);
-            new LevelRenderer(this.rootActor, CurrentLevel);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace TestDuel
             this.scene = new Scene(null);
             this.level = new Level();
             this.baseActor = this.scene.AddActor("ActorRoot");
+            new Grid(this.baseActor, this.level);
             this.subject = new ActorRoot(this.baseActor, this.level);
         }
 

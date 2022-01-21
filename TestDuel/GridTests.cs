@@ -7,20 +7,20 @@ using Xunit;
 
 namespace TestDuel
 {
-    public class LevelRendererTests
+    public class GridTests
     {
         private readonly Scene scene;
         private readonly Level level;
         private readonly Actor baseActor;
-        private readonly LevelRenderer subject;
+        private readonly Grid subject;
 
-        public LevelRendererTests()
+        public GridTests()
         {
             this.scene = new Scene(null);
             this.level = new Level();
             this.baseActor = this.scene.AddActor("ActorRoot");
+            this.subject = new Grid(this.baseActor, this.level);
             new ActorRoot(this.baseActor, this.level);
-            this.subject = new LevelRenderer(this.baseActor, this.level);
         }
 
         private void FlushScene()
@@ -45,6 +45,7 @@ namespace TestDuel
         {
             var entity = new Entity();
             entity.WarpToPosition(new Point(5, 5));
+
             this.level.AddEntity(entity);
             FlushScene();
 

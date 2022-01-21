@@ -15,13 +15,13 @@ namespace Duel.Components
 
     public class ActorRoot : BaseComponent
     {
-        public event EntityActorAction EntityActorSpawned;
-
+        private readonly Grid grid;
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
 
         public ActorRoot(Actor actor, Level level) : base(actor)
         {
+            this.grid = RequireComponent<Grid>();
             this.level = level;
             this.level.EntityAdded += CreateEntityActor;
         }
@@ -33,8 +33,8 @@ namespace Duel.Components
             entityToActorTable[entity] = entityActor;
 
             new RemoveEntityOnDestroy(entityActor, this.level, entity);
+            new EntityRenderInfo(entityActor, this.grid, entity);
 
-            EntityActorSpawned?.Invoke(entityActor, entity);
             ApplyTags(entity, entityActor);
         }
 

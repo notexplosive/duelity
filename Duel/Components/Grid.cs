@@ -12,26 +12,19 @@ using System.Text;
 
 namespace Duel.Components
 {
-    public class LevelRenderer : BaseComponent
+    public class Grid : BaseComponent
     {
         public static readonly int TileSize = 64;
 
         private readonly Level level;
         private Tuple<Point, Point> levelCorners;
 
-        public LevelRenderer(Actor actor, Level level) : base(actor)
+        public Grid(Actor actor, Level level) : base(actor)
         {
-            RequireComponent<ActorRoot>().EntityActorSpawned += SetupActorRenderer;
-
             this.level = level;
             RecomputeCorners();
 
             this.level.TilemapChanged += RecomputeCorners;
-        }
-
-        private void SetupActorRenderer(Actor entityActor, Entity entity)
-        {
-            new EntityRenderInfo(entityActor, this, entity);
         }
 
         private void RecomputeCorners()

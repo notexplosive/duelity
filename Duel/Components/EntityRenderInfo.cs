@@ -12,17 +12,26 @@ namespace Duel.Components
 {
     public class EntityRenderInfo : BaseComponent
     {
-        private readonly LevelRenderer levelRenderer;
+        private readonly Grid grid;
         private readonly Entity entity;
         public readonly TweenAccessors<Vector2> renderOffsetTweenable;
 
-        public EntityRenderInfo(Actor actor, LevelRenderer levelRenderer, Entity entity) : base(actor)
+        public EntityRenderInfo(Actor actor, Grid grid, Entity entity) : base(actor)
         {
-            this.levelRenderer = levelRenderer;
+            this.grid = grid;
             this.entity = entity;
             this.renderOffsetTweenable = new TweenAccessors<Vector2>(Vector2.Zero);
             SnapPositionToGrid();
 
+            this.entity.PositionChanged += SnapPositionIfWarp;
+        }
+
+        private void SnapPositionIfWarp(MoveType moveType, Point previousPosition)
+        {
+            if (moveType == MoveType.Warp)
+            {
+                SnapPositionToGrid();
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -39,7 +48,7 @@ namespace Duel.Components
 
         public Vector2 TileToLocalPosition(Point position)
         {
-            return this.levelRenderer.TileToLocalPosition(position);
+            return this.grid.TileToLocalPosition(position);
         }
     }
 }
