@@ -40,5 +40,20 @@ namespace TestDuel
             subject.IsBusy().Should().BeTrue();
             subject.IsBusy().Should().BeFalse();
         }
+
+        [Fact]
+        public void busy_signal_reports_parent_status_when_busy()
+        {
+            var parent = new BusySignal();
+            var subject = parent.MakeChild();
+
+            parent.Add(new BusyFunction("ParentAlwaysBusy", () => true));
+
+            subject.IsBusy().Should().BeTrue();
+            foreach (var busyFunction in subject.PendingBusyFunctions())
+            {
+                busyFunction.Name.Should().Be("ParentAlwaysBusy");
+            }
+        }
     }
 }

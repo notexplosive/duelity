@@ -8,9 +8,25 @@ namespace Duel.Data
     public class BusySignal
     {
         private readonly List<BusyFunction> busyFunctions = new List<BusyFunction>();
+        private BusySignal parent = null;
+
+        public BusySignal()
+        {
+
+        }
+
+        private BusySignal(BusySignal parent)
+        {
+            this.parent = parent;
+        }
 
         public bool IsBusy()
         {
+            if (ParentIsBusy())
+            {
+                return true;
+            }
+
             foreach (var busyFunction in this.busyFunctions)
             {
                 if (busyFunction.IsBusy())
@@ -25,6 +41,11 @@ namespace Duel.Data
             return false;
         }
 
+        public bool ParentIsBusy()
+        {
+            return this.parent != null && this.parent.IsBusy();
+        }
+
         public void Add(BusyFunction busyFunction)
         {
             this.busyFunctions.Add(busyFunction);
@@ -32,6 +53,14 @@ namespace Duel.Data
 
         public IEnumerable<BusyFunction> PendingBusyFunctions()
         {
+            if (this.parent != null)
+            {
+                foreach (var parentBusyFunction in this.parent.PendingBusyFunctions())
+                {
+                    yield return parentBusyFunction;
+                }
+            }
+
             foreach (var busyFunction in this.busyFunctions)
             {
                 if (busyFunction.IsBusy())
@@ -39,6 +68,11 @@ namespace Duel.Data
                     yield return busyFunction;
                 }
             }
+        }
+
+        public BusySignal MakeChild()
+        {
+            return new BusySignal(this);
         }
     }
 }
