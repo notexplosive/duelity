@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMachina", "machina\Test
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MachinaAssets", "machina\MachinaAssets\MachinaAssets.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDuel", "TestDuel\TestDuel.csproj", "{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		machina\MachinaAssets\MachinaAssets.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
@@ -41,6 +43,10 @@ Global
 		{1A91FF18-E32B-4929-A831-89B2946DEFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A91FF18-E32B-4929-A831-89B2946DEFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A91FF18-E32B-4929-A831-89B2946DEFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

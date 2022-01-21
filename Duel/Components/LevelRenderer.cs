@@ -21,20 +21,22 @@ namespace Duel.Components
 
         public LevelRenderer(Actor actor, Level level) : base(actor)
         {
+            RequireComponent<ActorRoot>().EntityActorSpawned += SetupActorRenderer;
+
             this.level = level;
             ContentChanged();
 
-            this.level.ContentChanged += ContentChanged;
+            this.level.TilemapChanged += ContentChanged;
+        }
+
+        private void SetupActorRenderer(Actor entityActor, Entity entity)
+        {
+            new EntityRenderer(entityActor, this, entity);
         }
 
         private void ContentChanged()
         {
             this.levelCorners = this.level.CalculateCorners();
-        }
-
-        public override void Update(float dt)
-        {
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)

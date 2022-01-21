@@ -20,16 +20,11 @@ namespace Duel
         {
             SceneLayers.BackgroundColor = Color.Black;
 
-            var level = new Level();
-
-            level.PutTileAt(new Point(-10, -10), new Tile());
-            level.PutTileAt(new Point(10, 10), new Tile());
-
             var gameScene = SceneLayers.AddNewScene();
-            var levelActor = gameScene.AddActor("Level");
-            levelActor.transform.Depth -= 200;
+            var game = new Sokoban(gameScene);
 
-            new LevelRenderer(levelActor, level);
+            game.CurrentLevel.PutTileAt(new Point(-10, -10), new Tile());
+            game.CurrentLevel.PutTileAt(new Point(10, 10), new Tile());
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
