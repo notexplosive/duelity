@@ -37,29 +37,7 @@ namespace Duel.Components
             {
                 this.waitTimer = 0.2f;
 
-                if (key == Keys.Left || key == Keys.A)
-                {
-                    DoOrBuffer(LeftPressed);
-                    this.heldDirections.left = true;
-                }
-
-                if (key == Keys.Right || key == Keys.D)
-                {
-                    DoOrBuffer(RightPressed);
-                    this.heldDirections.right = true;
-                }
-
-                if (key == Keys.Up || key == Keys.W)
-                {
-                    DoOrBuffer(UpPressed);
-                    this.heldDirections.up = true;
-                }
-
-                if (key == Keys.Down || key == Keys.S)
-                {
-                    DoOrBuffer(DownPressed);
-                    this.heldDirections.down = true;
-                }
+                DoOrBuffer(DirectionToAction(KeyToDirection(key)));
 
                 if (key == Keys.Z || key == Keys.Space)
                 {
@@ -67,27 +45,25 @@ namespace Duel.Components
                 }
             }
 
-            if (state == ButtonState.Released)
+            var pressed = state == ButtonState.Pressed;
+            if (KeyToDirection(key) == Direction.Left)
             {
-                if (key == Keys.Left || key == Keys.A)
-                {
-                    this.heldDirections.left = false;
-                }
+                this.heldDirections.left = pressed;
+            }
 
-                if (key == Keys.Right || key == Keys.D)
-                {
-                    this.heldDirections.right = false;
-                }
+            if (KeyToDirection(key) == Direction.Right)
+            {
+                this.heldDirections.right = pressed;
+            }
 
-                if (key == Keys.Up || key == Keys.W)
-                {
-                    this.heldDirections.up = false;
-                }
+            if (KeyToDirection(key) == Direction.Up)
+            {
+                this.heldDirections.up = pressed;
+            }
 
-                if (key == Keys.Down || key == Keys.S)
-                {
-                    this.heldDirections.down = false;
-                }
+            if (KeyToDirection(key) == Direction.Down)
+            {
+                this.heldDirections.down = pressed;
             }
         }
 
@@ -113,6 +89,31 @@ namespace Duel.Components
                     }
                 }
             }
+        }
+
+        private Direction KeyToDirection(Keys key)
+        {
+            if (key == Keys.Left || key == Keys.A)
+            {
+                return Direction.Left;
+            }
+
+            if (key == Keys.Right || key == Keys.D)
+            {
+                return Direction.Right;
+            }
+
+            if (key == Keys.Up || key == Keys.W)
+            {
+                return Direction.Up;
+            }
+
+            if (key == Keys.Down || key == Keys.S)
+            {
+                return Direction.Down;
+            }
+
+            return Direction.None;
         }
 
         private Action DirectionToAction(Direction direction)
