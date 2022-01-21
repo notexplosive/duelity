@@ -20,10 +20,16 @@ namespace Duel
         {
             SceneLayers.BackgroundColor = Color.Black;
 
-            var game = SceneLayers.AddNewScene();
-            var levelActor = game.AddActor("Level");
+            var level = new Level();
 
-            new LevelRenderer(levelActor, new Level());
+            level.PutTileAt(new Point(-10, -10), new Tile());
+            level.PutTileAt(new Point(10, 10), new Tile());
+
+            var gameScene = SceneLayers.AddNewScene();
+            var levelActor = gameScene.AddActor("Level");
+            levelActor.transform.Depth -= 200;
+
+            new LevelRenderer(levelActor, level);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
