@@ -12,13 +12,13 @@ namespace Duel.Components
 {
     public class MovementRenderer : BaseComponent
     {
-        private readonly EntityRenderer entityRenderer;
+        private readonly EntityRenderInfo renderInfo;
         private readonly Entity entity;
         private readonly TweenChain tween = new TweenChain();
 
         public MovementRenderer(Actor actor, Entity entity) : base(actor)
         {
-            this.entityRenderer = RequireComponent<EntityRenderer>();
+            this.renderInfo = RequireComponent<EntityRenderInfo>();
             this.entity = entity;
             this.entity.PositionChanged += OnPositionChanged;
         }
@@ -33,26 +33,26 @@ namespace Duel.Components
             if (moveType == MoveType.Warp)
             {
                 this.tween.Clear();
-                this.entityRenderer.SnapPositionToGrid();
+                this.renderInfo.SnapPositionToGrid();
             }
 
             if (moveType == MoveType.Walk)
             {
-                StartMoveTween(this.entityRenderer.TileToLocalPosition(previousPosition), this.entityRenderer.TileToLocalPosition(this.entity.Position));
+                StartMoveTween(this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
             }
 
             if (moveType == MoveType.Jump)
             {
-                StartJumpTween(this.entityRenderer.TileToLocalPosition(this.entity.Position));
+                StartJumpTween(this.renderInfo.TileToLocalPosition(this.entity.Position));
             }
         }
 
         private void StartMoveTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
             this.tween.Clear();
-            this.entityRenderer.SnapPositionToGrid();
-            this.entityRenderer.renderOffsetTweenable.setter(previousWorldPos - targetWorldPos);
-            this.tween.AppendVectorTween(Vector2.Zero, 0.10f, EaseFuncs.CubicEaseIn, this.entityRenderer.renderOffsetTweenable);
+            this.renderInfo.SnapPositionToGrid();
+            this.renderInfo.renderOffsetTweenable.setter(previousWorldPos - targetWorldPos);
+            this.tween.AppendVectorTween(Vector2.Zero, 0.10f, EaseFuncs.CubicEaseIn, this.renderInfo.renderOffsetTweenable);
             this.entity.BusySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
         }
 

@@ -10,13 +10,13 @@ using System;
 
 namespace Duel.Components
 {
-    public class EntityRenderer : BaseComponent
+    public class EntityRenderInfo : BaseComponent
     {
         private readonly LevelRenderer levelRenderer;
         private readonly Entity entity;
         public readonly TweenAccessors<Vector2> renderOffsetTweenable;
 
-        public EntityRenderer(Actor actor, LevelRenderer levelRenderer, Entity entity) : base(actor)
+        public EntityRenderInfo(Actor actor, LevelRenderer levelRenderer, Entity entity) : base(actor)
         {
             this.levelRenderer = levelRenderer;
             this.entity = entity;

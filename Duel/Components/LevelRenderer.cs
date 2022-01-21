@@ -31,7 +31,7 @@ namespace Duel.Components
 
         private void SetupActorRenderer(Actor entityActor, Entity entity)
         {
-            new EntityRenderer(entityActor, this, entity);
+            new EntityRenderInfo(entityActor, this, entity);
         }
 
         private void RecomputeCorners()
