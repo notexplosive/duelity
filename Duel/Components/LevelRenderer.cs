@@ -29,9 +29,9 @@ namespace Duel.Components
             this.level.TilemapChanged += RecomputeCorners;
         }
 
-        private void SetupActorRenderer(Actor entityActor, Entity entity)
+        private void SetupActorRenderer(Actor entityActor, EntityInfo entityInfo)
         {
-            new EntityRenderer(entityActor, this, entity);
+            new EntityRenderer(entityActor, this, entityInfo.Entity, entityInfo.BusySignal);
         }
 
         private void RecomputeCorners()

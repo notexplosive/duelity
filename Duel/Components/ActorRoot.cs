@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Duel.Components
 {
-    public delegate void EntityActorAction(Actor actor, Entity entity);
+    public delegate void EntityActorAction(Actor actor, EntityInfo entityInfo);
 
     public class ActorRoot : BaseComponent
     {
@@ -36,7 +36,7 @@ namespace Duel.Components
 
             ApplyTags(entity, entityActor);
 
-            EntityActorSpawned?.Invoke(entityActor, entity);
+            EntityActorSpawned?.Invoke(entityActor, new EntityInfo(entity));
         }
 
         private void ApplyTags(Entity entity, Actor entityActor)

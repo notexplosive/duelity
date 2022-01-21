@@ -12,11 +12,13 @@ namespace Duel.Components
     {
         private readonly LevelRenderer levelRenderer;
         private readonly Entity entity;
+        private readonly BusySignal busySignal;
 
-        public EntityRenderer(Actor actor, LevelRenderer levelRenderer, Entity entity) : base(actor)
+        public EntityRenderer(Actor actor, LevelRenderer levelRenderer, Entity entity, BusySignal busySignal) : base(actor)
         {
             this.levelRenderer = levelRenderer;
             this.entity = entity;
+            this.busySignal = busySignal;
             SnapPositionToGrid();
 
             this.entity.PositionChanged += OnPositionChanged;
