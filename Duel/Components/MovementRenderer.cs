@@ -49,9 +49,9 @@ namespace Duel.Components
 
         private void StartMoveTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
-            this.tween.Clear();
             this.renderInfo.SnapPositionToGrid();
             this.renderInfo.renderOffsetTweenable.setter(previousWorldPos - targetWorldPos);
+            this.tween.Clear();
             this.tween.AppendVectorTween(Vector2.Zero, 0.10f, EaseFuncs.CubicEaseIn, this.renderInfo.renderOffsetTweenable);
             this.entity.BusySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
         }
