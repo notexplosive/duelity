@@ -14,15 +14,13 @@ namespace Duel.Components
     {
         private readonly LevelRenderer levelRenderer;
         private readonly Entity entity;
-        private readonly BusySignal busySignal;
         private readonly TweenAccessors<Vector2> renderOffset;
         private readonly TweenChain tween = new TweenChain();
 
-        public EntityRenderer(Actor actor, LevelRenderer levelRenderer, Entity entity, BusySignal busySignal) : base(actor)
+        public EntityRenderer(Actor actor, LevelRenderer levelRenderer, Entity entity) : base(actor)
         {
             this.levelRenderer = levelRenderer;
             this.entity = entity;
-            this.busySignal = busySignal;
             this.renderOffset = new TweenAccessors<Vector2>(Vector2.Zero);
             SnapPositionToGrid();
 
@@ -36,17 +34,14 @@ namespace Duel.Components
                 SnapPositionToGrid();
             }
 
-            if (this.busySignal.IsFree())
+            if (moveType == MoveType.Walk)
             {
-                if (moveType == MoveType.Walk)
-                {
-                    StartMoveTween(this.levelRenderer.TileToLocalPosition(previousPosition), this.levelRenderer.TileToLocalPosition(this.entity.Position));
-                }
+                StartMoveTween(this.levelRenderer.TileToLocalPosition(previousPosition), this.levelRenderer.TileToLocalPosition(this.entity.Position));
+            }
 
-                if (moveType == MoveType.Jump)
-                {
-                    StartJumpTween(this.levelRenderer.TileToLocalPosition(this.entity.Position));
-                }
+            if (moveType == MoveType.Jump)
+            {
+                StartJumpTween(this.levelRenderer.TileToLocalPosition(this.entity.Position));
             }
         }
 
@@ -56,7 +51,7 @@ namespace Duel.Components
             SnapPositionToGrid();
             this.renderOffset.setter(previousWorldPos - targetWorldPos);
             this.tween.AppendVectorTween(Vector2.Zero, 0.25f, EaseFuncs.CubicEaseIn, renderOffset);
-            this.busySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
+            this.entity.BusySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
         }
 
         private void StartJumpTween(Vector2 targetWorldPos)

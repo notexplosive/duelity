@@ -14,9 +14,12 @@ namespace Duel.Data
 
     public class Entity
     {
-        public event MoveAction PositionChanged;
-        public TagCollection Tags { get; } = new TagCollection();
         public static int UniqueIdPool = 0;
+        public event MoveAction PositionChanged;
+
+        public BusySignal BusySignal { get; } = new BusySignal();
+        public TagCollection Tags { get; } = new TagCollection();
+
         private readonly int uniqueId;
 
         public Point Position { get; private set; }
@@ -51,16 +54,22 @@ namespace Duel.Data
 
         public void WarpToPosition(Point position)
         {
-            var prevPosition = Position;
-            Position = position;
-            PositionChanged?.Invoke(MoveType.Warp, prevPosition);
+            if (BusySignal.IsFree())
+            {
+                var prevPosition = Position;
+                Position = position;
+                PositionChanged?.Invoke(MoveType.Warp, prevPosition);
+            }
         }
 
         public void WalkToPosition(Point position)
         {
-            var prevPosition = Position;
-            Position = position;
-            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
+            if (BusySignal.IsFree())
+            {
+                var prevPosition = Position;
+                Position = position;
+                PositionChanged?.Invoke(MoveType.Walk, prevPosition);
+            }
         }
     }
 }
