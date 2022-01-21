@@ -8,7 +8,7 @@ namespace Duel.Data
     public class BusySignal
     {
         private readonly List<BusyFunction> busyFunctions = new List<BusyFunction>();
-        private BusySignal parent = null;
+        private readonly BusySignal parent = null;
 
         public BusySignal()
         {
@@ -53,7 +53,7 @@ namespace Duel.Data
 
         public IEnumerable<BusyFunction> PendingBusyFunctions()
         {
-            if (this.parent != null)
+            if (ParentIsBusy())
             {
                 foreach (var parentBusyFunction in this.parent.PendingBusyFunctions())
                 {
