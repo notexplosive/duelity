@@ -13,7 +13,7 @@ namespace Duel.Data
         public event EntityEvent EntityAdded;
         private readonly List<Entity> entities = new List<Entity>();
 
-        private readonly Dictionary<Point, Tile> tileMap = new Dictionary<Point, Tile>();
+        private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
 
         public void AddEntity(Entity entity)
         {
@@ -26,7 +26,7 @@ namespace Duel.Data
             this.entities.Remove(entity);
         }
 
-        public void PutTileAt(Point position, Tile tile)
+        public void PutTileAt(Point position, TileTemplate tile)
         {
             this.tileMap[position] = tile;
             TilemapChanged?.Invoke();

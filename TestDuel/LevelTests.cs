@@ -21,9 +21,9 @@ namespace TestDuel
         {
             var subject = new Level();
 
-            subject.PutTileAt(new Point(-3, 1), new Tile());
-            subject.PutTileAt(new Point(-4, 4), new Tile());
-            subject.PutTileAt(new Point(3, -6), new Tile());
+            subject.PutTileAt(new Point(-3, 1), new TileTemplate());
+            subject.PutTileAt(new Point(-4, 4), new TileTemplate());
+            subject.PutTileAt(new Point(3, -6), new TileTemplate());
 
             subject.CalculateCorners().Should().Be(new Tuple<Point, Point>(new Point(-4, -6), new Point(3, 4)));
         }
@@ -56,9 +56,9 @@ namespace TestDuel
                 hitCount++;
             };
 
-            subject.PutTileAt(new Point(1, 1), new Tile());
-            subject.PutTileAt(new Point(1, 1), new Tile());
-            subject.PutTileAt(new Point(1, 1), new Tile());
+            subject.PutTileAt(new Point(1, 1), new TileTemplate());
+            subject.PutTileAt(new Point(1, 1), new TileTemplate());
+            subject.PutTileAt(new Point(1, 1), new TileTemplate());
 
             hitCount.Should().Be(3);
         }
