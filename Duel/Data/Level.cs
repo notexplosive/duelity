@@ -45,6 +45,17 @@ namespace Duel.Data
             return new Tuple<Point, Point>(minTile, maxTile);
         }
 
+        public TileTemplate GetTileAt(Point position)
+        {
+            this.tileMap.TryGetValue(position, out TileTemplate result);
+            if (result == null)
+            {
+                return new TileTemplate();
+            }
+
+            return result;
+        }
+
         public Entity[] AllEntities()
         {
             return this.entities.ToArray();

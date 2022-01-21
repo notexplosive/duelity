@@ -38,16 +38,23 @@ namespace Duel.Components
             {
                 for (int y = this.levelCorners.Item1.Y; y < this.levelCorners.Item2.Y; y++)
                 {
-                    DrawCell(spriteBatch, new Point(x, y));
+                    DrawCell(spriteBatch, new Point(x, y), this.level.GetTileAt(new Point(x, y)));
                 }
             }
         }
 
-        public void DrawCell(SpriteBatch spriteBatch, Point location)
+        public void DrawCell(SpriteBatch spriteBatch, Point location, TileTemplate tile)
         {
+            var color = Color.White;
             var tileDepth = transform.Depth + 100;
-            spriteBatch.DrawRectangle(new RectangleF(TileToLocalPosition(location, false), new Point(TileSize)), Color.White, 1f, tileDepth);
-            spriteBatch.DrawCircle(new CircleF(TileToLocalPosition(location, true), TileSize / 2), 25, Color.White, 1f, tileDepth);
+
+
+            if (tile.Tags.HasTag<SolidTag>())
+            {
+                spriteBatch.FillRectangle(new RectangleF(TileToLocalPosition(location, false), new Point(TileSize)), Color.Orange, tileDepth - 1);
+            }
+
+            spriteBatch.DrawRectangle(new RectangleF(TileToLocalPosition(location, false), new Point(TileSize)), color, 1f, tileDepth);
         }
 
         public Vector2 TileToLocalPosition(Point location, bool centered = true)

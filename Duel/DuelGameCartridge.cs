@@ -23,7 +23,12 @@ namespace Duel
             var gameScene = SceneLayers.AddNewScene();
             var game = new Sokoban(gameScene);
 
+            var wall = new TileTemplate();
+            wall.Tags.AddTag(new SolidTag(SolidTag.Type.Static));
+            wall.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Wall));
+
             game.CurrentLevel.PutTileAt(new Point(-10, -10), new TileTemplate());
+            game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
             game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
 
             var player = new Entity();

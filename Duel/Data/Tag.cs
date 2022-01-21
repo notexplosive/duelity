@@ -56,4 +56,20 @@ namespace Duel.Data
             MovementType = movementType;
         }
     }
+
+    public class TileImageTag : Tag
+    {
+        public TileImage Image { get; }
+
+        public enum TileImage
+        {
+            Floor,
+            Wall
+        }
+
+        public TileImageTag(TileImage image)
+        {
+            Image = image;
+        }
+    }
 }
