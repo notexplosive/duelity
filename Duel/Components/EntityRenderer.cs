@@ -51,7 +51,7 @@ namespace Duel.Components
             this.tween.Clear();
             SnapPositionToGrid();
             this.renderOffset.setter(previousWorldPos - targetWorldPos);
-            this.tween.AppendVectorTween(Vector2.Zero, 0.25f, EaseFuncs.CubicEaseIn, renderOffset);
+            this.tween.AppendVectorTween(Vector2.Zero, 0.10f, EaseFuncs.CubicEaseIn, renderOffset);
             this.entity.BusySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
         }
 

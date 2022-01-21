@@ -61,12 +61,9 @@ namespace Duel.Data
 
         public void WalkToPosition(Point position)
         {
-            if (BusySignal.IsFree())
-            {
-                var prevPosition = Position;
-                Position = position;
-                PositionChanged?.Invoke(MoveType.Walk, prevPosition);
-            }
+            var prevPosition = Position;
+            Position = position;
+            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
         }
     }
 }
