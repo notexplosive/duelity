@@ -29,8 +29,8 @@ namespace Duel.Data
 
         public enum Type
         {
-            BlocksMovement,
-            PushedOnBump // only makes sense on entities... I think?
+            Static,
+            Pushable // only makes sense on entities... I think?
         }
 
         public SolidTag(Type type)

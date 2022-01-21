@@ -58,8 +58,8 @@ namespace TestDuel
         public void can_retrieve_specific_tag_info()
         {
             var subject = new TagCollection();
-            subject.AddTag(new SolidTag(SolidTag.Type.PushedOnBump));
-            subject.GetTag<SolidTag>().SolidType.Should().Be(SolidTag.Type.PushedOnBump);
+            subject.AddTag(new SolidTag(SolidTag.Type.Pushable));
+            subject.GetTag<SolidTag>().SolidType.Should().Be(SolidTag.Type.Pushable);
         }
     }
 }
