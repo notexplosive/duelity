@@ -19,7 +19,6 @@ namespace Duel.Components
 
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
-        private readonly BusySignal levelBusySignal = new BusySignal();
 
         public ActorRoot(Actor actor, Level level) : base(actor)
         {
@@ -35,9 +34,8 @@ namespace Duel.Components
 
             new RemoveEntityOnDestroy(entityActor, this.level, entity);
 
-            ApplyTags(entity, entityActor);
-
             EntityActorSpawned?.Invoke(entityActor, entity);
+            ApplyTags(entity, entityActor);
         }
 
         private void ApplyTags(Entity entity, Actor entityActor)
@@ -48,6 +46,7 @@ namespace Duel.Components
                 {
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
+                        new MovementRenderer(entityActor, entity);
                         new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new Lasso(entityActor, entity);
