@@ -48,7 +48,7 @@ namespace Duel.Components
                 {
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
-                        new KeyboardListener(entityActor);
+                        new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new Lasso(entityActor, entity);
                     }
