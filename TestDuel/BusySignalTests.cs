@@ -9,9 +9,23 @@ namespace TestDuel
         [Fact]
         public void busy_signal_is_not_busy_by_default()
         {
-            var busySignal = new BusySignal();
+            var subject = new BusySignal();
 
-            busySignal.IsBusy().Should().BeFalse();
+            subject.IsBusy().Should().BeFalse();
+        }
+
+        [Fact]
+        public void busy_signal_is_busy_when_given_action()
+        {
+            var subject = new BusySignal();
+
+            subject.Add(new BusyFunction("AlwaysBusy", () => true));
+
+            subject.IsBusy().Should().BeTrue();
+            foreach (var busyFunction in subject.PendingBusyFunctions())
+            {
+                busyFunction.Name.Should().Be("AlwaysBusy");
+            }
         }
     }
 }
