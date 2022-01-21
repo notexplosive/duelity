@@ -39,5 +39,18 @@ namespace TestDuel
 
             this.subject.transform.ChildAt(0).transform.LocalPosition.Should().Be(new Vector2(352, 352));
         }
+
+        [Fact]
+        public void actor_moves_when_entity_moves()
+        {
+            var entity = new Entity();
+            entity.WarpToPosition(new Point(5, 5));
+            this.level.AddEntity(entity);
+            FlushScene();
+
+            entity.WarpToPosition(new Point(5, 6));
+
+            this.subject.transform.ChildAt(0).transform.LocalPosition.Should().Be(new Vector2(352, 416));
+        }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Duel.Data
 {
     public class Entity
     {
+        public event Action PositionChanged;
+        public TagCollection Tags { get; } = new TagCollection();
         public static int UniqueIdPool = 0;
         private readonly int uniqueId;
 
@@ -12,11 +15,6 @@ namespace Duel.Data
         public Entity()
         {
             this.uniqueId = UniqueIdPool++;
-        }
-
-        public void WarpToPosition(Point position)
-        {
-            Position = position;
         }
 
         // Overrides //
@@ -38,6 +36,14 @@ namespace Duel.Data
         public override string ToString()
         {
             return this.uniqueId.ToString();
+        }
+
+        // /Overrides //
+
+        public void WarpToPosition(Point position)
+        {
+            Position = position;
+            PositionChanged?.Invoke();
         }
     }
 }

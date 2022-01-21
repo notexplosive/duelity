@@ -17,6 +17,8 @@ namespace Duel.Components
             this.levelRenderer = levelRenderer;
             this.entity = entity;
             SnapPositionToGrid();
+
+            this.entity.PositionChanged += SnapPositionToGrid;
         }
 
         public void SnapPositionToGrid()

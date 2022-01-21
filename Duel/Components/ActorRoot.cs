@@ -33,7 +33,31 @@ namespace Duel.Components
             entityToActorTable[entity] = entityActor;
 
             new RemoveEntityOnDestroy(entityActor, this.level, entity);
+
+            ApplyTags(entity, entityActor);
+
             EntityActorSpawned?.Invoke(entityActor, entity);
+        }
+
+        private void ApplyTags(Entity entity, Actor entityActor)
+        {
+            foreach (var tag in entity.Tags)
+            {
+                if (tag is PlayerTag playerTag)
+                {
+                    if (playerTag.MovementType == PlayerTag.Type.Sheriff)
+                    {
+                        new KeyboardListener(entityActor);
+                        new NormalKeyboardMovement(entityActor, entity);
+                        new Lasso(entityActor, entity);
+                    }
+                }
+
+                if (tag is SolidTag solidTag)
+                {
+                    // todo
+                }
+            }
         }
     }
 }

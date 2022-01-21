@@ -1,4 +1,6 @@
-﻿namespace Duel.Data
+﻿using Machina.Engine;
+
+namespace Duel.Data
 {
     public abstract class Tag
     {
@@ -34,6 +36,24 @@
         public SolidTag(Type type)
         {
             SolidType = type;
+        }
+    }
+
+    public class PlayerTag : Tag
+    {
+        public Type MovementType { get; }
+
+        public enum Type
+        {
+            Sheriff,
+            Renegade,
+            Cowboy,
+            Knight
+        }
+
+        public PlayerTag(Type movementType)
+        {
+            MovementType = movementType;
         }
     }
 }

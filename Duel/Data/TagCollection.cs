@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Duel.Data
 {
-    public class TagCollection
+    public class TagCollection : IEnumerable<Tag>
     {
-        private List<Tag> content = new List<Tag>();
+        private readonly List<Tag> content = new List<Tag>();
 
         public void AddTag(Tag tag)
         {
@@ -16,11 +17,11 @@ namespace Duel.Data
             this.content.Add(tag);
         }
 
-        public bool HasTagSimilarTo(Tag example)
+        public bool HasTagSimilarTo(Tag other)
         {
             foreach (var tag in this.content)
             {
-                if (tag.GetType() == example.GetType())
+                if (tag.GetType() == other.GetType())
                 {
                     return true;
                 }
@@ -53,6 +54,16 @@ namespace Duel.Data
             }
 
             throw new TagNotFoundException<T>();
+        }
+
+        public IEnumerator<Tag> GetEnumerator()
+        {
+            return this.content.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.content.GetEnumerator();
         }
     }
 }
