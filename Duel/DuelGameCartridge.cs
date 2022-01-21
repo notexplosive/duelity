@@ -29,6 +29,7 @@ namespace Duel
             var player = new Entity();
             player.Tags.AddTag(new PlayerTag(PlayerTag.Type.Sheriff));
             player.WarpToPosition(new Point(3, 3));
+
             game.CurrentLevel.AddEntity(player);
         }
 
