@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Duel.Data
 {
-    public delegate bool FuncBool();
+    public delegate bool TrueWhenDone();
 
     public class BusySignal
     {
@@ -18,6 +18,11 @@ namespace Duel.Data
         private BusySignal(BusySignal parent)
         {
             this.parent = parent;
+        }
+
+        public bool IsFree()
+        {
+            return !IsBusy();
         }
 
         public bool IsBusy()

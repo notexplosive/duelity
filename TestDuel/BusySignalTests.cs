@@ -19,7 +19,7 @@ namespace TestDuel
         {
             var subject = new BusySignal();
 
-            subject.Add(new BusyFunction("AlwaysBusy", () => true));
+            subject.Add(new BusyFunction("AlwaysBusy", () => false));
 
             subject.IsBusy().Should().BeTrue();
             foreach (var busyFunction in subject.PendingBusyFunctions())
@@ -34,7 +34,7 @@ namespace TestDuel
             var subject = new BusySignal();
             int count = 0;
 
-            subject.Add(new BusyFunction("SometimesBusy", () => count++ < 2));
+            subject.Add(new BusyFunction("SometimesBusy", () => count++ >= 2));
 
             subject.IsBusy().Should().BeTrue();
             subject.IsBusy().Should().BeTrue();
@@ -47,7 +47,7 @@ namespace TestDuel
             var parent = new BusySignal();
             var subject = parent.MakeChild();
 
-            parent.Add(new BusyFunction("ParentAlwaysBusy", () => true));
+            parent.Add(new BusyFunction("ParentAlwaysBusy", () => false));
 
             subject.IsBusy().Should().BeTrue();
             foreach (var busyFunction in subject.PendingBusyFunctions())

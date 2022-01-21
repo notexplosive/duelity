@@ -7,11 +7,12 @@ namespace Duel.Data
     public class EntityInfo
     {
         public Entity Entity { get; }
-        public BusySignal BusySignal { get; } = new BusySignal();
+        public BusySignal BusySignal { get; }
 
-        public EntityInfo(Entity entity)
+        public EntityInfo(Entity entity, BusySignal levelBusySignal)
         {
             Entity = entity;
+            BusySignal = levelBusySignal.MakeChild();
         }
     }
 }

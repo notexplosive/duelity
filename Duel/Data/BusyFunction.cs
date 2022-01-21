@@ -2,10 +2,10 @@
 {
     public class BusyFunction
     {
-        private readonly FuncBool function;
+        private readonly TrueWhenDone function;
         public string Name { get; }
 
-        public BusyFunction(string name, FuncBool function)
+        public BusyFunction(string name, TrueWhenDone function)
         {
             this.Name = name;
             this.function = function;
@@ -13,7 +13,7 @@
 
         public bool IsBusy()
         {
-            return this.function();
+            return !this.function();
         }
 
         public override string ToString()

@@ -19,6 +19,7 @@ namespace Duel.Components
 
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
+        private readonly BusySignal levelBusySignal = new BusySignal();
 
         public ActorRoot(Actor actor, Level level) : base(actor)
         {
@@ -36,7 +37,7 @@ namespace Duel.Components
 
             ApplyTags(entity, entityActor);
 
-            EntityActorSpawned?.Invoke(entityActor, new EntityInfo(entity));
+            EntityActorSpawned?.Invoke(entityActor, new EntityInfo(entity, this.levelBusySignal));
         }
 
         private void ApplyTags(Entity entity, Actor entityActor)
