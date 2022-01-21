@@ -31,7 +31,7 @@ namespace Duel.Components
         private Action Move(Point relativePosition)
         {
             return
-                () => { this.entity.WarpToPosition(this.entity.Position + relativePosition); };
+                () => { this.entity.WalkToPosition(this.entity.Position + relativePosition); };
         }
     }
 }

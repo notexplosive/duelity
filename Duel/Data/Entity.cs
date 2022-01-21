@@ -3,9 +3,18 @@ using System;
 
 namespace Duel.Data
 {
+    public enum MoveType
+    {
+        Warp,
+        Walk,
+        Jump
+    }
+
+    public delegate void MoveAction(MoveType moveType, Point previousPosition);
+
     public class Entity
     {
-        public event Action PositionChanged;
+        public event MoveAction PositionChanged;
         public TagCollection Tags { get; } = new TagCollection();
         public static int UniqueIdPool = 0;
         private readonly int uniqueId;
@@ -42,8 +51,16 @@ namespace Duel.Data
 
         public void WarpToPosition(Point position)
         {
+            var prevPosition = Position;
             Position = position;
-            PositionChanged?.Invoke();
+            PositionChanged?.Invoke(MoveType.Warp, prevPosition);
+        }
+
+        public void WalkToPosition(Point position)
+        {
+            var prevPosition = Position;
+            Position = position;
+            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
         }
     }
 }

@@ -4,6 +4,7 @@ using Machina.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using System;
 
 namespace Duel.Components
 {
@@ -18,7 +19,35 @@ namespace Duel.Components
             this.entity = entity;
             SnapPositionToGrid();
 
-            this.entity.PositionChanged += SnapPositionToGrid;
+            this.entity.PositionChanged += OnPositionChanged;
+        }
+
+        private void OnPositionChanged(MoveType moveType, Point previousPosition)
+        {
+            if (moveType == MoveType.Warp)
+            {
+                SnapPositionToGrid();
+            }
+
+            if (moveType == MoveType.Walk)
+            {
+                StartMoveTween(this.levelRenderer.TileToLocalPosition(this.entity.Position));
+            }
+
+            if (moveType == MoveType.Jump)
+            {
+                StartJumpTween(this.levelRenderer.TileToLocalPosition(this.entity.Position));
+            }
+        }
+
+        private void StartJumpTween(Vector2 targetWorldPos)
+        {
+            MachinaClient.Print("Jump todo");
+        }
+
+        private void StartMoveTween(Vector2 targetWorldPos)
+        {
+            MachinaClient.Print("Walk todo");
         }
 
         public void SnapPositionToGrid()
