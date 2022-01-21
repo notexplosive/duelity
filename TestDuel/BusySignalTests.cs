@@ -27,5 +27,18 @@ namespace TestDuel
                 busyFunction.Name.Should().Be("AlwaysBusy");
             }
         }
+
+        [Fact]
+        public void busy_signal_becomes_unbusy()
+        {
+            var subject = new BusySignal();
+            int count = 0;
+
+            subject.Add(new BusyFunction("SometimesBusy", () => count++ < 2));
+
+            subject.IsBusy().Should().BeTrue();
+            subject.IsBusy().Should().BeTrue();
+            subject.IsBusy().Should().BeFalse();
+        }
     }
 }
