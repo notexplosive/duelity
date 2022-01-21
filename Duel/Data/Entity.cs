@@ -54,12 +54,9 @@ namespace Duel.Data
 
         public void WarpToPosition(Point position)
         {
-            if (BusySignal.IsFree())
-            {
-                var prevPosition = Position;
-                Position = position;
-                PositionChanged?.Invoke(MoveType.Warp, prevPosition);
-            }
+            var prevPosition = Position;
+            Position = position;
+            PositionChanged?.Invoke(MoveType.Warp, prevPosition);
         }
 
         public void WalkToPosition(Point position)

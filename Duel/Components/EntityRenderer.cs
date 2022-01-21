@@ -31,6 +31,7 @@ namespace Duel.Components
         {
             if (moveType == MoveType.Warp)
             {
+                this.tween.Clear();
                 SnapPositionToGrid();
             }
 
