@@ -4,15 +4,6 @@ using System.Text;
 
 namespace Duel.Data
 {
-    public enum Direction
-    {
-        Up,
-        Right,
-        Down,
-        Left,
-        None
-    }
-
     public class DirectionalButtons
     {
         public bool up;
@@ -29,7 +20,6 @@ namespace Duel.Data
         {
             if (this.up && !this.down) { return Direction.Up; }
             if (this.down && !this.up) { return Direction.Down; }
-
             if (this.left && !this.right) { return Direction.Left; }
             if (this.right && !this.left) { return Direction.Right; }
 
