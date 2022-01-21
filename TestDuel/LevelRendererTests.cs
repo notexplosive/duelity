@@ -37,7 +37,7 @@ namespace TestDuel
             this.level.AddEntity(entity);
             FlushScene();
 
-            this.subject.transform.ChildAt(0).transform.LocalPosition.Should().Be(new Vector2(270, 270));
+            this.subject.transform.ChildAt(0).transform.LocalPosition.Should().Be(new Vector2(352, 352));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Duel.Components
 {
     public class LevelRenderer : BaseComponent
     {
-        public static readonly int TileSize = 60;
+        public static readonly int TileSize = 64;
 
         private readonly Level level;
         private Tuple<Point, Point> levelCorners;
@@ -52,13 +52,14 @@ namespace Duel.Components
 
         public void DrawCell(SpriteBatch spriteBatch, Point location)
         {
-            spriteBatch.DrawRectangle(new RectangleF(TileToLocalPosition(location), new Point(TileSize)), Color.White, 1f, transform.Depth);
-            spriteBatch.DrawCircle(new CircleF(location.ToVector2() * TileSize, TileSize / 2), 25, Color.White, 1f, transform.Depth);
+            var tileDepth = transform.Depth + 100;
+            spriteBatch.DrawRectangle(new RectangleF(TileToLocalPosition(location, false), new Point(TileSize)), Color.White, 1f, tileDepth);
+            spriteBatch.DrawCircle(new CircleF(TileToLocalPosition(location, true), TileSize / 2), 25, Color.White, 1f, tileDepth);
         }
 
         public Vector2 TileToLocalPosition(Point location, bool centered = true)
         {
-            return location.ToVector2() * TileSize - (centered ? new Vector2(TileSize) / 2 : Vector2.Zero);
+            return location.ToVector2() * TileSize + (centered ? new Vector2(TileSize) / 2 : Vector2.Zero);
         }
     }
 }

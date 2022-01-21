@@ -25,7 +25,6 @@ namespace Duel.Data
 
             CurrentLevel = new Level();
             this.rootActor = scene.AddActor("Level");
-            this.rootActor.transform.Depth -= 200;
 
             new ActorRoot(this.rootActor, CurrentLevel);
             new LevelRenderer(this.rootActor, CurrentLevel);

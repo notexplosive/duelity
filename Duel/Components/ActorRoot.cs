@@ -29,6 +29,7 @@ namespace Duel.Components
         private void CreateEntityActor(Entity entity)
         {
             var entityActor = transform.AddActorAsChild("EntityActor");
+            entityActor.transform.LocalDepth -= 200;
             entityToActorTable[entity] = entityActor;
 
             new RemoveEntityOnDestroy(entityActor, this.level, entity);
