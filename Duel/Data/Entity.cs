@@ -15,6 +15,8 @@ namespace Duel.Data
     public class Entity
     {
         public static int UniqueIdPool = 0;
+        private SolidProvider solidProvider;
+
         public event MoveAction PositionChanged;
 
         public BusySignal BusySignal { get; } = new BusySignal();
@@ -27,6 +29,12 @@ namespace Duel.Data
         public Entity()
         {
             this.uniqueId = UniqueIdPool++;
+            this.solidProvider = new EmptySolidProvider();
+        }
+
+        public Entity(SolidProvider solidProvider)
+        {
+            this.solidProvider = solidProvider;
         }
 
         // Overrides //

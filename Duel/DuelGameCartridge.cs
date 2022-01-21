@@ -31,7 +31,7 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
             game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
 
-            var player = new Entity();
+            var player = new Entity(new LevelSolidProvider(game.CurrentLevel));
             player.Tags.AddTag(new PlayerTag(PlayerTag.Type.Sheriff));
             player.WarpToPosition(new Point(3, 3));
 

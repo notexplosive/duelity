@@ -60,5 +60,22 @@ namespace Duel.Data
         {
             return this.entities.ToArray();
         }
+
+        public bool IsOutOfBounds(Point position)
+        {
+            var corners = CalculateCorners();
+            return position.X < corners.Item1.X || position.Y < corners.Item1.Y || position.X > corners.Item2.X || position.Y > corners.Item2.Y;
+        }
+
+        public IEnumerable<Entity> AllEntitiesAt(Point position)
+        {
+            foreach (var entity in this.entities)
+            {
+                if (entity.Position == position)
+                {
+                    yield return entity;
+                }
+            }
+        }
     }
 }
