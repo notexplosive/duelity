@@ -3,23 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Duel", "Duel\Duel.csproj", "{DE4B7104-500A-44DB-82B7-1B05A357CD8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Duel", "Duel\Duel.csproj", "{DE4B7104-500A-44DB-82B7-1B05A357CD8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "machina", "machina", "{8036DA32-6B82-4E00-8421-58752962AF3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Machina", "machina\Machina\Machina.csproj", "{1A447A9A-466C-4F74-B5D6-B8E06D8FB0FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Machina", "machina\Machina\Machina.csproj", "{1A447A9A-466C-4F74-B5D6-B8E06D8FB0FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachinaDesktop", "machina\MachinaDesktop\MachinaDesktop.csproj", "{A88FB3A6-5DFF-4E27-A6A5-FAEFF56A3111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachinaDesktop", "machina\MachinaDesktop\MachinaDesktop.csproj", "{A88FB3A6-5DFF-4E27-A6A5-FAEFF56A3111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMachina", "machina\TestMachina\TestMachina.csproj", "{1A91FF18-E32B-4929-A831-89B2946DEFBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMachina", "machina\TestMachina\TestMachina.csproj", "{1A91FF18-E32B-4929-A831-89B2946DEFBB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MachinaAssets", "machina\MachinaAssets\MachinaAssets.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		machina\MachinaAssets\MachinaAssets.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+		machina\MachinaAssets\MachinaAssets.projitems*{de4b7104-500a-44db-82b7-1b05a357cd8d}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DE4B7104-500A-44DB-82B7-1B05A357CD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -39,9 +42,16 @@ Global
 		{1A91FF18-E32B-4929-A831-89B2946DEFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A91FF18-E32B-4929-A831-89B2946DEFBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1A447A9A-466C-4F74-B5D6-B8E06D8FB0FB} = {8036DA32-6B82-4E00-8421-58752962AF3F}
 		{A88FB3A6-5DFF-4E27-A6A5-FAEFF56A3111} = {8036DA32-6B82-4E00-8421-58752962AF3F}
 		{1A91FF18-E32B-4929-A831-89B2946DEFBB} = {8036DA32-6B82-4E00-8421-58752962AF3F}
+		{A0CDBD0E-3A41-42B7-9425-A838BC2C7383} = {8036DA32-6B82-4E00-8421-58752962AF3F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7BFEBE8-DE01-4B46-A33D-53D821240AB3}
 	EndGlobalSection
 EndGlobal

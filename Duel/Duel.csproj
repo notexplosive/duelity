@@ -24,6 +24,7 @@
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
@@ -31,4 +32,5 @@
     <ProjectReference Include="..\machina\Machina\Machina.csproj" />
     <ProjectReference Include="..\machina\MachinaDesktop\MachinaDesktop.csproj" />
   </ItemGroup>
+  <Import Project="..\machina\MachinaAssets\MachinaAssets.projitems" Label="Shared" />
 </Project>
