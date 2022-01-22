@@ -31,11 +31,19 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
             game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
 
-            var player = new Entity(new LevelSolidProvider(game.CurrentLevel));
+            var solidProvider = new LevelSolidProvider(game.CurrentLevel);
+
+            var player = new Entity(solidProvider);
             player.Tags.AddTag(new PlayerTag(PlayerTag.Type.Sheriff));
             player.WarpToPosition(new Point(3, 3));
 
+
             game.CurrentLevel.AddEntity(player);
+
+            var crate = new Entity(solidProvider);
+            crate.Tags.AddTag(new SolidTag(SolidTag.Type.Pushable));
+            crate.WarpToPosition(new Point(1, 1));
+            game.CurrentLevel.AddEntity(crate);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

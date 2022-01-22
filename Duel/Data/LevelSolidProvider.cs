@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Machina.Engine;
+using Microsoft.Xna.Framework;
 
 namespace Duel.Data
 {

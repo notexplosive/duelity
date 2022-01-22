@@ -34,6 +34,7 @@ namespace Duel.Components
 
             new RemoveEntityOnDestroy(entityActor, this.level, entity);
             new EntityRenderInfo(entityActor, this.grid, entity);
+            new MovementRenderer(entityActor, entity);
 
             ApplyTags(entity, entityActor);
         }
@@ -46,16 +47,10 @@ namespace Duel.Components
                 {
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
-                        new MovementRenderer(entityActor, entity);
                         new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new Lasso(entityActor, entity);
                     }
-                }
-
-                if (tag is SolidTag solidTag)
-                {
-                    // todo
                 }
             }
         }
