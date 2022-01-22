@@ -31,8 +31,8 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
             game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
 
-            game.CurrentLevel.CreateEntityWithTags(new Point(3, 3), new PlayerTag(PlayerTag.Type.Sheriff));
-            game.CurrentLevel.CreateEntityWithTags(new Point(1, 1), new SolidTag(SolidTag.Type.Pushable));
+            game.CurrentLevel.CreateEntity(new Point(3, 3), new PlayerTag(PlayerTag.Type.Sheriff));
+            game.CurrentLevel.CreateEntity(new Point(1, 1), new SolidTag(SolidTag.Type.Pushable));
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

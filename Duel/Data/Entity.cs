@@ -32,7 +32,7 @@ namespace Duel.Data
             this.solidProvider = new EmptySolidProvider();
         }
 
-        public Entity(SolidProvider solidProvider)
+        public Entity(SolidProvider solidProvider) : this()
         {
             this.solidProvider = solidProvider;
         }

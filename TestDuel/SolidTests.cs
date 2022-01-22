@@ -29,7 +29,7 @@ namespace TestDuel
         public void solid_entities_are_solid()
         {
             var level = new Level(new Corners(new Point(-2, -2), new Point(2, 2)));
-            level.CreateEntityWithTags(new Point(1, 1), new SolidTag(SolidTag.Type.Static));
+            level.CreateEntity(new Point(1, 1), new SolidTag(SolidTag.Type.Static));
 
             var solidProvider = new LevelSolidProvider(level);
 
@@ -40,8 +40,8 @@ namespace TestDuel
         public void entity_walking_into_pushable_pushes()
         {
             var level = new Level(new Corners(new Point(-3, -3), new Point(3, 3)));
-            var pushable = level.CreateEntityWithTags(new Point(1, 1), new SolidTag(SolidTag.Type.Pushable));
-            var pusher = level.CreateEntityWithTags(new Point(1, 2));
+            var pushable = level.CreateEntity(new Point(1, 1), new SolidTag(SolidTag.Type.Pushable));
+            var pusher = level.CreateEntity(new Point(1, 2));
 
             pusher.WalkInDirection(Direction.Up);
 

@@ -17,8 +17,8 @@ namespace Duel.Data
 
         public Level(Corners corners)
         {
-            this.PutTileAt(corners.TopLeft, new TileTemplate());
-            this.PutTileAt(corners.BottomRight, new TileTemplate());
+            PutTileAt(corners.TopLeft, new TileTemplate());
+            PutTileAt(corners.BottomRight, new TileTemplate());
         }
 
         public Level() : this(new Corners(Point.Zero, Point.Zero))
@@ -26,7 +26,7 @@ namespace Duel.Data
 
         }
 
-        public Entity CreateEntityWithTags(Point startingPosition, params Tag[] tags)
+        public Entity CreateEntity(Point startingPosition, params Tag[] tags)
         {
             var entity = new Entity(new LevelSolidProvider(this));
 
