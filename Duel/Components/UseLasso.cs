@@ -16,7 +16,7 @@ namespace Duel.Components
         private readonly ActorRoot actorRoot;
         private readonly Entity userEntity;
         private readonly Level level;
-        private readonly KeyboardListener keyboard;
+        private readonly BufferedKeyboardListener keyboard;
         private readonly LevelSolidProvider solidProvider;
 
         public UseLasso(Actor actor, Entity entity, Level level, ActorRoot actorRoot) : base(actor)
@@ -26,7 +26,7 @@ namespace Duel.Components
             this.level = level;
             this.solidProvider = new LevelSolidProvider(this.level);
 
-            this.keyboard = RequireComponent<KeyboardListener>();
+            this.keyboard = RequireComponent<BufferedKeyboardListener>();
             keyboard.ActionPressed += DeployLasso;
         }
 

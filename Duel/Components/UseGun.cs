@@ -9,12 +9,12 @@ namespace Duel.Components
     {
         private readonly Entity entity;
         private readonly LevelSolidProvider solidProvider;
-        private readonly KeyboardListener keyboard;
+        private readonly BufferedKeyboardListener keyboard;
 
         public UseGun(Actor actor, Entity entity, Level level) : base(actor)
         {
             this.solidProvider = new LevelSolidProvider(level);
-            this.keyboard = RequireComponent<KeyboardListener>();
+            this.keyboard = RequireComponent<BufferedKeyboardListener>();
             this.entity = entity;
             keyboard.ActionPressed += Shoot;
         }

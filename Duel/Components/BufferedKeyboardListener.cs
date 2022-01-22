@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Duel.Components
 {
-    public class KeyboardListener : BaseComponent
+    public class BufferedKeyboardListener : BaseComponent
     {
         private readonly BusySignal busySignal;
         private readonly DirectionalButtons heldDirections = new DirectionalButtons();
@@ -26,7 +26,7 @@ namespace Duel.Components
         public event Action DownPressed;
         public event Action ActionPressed;
 
-        public KeyboardListener(Actor actor, BusySignal busySignal) : base(actor)
+        public BufferedKeyboardListener(Actor actor, BusySignal busySignal) : base(actor)
         {
             this.busySignal = busySignal;
         }

@@ -53,7 +53,7 @@ namespace Duel.Components
                 {
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
-                        new KeyboardListener(entityActor, entity.BusySignal);
+                        new BufferedKeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseLasso(entityActor, entity, this.level, this);
 
@@ -65,7 +65,7 @@ namespace Duel.Components
 
                     if (playerTag.MovementType == PlayerTag.Type.Renegade)
                     {
-                        new KeyboardListener(entityActor, entity.BusySignal);
+                        new BufferedKeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseGun(entityActor, entity, this.level);
                         if (!Sokoban.Headless)

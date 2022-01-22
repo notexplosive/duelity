@@ -15,11 +15,11 @@ namespace Duel.Components
     public class NormalKeyboardMovement : BaseComponent
     {
         private readonly Entity entity;
-        private readonly KeyboardListener keyboard;
+        private readonly BufferedKeyboardListener keyboard;
 
         public NormalKeyboardMovement(Actor actor, Entity entity) : base(actor)
         {
-            this.keyboard = RequireComponent<KeyboardListener>();
+            this.keyboard = RequireComponent<BufferedKeyboardListener>();
             this.entity = entity;
 
             this.keyboard.LeftPressed += Move(Direction.Left);
