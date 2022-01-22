@@ -118,16 +118,21 @@ namespace Duel.Components
 
         private Action DirectionToAction(Direction direction)
         {
-            switch (direction)
+            if (direction == Direction.Up)
             {
-                case Direction.Up:
-                    return UpPressed;
-                case Direction.Down:
-                    return DownPressed;
-                case Direction.Left:
-                    return LeftPressed;
-                case Direction.Right:
-                    return RightPressed;
+                return UpPressed;
+            }
+            if (direction == Direction.Down)
+            {
+                return DownPressed;
+            }
+            if (direction == Direction.Left)
+            {
+                return LeftPressed;
+            }
+            if (direction == Direction.Right)
+            {
+                return RightPressed;
             }
 
             return null;
