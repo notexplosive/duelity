@@ -69,6 +69,11 @@ namespace Duel.Data
 
         public void WalkToPosition(Point position)
         {
+            if (this.solidProvider.IsSolidAt(position))
+            {
+                return;
+            }
+
             var prevPosition = Position;
             Position = position;
             PositionChanged?.Invoke(MoveType.Walk, prevPosition);

@@ -1,5 +1,6 @@
 ﻿using Duel.Data;
 using FluentAssertions;
+using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace TestDuel
@@ -18,6 +19,18 @@ namespace TestDuel
             subject1.Should().NotBe(subject2);
             subject1.Should().Be(subject1Copy);
             subject2.Should().Be(subject2Copy);
+        }
+
+        [Fact]
+        public void entity_cannot_walk_into_solid()
+        {
+            var solidProvider = new FakeSolidProvider();
+            solidProvider.BecomeSolidAt(new Point(1, 1));
+            var subject = new Entity(solidProvider);
+            subject.WarpToPosition(new Point(1, 2));
+            subject.WalkToPosition(new Point(1, 1));
+
+            subject.Position.Should().Be(new Point(1, 2));
         }
     }
 }
