@@ -37,60 +37,27 @@ namespace Duel.Components
 
         private IEnumerator<ICoroutineAction> LassoCoroutine(Direction throwDirection)
         {
-            var targetPosition = this.userEntity.Position;
-
-            if (this.solidProvider.HasTagAt<BlockProjectileTag>(targetPosition + throwDirection.ToPoint()))
+            var hitScan = new LassoHitScan(this.userEntity.Position, throwDirection, this.solidProvider);
+            if (!hitScan.Invalid)
             {
-
-            }
-            else
-            {
-                bool foundHook = false;
-                bool wasBlocked = false;
-
-                for (int i = 0; i < 3; i++)
-                {
-                    targetPosition += throwDirection.ToPoint();
-                    var nextPos = targetPosition + throwDirection.ToPoint();
-
-                    if (this.solidProvider.HasTagAt<Grapplable>(targetPosition))
-                    {
-                        foundHook = true;
-                    }
-
-                    if (this.solidProvider.HasTagAt<BlockProjectileTag>(nextPos))
-                    {
-                        wasBlocked = true;
-                    }
-
-                    if (foundHook || wasBlocked)
-                    {
-                        break;
-                    }
-                }
-
-                // Actually do the animation
                 var lassoEntity = this.level.CreateEntity(this.userEntity.Position);
 
-                lassoEntity.JumpToPosition(targetPosition);
+                lassoEntity.JumpToPosition(hitScan.LassoLandingPosition);
                 yield return new WaitUntil(lassoEntity.BusySignal.IsFree);
 
-                if (foundHook)
+                if (hitScan.FoundHook)
                 {
-                    if (this.solidProvider.TryGetFirstEntityWithTagAt<Grapplable>(targetPosition, out Entity grapplableEntity))
+                    if (hitScan.EntityToPull != null)
                     {
-                        if (grapplableEntity.Tags.GetTag<Grapplable>().HookType == Grapplable.Type.PulledByLasso)
-                        {
-                            this.actorRoot.FindActor(lassoEntity).Destroy();
-                            yield return new WaitSeconds(0.25f);
-                            grapplableEntity.JumpToPosition(this.userEntity.Position + throwDirection.ToPoint());
-                            yield return new WaitUntil(grapplableEntity.BusySignal.IsFree);
-                        }
+                        this.actorRoot.FindActor(lassoEntity).Destroy();
+                        yield return new WaitSeconds(0.25f);
+                        hitScan.EntityToPull.JumpToPosition(this.userEntity.Position + throwDirection.ToPoint());
+                        yield return new WaitUntil(hitScan.EntityToPull.BusySignal.IsFree);
                     }
                     else
                     {
                         yield return new WaitSeconds(0.25f);
-                        this.userEntity.JumpToPosition(targetPosition);
+                        this.userEntity.JumpToPosition(hitScan.LassoLandingPosition);
                         yield return new WaitUntil(this.userEntity.BusySignal.GetSpecific("JumpTween").IsFree); // need to probe specific busysignal because lassoing itself raises a busysignal
                         this.actorRoot.FindActor(lassoEntity).Destroy();
                     }
