@@ -21,5 +21,6 @@ namespace Duel.Data
         }
 
         public static readonly PlayerAnimations Ernesto = new PlayerAnimations("ernesto-idle", "ernesto-move", "ernesto-move");
+        public static readonly PlayerAnimations Miranda = new PlayerAnimations("miranda-idle", "miranda-move", "miranda-move");
     }
 }

@@ -70,7 +70,7 @@ namespace Duel.Components
                         new UseGun(entityActor, entity, this.level);
                         if (!Sokoban.Headless)
                         {
-                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Ernesto);
+                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Miranda);
                         }
                     }
                 }

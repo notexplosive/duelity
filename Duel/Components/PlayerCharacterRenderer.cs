@@ -43,7 +43,7 @@ namespace Duel.Components
             BindSpritePosToRenderOffset();
             if (RenderOffset().Length() > 5)
             {
-                this.spriteRenderer.SetAnimation(MachinaClient.Assets.GetMachinaAsset<IFrameAnimation>("ernesto-move"));
+                this.spriteRenderer.SetAnimation(this.playerAnimations.Move);
             }
             else
             {

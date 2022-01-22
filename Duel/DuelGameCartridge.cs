@@ -55,6 +55,9 @@ namespace Duel
             loader.AddMachinaAssetCallback("characters-sheet", () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));
             loader.AddMachinaAssetCallback("ernesto-move", () => new LinearFrameAnimation(2, 1));
+
+            loader.AddMachinaAssetCallback("miranda-idle", () => new LinearFrameAnimation(6, 2));
+            loader.AddMachinaAssetCallback("miranda-move", () => new LinearFrameAnimation(8, 1));
         }
     }
 }
