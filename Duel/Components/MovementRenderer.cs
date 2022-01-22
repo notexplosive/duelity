@@ -21,6 +21,7 @@ namespace Duel.Components
             this.renderInfo = RequireComponent<EntityRenderInfo>();
             this.entity = entity;
             this.entity.PositionChanged += OnPositionChanged;
+            this.entity.MoveFailed += BumpAnimation;
         }
 
         public override void Update(float dt)
@@ -38,7 +39,7 @@ namespace Duel.Components
 
             if (moveType == MoveType.Walk)
             {
-                StartMoveTween(this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
+                StartWalkTween(this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
             }
 
             if (moveType == MoveType.Jump)
@@ -47,7 +48,15 @@ namespace Duel.Components
             }
         }
 
-        private void StartMoveTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
+        private void BumpAnimation(Direction direction)
+        {
+            this.tween.Clear();
+            this.tween.AppendVectorTween(direction.ToPoint().ToVector2() * 20, 0.05f, EaseFuncs.CubicEaseIn, this.renderInfo.renderOffsetTweenable);
+            this.tween.AppendVectorTween(Vector2.Zero, 0.20f, EaseFuncs.CubicEaseOut, this.renderInfo.renderOffsetTweenable);
+            this.entity.BusySignal.Add(new BusyFunction("BumpTween", this.tween.IsDone));
+        }
+
+        private void StartWalkTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
             this.renderInfo.SnapPositionToGrid();
             this.renderInfo.renderOffsetTweenable.setter(previousWorldPos - targetWorldPos);

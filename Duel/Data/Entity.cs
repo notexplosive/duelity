@@ -11,6 +11,7 @@ namespace Duel.Data
     }
 
     public delegate void MoveAction(MoveType moveType, Point previousPosition);
+    public delegate void DirectionalAction(Direction direction);
 
     public class Entity
     {
@@ -18,6 +19,7 @@ namespace Duel.Data
         private SolidProvider solidProvider;
 
         public event MoveAction PositionChanged;
+        public event DirectionalAction MoveFailed;
 
         public BusySignal BusySignal { get; } = new BusySignal();
         public TagCollection Tags { get; } = new TagCollection();
@@ -71,6 +73,7 @@ namespace Duel.Data
         {
             if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
+                MoveFailed?.Invoke(direction);
                 solidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
                 return;
             }
