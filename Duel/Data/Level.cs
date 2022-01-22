@@ -27,6 +27,18 @@ namespace Duel.Data
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
 
+        public Level(Corners corners)
+        {
+            this.PutTileAt(corners.TopLeft, new TileTemplate());
+            this.PutTileAt(corners.BottomRight, new TileTemplate());
+        }
+
+        public Level() : this(new Corners(Point.Zero, Point.Zero))
+        {
+
+        }
+
+
         public void AddEntity(Entity entity)
         {
             this.entities.Add(entity);
