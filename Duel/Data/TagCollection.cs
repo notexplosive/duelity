@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -27,6 +28,21 @@ namespace Duel.Data
                 }
             }
 
+            return false;
+        }
+
+        public bool TryGetTag<T>(out T result) where T : Tag
+        {
+            foreach (var tag in this.content)
+            {
+                if (tag is T match)
+                {
+                    result = match;
+                    return true;
+                }
+            }
+
+            result = null;
             return false;
         }
 

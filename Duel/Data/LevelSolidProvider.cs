@@ -11,6 +11,20 @@ namespace Duel.Data
             this.level = level;
         }
 
+        public override void ApplyPushAt(Point position, Direction direction)
+        {
+            foreach (var entity in this.level.AllEntitiesAt(position))
+            {
+                if (entity.Tags.TryGetTag(out SolidTag solidTag))
+                {
+                    if (solidTag.SolidType == SolidTag.Type.Pushable)
+                    {
+                        entity.WalkInDirection(direction);
+                    }
+                }
+            }
+        }
+
         public override bool IsSolidAt(Point position)
         {
             if (this.level.GetTileAt(position).Tags.HasTag<SolidTag>())

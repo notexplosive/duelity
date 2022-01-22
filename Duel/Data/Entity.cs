@@ -71,6 +71,7 @@ namespace Duel.Data
         {
             if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
+                solidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
                 return;
             }
 

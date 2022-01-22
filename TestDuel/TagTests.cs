@@ -36,6 +36,27 @@ namespace TestDuel
         }
 
         [Fact]
+        public void can_try_and_fail_to_find_tag()
+        {
+            var subject = new TagCollection();
+            var found = subject.TryGetTag<SolidTag>(out SolidTag solidTag);
+
+            solidTag.Should().BeNull();
+            found.Should().BeFalse();
+        }
+
+        [Fact]
+        public void can_try_and_succeed_to_find_tag()
+        {
+            var subject = new TagCollection();
+            subject.AddTag(new BlockProjectileTag());
+            var found = subject.TryGetTag<BlockProjectileTag>(out BlockProjectileTag tag);
+
+            tag.Should().NotBeNull();
+            found.Should().BeTrue();
+        }
+
+        [Fact]
         public void cannot_duplicate_tags()
         {
             var subject = new TagCollection();

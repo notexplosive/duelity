@@ -8,6 +8,10 @@ namespace TestDuel
     {
         private readonly HashSet<Point> positions = new HashSet<Point>();
 
+        public override void ApplyPushAt(Point position, Direction direction)
+        {
+        }
+
         public void BecomeSolidAt(Point position)
         {
             this.positions.Add(position);
