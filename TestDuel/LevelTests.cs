@@ -13,7 +13,7 @@ namespace TestDuel
         {
             var subject = new Level();
 
-            subject.CalculateCorners().Should().Be(new Tuple<Point, Point>(Point.Zero, Point.Zero));
+            subject.CalculateCorners().Should().Be(new Corners(Point.Zero, Point.Zero));
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace TestDuel
             subject.PutTileAt(new Point(-4, 4), new TileTemplate());
             subject.PutTileAt(new Point(3, -6), new TileTemplate());
 
-            subject.CalculateCorners().Should().Be(new Tuple<Point, Point>(new Point(-4, -6), new Point(3, 4)));
+            subject.CalculateCorners().Should().Be(new Corners(new Point(-4, -6), new Point(3, 4)));
         }
 
         [Fact]
@@ -39,10 +39,9 @@ namespace TestDuel
                 createdEntity = entity;
             };
 
-            Entity realEntity = new Entity();
-            subject.AddEntity(realEntity);
+            var returnedEntity = subject.CreateEntityWithTags(new Point(5, 5));
 
-            createdEntity.Should().Be(realEntity);
+            createdEntity.Should().Be(returnedEntity);
         }
 
         [Fact]

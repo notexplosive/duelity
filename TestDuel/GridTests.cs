@@ -31,10 +31,7 @@ namespace TestDuel
         [Fact]
         public void actor_gets_placed_at_proper_position()
         {
-            var entity = new Entity();
-            entity.WarpToPosition(new Point(5, 5));
-
-            this.level.AddEntity(entity);
+            var entity = this.level.CreateEntityWithTags(new Point(5, 5));
             FlushScene();
 
             this.subject.transform.ChildAt(0).transform.LocalPosition.Should().Be(new Vector2(352, 352));
@@ -43,10 +40,7 @@ namespace TestDuel
         [Fact]
         public void actor_moves_when_entity_moves()
         {
-            var entity = new Entity();
-            entity.WarpToPosition(new Point(5, 5));
-
-            this.level.AddEntity(entity);
+            var entity = this.level.CreateEntityWithTags(new Point(5, 5));
             FlushScene();
 
             entity.WarpToPosition(new Point(5, 6));

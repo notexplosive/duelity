@@ -2,6 +2,7 @@
 using Duel.Data;
 using FluentAssertions;
 using Machina.Engine;
+using Microsoft.Xna.Framework;
 using System;
 using Xunit;
 
@@ -32,8 +33,8 @@ namespace TestDuel
         public void actor_root_creates_actor_from_level()
         {
 
-            this.level.AddEntity(new Entity());
-            this.level.AddEntity(new Entity());
+            this.level.CreateEntityWithTags(Point.Zero);
+            this.level.CreateEntityWithTags(Point.Zero);
 
             this.subject.transform.ChildCount.Should().Be(2);
         }
@@ -41,9 +42,8 @@ namespace TestDuel
         [Fact]
         public void actor_root_deletes_actors_when_destroyed()
         {
-            var firstEntity = new Entity();
-            this.level.AddEntity(firstEntity);
-            this.level.AddEntity(new Entity());
+            var firstEntity = this.level.CreateEntityWithTags(Point.Zero);
+            this.level.CreateEntityWithTags(Point.Zero);
             this.subject.transform.ChildAt(1).Destroy();
             FlushScene();
 

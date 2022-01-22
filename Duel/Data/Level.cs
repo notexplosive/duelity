@@ -17,6 +17,13 @@ namespace Duel.Data
 
         public Point TopLeft { get; }
         public Point BottomRight { get; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Corners corners &&
+                   TopLeft.Equals(corners.TopLeft) &&
+                   BottomRight.Equals(corners.BottomRight);
+        }
     }
 
     public class Level
@@ -38,8 +45,23 @@ namespace Duel.Data
 
         }
 
+        public Entity CreateEntityWithTags(Point startingPosition, params Tag[] tags)
+        {
+            var entity = new Entity(new LevelSolidProvider(this));
 
-        public void AddEntity(Entity entity)
+            foreach (var tag in tags)
+            {
+                entity.Tags.AddTag(tag);
+            }
+
+            entity.WarpToPosition(startingPosition);
+
+            AddEntity(entity);
+
+            return entity;
+        }
+
+        private void AddEntity(Entity entity)
         {
             this.entities.Add(entity);
             EntityAdded?.Invoke(entity);
