@@ -22,16 +22,16 @@ namespace Duel.Components
             this.keyboard = RequireComponent<KeyboardListener>();
             this.entity = entity;
 
-            this.keyboard.LeftPressed += Move(new Point(-1, 0));
-            this.keyboard.RightPressed += Move(new Point(1, 0));
-            this.keyboard.DownPressed += Move(new Point(0, 1));
-            this.keyboard.UpPressed += Move(new Point(0, -1));
+            this.keyboard.LeftPressed += Move(Direction.Left);
+            this.keyboard.RightPressed += Move(Direction.Right);
+            this.keyboard.DownPressed += Move(Direction.Down);
+            this.keyboard.UpPressed += Move(Direction.Up);
         }
 
-        private Action Move(Point relativePosition)
+        private Action Move(Direction direction)
         {
             return
-                () => { this.entity.WalkToPosition(this.entity.Position + relativePosition); };
+                () => { this.entity.WalkInDirection(direction); };
         }
     }
 }

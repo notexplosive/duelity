@@ -67,15 +67,15 @@ namespace Duel.Data
             PositionChanged?.Invoke(MoveType.Warp, prevPosition);
         }
 
-        public void WalkToPosition(Point position)
+        public void WalkInDirection(Direction direction)
         {
-            if (this.solidProvider.IsSolidAt(position))
+            if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
                 return;
             }
 
             var prevPosition = Position;
-            Position = position;
+            Position += direction.ToPoint();
             PositionChanged?.Invoke(MoveType.Walk, prevPosition);
         }
     }
