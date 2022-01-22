@@ -56,7 +56,11 @@ namespace Duel.Components
                         new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseLasso(entityActor, entity, this.level, this);
-                        new PlayerCharacterRenderer(entityActor);
+
+                        if (!Sokoban.Headless)
+                        {
+                            new PlayerCharacterRenderer(entityActor);
+                        }
                     }
 
                     if (playerTag.MovementType == PlayerTag.Type.Renegade)
@@ -64,7 +68,10 @@ namespace Duel.Components
                         new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseGun(entityActor, entity, this.level);
-                        new PlayerCharacterRenderer(entityActor);
+                        if (!Sokoban.Headless)
+                        {
+                            new PlayerCharacterRenderer(entityActor);
+                        }
                     }
                 }
             }

@@ -14,6 +14,9 @@ namespace Duel.Data
 
         public Level CurrentLevel { get; private set; }
 
+        // Set to true for tests (ughhhhhhhhhhhhhhhhh)
+        public static bool Headless { get; set; }
+
         public Sokoban(Scene scene)
         {
             this.scene = scene;

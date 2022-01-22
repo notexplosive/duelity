@@ -7,14 +7,15 @@ using Xunit;
 
 namespace TestDuel
 {
-    public class LassoProjectileTests
+    public class SheriffTests
     {
         private readonly Entity playerEntity;
         private readonly UseLasso lassoComponent;
         private readonly Level level;
 
-        public LassoProjectileTests()
+        public SheriffTests()
         {
+            Sokoban.Headless = true;
             var scene = new Scene(null);
             var game = new Sokoban(scene);
 

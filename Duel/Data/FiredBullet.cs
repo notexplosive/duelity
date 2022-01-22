@@ -17,31 +17,29 @@ namespace Duel.Data
             {
                 hitScanPosition += shootDirection.ToPoint();
 
-                bool stop = false;
-
                 if (solidProvider.HasTagAt<Hittable>(hitScanPosition))
                 {
-                    HitSomethingHittable = true;
-                    stop = true;
+                    HitLocations.Add(hitScanPosition);
+                    HitAtLeastOneThing = true;
                 }
 
                 if (solidProvider.HasTagAt<BlockProjectileTag>(hitScanPosition))
                 {
                     WasBlocked = true;
-                    stop = true;
-                }
-
-                if (stop)
                     break;
+                }
             }
 
-            HitLocation = hitScanPosition;
+            if (HitLocations.Count == 0)
+            {
+                HitLocations.Add(hitScanPosition);
+            }
         }
 
-        public bool HitSomethingHittable { get; }
+        public bool HitAtLeastOneThing { get; }
         public Entity HittableEntity { get; }
         public bool WasBlocked { get; }
-        public Point HitLocation { get; }
         public Point StartPosition { get; }
+        public List<Point> HitLocations { get; } = new List<Point>();
     }
 }

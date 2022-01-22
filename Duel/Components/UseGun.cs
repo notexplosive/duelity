@@ -19,16 +19,24 @@ namespace Duel.Components
             keyboard.ActionPressed += Shoot;
         }
 
-        private void Shoot()
+        public void Shoot()
         {
-            var bullet = new FiredBullet(this.entity.Position, this.entity.FacingDirection, this.solidProvider);
+            var bullet = CreateBullet();
 
-            if (bullet.HitSomethingHittable)
+            if (bullet.HitAtLeastOneThing)
             {
-                this.solidProvider.ApplyHitAt(bullet.HitLocation, this.entity.FacingDirection);
+                foreach (var hitLocation in bullet.HitLocations)
+                {
+                    this.solidProvider.ApplyHitAt(hitLocation, this.entity.FacingDirection);
+                }
             }
 
-            MachinaClient.Print("Bang!", bullet.HitSomethingHittable ? bullet.HitLocation.ToString() : "missed", "blocked:", bullet.WasBlocked, "entity:", bullet.HittableEntity);
+            MachinaClient.Print("Bang!");
+        }
+
+        public FiredBullet CreateBullet()
+        {
+            return new FiredBullet(this.entity.Position, this.entity.FacingDirection, this.solidProvider);
         }
     }
 }
