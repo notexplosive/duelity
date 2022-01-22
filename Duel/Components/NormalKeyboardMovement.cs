@@ -31,7 +31,7 @@ namespace Duel.Components
         private Action Move(Direction direction)
         {
             return
-                () => { this.entity.WalkInDirection(direction); };
+                () => { this.entity.WalkAndPushInDirection(direction); };
         }
     }
 }

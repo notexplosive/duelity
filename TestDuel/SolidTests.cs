@@ -43,7 +43,7 @@ namespace TestDuel
             var pushable = level.CreateEntity(new Point(1, 1), new SolidTag(SolidTag.Type.Pushable));
             var pusher = level.CreateEntity(new Point(1, 2));
 
-            pusher.WalkInDirection(Direction.Up);
+            pusher.WalkAndPushInDirection(Direction.Up);
 
             pushable.Position.Should().Be(new Point(1, 0));
         }
@@ -58,7 +58,7 @@ namespace TestDuel
             var c = level.CreateEntity(new Point(3, 0), new SolidTag(SolidTag.Type.Pushable));
             var d = level.CreateEntity(new Point(4, 0), new SolidTag(SolidTag.Type.Pushable));
 
-            pusher.WalkInDirection(Direction.Right);
+            pusher.WalkAndPushInDirection(Direction.Right);
 
             a.Position.Should().Be(new Point(2, 0));
             b.Position.Should().Be(new Point(3, 0));

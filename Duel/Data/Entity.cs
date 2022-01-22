@@ -69,7 +69,7 @@ namespace Duel.Data
             PositionChanged?.Invoke(MoveType.Warp, prevPosition);
         }
 
-        public void WalkInDirection(Direction direction)
+        public void WalkAndPushInDirection(Direction direction)
         {
             if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
