@@ -27,7 +27,7 @@ namespace Duel.Data
 
         }
 
-        public Entity CreateEntity(Point startingPosition, params Tag[] tags)
+        public Entity PutEntityAt(Point startingPosition, params Tag[] tags)
         {
             var entity = new Entity(new LevelSolidProvider(this));
 

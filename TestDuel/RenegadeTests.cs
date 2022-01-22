@@ -20,7 +20,7 @@ namespace TestDuel
             this.scene = new Scene(null);
             var game = new Sokoban(scene);
 
-            this.playerEntity = game.CurrentLevel.CreateEntity(new Point(0, 0), new PlayerTag(PlayerTag.Type.Renegade));
+            this.playerEntity = game.CurrentLevel.PutEntityAt(new Point(0, 0), new PlayerTag(PlayerTag.Type.Renegade));
             this.gunComponent = game.FindActor(this.playerEntity).GetComponent<UseGun>();
             this.level = game.CurrentLevel;
 
@@ -69,9 +69,9 @@ namespace TestDuel
         [Fact]
         public void shot_through_several_breakables()
         {
-            this.level.CreateEntity(new Point(0, 3), new Hittable(Hittable.Type.DestroyOnHit));
-            this.level.CreateEntity(new Point(0, 4), new Hittable(Hittable.Type.DestroyOnHit));
-            this.level.CreateEntity(new Point(0, 5), new Hittable(Hittable.Type.DestroyOnHit));
+            this.level.PutEntityAt(new Point(0, 3), new Hittable(Hittable.Type.DestroyOnHit));
+            this.level.PutEntityAt(new Point(0, 4), new Hittable(Hittable.Type.DestroyOnHit));
+            this.level.PutEntityAt(new Point(0, 5), new Hittable(Hittable.Type.DestroyOnHit));
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -84,7 +84,7 @@ namespace TestDuel
         [Fact]
         public void shot_blocked_by_entity()
         {
-            this.level.CreateEntity(new Point(0, 4), new BlockProjectileTag());
+            this.level.PutEntityAt(new Point(0, 4), new BlockProjectileTag());
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -97,7 +97,7 @@ namespace TestDuel
         [Fact]
         public void shot_blocked_at_point_blank()
         {
-            this.level.CreateEntity(new Point(0, 1), new BlockProjectileTag());
+            this.level.PutEntityAt(new Point(0, 1), new BlockProjectileTag());
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -110,7 +110,7 @@ namespace TestDuel
         [Fact]
         public void shot_causes_push()
         {
-            var pushable = this.level.CreateEntity(new Point(0, 3), new BlockProjectileTag(), new Hittable(Hittable.Type.PushOnHit));
+            var pushable = this.level.PutEntityAt(new Point(0, 3), new BlockProjectileTag(), new Hittable(Hittable.Type.PushOnHit));
 
             this.gunComponent.Shoot();
 
@@ -121,8 +121,8 @@ namespace TestDuel
         public void shot_pushes_item_out_of_bounds()
         {
             // weird edge case I came across while testing
-            var pushedOnHit = this.level.CreateEntity(new Point(0, 3), new Hittable(Hittable.Type.PushOnHit));
-            var pushable = this.level.CreateEntity(new Point(0, 4), new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable));
+            var pushedOnHit = this.level.PutEntityAt(new Point(0, 3), new Hittable(Hittable.Type.PushOnHit));
+            var pushable = this.level.PutEntityAt(new Point(0, 4), new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable));
 
             this.gunComponent.Shoot();
 

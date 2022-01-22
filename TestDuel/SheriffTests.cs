@@ -19,7 +19,7 @@ namespace TestDuel
             var scene = new Scene(null);
             var game = new Sokoban(scene);
 
-            this.playerEntity = game.CurrentLevel.CreateEntity(new Point(0, 0), new PlayerTag(PlayerTag.Type.Sheriff));
+            this.playerEntity = game.CurrentLevel.PutEntityAt(new Point(0, 0), new PlayerTag(PlayerTag.Type.Sheriff));
             this.lassoComponent = game.FindActor(this.playerEntity).GetComponent<UseLasso>();
             this.level = game.CurrentLevel;
         }
@@ -83,7 +83,7 @@ namespace TestDuel
         [Fact]
         public void lasso_pulls_pullables()
         {
-            var pullable = this.level.CreateEntity(new Point(0, 2), new Grapplable(Grapplable.Type.PulledByLasso));
+            var pullable = this.level.PutEntityAt(new Point(0, 2), new Grapplable(Grapplable.Type.PulledByLasso));
 
             var lasso = ThrowLassoDown();
 

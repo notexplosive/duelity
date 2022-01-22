@@ -89,7 +89,7 @@ namespace Duel.Data
 
         public ICoroutineAction DeployLasso(Level level, ActorRoot actorRoot)
         {
-            this.lassoEntity = level.CreateEntity(this.startingPosition);
+            this.lassoEntity = level.PutEntityAt(this.startingPosition);
             this.lassoEntity.JumpToPosition(LassoLandingPosition);
             this.actor = actorRoot.FindActor(this.lassoEntity);
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);

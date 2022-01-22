@@ -33,8 +33,8 @@ namespace TestDuel
         public void actor_root_creates_actor_from_level()
         {
 
-            this.level.CreateEntity(Point.Zero);
-            this.level.CreateEntity(Point.Zero);
+            this.level.PutEntityAt(Point.Zero);
+            this.level.PutEntityAt(Point.Zero);
 
             this.subject.transform.ChildCount.Should().Be(2);
         }
@@ -42,8 +42,8 @@ namespace TestDuel
         [Fact]
         public void actor_root_deletes_actors_when_destroyed()
         {
-            var firstEntity = this.level.CreateEntity(Point.Zero);
-            this.level.CreateEntity(Point.Zero);
+            var firstEntity = this.level.PutEntityAt(Point.Zero);
+            this.level.PutEntityAt(Point.Zero);
             this.subject.transform.ChildAt(1).Destroy();
             FlushScene();
 

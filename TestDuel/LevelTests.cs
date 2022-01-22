@@ -39,7 +39,7 @@ namespace TestDuel
                 createdEntity = entity;
             };
 
-            var returnedEntity = subject.CreateEntity(new Point(5, 5));
+            var returnedEntity = subject.PutEntityAt(new Point(5, 5));
 
             createdEntity.Should().Be(returnedEntity);
         }
