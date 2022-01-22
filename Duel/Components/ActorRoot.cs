@@ -50,6 +50,7 @@ namespace Duel.Components
                         new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseLasso(entityActor, entity, this.level, this);
+                        new PlayerCharacterRenderer(entityActor);
                     }
                 }
             }

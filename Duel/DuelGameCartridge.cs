@@ -1,5 +1,6 @@
 ﻿using Duel.Components;
 using Duel.Data;
+using Machina.Data;
 using Machina.Engine;
 using Machina.Engine.Assets;
 using Machina.Engine.Cartridges;
@@ -48,7 +49,9 @@ namespace Duel
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
         {
-
+            loader.AddMachinaAssetCallback("characters-sheet", () => new GridBasedSpriteSheet("characters", new Point(64)));
+            loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));
+            loader.AddMachinaAssetCallback("ernesto-move", () => new LinearFrameAnimation(2, 1));
         }
     }
 }

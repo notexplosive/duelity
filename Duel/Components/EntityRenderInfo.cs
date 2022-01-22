@@ -15,6 +15,7 @@ namespace Duel.Components
         private readonly Grid grid;
         private readonly Entity entity;
         public readonly TweenAccessors<Vector2> renderOffsetTweenable;
+        private bool skipDebug;
 
         public EntityRenderInfo(Actor actor, Grid grid, Entity entity) : base(actor)
         {
@@ -24,6 +25,11 @@ namespace Duel.Components
             SnapPositionToGrid();
 
             this.entity.PositionChanged += SnapPositionIfWarp;
+        }
+
+        public void DisableDebugGraphic()
+        {
+            this.skipDebug = true;
         }
 
         private void SnapPositionIfWarp(MoveType moveType, Point previousPosition)
@@ -36,7 +42,10 @@ namespace Duel.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawCircle(new CircleF(RenderPosition, 20), 20, Color.OrangeRed, 20, transform.Depth);
+            if (!this.skipDebug)
+            {
+                spriteBatch.DrawCircle(new CircleF(RenderPosition, 20), 20, Color.OrangeRed, 20, transform.Depth);
+            }
         }
 
         public void SnapPositionToGrid()
