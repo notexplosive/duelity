@@ -36,6 +36,13 @@ namespace Duel.Data
             }
         }
 
+        public IEnumerable<Point> HitLocationsReversed()
+        {
+            var result = new List<Point>(HitLocations);
+            result.Reverse();
+            return result;
+        }
+
         public bool HitAtLeastOneThing { get; }
         public Entity HittableEntity { get; }
         public bool WasBlocked { get; }

@@ -43,7 +43,7 @@ namespace Duel
             hook.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Hook));
             game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
 
-            game.CurrentLevel.CreateEntity(new Point(3, 2), new Hittable(Hittable.Type.PushOnHit));
+            game.CurrentLevel.CreateEntity(new Point(3, 2), new Hittable(Hittable.Type.PushOnHit), new BlockProjectileTag());
             game.CurrentLevel.CreateEntity(new Point(4, 2), new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable));
 
             game.CurrentLevel.CreateEntity(new Point(3, 3), new PlayerTag(PlayerTag.Type.Renegade));

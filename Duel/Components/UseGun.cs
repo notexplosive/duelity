@@ -25,7 +25,7 @@ namespace Duel.Components
 
             if (bullet.HitAtLeastOneThing)
             {
-                foreach (var hitLocation in bullet.HitLocations)
+                foreach (var hitLocation in bullet.HitLocationsReversed())
                 {
                     this.solidProvider.ApplyHitAt(hitLocation, this.entity.FacingDirection);
                 }

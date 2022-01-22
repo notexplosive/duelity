@@ -12,11 +12,12 @@ namespace TestDuel
         private readonly Entity playerEntity;
         private readonly UseGun gunComponent;
         private readonly Level level;
+        private readonly Scene scene;
 
         public RenegadeTests()
         {
             Sokoban.Headless = true;
-            var scene = new Scene(null);
+            this.scene = new Scene(null);
             var game = new Sokoban(scene);
 
             this.playerEntity = game.CurrentLevel.CreateEntity(new Point(0, 0), new PlayerTag(PlayerTag.Type.Renegade));
@@ -114,6 +115,50 @@ namespace TestDuel
             this.gunComponent.Shoot();
 
             pushable.Position.Should().Be(new Point(0, 4));
+        }
+
+        [Fact]
+        public void shot_pushes_item_out_of_bounds()
+        {
+            // weird edge case I came across while testing
+            var pushedOnHit = this.level.CreateEntity(new Point(0, 3), new Hittable(Hittable.Type.PushOnHit));
+            var pushable = this.level.CreateEntity(new Point(0, 4), new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable));
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 4));
+            pushable.Position.Should().Be(new Point(0, 5));
+
+            this.scene.FlushBuffers(); // because an actor got destroyed. ugh.
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 5));
+            pushable.Position.Should().Be(new Point(0, 5)); // didn't move because it got destroyed (should really have a better way to measure that)
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 6));
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 7));
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 8));
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 9));
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 10));
+
+            this.gunComponent.Shoot();
+
+            pushedOnHit.Position.Should().Be(new Point(0, 10));
         }
     }
 }
