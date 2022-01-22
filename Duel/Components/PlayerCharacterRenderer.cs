@@ -14,17 +14,19 @@ namespace Duel.Components
 {
     public class PlayerCharacterRenderer : BaseComponent
     {
+        private readonly PlayerAnimations playerAnimations;
         private readonly EntityRenderInfo renderInfo;
         private readonly Actor spriteActor;
         private readonly SpriteRenderer spriteRenderer;
 
-        public PlayerCharacterRenderer(Actor actor) : base(actor)
+        public PlayerCharacterRenderer(Actor actor, PlayerAnimations playerAnimations) : base(actor)
         {
+            this.playerAnimations = playerAnimations;
             this.renderInfo = RequireComponent<EntityRenderInfo>();
             this.spriteActor = transform.AddActorAsChild("sprite");
             this.spriteRenderer = new SpriteRenderer(this.spriteActor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("characters-sheet"));
 
-            this.spriteRenderer.SetAnimation(MachinaClient.Assets.GetMachinaAsset<IFrameAnimation>("ernesto-idle"));
+            this.spriteRenderer.SetAnimation(playerAnimations.Idle);
             this.spriteRenderer.FramesPerSecond = 10;
             spriteActor.transform.LocalPosition = new Vector2(0, -Grid.TileSize / 4);
             this.renderInfo.DisableDebugGraphic();
@@ -45,7 +47,7 @@ namespace Duel.Components
             }
             else
             {
-                this.spriteRenderer.SetAnimation(MachinaClient.Assets.GetMachinaAsset<IFrameAnimation>("ernesto-idle"));
+                this.spriteRenderer.SetAnimation(this.playerAnimations.Idle);
             }
         }
 
