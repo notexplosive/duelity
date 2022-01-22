@@ -1,0 +1,9 @@
+conversation	test_conversation	
+say	SheriffNormal	....
+left	Sheriff	
+down	Sheriff	
+down	Sheriff	
+say	SheriffSpooked	.........!!
+		
+conversation	test_conversation_2	
+z	Renegade	
