@@ -37,37 +37,31 @@ namespace Duel.Components
 
         private IEnumerator<ICoroutineAction> LassoCoroutine(Direction throwDirection)
         {
-            var hitScan = new LassoHitScan(this.userEntity.Position, throwDirection, this.solidProvider);
-            if (!hitScan.Invalid)
+            var hitScan = new LassoHitScan(this.userEntity, throwDirection, this.solidProvider);
+            if (hitScan.Valid)
             {
-                var lassoEntity = this.level.CreateEntity(this.userEntity.Position);
-
-                lassoEntity.JumpToPosition(hitScan.LassoLandingPosition);
-                yield return new WaitUntil(lassoEntity.BusySignal.IsFree);
+                yield return hitScan.DeployLasso(this.level, actorRoot);
 
                 if (hitScan.FoundHook)
                 {
-                    if (hitScan.EntityToPull != null)
+                    if (hitScan.FoundPullableEntity)
                     {
-                        this.actorRoot.FindActor(lassoEntity).Destroy();
+                        hitScan.DestroyLassoActor();
                         yield return new WaitSeconds(0.25f);
-                        hitScan.EntityToPull.JumpToPosition(this.userEntity.Position + throwDirection.ToPoint());
-                        yield return new WaitUntil(hitScan.EntityToPull.BusySignal.IsFree);
+                        yield return hitScan.PullEntity();
                     }
                     else
                     {
                         yield return new WaitSeconds(0.25f);
-                        this.userEntity.JumpToPosition(hitScan.LassoLandingPosition);
-                        yield return new WaitUntil(this.userEntity.BusySignal.GetSpecific("JumpTween").IsFree); // need to probe specific busysignal because lassoing itself raises a busysignal
-                        this.actorRoot.FindActor(lassoEntity).Destroy();
+                        yield return hitScan.JumpToDestination();
+                        hitScan.DestroyLassoActor();
                     }
                 }
                 else
                 {
                     yield return new WaitSeconds(0.10f);
-                    lassoEntity.JumpToPosition(this.userEntity.Position);
-                    yield return new WaitUntil(lassoEntity.BusySignal.IsFree);
-                    this.actorRoot.FindActor(lassoEntity).Destroy();
+                    yield return hitScan.ReturnLassoToPlayer();
+                    hitScan.DestroyLassoActor();
                 }
 
             }
