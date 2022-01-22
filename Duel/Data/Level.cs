@@ -7,25 +7,6 @@ namespace Duel.Data
 {
     public delegate void EntityEvent(Entity entity);
 
-    public class Corners
-    {
-        public Corners(Point topLeft, Point bottomRight)
-        {
-            TopLeft = topLeft;
-            BottomRight = bottomRight;
-        }
-
-        public Point TopLeft { get; }
-        public Point BottomRight { get; }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Corners corners &&
-                   TopLeft.Equals(corners.TopLeft) &&
-                   BottomRight.Equals(corners.BottomRight);
-        }
-    }
-
     public class Level
     {
         public event Action TilemapChanged;
