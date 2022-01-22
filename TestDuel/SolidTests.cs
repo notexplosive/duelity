@@ -47,5 +47,23 @@ namespace TestDuel
 
             pushable.Position.Should().Be(new Point(1, 0));
         }
+
+        [Fact]
+        public void a_pushes_b_pushes_c_pushes_d()
+        {
+            var level = new Level(new Corners(new Point(-10, -10), new Point(10, 10)));
+            var pusher = level.CreateEntity(new Point(0, 0));
+            var a = level.CreateEntity(new Point(1, 0), new SolidTag(SolidTag.Type.Pushable));
+            var b = level.CreateEntity(new Point(2, 0), new SolidTag(SolidTag.Type.Pushable));
+            var c = level.CreateEntity(new Point(3, 0), new SolidTag(SolidTag.Type.Pushable));
+            var d = level.CreateEntity(new Point(4, 0), new SolidTag(SolidTag.Type.Pushable));
+
+            pusher.WalkInDirection(Direction.Right);
+
+            a.Position.Should().Be(new Point(2, 0));
+            b.Position.Should().Be(new Point(3, 0));
+            c.Position.Should().Be(new Point(4, 0));
+            d.Position.Should().Be(new Point(5, 0));
+        }
     }
 }
