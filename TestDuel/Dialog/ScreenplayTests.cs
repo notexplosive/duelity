@@ -11,7 +11,7 @@ namespace TestDuel.Dialog
         [Fact]
         public void happy_path()
         {
-            Screenplay screenplay = new Screenplay("../../../Content/test_dialog.tsv");
+            Screenplay screenplay = new Screenplay("Content/test_dialog.tsv");
 
 
             screenplay.Conversations["test_conversation"].Should().BeEquivalentTo(new Conversation(new List<IDialogEvent> {

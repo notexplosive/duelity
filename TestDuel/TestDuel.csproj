@@ -18,4 +18,10 @@
     <ProjectReference Include="..\Duel\Duel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Content\test_dialog.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
