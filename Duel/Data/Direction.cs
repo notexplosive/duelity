@@ -5,43 +5,24 @@ namespace Duel.Data
 {
     public class Direction
     {
-        private Direction()
+        private Direction(Point givenPoint)
         {
-
+            this.internalPoint = givenPoint;
         }
 
-        public static Direction Up = new Direction();
-        public static Direction Right = new Direction();
-        public static Direction Down = new Direction();
-        public static Direction Left = new Direction();
-        public static Direction None = new Direction();
+        private readonly Point internalPoint;
+        public static Direction Up = new Direction(new Point(0, -1));
+        public static Direction Right = new Direction(new Point(1, 0));
+        public static Direction Down = new Direction(new Point(0, 1));
+        public static Direction Left = new Direction(new Point(-1, 0));
+        public static Direction None = new Direction(Point.Zero);
 
         public Point ToPoint()
         {
-            if (this == Left)
-            {
-                return new Point(-1, 0);
-            }
-
-            if (this == Right)
-            {
-                return new Point(1, 0);
-            }
-
-            if (this == Down)
-            {
-                return new Point(0, 1);
-            }
-
-            if (this == Up)
-            {
-                return new Point(0, -1);
-            }
-
-            return Point.Zero;
+            return this.internalPoint;
         }
 
-        public Direction PointToDirection(Point point)
+        public static Direction PointToDirection(Point point)
         {
             var absX = Math.Abs(point.X);
             var absY = Math.Abs(point.Y);
