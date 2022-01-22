@@ -65,5 +65,16 @@ namespace TestDuel
             c.Position.Should().Be(new Point(4, 0));
             d.Position.Should().Be(new Point(5, 0));
         }
+
+        [Fact]
+        public void hit_at_location_to_push()
+        {
+            var level = new Level(new Corners(new Point(-10, -10), new Point(10, 10)));
+            var pushable = level.CreateEntity(Point.Zero, new BlockProjectileTag(), new Hittable(Hittable.Type.PushOnHit));
+            var solidProvider = new LevelSolidProvider(level);
+
+            solidProvider.ApplyHitAt(Point.Zero, Direction.Right);
+            pushable.Position.Should().Be(new Point(1, 0));
+        }
     }
 }
