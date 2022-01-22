@@ -73,9 +73,14 @@ namespace Duel.Data
         {
             if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
-                MoveFailed?.Invoke(direction);
                 solidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
-                return;
+
+                // If it's still solid, give up, otherwise we move
+                if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
+                {
+                    MoveFailed?.Invoke(direction);
+                    return;
+                }
             }
 
             var prevPosition = Position;
