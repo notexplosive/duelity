@@ -17,7 +17,7 @@ namespace Duel.Components
         public static readonly int TileSize = 64;
 
         private readonly Level level;
-        private Tuple<Point, Point> levelCorners;
+        private Corners levelCorners;
 
         public Grid(Actor actor, Level level) : base(actor)
         {
@@ -34,9 +34,9 @@ namespace Duel.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            for (int x = this.levelCorners.Item1.X; x < this.levelCorners.Item2.X; x++)
+            for (int x = this.levelCorners.TopLeft.X; x < this.levelCorners.BottomRight.X; x++)
             {
-                for (int y = this.levelCorners.Item1.Y; y < this.levelCorners.Item2.Y; y++)
+                for (int y = this.levelCorners.TopLeft.Y; y < this.levelCorners.BottomRight.Y; y++)
                 {
                     DrawCell(spriteBatch, new Point(x, y), this.level.GetTileAt(new Point(x, y)));
                 }

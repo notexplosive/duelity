@@ -7,6 +7,18 @@ namespace Duel.Data
 {
     public delegate void EntityEvent(Entity entity);
 
+    public class Corners
+    {
+        public Corners(Point topLeft, Point bottomRight)
+        {
+            TopLeft = topLeft;
+            BottomRight = bottomRight;
+        }
+
+        public Point TopLeft { get; }
+        public Point BottomRight { get; }
+    }
+
     public class Level
     {
         public event Action TilemapChanged;
@@ -32,7 +44,7 @@ namespace Duel.Data
             TilemapChanged?.Invoke();
         }
 
-        public Tuple<Point, Point> CalculateCorners()
+        public Corners CalculateCorners()
         {
             var minTile = Point.Zero;
             var maxTile = Point.Zero;
@@ -42,7 +54,7 @@ namespace Duel.Data
                 maxTile = new Point(Math.Max(maxTile.X, tilePosition.X), Math.Max(maxTile.Y, tilePosition.Y));
             }
 
-            return new Tuple<Point, Point>(minTile, maxTile);
+            return new Corners(minTile, maxTile);
         }
 
         public TileTemplate GetTileAt(Point position)
@@ -64,7 +76,7 @@ namespace Duel.Data
         public bool IsOutOfBounds(Point position)
         {
             var corners = CalculateCorners();
-            return position.X < corners.Item1.X || position.Y < corners.Item1.Y || position.X > corners.Item2.X || position.Y > corners.Item2.Y;
+            return position.X < corners.TopLeft.X || position.Y < corners.TopLeft.Y || position.X > corners.BottomRight.X || position.Y > corners.BottomRight.Y;
         }
 
         public IEnumerable<Entity> AllEntitiesAt(Point position)
