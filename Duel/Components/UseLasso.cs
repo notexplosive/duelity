@@ -24,8 +24,9 @@ namespace Duel.Components
             this.actorRoot = actorRoot;
             this.userEntity = entity;
             this.level = level;
-            this.keyboard = RequireComponent<KeyboardListener>();
             this.solidProvider = new LevelSolidProvider(this.level);
+
+            this.keyboard = RequireComponent<KeyboardListener>();
             keyboard.ActionPressed += DeployLasso;
         }
 

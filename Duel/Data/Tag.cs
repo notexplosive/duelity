@@ -89,4 +89,23 @@ namespace Duel.Data
             HookType = type;
         }
     }
+
+    /// <summary>
+    /// Thing responds to being shot, does not block the projectile
+    /// </summary>
+    public class Hittable : Tag
+    {
+        public Type HitResponseType { get; }
+
+        public enum Type
+        {
+            DestroyOnHit,
+            PushOnHit
+        }
+
+        public Hittable(Type type)
+        {
+            HitResponseType = type;
+        }
+    }
 }

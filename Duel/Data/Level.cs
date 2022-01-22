@@ -11,6 +11,7 @@ namespace Duel.Data
     {
         public event Action TilemapChanged;
         public event EntityEvent EntityAdded;
+        public event EntityEvent EntityDestroyRequested;
         private readonly List<Entity> entities = new List<Entity>();
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
@@ -51,6 +52,11 @@ namespace Duel.Data
         public void RemoveEntity(Entity entity)
         {
             this.entities.Remove(entity);
+        }
+
+        public void RequestDestroyEntity(Entity entity)
+        {
+            EntityDestroyRequested?.Invoke(entity);
         }
 
         public void PutTileAt(Point position, TileTemplate tile)

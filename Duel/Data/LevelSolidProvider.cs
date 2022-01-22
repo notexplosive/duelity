@@ -28,14 +28,39 @@ namespace Duel.Data
             }
         }
 
+        public bool IsOutOfBounds(Point hitScanPosition)
+        {
+            return this.level.IsOutOfBounds(hitScanPosition);
+        }
+
         public override bool IsSolidAt(Point position)
         {
-            if (this.level.IsOutOfBounds(position))
+            if (IsOutOfBounds(position))
             {
                 return true;
             }
 
             return HasTagAt<SolidTag>(position);
+        }
+
+        public void ApplyHitAt(Point hitLocation, Direction attackDirection)
+        {
+            var entities = new List<Entity>(this.level.AllEntitiesAt(hitLocation));
+            foreach (var entity in entities)
+            {
+                if (entity.Tags.TryGetTag(out Hittable hittable))
+                {
+                    if (hittable.HitResponseType == Hittable.Type.DestroyOnHit)
+                    {
+                        this.level.RequestDestroyEntity(entity);
+                    }
+
+                    if (hittable.HitResponseType == Hittable.Type.PushOnHit)
+                    {
+                        entity.WalkAndPushInDirection(attackDirection);
+                    }
+                }
+            }
         }
 
         public bool HasTagAt<T>(Point position) where T : Tag

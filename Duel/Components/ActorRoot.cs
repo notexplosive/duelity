@@ -24,6 +24,12 @@ namespace Duel.Components
             this.grid = RequireComponent<Grid>();
             this.level = level;
             this.level.EntityAdded += CreateEntityActor;
+            this.level.EntityDestroyRequested += DestroyEntityActor;
+        }
+
+        private void DestroyEntityActor(Entity entity)
+        {
+            FindActor(entity).Destroy();
         }
 
         private void CreateEntityActor(Entity entity)
@@ -50,6 +56,14 @@ namespace Duel.Components
                         new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseLasso(entityActor, entity, this.level, this);
+                        new PlayerCharacterRenderer(entityActor);
+                    }
+
+                    if (playerTag.MovementType == PlayerTag.Type.Renegade)
+                    {
+                        new KeyboardListener(entityActor, entity.BusySignal);
+                        new NormalKeyboardMovement(entityActor, entity);
+                        new UseGun(entityActor, entity, this.level);
                         new PlayerCharacterRenderer(entityActor);
                     }
                 }
