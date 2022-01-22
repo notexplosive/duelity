@@ -49,10 +49,15 @@ namespace Duel.Components
                     {
                         new KeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
-                        new Lasso(entityActor, entity);
+                        new UseLasso(entityActor, entity, this.level, this);
                     }
                 }
             }
+        }
+
+        public Actor FindActor(Entity entity)
+        {
+            return this.entityToActorTable[entity];
         }
     }
 }

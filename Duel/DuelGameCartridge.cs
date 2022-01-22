@@ -23,16 +23,27 @@ namespace Duel
             var gameScene = SceneLayers.AddNewScene();
             var game = new Sokoban(gameScene);
 
+
+            // Corners
+            game.CurrentLevel.PutTileAt(new Point(1, 1), new TileTemplate());
+            game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
+
+            // Walls
             var wall = new TileTemplate();
             wall.Tags.AddTag(new SolidTag(SolidTag.Type.Static));
             wall.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Wall));
-
-            game.CurrentLevel.PutTileAt(new Point(-10, -10), new TileTemplate());
+            wall.Tags.AddTag(new BlockProjectileTag());
+            game.CurrentLevel.PutTileAt(new Point(5, 6), wall);
             game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
-            game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
+            game.CurrentLevel.PutTileAt(new Point(5, 4), wall);
+
+            var hook = new TileTemplate();
+            hook.Tags.AddTag(new Grapplable(Grapplable.Type.Static));
+            hook.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Hook));
+            game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
 
             game.CurrentLevel.CreateEntity(new Point(3, 3), new PlayerTag(PlayerTag.Type.Sheriff));
-            game.CurrentLevel.CreateEntity(new Point(1, 1), new SolidTag(SolidTag.Type.Pushable));
+            game.CurrentLevel.CreateEntity(new Point(6, 5), new SolidTag(SolidTag.Type.Pushable), new Grapplable(Grapplable.Type.PulledByLasso));
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

@@ -2,23 +2,28 @@
 {
     public class BusyFunction
     {
-        private readonly TrueWhenDone function;
+        private readonly TrueWhenDone isDone;
         public string Name { get; }
 
-        public BusyFunction(string name, TrueWhenDone function)
+        public BusyFunction(string name, TrueWhenDone isDone)
         {
             this.Name = name;
-            this.function = function;
+            this.isDone = isDone;
         }
 
         public bool IsBusy()
         {
-            return !this.function();
+            return !this.isDone();
+        }
+
+        public bool IsFree()
+        {
+            return !IsBusy();
         }
 
         public override string ToString()
         {
-            var status = this.function() ? "Busy" : "Done";
+            var status = this.isDone() ? "Done" : "Busy";
             return $"{this.Name} [{status}]";
         }
     }

@@ -36,7 +36,7 @@ namespace Duel.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawCircle(new CircleF(RenderPosition, 20), 20, Color.Orange, 20, transform.Depth);
+            spriteBatch.DrawCircle(new CircleF(RenderPosition, 20), 20, Color.OrangeRed, 20, transform.Depth);
         }
 
         public void SnapPositionToGrid()

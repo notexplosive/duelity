@@ -64,12 +64,29 @@ namespace Duel.Data
         public enum TileImage
         {
             Floor,
-            Wall
+            Wall,
+            Hook
         }
 
         public TileImageTag(TileImage image)
         {
             Image = image;
+        }
+    }
+
+    public class Grapplable : Tag
+    {
+        public Type HookType { get; }
+
+        public enum Type
+        {
+            Static, // Moves player to there
+            PulledByLasso, // Lasso yanks it to the player
+        }
+
+        public Grapplable(Type type)
+        {
+            HookType = type;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Duel.Data
         private readonly int uniqueId;
 
         public Point Position { get; private set; }
+        public Direction FacingDirection { get; private set; } = Direction.Down;
 
         public Entity()
         {
@@ -69,8 +70,37 @@ namespace Duel.Data
             PositionChanged?.Invoke(MoveType.Warp, prevPosition);
         }
 
+        public void JumpToPosition(Point position)
+        {
+            if (Position == position)
+            {
+                return;
+            }
+
+            var prevPosition = Position;
+            Position = position;
+            PositionChanged?.Invoke(MoveType.Jump, prevPosition);
+        }
+
+        public void WalkWithoutPushInDirection(Direction direction)
+        {
+            FacingDirection = direction;
+
+            if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
+            {
+                MoveFailed?.Invoke(direction);
+                return;
+            }
+
+            var prevPosition = Position;
+            Position += direction.ToPoint();
+            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
+        }
+
         public void WalkAndPushInDirection(Direction direction)
         {
+            FacingDirection = direction;
+
             if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
                 solidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);

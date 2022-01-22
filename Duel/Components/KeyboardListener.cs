@@ -39,7 +39,7 @@ namespace Duel.Components
 
                 DoOrBuffer(DirectionToAction(KeyToDirection(key)));
 
-                if (key == Keys.Z || key == Keys.Space)
+                if (key == Keys.Z || key == Keys.Space && modifiers.None)
                 {
                     DoOrBuffer(ActionPressed);
                 }

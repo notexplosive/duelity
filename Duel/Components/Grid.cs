@@ -48,6 +48,13 @@ namespace Duel.Components
             var color = Color.White;
             var tileDepth = transform.Depth + 100;
 
+            if (tile.Tags.TryGetTag(out TileImageTag imageTag))
+            {
+                if (imageTag.Image == TileImageTag.TileImage.Hook)
+                {
+                    spriteBatch.DrawCircle(new CircleF(TileToLocalPosition(location, true), 10), 10, Color.LightBlue, 2f, transform.Depth);
+                }
+            }
 
             if (tile.Tags.HasTag<SolidTag>())
             {

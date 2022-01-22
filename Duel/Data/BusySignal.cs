@@ -79,5 +79,18 @@ namespace Duel.Data
         {
             return new BusySignal(this);
         }
+
+        public BusyFunction GetSpecific(string name)
+        {
+            foreach (var busyFunction in this.busyFunctions)
+            {
+                if (busyFunction.Name == name)
+                {
+                    return busyFunction;
+                }
+            }
+
+            throw new Exception($"No busy function called {name} found");
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Machina.Engine;
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace Duel.Data
 {
@@ -28,24 +30,44 @@ namespace Duel.Data
 
         public override bool IsSolidAt(Point position)
         {
-            if (this.level.GetTileAt(position).Tags.HasTag<SolidTag>())
+            if (this.level.IsOutOfBounds(position))
             {
                 return true;
             }
 
-            if (this.level.IsOutOfBounds(position))
+            return HasTagAt<SolidTag>(position);
+        }
+
+        public bool HasTagAt<T>(Point position) where T : Tag
+        {
+            if (this.level.GetTileAt(position).Tags.HasTag<T>())
             {
                 return true;
             }
 
             foreach (var entity in this.level.AllEntitiesAt(position))
             {
-                if (entity.Tags.HasTag<SolidTag>())
+                if (entity.Tags.HasTag<T>())
                 {
                     return true;
                 }
             }
 
+            return false;
+        }
+
+        public bool TryGetFirstEntityWithTagAt<T>(Point position, out Entity result) where T : Tag
+        {
+            foreach (var entity in this.level.AllEntitiesAt(position))
+            {
+                if (entity.Tags.HasTag<T>())
+                {
+                    result = entity;
+                    return true;
+                }
+            }
+
+            result = null;
             return false;
         }
     }

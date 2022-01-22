@@ -44,7 +44,7 @@ namespace Duel.Components
 
             if (moveType == MoveType.Jump)
             {
-                StartJumpTween(this.renderInfo.TileToLocalPosition(this.entity.Position));
+                StartJumpTween(this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
             }
         }
 
@@ -65,9 +65,15 @@ namespace Duel.Components
             this.entity.BusySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
         }
 
-        private void StartJumpTween(Vector2 targetWorldPos)
+        private void StartJumpTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
-            MachinaClient.Print("Jump todo");
+            this.renderInfo.SnapPositionToGrid();
+            var displacement = previousWorldPos - targetWorldPos;
+            this.renderInfo.renderOffsetTweenable.setter(displacement);
+            this.tween.Clear();
+
+            this.tween.AppendVectorTween(Vector2.Zero, 0.10f * displacement.Length() / Grid.TileSize, EaseFuncs.EaseInBack, this.renderInfo.renderOffsetTweenable);
+            this.entity.BusySignal.Add(new BusyFunction("JumpTween", this.tween.IsDone));
         }
     }
 }
