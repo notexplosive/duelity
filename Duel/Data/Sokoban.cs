@@ -10,6 +10,7 @@ namespace Duel.Data
     {
         private readonly Scene scene;
         private Actor rootActor;
+        private ActorRoot actorRootComponent;
 
         public Level CurrentLevel { get; private set; }
 
@@ -27,7 +28,12 @@ namespace Duel.Data
             this.rootActor = scene.AddActor("Level");
 
             new Grid(this.rootActor, CurrentLevel);
-            new ActorRoot(this.rootActor, CurrentLevel);
+            this.actorRootComponent = new ActorRoot(this.rootActor, CurrentLevel);
+        }
+
+        public Actor FindActor(Entity entity)
+        {
+            return this.actorRootComponent.FindActor(entity);
         }
     }
 }

@@ -31,37 +31,42 @@ namespace Duel.Components
 
         private void DeployLasso()
         {
-            var lassoAnimation = this.actor.scene.StartCoroutine(LassoCoroutine(this.userEntity.FacingDirection));
+            var lasso = CreateProjectile();
+            var lassoAnimation = this.actor.scene.StartCoroutine(LassoCoroutine(lasso));
             this.userEntity.BusySignal.Add(new BusyFunction("Lasso", lassoAnimation.IsDone));
         }
 
-        private IEnumerator<ICoroutineAction> LassoCoroutine(Direction throwDirection)
+        public LassoProjectile CreateProjectile()
         {
-            var hitScan = new LassoHitScan(this.userEntity, throwDirection, this.solidProvider);
-            if (hitScan.Valid)
-            {
-                yield return hitScan.DeployLasso(this.level, actorRoot);
+            return new LassoProjectile(this.userEntity, this.userEntity.FacingDirection, this.solidProvider);
+        }
 
-                if (hitScan.FoundHook)
+        public IEnumerator<ICoroutineAction> LassoCoroutine(LassoProjectile lasso)
+        {
+            if (lasso.Valid)
+            {
+                yield return lasso.DeployLasso(this.level, actorRoot);
+
+                if (lasso.FoundHook)
                 {
-                    if (hitScan.FoundPullableEntity)
+                    if (lasso.FoundPullableEntity)
                     {
-                        hitScan.DestroyLassoActor();
+                        lasso.DestroyLassoActor();
                         yield return new WaitSeconds(0.25f);
-                        yield return hitScan.PullEntity();
+                        yield return lasso.PullEntity();
                     }
                     else
                     {
                         yield return new WaitSeconds(0.25f);
-                        yield return hitScan.JumpToDestination();
-                        hitScan.DestroyLassoActor();
+                        yield return lasso.JumpToDestination();
+                        lasso.DestroyLassoActor();
                     }
                 }
                 else
                 {
                     yield return new WaitSeconds(0.10f);
-                    yield return hitScan.ReturnLassoToPlayer();
-                    hitScan.DestroyLassoActor();
+                    yield return lasso.ReturnLassoToPlayer();
+                    lasso.DestroyLassoActor();
                 }
 
             }

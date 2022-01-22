@@ -6,7 +6,7 @@ using System;
 
 namespace Duel.Data
 {
-    public class LassoHitScan
+    public class LassoProjectile
     {
         private readonly Entity userEntity;
         private readonly Point startingPosition;
@@ -15,18 +15,18 @@ namespace Duel.Data
         private Entity lassoEntity;
         private readonly bool invalid;
         private Actor actor;
-        private Point lassoLandingPosition;
 
+        public Point LassoLandingPosition { get; }
         public bool Valid => !this.invalid;
         public bool FoundHook { get; }
         public bool FoundPullableEntity { get; }
 
-        public LassoHitScan(Entity userEntity, Direction throwDirection, LevelSolidProvider solidProvider)
+        public LassoProjectile(Entity userEntity, Direction throwDirection, LevelSolidProvider solidProvider)
         {
             this.userEntity = userEntity;
             this.startingPosition = this.userEntity.Position;
             this.throwDirection = throwDirection;
-            this.lassoLandingPosition = this.startingPosition;
+            LassoLandingPosition = this.startingPosition;
             FoundHook = false;
 
             if (solidProvider.HasTagAt<BlockProjectileTag>(this.startingPosition + throwDirection.ToPoint()))
@@ -34,38 +34,40 @@ namespace Duel.Data
                 this.invalid = true;
             }
 
-            bool wasBlocked = false;
-
-            for (int i = 0; i < 3; i++)
+            if (Valid)
             {
-                this.lassoLandingPosition += throwDirection.ToPoint();
-                var nextPos = this.lassoLandingPosition + throwDirection.ToPoint();
+                bool wasBlocked = false;
 
-                if (solidProvider.HasTagAt<Grapplable>(this.lassoLandingPosition))
+                for (int i = 0; i < 3; i++)
                 {
-                    FoundHook = true;
+                    LassoLandingPosition += throwDirection.ToPoint();
+                    var nextPos = LassoLandingPosition + throwDirection.ToPoint();
+
+                    if (solidProvider.HasTagAt<Grapplable>(LassoLandingPosition))
+                    {
+                        FoundHook = true;
+                    }
+
+                    if (solidProvider.HasTagAt<BlockProjectileTag>(nextPos))
+                    {
+                        wasBlocked = true;
+                    }
+
+                    if (FoundHook || wasBlocked)
+                    {
+                        break;
+                    }
                 }
 
-                if (solidProvider.HasTagAt<BlockProjectileTag>(nextPos))
+                if (solidProvider.TryGetFirstEntityWithTagAt<Grapplable>(LassoLandingPosition, out Entity grapplableEntity))
                 {
-                    wasBlocked = true;
-                }
-
-                if (FoundHook || wasBlocked)
-                {
-                    break;
+                    if (grapplableEntity.Tags.GetTag<Grapplable>().HookType == Grapplable.Type.PulledByLasso)
+                    {
+                        this.entityToPull = grapplableEntity;
+                        FoundPullableEntity = true;
+                    }
                 }
             }
-
-            if (solidProvider.TryGetFirstEntityWithTagAt<Grapplable>(this.lassoLandingPosition, out Entity grapplableEntity))
-            {
-                if (grapplableEntity.Tags.GetTag<Grapplable>().HookType == Grapplable.Type.PulledByLasso)
-                {
-                    this.entityToPull = grapplableEntity;
-                    FoundPullableEntity = true;
-                }
-            }
-
         }
 
         public ICoroutineAction PullEntity()
@@ -76,7 +78,7 @@ namespace Duel.Data
 
         public ICoroutineAction JumpToDestination()
         {
-            this.userEntity.JumpToPosition(this.lassoLandingPosition);
+            this.userEntity.JumpToPosition(LassoLandingPosition);
             return new WaitUntil(this.userEntity.BusySignal.GetSpecific("JumpTween").IsFree); // need to probe specific busysignal because lassoing itself raises a busysignal
         }
 
@@ -88,7 +90,7 @@ namespace Duel.Data
         public ICoroutineAction DeployLasso(Level level, ActorRoot actorRoot)
         {
             this.lassoEntity = level.CreateEntity(this.startingPosition);
-            this.lassoEntity.JumpToPosition(this.lassoLandingPosition);
+            this.lassoEntity.JumpToPosition(LassoLandingPosition);
             this.actor = actorRoot.FindActor(this.lassoEntity);
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
         }
