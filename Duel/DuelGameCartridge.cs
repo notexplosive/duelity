@@ -53,13 +53,13 @@ namespace Duel
             var metalBox = new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new SolidTag(SolidTag.Type.Static), new BlockProjectileTag());
             game.CurrentLevel.PutEntityAt(new Point(3, 5), metalBox);
 
-            var crate = new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new SolidTag(SolidTag.Type.Pushable), new BlockProjectileTag(), new Grapplable(Grapplable.Type.PulledByLasso));
+            var crate = new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new SolidTag(SolidTag.Type.PushableByHand), new BlockProjectileTag(), new Grapplable(Grapplable.Type.PulledByLasso));
             game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new BlockProjectileTag(), new SolidTag(SolidTag.Type.Pushable)));
-            game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable)));
+            game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new BlockProjectileTag(), new SolidTag(SolidTag.Type.PushableByHand)));
+            game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.PushableByHand)));
 
-            game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new SolidTag(SolidTag.Type.Pushable), new Grapplable(Grapplable.Type.PulledByLasso)));
+            game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new SolidTag(SolidTag.Type.PushableByHand), new Grapplable(Grapplable.Type.PulledByLasso)));
             game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
         }
 

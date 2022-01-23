@@ -44,7 +44,7 @@ namespace TestDuel
         {
             // None of these traits block projectiles
             this.level.PutTileAt(new Point(0, 3), new TileTemplate(new SolidTag(SolidTag.Type.Static)));
-            this.level.PutTileAt(new Point(0, 4), new TileTemplate(new SolidTag(SolidTag.Type.Pushable)));
+            this.level.PutTileAt(new Point(0, 4), new TileTemplate(new SolidTag(SolidTag.Type.PushableByHand)));
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -122,7 +122,7 @@ namespace TestDuel
         {
             // weird edge case I came across while testing
             var pushedOnHit = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit)));
-            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable)));
+            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.PushableByHand)));
 
             this.gunComponent.Shoot();
 

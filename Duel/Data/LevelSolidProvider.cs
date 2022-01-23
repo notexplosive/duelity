@@ -20,7 +20,7 @@ namespace Duel.Data
             {
                 if (entity.Tags.TryGetTag(out SolidTag solidTag))
                 {
-                    if (solidTag.SolidType == SolidTag.Type.Pushable)
+                    if (solidTag.SolidType == SolidTag.Type.PushableByHand)
                     {
                         entity.WalkAndPushInDirection(direction);
                     }

@@ -30,7 +30,7 @@ namespace Duel.Data
         public enum Type
         {
             Static,
-            Pushable // only makes sense on entities... I think?
+            PushableByHand // only makes sense on entities... I think?
         }
 
         public SolidTag(Type type)
