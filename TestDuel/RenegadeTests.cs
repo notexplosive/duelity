@@ -7,6 +7,55 @@ using Xunit;
 
 namespace TestDuel
 {
+    public class CowboyTests
+    {
+        private readonly Entity playerEntity;
+        private readonly ChargingKeyboardMovement chargeComponent;
+        private readonly Level level;
+        private readonly Scene scene;
+        private readonly Sokoban game;
+
+        public CowboyTests()
+        {
+            Sokoban.Headless = true;
+            this.scene = new Scene(null);
+            this.game = new Sokoban(this.scene);
+
+            this.playerEntity = this.game.CurrentLevel.PutEntityAt(new Point(0, 0), new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy)));
+            this.chargeComponent = this.game.FindActor(this.playerEntity).GetComponent<ChargingKeyboardMovement>();
+            this.level = this.game.CurrentLevel;
+
+            this.level.PutTileAt(new Point(0, 0), new TileTemplate());
+            this.level.PutTileAt(new Point(10, 10), new TileTemplate());
+        }
+
+        [Fact]
+        public void charge_to_edge_of_level()
+        {
+            var subject = new Charge(new Point(5, 5), Direction.Down, new LevelSolidProvider(this.level));
+
+            subject.LandingPosition.Should().Be(new Point(5, 9));
+            subject.RammedPositions.Should().Contain(new Point(5, 10));
+        }
+
+        [Fact]
+        public void charge_cleaves_through_breakables()
+        {
+            var glass = new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit));
+
+            var actor1 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 6), glass));
+            var actor2 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 7), glass));
+            var actor3 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 8), glass));
+
+            this.chargeComponent.Charge(Direction.Down);
+            scene.FlushBuffers();
+
+            actor1.IsDestroyed.Should().BeTrue();
+            actor2.IsDestroyed.Should().BeTrue();
+            actor3.IsDestroyed.Should().BeTrue();
+        }
+    }
+
     public class RenegadeTests
     {
         private readonly Entity playerEntity;
@@ -18,7 +67,7 @@ namespace TestDuel
         {
             Sokoban.Headless = true;
             this.scene = new Scene(null);
-            var game = new Sokoban(scene);
+            var game = new Sokoban(this.scene);
 
             this.playerEntity = game.CurrentLevel.PutEntityAt(new Point(0, 0), new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade)));
             this.gunComponent = game.FindActor(this.playerEntity).GetComponent<UseGun>();

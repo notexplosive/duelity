@@ -43,6 +43,15 @@ namespace Duel
             hook.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Hook));
             game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
 
+
+            var glass = new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit));
+            game.CurrentLevel.PutEntityAt(new Point(0, 0), glass);
+            game.CurrentLevel.PutEntityAt(new Point(0, 2), glass);
+            game.CurrentLevel.PutEntityAt(new Point(0, 3), glass);
+            game.CurrentLevel.PutEntityAt(new Point(0, 4), glass);
+            game.CurrentLevel.PutEntityAt(new Point(0, 5), glass);
+
+
             game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new BlockProjectileTag()));
             game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable)));
 

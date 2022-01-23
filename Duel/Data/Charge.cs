@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Duel.Data
 {
@@ -12,7 +13,7 @@ namespace Duel.Data
             while (!solidProvider.IsOutOfBounds(hitScanPosition))
             {
                 LandingPosition = hitScanPosition;
-                RammedPosition = hitScanPosition + travelDirection.ToPoint();
+                RammedPositions.Add(hitScanPosition + travelDirection.ToPoint());
 
                 if (solidProvider.HasTagAt<SolidTag>(hitScanPosition))
                 {
@@ -25,6 +26,6 @@ namespace Duel.Data
 
         public Point StartPosition { get; }
         public Point LandingPosition { get; }
-        public Point RammedPosition { get; }
+        public List<Point> RammedPositions { get; } = new List<Point>();
     }
 }
