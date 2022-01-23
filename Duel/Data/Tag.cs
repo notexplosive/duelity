@@ -113,7 +113,6 @@ namespace Duel.Data
             Hook,
             Ravine,
             Bramble,
-            FilledWater,
             Bridge
         }
 

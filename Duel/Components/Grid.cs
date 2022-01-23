@@ -18,23 +18,30 @@ namespace Duel.Components
 
         private readonly Level level;
         public Corners LevelCorners { get; private set; }
+        public AutoTile WaterAutoTile { get; private set; }
 
         public Grid(Actor actor, Level level) : base(actor)
         {
             this.level = level;
-            RecomputeCorners();
+            Recompute();
 
-            this.level.TilemapChanged += RecomputeCorners;
+            this.level.TilemapChanged += Recompute;
         }
 
-        private void RecomputeCorners()
+        private void Recompute()
         {
-            this.LevelCorners = this.level.CalculateCorners();
+            LevelCorners = this.level.CalculateCorners();
+            WaterAutoTile = this.level.ComputeAutoTile(TileImageTag.TileImage.Water);
         }
 
         public Vector2 TileToLocalPosition(Point location, bool centered = true)
         {
             return location.ToVector2() * TileSize + (centered ? new Vector2(TileSize) / 2 : Vector2.Zero);
+        }
+
+        public TileClass GetWaterClassAt(Point location)
+        {
+            return WaterAutoTile.GetClassAt(location);
         }
     }
 }
