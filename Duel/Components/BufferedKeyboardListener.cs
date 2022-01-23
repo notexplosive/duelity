@@ -16,9 +16,20 @@ namespace Duel.Components
     {
         private readonly BusySignal busySignal;
         private readonly DirectionalButtons heldDirections = new DirectionalButtons();
-        private float waitTimer;
+        private float heldKeyTimer;
 
-        public Action BufferedAction { get; private set; }
+        private float bufferedActionTimer;
+        private Action bufferedActionImpl;
+
+        public Action BufferedAction
+        {
+            get => this.bufferedActionImpl;
+            private set
+            {
+                this.bufferedActionTimer = 0.1f;
+                this.bufferedActionImpl = value;
+            }
+        }
 
         public event Action LeftPressed;
         public event Action RightPressed;
@@ -35,7 +46,7 @@ namespace Duel.Components
         {
             if (state == ButtonState.Pressed)
             {
-                this.waitTimer = 0.2f;
+                this.heldKeyTimer = 0.2f;
 
                 DoOrBuffer(DirectionToAction(KeyToDirection(key)));
 
@@ -69,6 +80,15 @@ namespace Duel.Components
 
         public override void Update(float dt)
         {
+            if (this.bufferedActionTimer > 0)
+            {
+                this.bufferedActionTimer -= dt;
+            }
+            else
+            {
+                BufferedAction = null;
+            }
+
             if (this.busySignal.IsFree())
             {
                 if (BufferedAction != null)
@@ -80,11 +100,11 @@ namespace Duel.Components
                 {
                     if (this.heldDirections.HasPressed())
                     {
-                        this.waitTimer -= dt;
-                        if (this.waitTimer < 0)
+                        this.heldKeyTimer -= dt;
+                        if (this.heldKeyTimer < 0)
                         {
                             DoOrBuffer(DirectionToAction(this.heldDirections.GetFirstDirection()));
-                            this.waitTimer = 0.05f;
+                            this.heldKeyTimer = 0.05f;
                         }
                     }
                 }
