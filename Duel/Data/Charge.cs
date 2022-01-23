@@ -7,15 +7,15 @@ namespace Duel.Data
     {
         public Charge(Point startPosition, Direction travelDirection, LevelSolidProvider solidProvider)
         {
+            Direction = travelDirection;
             StartPosition = startPosition;
             var hitScanPosition = startPosition;
 
             while (!solidProvider.IsOutOfBounds(hitScanPosition))
             {
-                LandingPosition = hitScanPosition;
-                RammedPositions.Add(hitScanPosition + travelDirection.ToPoint());
+                Path.Add(new ChargeHit(hitScanPosition, travelDirection));
 
-                if (solidProvider.HasTagAt<SolidTag>(hitScanPosition))
+                if (solidProvider.HasTagAt<SolidTag>(hitScanPosition + travelDirection.ToPoint()))
                 {
                     return;
                 }
@@ -24,8 +24,8 @@ namespace Duel.Data
             }
         }
 
+        public Direction Direction { get; }
         public Point StartPosition { get; }
-        public Point LandingPosition { get; }
-        public List<Point> RammedPositions { get; } = new List<Point>();
+        public List<ChargeHit> Path { get; } = new List<ChargeHit>();
     }
 }

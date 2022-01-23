@@ -15,6 +15,7 @@ namespace Duel.Components
     public class PlayerCharacterRenderer : BaseComponent
     {
         private readonly PlayerAnimations playerAnimations;
+        private readonly MovementRenderer movement;
         private readonly EntityRenderInfo renderInfo;
         private readonly Actor spriteActor;
         private readonly SpriteRenderer spriteRenderer;
@@ -22,6 +23,7 @@ namespace Duel.Components
         public PlayerCharacterRenderer(Actor actor, PlayerAnimations playerAnimations) : base(actor)
         {
             this.playerAnimations = playerAnimations;
+            this.movement = RequireComponent<MovementRenderer>();
             this.renderInfo = RequireComponent<EntityRenderInfo>();
             this.spriteActor = transform.AddActorAsChild("sprite");
             this.spriteRenderer = new SpriteRenderer(this.spriteActor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("characters-sheet"));
@@ -41,7 +43,7 @@ namespace Duel.Components
         public override void Update(float dt)
         {
             BindSpritePosToRenderOffset();
-            if (RenderOffset().Length() > 5)
+            if (this.movement.IsMoving)
             {
                 this.spriteRenderer.SetAnimation(this.playerAnimations.Move);
             }
