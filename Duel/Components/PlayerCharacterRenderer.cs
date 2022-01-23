@@ -27,6 +27,7 @@ namespace Duel.Components
             this.playerAnimations = playerAnimations;
             this.movement = RequireComponent<MovementRenderer>();
             this.renderInfo = RequireComponent<EntityRenderInfo>();
+
             this.spriteActor = transform.AddActorAsChild("sprite");
             this.spriteRenderer = new SpriteRenderer(this.spriteActor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("characters-sheet"));
 

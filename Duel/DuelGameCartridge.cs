@@ -60,7 +60,7 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable)));
 
             game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new SolidTag(SolidTag.Type.Pushable), new Grapplable(Grapplable.Type.PulledByLasso)));
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight)));
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
@@ -74,6 +74,11 @@ namespace Duel
 
             loader.AddMachinaAssetCallback("steven-idle", () => new LinearFrameAnimation(12, 2));
             loader.AddMachinaAssetCallback("steven-move", () => new LinearFrameAnimation(14, 2));
+
+            loader.AddMachinaAssetCallback("bennigan-idle", () => new LinearFrameAnimation(18, 2));
+            loader.AddMachinaAssetCallback("bennigan-hover", () => new LinearFrameAnimation(20, 1));
+            loader.AddMachinaAssetCallback("bennigan-land", () => new LinearFrameAnimation(21, 1));
+            loader.AddMachinaAssetCallback("bennigan-swing", () => new LinearFrameAnimation(22, 1));
         }
     }
 }

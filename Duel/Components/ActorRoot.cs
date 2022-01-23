@@ -84,6 +84,19 @@ namespace Duel.Components
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Steven);
                         }
                     }
+
+                    if (playerTag.MovementType == PlayerTag.Type.Knight)
+                    {
+                        new BufferedKeyboardListener(entityActor, entity.BusySignal);
+                        new KnightMovement(entityActor, entity, new LevelSolidProvider(this.level));
+                        new KnightSwing(entityActor, entity);
+
+                        if (!Sokoban.Headless)
+                        {
+                            new KnightPreviewRenderer(entityActor, entity, this.grid, new LevelSolidProvider(this.level));
+                            new KnightCharacterRenderer(entityActor);
+                        }
+                    }
                 }
             }
         }

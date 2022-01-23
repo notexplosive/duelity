@@ -59,6 +59,62 @@ namespace Duel.Data
             return None;
         }
 
+        public Direction Previous
+        {
+            get
+            {
+                if (this == Up)
+                {
+                    return Left;
+                }
+
+                if (this == Right)
+                {
+                    return Up;
+                }
+
+                if (this == Down)
+                {
+                    return Right;
+                }
+
+                if (this == Left)
+                {
+                    return Down;
+                }
+
+                return None;
+            }
+        }
+
+        public Direction Next
+        {
+            get
+            {
+                if (this == Up)
+                {
+                    return Right;
+                }
+
+                if (this == Right)
+                {
+                    return Down;
+                }
+
+                if (this == Down)
+                {
+                    return Left;
+                }
+
+                if (this == Left)
+                {
+                    return Up;
+                }
+
+                return None;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Direction direction &&
