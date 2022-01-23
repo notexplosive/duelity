@@ -46,7 +46,7 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new BlockProjectileTag()));
             game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable)));
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade)));
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy)));
             game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new SolidTag(SolidTag.Type.Pushable), new Grapplable(Grapplable.Type.PulledByLasso)));
         }
 
@@ -58,6 +58,9 @@ namespace Duel
 
             loader.AddMachinaAssetCallback("miranda-idle", () => new LinearFrameAnimation(6, 2));
             loader.AddMachinaAssetCallback("miranda-move", () => new LinearFrameAnimation(8, 1));
+
+            loader.AddMachinaAssetCallback("steven-idle", () => new LinearFrameAnimation(12, 2));
+            loader.AddMachinaAssetCallback("steven-move", () => new LinearFrameAnimation(14, 2));
         }
     }
 }

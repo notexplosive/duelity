@@ -46,6 +46,22 @@ namespace Duel.Components
             {
                 StartJumpTween(this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
             }
+
+            if (moveType == MoveType.Charge)
+            {
+                StartChargeTween(this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
+            }
+        }
+
+        private void StartChargeTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
+        {
+            this.renderInfo.SnapPositionToGrid();
+            var displacement = previousWorldPos - targetWorldPos;
+            this.renderInfo.renderOffsetTweenable.setter(displacement);
+            this.tween.Clear();
+
+            this.tween.AppendVectorTween(Vector2.Zero, 0.05f * displacement.Length() / Grid.TileSize, EaseFuncs.QuadraticEaseIn, this.renderInfo.renderOffsetTweenable);
+            this.entity.BusySignal.Add(new BusyFunction("ChargeTween", this.tween.IsDone));
         }
 
         private void BumpAnimation(Direction direction)

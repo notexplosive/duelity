@@ -73,6 +73,17 @@ namespace Duel.Components
                             new PlayerCharacterRenderer(entityActor, PlayerAnimations.Miranda);
                         }
                     }
+
+                    if (playerTag.MovementType == PlayerTag.Type.Cowboy)
+                    {
+                        new BufferedKeyboardListener(entityActor, entity.BusySignal);
+                        new ChargingKeyboardMovement(entityActor, entity, new LevelSolidProvider(this.level));
+
+                        if (!Sokoban.Headless)
+                        {
+                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Steven);
+                        }
+                    }
                 }
             }
         }
