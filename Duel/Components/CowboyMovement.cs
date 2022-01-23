@@ -47,7 +47,7 @@ namespace Duel.Components
             {
                 if (chargeHit.StandingPosition != this.entity.Position)
                 {
-                    this.entity.ChargeToPosition(chargeHit.StandingPosition);
+                    this.entity.ChargeToPosition(chargeHit.StandingPosition, chargeHit.Direction);
                     yield return new WaitUntil(this.entity.BusySignal.GetSpecific("ChargeTween").IsFree);
                 }
                 this.solidProvider.ApplyHitAt(chargeHit.RammedPosition, chargeHit.Direction);

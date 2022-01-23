@@ -71,8 +71,10 @@ namespace Duel.Data
             PositionChanged?.Invoke(MoveType.Warp, prevPosition);
         }
 
-        public void ChargeToPosition(Point position)
+        public void ChargeToPosition(Point position, Direction direction)
         {
+            FacingDirection = direction;
+
             if (Position == position)
             {
                 return;

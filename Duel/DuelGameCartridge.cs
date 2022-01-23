@@ -53,7 +53,7 @@ namespace Duel
             var metalBox = new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new SolidTag(SolidTag.Type.Static));
             game.CurrentLevel.PutEntityAt(new Point(3, 5), metalBox);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new BlockProjectileTag()));
+            game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new BlockProjectileTag(), new SolidTag(SolidTag.Type.Pushable)));
             game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable)));
 
             game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy)));

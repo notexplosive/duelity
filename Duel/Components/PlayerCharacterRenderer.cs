@@ -14,14 +14,16 @@ namespace Duel.Components
 {
     public class PlayerCharacterRenderer : BaseComponent
     {
+        private readonly Entity entity;
         private readonly PlayerAnimations playerAnimations;
         private readonly MovementRenderer movement;
         private readonly EntityRenderInfo renderInfo;
         private readonly Actor spriteActor;
         private readonly SpriteRenderer spriteRenderer;
 
-        public PlayerCharacterRenderer(Actor actor, PlayerAnimations playerAnimations) : base(actor)
+        public PlayerCharacterRenderer(Actor actor, Entity entity, PlayerAnimations playerAnimations) : base(actor)
         {
+            this.entity = entity;
             this.playerAnimations = playerAnimations;
             this.movement = RequireComponent<MovementRenderer>();
             this.renderInfo = RequireComponent<EntityRenderInfo>();
@@ -50,6 +52,16 @@ namespace Duel.Components
             else
             {
                 this.spriteRenderer.SetAnimation(this.playerAnimations.Idle);
+            }
+
+            if (this.entity.FacingDirection == Direction.Left)
+            {
+                this.spriteRenderer.FlipX = false;
+            }
+
+            if (this.entity.FacingDirection == Direction.Right)
+            {
+                this.spriteRenderer.FlipX = true;
             }
         }
 

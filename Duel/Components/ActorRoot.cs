@@ -59,7 +59,7 @@ namespace Duel.Components
 
                         if (!Sokoban.Headless)
                         {
-                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Ernesto);
+                            new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Ernesto);
                         }
                     }
 
@@ -70,7 +70,7 @@ namespace Duel.Components
                         new UseGun(entityActor, entity, this.level);
                         if (!Sokoban.Headless)
                         {
-                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Miranda);
+                            new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Miranda);
                         }
                     }
 
@@ -81,7 +81,7 @@ namespace Duel.Components
 
                         if (!Sokoban.Headless)
                         {
-                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Steven);
+                            new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Steven);
                         }
                     }
                 }

@@ -5,17 +5,21 @@ namespace Duel.Data
 {
     public class Direction
     {
-        private Direction(Point givenPoint)
+        private Direction(string name, Point givenPoint)
         {
+            this.name = name;
             this.internalPoint = givenPoint;
         }
 
+        private readonly string name;
         private readonly Point internalPoint;
-        public static Direction Up = new Direction(new Point(0, -1));
-        public static Direction Right = new Direction(new Point(1, 0));
-        public static Direction Down = new Direction(new Point(0, 1));
-        public static Direction Left = new Direction(new Point(-1, 0));
-        public static Direction None = new Direction(Point.Zero);
+        public static Direction Up = new Direction("Up", new Point(0, -1));
+        public static Direction Right = new Direction("Right", new Point(1, 0));
+        public static Direction Down = new Direction("Down", new Point(0, 1));
+        public static Direction Left = new Direction("Left", new Point(-1, 0));
+        public static Direction None = new Direction("None", Point.Zero);
+
+        public override string ToString() => this.name;
 
         public Point ToPoint()
         {
@@ -54,5 +58,23 @@ namespace Duel.Data
 
             return None;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Direction direction &&
+                   this.internalPoint.Equals(direction.internalPoint);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.internalPoint);
+        }
+
+        public static bool operator ==(Direction lhs, Direction rhs)
+        {
+            return lhs.internalPoint == rhs.internalPoint;
+        }
+
+        public static bool operator !=(Direction lhs, Direction rhs) => !(lhs == rhs);
     }
 }
