@@ -25,6 +25,7 @@ namespace Duel.Components
             this.entity = entity;
             this.entity.PositionChanged += OnPositionChanged;
             this.entity.MoveFailed += BumpAnimation;
+            this.entity.Nudged += BumpAnimation;
         }
 
         public override void Update(float dt)
@@ -76,7 +77,7 @@ namespace Duel.Components
             this.entity.BusySignal.Add(new BusyFunction("ChargeTween", this.tween.IsDone));
         }
 
-        private void BumpAnimation(Direction direction)
+        public void BumpAnimation(Direction direction)
         {
             this.tween.Clear();
             this.tween.AppendVectorTween(direction.ToPoint().ToVector2() * 20, 0.05f, EaseFuncs.CubicEaseIn, this.renderInfo.renderOffsetTweenable);

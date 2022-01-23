@@ -18,8 +18,10 @@ namespace Duel.Data
 
         public Point LassoLandingPosition { get; }
         public bool Valid => !this.invalid;
-        public bool FoundHook { get; }
+        public bool FoundGrapplable { get; }
         public bool FoundPullableEntity { get; }
+        public bool WasBlocked { get; }
+        public Point FailPoint { get; }
 
         public LassoProjectile(Entity userEntity, Direction throwDirection, LevelSolidProvider solidProvider)
         {
@@ -27,7 +29,7 @@ namespace Duel.Data
             this.startingPosition = this.userEntity.Position;
             this.throwDirection = throwDirection;
             LassoLandingPosition = this.startingPosition;
-            FoundHook = false;
+            FoundGrapplable = false;
 
             if (solidProvider.HasTagAt<BlockProjectileTag>(this.startingPosition + throwDirection.ToPoint()))
             {
@@ -36,7 +38,7 @@ namespace Duel.Data
 
             if (Valid)
             {
-                bool wasBlocked = false;
+                WasBlocked = false;
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -45,15 +47,21 @@ namespace Duel.Data
 
                     if (solidProvider.HasTagAt<Grapplable>(LassoLandingPosition))
                     {
-                        FoundHook = true;
+                        FoundGrapplable = true;
                     }
 
-                    if (solidProvider.HasTagAt<BlockProjectileTag>(nextPos))
+                    if (solidProvider.HasTagAt<BlockProjectileTag>(LassoLandingPosition))
                     {
-                        wasBlocked = true;
+                        WasBlocked = true;
                     }
 
-                    if (FoundHook || wasBlocked)
+                    if (WasBlocked && !FoundGrapplable)
+                    {
+                        FailPoint = LassoLandingPosition;
+                        LassoLandingPosition -= throwDirection.ToPoint();
+                    }
+
+                    if (FoundGrapplable || WasBlocked)
                     {
                         break;
                     }

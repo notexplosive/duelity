@@ -84,6 +84,14 @@ namespace Duel.Data
             return result;
         }
 
+        public void NudgeAt(Point point, Direction direction)
+        {
+            foreach (var entity in AllEntitiesAt(point))
+            {
+                entity.Nudge(direction);
+            }
+        }
+
         public Entity[] AllEntities()
         {
             return this.entities.ToArray();

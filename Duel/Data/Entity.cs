@@ -20,6 +20,7 @@ namespace Duel.Data
 
         public event MoveAction PositionChanged;
         public event DirectionalAction MoveFailed;
+        public event DirectionalAction Nudged;
 
         public BusySignal BusySignal { get; } = new BusySignal();
         public TagCollection Tags { get; } = new TagCollection();
@@ -29,6 +30,12 @@ namespace Duel.Data
         public Point Position { get; private set; }
         public Direction FacingDirection { get; private set; } = Direction.Down;
         public SolidProvider SolidProvider { get; }
+
+        public void Nudge(Direction direction)
+        {
+            // Purely graphical
+            Nudged?.Invoke(direction);
+        }
 
         public Entity()
         {
