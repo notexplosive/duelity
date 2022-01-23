@@ -30,31 +30,26 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
 
             // Walls
-            var wall = new TileTemplate();
-            wall.Tags.AddTag(new Solid());
-            wall.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Wall));
-            wall.Tags.AddTag(new BlockProjectileTag());
+            var wall = new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall),
+                new BlockProjectileTag());
+            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water));
+            var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine));
+            var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
+            var hook = new TileTemplate(new Grapplable(Grapplable.Type.Static),
+                new TileImageTag(TileImageTag.TileImage.Hook));
+
             game.CurrentLevel.PutTileAt(new Point(5, 6), wall);
             game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
             game.CurrentLevel.PutTileAt(new Point(5, 4), wall);
             game.CurrentLevel.PutTileAt(new Point(0, 6), wall);
-
-            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water));
-            game.CurrentLevel.PutTileAt(new Point(2, 2), water);
-            game.CurrentLevel.PutTileAt(new Point(3, 2), water);
-            game.CurrentLevel.PutTileAt(new Point(2, 3), water);
-
-            var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
+            game.CurrentLevel.PutTileAt(new Point(2, 2), ravine);
+            game.CurrentLevel.PutTileAt(new Point(3, 2), ravine);
+            game.CurrentLevel.PutTileAt(new Point(2, 3), ravine);
             game.CurrentLevel.PutTileAt(new Point(3, 3), bramble);
             game.CurrentLevel.PutTileAt(new Point(4, 3), bramble);
             game.CurrentLevel.PutTileAt(new Point(5, 3), bramble);
-
-            var hook = new TileTemplate();
-            hook.Tags.AddTag(new Grapplable(Grapplable.Type.Static));
-            hook.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Hook));
             game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
-
-
+            
             var glass = new EntityTemplate(new DestroyOnHit());
             game.CurrentLevel.PutEntityAt(new Point(0, 0), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 1), glass);

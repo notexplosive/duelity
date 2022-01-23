@@ -18,7 +18,9 @@ namespace Duel.Components
 
         private readonly Level level;
         public Corners LevelCorners { get; private set; }
-        public AutoTile WaterAutoTile { get; private set; }
+        private AutoTile WaterAutoTile { get; set; }
+        private AutoTile RavineAutoTile { get; set; }
+
 
         public Grid(Actor actor, Level level) : base(actor)
         {
@@ -32,6 +34,7 @@ namespace Duel.Components
         {
             LevelCorners = this.level.CalculateCorners();
             WaterAutoTile = this.level.ComputeAutoTile(TileImageTag.TileImage.Water);
+            RavineAutoTile = this.level.ComputeAutoTile(TileImageTag.TileImage.Ravine);
         }
 
         public Vector2 TileToLocalPosition(Point location, bool centered = true)
@@ -42,6 +45,11 @@ namespace Duel.Components
         public TileClass GetWaterClassAt(Point location)
         {
             return WaterAutoTile.GetClassAt(location);
+        }
+        
+        public TileClass GetRavineClassAt(Point location)
+        {
+            return RavineAutoTile.GetClassAt(location);
         }
     }
 }

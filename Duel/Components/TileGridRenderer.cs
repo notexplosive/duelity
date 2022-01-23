@@ -93,16 +93,13 @@ namespace Duel.Components
                         this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToWaterFrame(this.grid.GetWaterClassAt(location)), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Ravine:
-                        spriteBatch.FillRectangle(new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize)), Color.Black, tileDepth);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToRavineFrame(this.grid.GetRavineClassAt(location)), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Bramble:
                         this.tilesheet.DrawFrame(spriteBatch, GetRandomBrambleTile(location), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Bridge:
-                        spriteBatch.FillRectangle(new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize)), Color.LightBlue, tileDepth - 1);
-                        var bridgeRect = new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize));
-                        bridgeRect.Inflate(-5, -5);
-                        spriteBatch.FillRectangle(bridgeRect, Color.Orange, tileDepth - 1);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Bridge, this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                 }
             }
@@ -177,6 +174,49 @@ namespace Duel.Components
             }
 
             return TileFrame.WaterCenter;
+        }
+        
+        private TileFrame AutoTileClassToRavineFrame(TileClass tileClass)
+        {
+            switch (tileClass)
+            {
+                case TileClass.Alone:
+                    return TileFrame.RavineAloneNub;
+                case TileClass.VerticalNub:
+                    return TileFrame.RavineVerticalNub;
+                case TileClass.HorizontalNub:
+                    return TileFrame.RavineHorizontal;
+                case TileClass.CenterNub:
+                    return TileFrame.RavineCenterNub;
+                case TileClass.BottomNub:
+                    return TileFrame.RavineBottomNub;
+                case TileClass.LeftNub:
+                    return TileFrame.RavineLeftNub;
+                case TileClass.RightNub:
+                    return TileFrame.RavineRightNub;
+                case TileClass.TopNub:
+                    return TileFrame.RavineTopNub;
+                case TileClass.CenterFill:
+                    return TileFrame.RavineCenter;
+                case TileClass.BottomEdge:
+                    return TileFrame.RavineBottomEdge;
+                case TileClass.LeftEdge:
+                    return TileFrame.RavineLeftEdge;
+                case TileClass.RightEdge:
+                    return TileFrame.RavineRightEdge;
+                case TileClass.TopEdge:
+                    return TileFrame.RavineTopEdge;
+                case TileClass.TopRightCorner:
+                    return TileFrame.RavineRightEdge;
+                case TileClass.TopLeftCorner:
+                    return TileFrame.RavineTopLeft;
+                case TileClass.BottomLeftCorner:
+                    return TileFrame.RavineBottomLeft;
+                case TileClass.BottomRightCorner:
+                    return TileFrame.RavineBottomRight;
+            }
+
+            return TileFrame.RavineCenter;
         }
 
         public void EnableGrid()
