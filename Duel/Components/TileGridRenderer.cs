@@ -19,7 +19,7 @@ namespace Duel.Components
         private readonly Grid grid;
         private readonly SpriteSheet tilesheet;
         private readonly TileFrame[] groundTiles;
-        private bool showGrid;
+        public bool ShowGrid { get; set; } = false;
 
         public TileGridRenderer(Actor actor, Level level) : base(actor)
         {
@@ -63,7 +63,7 @@ namespace Duel.Components
             var tileDepth = transform.Depth + 100;
             var floorDepth = tileDepth + 50;
 
-            if (this.showGrid)
+            if (this.ShowGrid)
             {
                 if ((location.X % 2 == 0 && location.Y % 2 == 1) || (location.X % 2 == 1 && location.Y % 2 == 0))
                 {
@@ -159,6 +159,11 @@ namespace Duel.Components
             }
 
             return TileFrame.WaterCenter;
+        }
+
+        public void EnableGrid()
+        {
+            ShowGrid = true;
         }
     }
 }
