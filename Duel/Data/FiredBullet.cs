@@ -23,6 +23,15 @@ namespace Duel.Data
                     HitAtLeastOneThing = true;
                 }
 
+                if (solidProvider.TryGetFirstEntityWithTagAt<SolidTag>(hitScanPosition, out Entity foundEntity))
+                {
+                    if (foundEntity.Tags.GetTag<SolidTag>().IsPushOnHit)
+                    {
+                        HitLocations.Add(hitScanPosition);
+                        HitAtLeastOneThing = true;
+                    }
+                }
+
                 if (solidProvider.HasTagAt<BlockProjectileTag>(hitScanPosition))
                 {
                     WasBlocked = true;

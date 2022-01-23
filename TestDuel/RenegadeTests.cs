@@ -43,8 +43,8 @@ namespace TestDuel
         public void shot_through_entities_and_tiles()
         {
             // None of these traits block projectiles
-            this.level.PutTileAt(new Point(0, 3), new TileTemplate(new SolidTag(SolidTag.Type.Static)));
-            this.level.PutTileAt(new Point(0, 4), new TileTemplate(new SolidTag(SolidTag.Type.PushableByHand)));
+            this.level.PutTileAt(new Point(0, 3), new TileTemplate(new SolidTag()));
+            this.level.PutTileAt(new Point(0, 4), new TileTemplate(new SolidTag().PushOnBump()));
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -110,7 +110,7 @@ namespace TestDuel
         [Fact]
         public void shot_causes_push()
         {
-            var pushable = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new BlockProjectileTag(), new Hittable(Hittable.Type.PushOnHit)));
+            var pushable = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new BlockProjectileTag(), new SolidTag().PushOnHit()));
 
             this.gunComponent.Shoot();
 
@@ -121,8 +121,8 @@ namespace TestDuel
         public void shot_pushes_item_out_of_bounds()
         {
             // weird edge case I came across while testing
-            var pushedOnHit = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new Hittable(Hittable.Type.PushOnHit)));
-            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.PushableByHand)));
+            var pushedOnHit = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new SolidTag().PushOnHit()));
+            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag().PushOnBump()));
 
             this.gunComponent.Shoot();
 

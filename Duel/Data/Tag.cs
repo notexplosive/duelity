@@ -25,17 +25,23 @@ namespace Duel.Data
 
     public class SolidTag : Tag
     {
-        public Type SolidType { get; }
+        public bool IsPushOnBump { get; private set; }
+        public bool IsPushOnHit { get; private set; }
 
-        public enum Type
+        public SolidTag PushOnBump()
         {
-            Static,
-            PushableByHand // only makes sense on entities... I think?
+            IsPushOnBump = true;
+            return this;
         }
 
-        public SolidTag(Type type)
+        public SolidTag PushOnHit()
         {
-            SolidType = type;
+            IsPushOnHit = true;
+            return this;
+        }
+
+        public SolidTag()
+        {
         }
     }
 
@@ -104,8 +110,7 @@ namespace Duel.Data
 
         public enum Type
         {
-            DestroyOnHit,
-            PushOnHit
+            DestroyOnHit
         }
 
         public Hittable(Type type)

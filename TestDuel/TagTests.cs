@@ -79,8 +79,8 @@ namespace TestDuel
         public void can_retrieve_specific_tag_info()
         {
             var subject = new TagCollection();
-            subject.AddTag(new SolidTag(SolidTag.Type.PushableByHand));
-            subject.GetTag<SolidTag>().SolidType.Should().Be(SolidTag.Type.PushableByHand);
+            subject.AddTag(new SolidTag().PushOnBump());
+            subject.GetTag<SolidTag>().IsPushOnBump.Should().BeTrue();
         }
     }
 }

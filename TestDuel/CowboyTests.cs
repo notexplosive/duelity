@@ -66,7 +66,7 @@ namespace TestDuel
         [Fact]
         public void charge_into_heavy_metal_box()
         {
-            var metalBox = new EntityTemplate(new Hittable(Hittable.Type.PushOnHit), new SolidTag(SolidTag.Type.Static));
+            var metalBox = new EntityTemplate(new SolidTag().PushOnHit());
 
             var boxInstance = this.level.PutEntityAt(new Point(0, 5), metalBox);
 
@@ -79,7 +79,7 @@ namespace TestDuel
         [Fact]
         public void charge_into_wall()
         {
-            this.level.PutTileAt(new Point(0, 5), new TileTemplate(new SolidTag(SolidTag.Type.Static)));
+            this.level.PutTileAt(new Point(0, 5), new TileTemplate(new SolidTag()));
 
             DoChargeDown();
 

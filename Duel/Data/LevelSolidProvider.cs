@@ -20,7 +20,7 @@ namespace Duel.Data
             {
                 if (entity.Tags.TryGetTag(out SolidTag solidTag))
                 {
-                    if (solidTag.SolidType == SolidTag.Type.PushableByHand)
+                    if (solidTag.IsPushOnBump)
                     {
                         entity.WalkAndPushInDirection(direction);
                     }
@@ -58,8 +58,11 @@ namespace Duel.Data
                     {
                         this.level.RequestDestroyEntity(entity);
                     }
+                }
 
-                    if (hittable.HitResponseType == Hittable.Type.PushOnHit)
+                if (entity.Tags.TryGetTag(out SolidTag solid))
+                {
+                    if (solid.IsPushOnHit)
                     {
                         entity.WalkAndPushInDirection(attackDirection);
                     }
