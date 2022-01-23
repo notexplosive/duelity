@@ -104,9 +104,9 @@ namespace Duel.Data
     /// <summary>
     /// Thing responds to being shot, does not block the projectile
     /// </summary>
-    public class Hittable : Tag
+    public class DestroyOnHit : Tag
     {
-        public Hittable()
+        public DestroyOnHit()
         {
         }
     }

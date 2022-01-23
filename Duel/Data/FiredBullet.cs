@@ -17,7 +17,7 @@ namespace Duel.Data
             {
                 hitScanPosition += shootDirection.ToPoint();
 
-                if (solidProvider.HasTagAt<Hittable>(hitScanPosition))
+                if (solidProvider.HasTagAt<DestroyOnHit>(hitScanPosition))
                 {
                     HitLocations.Add(hitScanPosition);
                     HitAtLeastOneThing = true;

@@ -69,9 +69,9 @@ namespace TestDuel
         [Fact]
         public void shot_through_several_breakables()
         {
-            this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new Hittable()));
-            this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new Hittable()));
-            this.level.PutEntityAt(new Point(0, 5), new EntityTemplate(new Hittable()));
+            this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new DestroyOnHit()));
+            this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit()));
+            this.level.PutEntityAt(new Point(0, 5), new EntityTemplate(new DestroyOnHit()));
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -122,7 +122,7 @@ namespace TestDuel
         {
             // weird edge case I came across while testing
             var pushedOnHit = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new SolidTag().PushOnHit()));
-            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new Hittable(), new SolidTag().PushOnBump()));
+            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit(), new SolidTag().PushOnBump()));
 
             this.gunComponent.Shoot();
 
