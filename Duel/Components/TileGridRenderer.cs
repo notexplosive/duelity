@@ -19,6 +19,7 @@ namespace Duel.Components
         private readonly Grid grid;
         private readonly SpriteSheet tilesheet;
         private readonly TileFrame[] groundTiles;
+        private readonly TileFrame[] brambleTiles;
         public bool ShowGrid { get; set; } = false;
 
         public TileGridRenderer(Actor actor, Level level) : base(actor)
@@ -26,6 +27,11 @@ namespace Duel.Components
             this.level = level;
             this.grid = RequireComponent<Grid>();
             this.tilesheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("tiles-sheet");
+            this.brambleTiles = new TileFrame[]
+            {
+                TileFrame.Bramble0,
+                TileFrame.Bramble1,
+            };
             this.groundTiles = new TileFrame[] {
                 TileFrame.Floor0,
                 TileFrame.Floor0,
@@ -78,10 +84,10 @@ namespace Duel.Components
                 switch (imageTag.Image)
                 {
                     case TileImageTag.TileImage.Wall:
-                        spriteBatch.FillRectangle(new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize)), Color.Orange, tileDepth);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Wall, this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Hook:
-                        spriteBatch.DrawCircle(new CircleF(this.grid.TileToLocalPosition(location, true), 10), 10, Color.LightBlue, 2f, tileDepth);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Hook, this.grid.TileToLocalPosition(location, true), floorDepth, Color.White); // hooks are floorDepth
                         break;
                     case TileImageTag.TileImage.Water:
                         this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToWaterFrame(this.grid.GetWaterClassAt(location)), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
@@ -90,7 +96,7 @@ namespace Duel.Components
                         spriteBatch.FillRectangle(new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize)), Color.Black, tileDepth);
                         break;
                     case TileImageTag.TileImage.Bramble:
-                        spriteBatch.FillRectangle(new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize)), Color.SlateGray, tileDepth);
+                        this.tilesheet.DrawFrame(spriteBatch, GetRandomBrambleTile(location), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Bridge:
                         spriteBatch.FillRectangle(new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize)), Color.LightBlue, tileDepth - 1);
@@ -103,14 +109,26 @@ namespace Duel.Components
             else
             {
                 // floor
-                this.tilesheet.DrawFrame(spriteBatch, GetRandomFloorTile(location), this.grid.TileToLocalPosition(location, true), floorDepth + 10, Color.White);
+                DrawFloorTile(spriteBatch, location, floorDepth);
             }
+        }
+
+        private void DrawFloorTile(SpriteBatch spriteBatch, Point location, Depth floorDepth)
+        {
+            this.tilesheet.DrawFrame(spriteBatch, GetRandomFloorTile(location), this.grid.TileToLocalPosition(location, true),
+                floorDepth + 10, Color.White);
         }
 
         private int GetRandomFloorTile(Point location)
         {
             var noise = NoiseAt(location);
             return (int)this.groundTiles[noise % this.groundTiles.Length];
+        }
+        
+        private int GetRandomBrambleTile(Point location)
+        {
+            var noise = NoiseAt(location);
+            return (int)this.brambleTiles[noise % this.brambleTiles.Length];
         }
 
         public int NoiseAt(Point position)

@@ -44,6 +44,11 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(3, 2), water);
             game.CurrentLevel.PutTileAt(new Point(2, 3), water);
 
+            var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
+            game.CurrentLevel.PutTileAt(new Point(3, 3), bramble);
+            game.CurrentLevel.PutTileAt(new Point(4, 3), bramble);
+            game.CurrentLevel.PutTileAt(new Point(5, 3), bramble);
+
             var hook = new TileTemplate();
             hook.Tags.AddTag(new Grapplable(Grapplable.Type.Static));
             hook.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Hook));
@@ -58,19 +63,24 @@ namespace Duel
             var metalBox = new EntityTemplate(new Solid().PushOnHit(), new BlockProjectileTag());
             game.CurrentLevel.PutEntityAt(new Point(3, 5), metalBox);
 
-            var crate = new EntityTemplate(new Solid().PushOnBump().PushOnHit(), new BlockProjectileTag(), new Grapplable(Grapplable.Type.PulledByLasso));
+            var crate = new EntityTemplate(new Solid().PushOnBump().PushOnHit(), new BlockProjectileTag(),
+                new Grapplable(Grapplable.Type.PulledByLasso));
             game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new BlockProjectileTag(), new Solid().PushOnBump().PushOnHit()));
-            game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump()));
+            game.CurrentLevel.PutEntityAt(new Point(3, 2),
+                new EntityTemplate(new BlockProjectileTag(), new Solid().PushOnBump().PushOnHit()));
+            game.CurrentLevel.PutEntityAt(new Point(4, 2),
+                new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump()));
 
-            game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new Solid().PushOnBump(), new Grapplable(Grapplable.Type.PulledByLasso)));
+            game.CurrentLevel.PutEntityAt(new Point(6, 5),
+                new EntityTemplate(new Solid().PushOnBump(), new Grapplable(Grapplable.Type.PulledByLasso)));
             game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade)));
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
         {
-            loader.AddMachinaAssetCallback("characters-sheet", () => new GridBasedSpriteSheet("characters", new Point(64)));
+            loader.AddMachinaAssetCallback("characters-sheet",
+                () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("tiles-sheet", () => new GridBasedSpriteSheet("tiles", new Point(64)));
             loader.AddMachinaAssetCallback("entities-sheet", () => new GridBasedSpriteSheet("entities", new Point(64)));
             loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));
