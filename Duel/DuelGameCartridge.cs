@@ -39,6 +39,11 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(5, 4), wall);
             game.CurrentLevel.PutTileAt(new Point(0, 6), wall);
 
+            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water));
+            game.CurrentLevel.PutTileAt(new Point(2, 2), water);
+            game.CurrentLevel.PutTileAt(new Point(3, 2), water);
+            game.CurrentLevel.PutTileAt(new Point(2, 3), water);
+
             var hook = new TileTemplate();
             hook.Tags.AddTag(new Grapplable(Grapplable.Type.Static));
             hook.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Hook));
@@ -66,6 +71,8 @@ namespace Duel
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
         {
             loader.AddMachinaAssetCallback("characters-sheet", () => new GridBasedSpriteSheet("characters", new Point(64)));
+            loader.AddMachinaAssetCallback("tiles-sheet", () => new GridBasedSpriteSheet("tiles", new Point(64)));
+            loader.AddMachinaAssetCallback("entities-sheet", () => new GridBasedSpriteSheet("entities", new Point(64)));
             loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));
             loader.AddMachinaAssetCallback("ernesto-move", () => new LinearFrameAnimation(2, 1));
             loader.AddMachinaAssetCallback("ernesto-jump", () => new LinearFrameAnimation(3, 1));
