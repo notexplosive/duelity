@@ -59,7 +59,8 @@ namespace Duel.Components
 
                         if (!Sokoban.Headless)
                         {
-                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Ernesto);
+                            new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Ernesto);
+                            new PlayerDirectionRenderer(entityActor, entity, Color.Crimson);
                         }
                     }
 
@@ -70,7 +71,32 @@ namespace Duel.Components
                         new UseGun(entityActor, entity, this.level);
                         if (!Sokoban.Headless)
                         {
-                            new PlayerCharacterRenderer(entityActor, PlayerAnimations.Miranda);
+                            new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Miranda);
+                            new PlayerDirectionRenderer(entityActor, entity, Color.Purple);
+                        }
+                    }
+
+                    if (playerTag.MovementType == PlayerTag.Type.Cowboy)
+                    {
+                        new BufferedKeyboardListener(entityActor, entity.BusySignal);
+                        new CowboyMovement(entityActor, entity, new LevelSolidProvider(this.level));
+
+                        if (!Sokoban.Headless)
+                        {
+                            new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Steven);
+                        }
+                    }
+
+                    if (playerTag.MovementType == PlayerTag.Type.Knight)
+                    {
+                        new BufferedKeyboardListener(entityActor, entity.BusySignal);
+                        new KnightMovement(entityActor, entity, new LevelSolidProvider(this.level));
+                        new KnightSwing(entityActor, entity);
+
+                        if (!Sokoban.Headless)
+                        {
+                            new KnightPreviewRenderer(entityActor, entity, this.grid, new LevelSolidProvider(this.level));
+                            new KnightCharacterRenderer(entityActor);
                         }
                     }
                 }

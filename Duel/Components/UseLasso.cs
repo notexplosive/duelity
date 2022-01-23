@@ -48,7 +48,7 @@ namespace Duel.Components
             {
                 yield return lasso.DeployLasso(this.level, actorRoot);
 
-                if (lasso.FoundHook)
+                if (lasso.FoundGrapplable)
                 {
                     if (lasso.FoundPullableEntity)
                     {
@@ -65,6 +65,10 @@ namespace Duel.Components
                 }
                 else
                 {
+                    if (lasso.WasBlocked)
+                    {
+                        this.level.NudgeAt(lasso.FailPoint, this.userEntity.FacingDirection);
+                    }
                     yield return new WaitSeconds(0.10f);
                     yield return lasso.ReturnLassoToPlayer();
                     lasso.DestroyLassoActor();

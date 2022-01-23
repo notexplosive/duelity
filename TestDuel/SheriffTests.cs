@@ -19,7 +19,7 @@ namespace TestDuel
             var scene = new Scene(null);
             var game = new Sokoban(scene);
 
-            this.playerEntity = game.CurrentLevel.CreateEntity(new Point(0, 0), new PlayerTag(PlayerTag.Type.Sheriff));
+            this.playerEntity = game.CurrentLevel.PutEntityAt(new Point(0, 0), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
             this.lassoComponent = game.FindActor(this.playerEntity).GetComponent<UseLasso>();
             this.level = game.CurrentLevel;
         }
@@ -41,7 +41,7 @@ namespace TestDuel
             var lasso = ThrowLassoDown();
 
             lasso.Valid.Should().BeTrue();
-            lasso.FoundHook.Should().BeFalse();
+            lasso.FoundGrapplable.Should().BeFalse();
             lasso.FoundPullableEntity.Should().BeFalse();
 
             lasso.LassoLandingPosition.Should().Be(new Point(0, 3)); // max range of lasso
@@ -58,7 +58,7 @@ namespace TestDuel
             var lasso = ThrowLassoDown();
 
             lasso.Valid.Should().BeFalse();
-            lasso.FoundHook.Should().BeFalse();
+            lasso.FoundGrapplable.Should().BeFalse();
             lasso.FoundPullableEntity.Should().BeFalse();
             lasso.LassoLandingPosition.Should().Be(new Point(0, 0));
             this.playerEntity.Position.Should().Be(new Point(0, 0));
@@ -74,21 +74,37 @@ namespace TestDuel
             var lasso = ThrowLassoDown();
 
             lasso.Valid.Should().BeTrue();
-            lasso.FoundHook.Should().BeFalse();
+            lasso.FoundGrapplable.Should().BeFalse();
             lasso.FoundPullableEntity.Should().BeFalse();
             lasso.LassoLandingPosition.Should().Be(new Point(0, 1));
             this.playerEntity.Position.Should().Be(new Point(0, 0));
         }
 
         [Fact]
-        public void lasso_pulls_pullables()
+        public void blocks_projectiles_but_also_grapplable()
         {
-            var pullable = this.level.CreateEntity(new Point(0, 2), new Grapplable(Grapplable.Type.PulledByLasso));
+            var crate = new EntityTemplate(new BlockProjectileTag(), new Grapplable(Grapplable.Type.PulledByLasso));
+            var crateInstance = this.level.PutEntityAt(new Point(0, 2), crate);
 
             var lasso = ThrowLassoDown();
 
             lasso.Valid.Should().BeTrue();
-            lasso.FoundHook.Should().BeTrue();
+            lasso.FoundGrapplable.Should().BeTrue();
+            lasso.FoundPullableEntity.Should().BeTrue();
+            lasso.LassoLandingPosition.Should().Be(new Point(0, 2));
+            crateInstance.Position.Should().Be(new Point(0, 1));
+            this.playerEntity.Position.Should().Be(new Point(0, 0));
+        }
+
+        [Fact]
+        public void lasso_pulls_pullables()
+        {
+            var pullable = this.level.PutEntityAt(new Point(0, 2), new EntityTemplate(new Grapplable(Grapplable.Type.PulledByLasso)));
+
+            var lasso = ThrowLassoDown();
+
+            lasso.Valid.Should().BeTrue();
+            lasso.FoundGrapplable.Should().BeTrue();
             lasso.FoundPullableEntity.Should().BeTrue();
             lasso.LassoLandingPosition.Should().Be(new Point(0, 2));
             pullable.Position.Should().Be(new Point(0, 1));
@@ -105,7 +121,7 @@ namespace TestDuel
             var lasso = ThrowLassoDown();
 
             lasso.Valid.Should().BeTrue();
-            lasso.FoundHook.Should().BeTrue();
+            lasso.FoundGrapplable.Should().BeTrue();
             lasso.FoundPullableEntity.Should().BeFalse();
             lasso.LassoLandingPosition.Should().Be(new Point(0, 2));
             this.playerEntity.Position.Should().Be(new Point(0, 2));

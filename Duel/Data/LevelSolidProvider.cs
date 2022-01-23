@@ -24,6 +24,10 @@ namespace Duel.Data
                     {
                         entity.WalkAndPushInDirection(direction);
                     }
+                    else
+                    {
+                        entity.Nudge(direction);
+                    }
                 }
             }
         }

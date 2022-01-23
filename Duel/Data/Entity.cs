@@ -7,7 +7,8 @@ namespace Duel.Data
     {
         Warp,
         Walk,
-        Jump
+        Jump,
+        Charge
     }
 
     public delegate void MoveAction(MoveType moveType, Point previousPosition);
@@ -16,10 +17,10 @@ namespace Duel.Data
     public class Entity
     {
         public static int UniqueIdPool = 0;
-        private SolidProvider solidProvider;
 
         public event MoveAction PositionChanged;
         public event DirectionalAction MoveFailed;
+        public event DirectionalAction Nudged;
 
         public BusySignal BusySignal { get; } = new BusySignal();
         public TagCollection Tags { get; } = new TagCollection();
@@ -28,16 +29,23 @@ namespace Duel.Data
 
         public Point Position { get; private set; }
         public Direction FacingDirection { get; private set; } = Direction.Down;
+        public SolidProvider SolidProvider { get; }
+
+        public void Nudge(Direction direction)
+        {
+            // Purely graphical
+            Nudged?.Invoke(direction);
+        }
 
         public Entity()
         {
             this.uniqueId = UniqueIdPool++;
-            this.solidProvider = new EmptySolidProvider();
+            SolidProvider = new EmptySolidProvider();
         }
 
         public Entity(SolidProvider solidProvider) : this()
         {
-            this.solidProvider = solidProvider;
+            SolidProvider = solidProvider;
         }
 
         // Overrides //
@@ -70,6 +78,20 @@ namespace Duel.Data
             PositionChanged?.Invoke(MoveType.Warp, prevPosition);
         }
 
+        public void ChargeToPosition(Point position, Direction direction)
+        {
+            FacingDirection = direction;
+
+            if (Position == position)
+            {
+                return;
+            }
+
+            var prevPosition = Position;
+            Position = position;
+            PositionChanged?.Invoke(MoveType.Charge, prevPosition);
+        }
+
         public void JumpToPosition(Point position)
         {
             if (Position == position)
@@ -86,7 +108,7 @@ namespace Duel.Data
         {
             FacingDirection = direction;
 
-            if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
+            if (this.SolidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
                 MoveFailed?.Invoke(direction);
                 return;
@@ -101,12 +123,12 @@ namespace Duel.Data
         {
             FacingDirection = direction;
 
-            if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
+            if (this.SolidProvider.IsSolidAt(Position + direction.ToPoint()))
             {
-                solidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
+                SolidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
 
                 // If it's still solid, give up, otherwise we move
-                if (this.solidProvider.IsSolidAt(Position + direction.ToPoint()))
+                if (this.SolidProvider.IsSolidAt(Position + direction.ToPoint()))
                 {
                     MoveFailed?.Invoke(direction);
                     return;

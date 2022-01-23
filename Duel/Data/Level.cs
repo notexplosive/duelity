@@ -27,14 +27,9 @@ namespace Duel.Data
 
         }
 
-        public Entity CreateEntity(Point startingPosition, params Tag[] tags)
+        public Entity PutEntityAt(Point startingPosition, EntityTemplate template)
         {
-            var entity = new Entity(new LevelSolidProvider(this));
-
-            foreach (var tag in tags)
-            {
-                entity.Tags.AddTag(tag);
-            }
+            var entity = template.Create(new LevelSolidProvider(this));
 
             entity.WarpToPosition(startingPosition);
 
@@ -89,6 +84,14 @@ namespace Duel.Data
             return result;
         }
 
+        public void NudgeAt(Point point, Direction direction)
+        {
+            foreach (var entity in AllEntitiesAt(point))
+            {
+                entity.Nudge(direction);
+            }
+        }
+
         public Entity[] AllEntities()
         {
             return this.entities.ToArray();
@@ -97,7 +100,7 @@ namespace Duel.Data
         public bool IsOutOfBounds(Point position)
         {
             var corners = CalculateCorners();
-            return position.X < corners.TopLeft.X || position.Y < corners.TopLeft.Y || position.X > corners.BottomRight.X || position.Y > corners.BottomRight.Y;
+            return position.X < corners.TopLeft.X || position.Y < corners.TopLeft.Y || position.X >= corners.BottomRight.X || position.Y >= corners.BottomRight.Y;
         }
 
         public IEnumerable<Entity> AllEntitiesAt(Point position)
