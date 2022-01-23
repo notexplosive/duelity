@@ -13,7 +13,7 @@ namespace Duel
 {
     public class DuelGameCartridge : GameCartridge
     {
-        public DuelGameCartridge() : base(new Point(1600, 900), ResizeBehavior.KeepAspectRatio)
+        public DuelGameCartridge() : base(new Point(960, 540), ResizeBehavior.KeepAspectRatio)
         {
         }
 
