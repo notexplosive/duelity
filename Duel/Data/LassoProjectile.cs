@@ -67,9 +67,9 @@ namespace Duel.Data
                     }
                 }
 
-                if (solidProvider.TryGetFirstEntityWithTagAt<Grapplable>(LassoLandingPosition, out Entity grapplableEntity))
+                if (solidProvider.TryGetFirstEntityWithTagAt(LassoLandingPosition, out Entity grapplableEntity, out Grapplable grapplable))
                 {
-                    if (grapplableEntity.Tags.GetTag<Grapplable>().HookType == Grapplable.Type.PulledByLasso)
+                    if (grapplable.HookType == Grapplable.Type.PulledByLasso)
                     {
                         this.entityToPull = grapplableEntity;
                         FoundPullableEntity = true;

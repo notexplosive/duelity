@@ -23,9 +23,9 @@ namespace Duel.Data
                     HitAtLeastOneThing = true;
                 }
 
-                if (solidProvider.TryGetFirstEntityWithTagAt<SolidTag>(hitScanPosition, out Entity foundEntity))
+                if (solidProvider.TryGetFirstEntityWithTagAt(hitScanPosition, out Entity foundEntity, out SolidTag solid))
                 {
-                    if (foundEntity.Tags.GetTag<SolidTag>().IsPushOnHit)
+                    if (solid.IsPushOnHit)
                     {
                         HitLocations.Add(hitScanPosition);
                         HitAtLeastOneThing = true;

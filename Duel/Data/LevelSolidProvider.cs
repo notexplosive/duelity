@@ -88,18 +88,20 @@ namespace Duel.Data
             return false;
         }
 
-        public bool TryGetFirstEntityWithTagAt<T>(Point position, out Entity result) where T : Tag
+        public bool TryGetFirstEntityWithTagAt<T>(Point position, out Entity foundEntity, out T foundTag) where T : Tag
         {
             foreach (var entity in this.level.AllEntitiesAt(position))
             {
-                if (entity.Tags.HasTag<T>())
+                if (entity.Tags.TryGetTag(out T tag))
                 {
-                    result = entity;
+                    foundEntity = entity;
+                    foundTag = tag;
                     return true;
                 }
             }
 
-            result = null;
+            foundEntity = null;
+            foundTag = null;
             return false;
         }
     }
