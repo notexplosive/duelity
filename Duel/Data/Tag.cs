@@ -63,6 +63,44 @@ namespace Duel.Data
         }
     }
 
+    public enum TileFrame
+    {
+        Floor0,
+        Floor1,
+        Floor2,
+        Floor3,
+        Floor4,
+        Wall,
+        WaterLeftNub,
+        WaterHorizontal,
+        WaterRightNub,
+        Hook,
+        HookLassod,
+        Bramble0,
+        WaterTopNub,
+        WaterLeftEdge,
+        WaterTopEdge,
+        WaterCenterNub,
+        AAA,
+        Bramble1,
+        WaterVerticalNub,
+        WaterRightEdge,
+        WaterBottomEdge,
+        BBB,
+        CCC,
+        DDD,
+        WaterBottomNub,
+        WaterAloneNub,
+        WaterCenter,
+        EEE,
+        FFF,
+        GGG,
+        WaterTopRight,
+        WaterTopLeft,
+        WaterBottomRight,
+        WaterBottomLeft
+    }
+
     public class TileImageTag : Tag
     {
         public TileImage Image { get; }
@@ -71,8 +109,8 @@ namespace Duel.Data
         {
             Floor,
             Wall,
-            Hook,
             Water,
+            Hook,
             Ravine,
             Bramble,
             FilledWater,

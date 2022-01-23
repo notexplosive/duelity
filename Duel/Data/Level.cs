@@ -12,6 +12,7 @@ namespace Duel.Data
         public event Action TilemapChanged;
         public event EntityEvent EntityAdded;
         public event EntityEvent EntityDestroyRequested;
+
         private readonly List<Entity> entities = new List<Entity>();
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
@@ -58,6 +59,22 @@ namespace Duel.Data
         {
             this.tileMap[position] = tile;
             TilemapChanged?.Invoke();
+        }
+
+        public AutoTile ComputeAutoTile(TileImageTag.TileImage image)
+        {
+            var result = new AutoTile();
+            foreach (var tileAndLocation in this.tileMap)
+            {
+                if (tileAndLocation.Value.Tags.TryGetTag(out TileImageTag tileImageTag))
+                {
+                    if (tileImageTag.Image == image)
+                    {
+                        result.PutTileAt(tileAndLocation.Key);
+                    }
+                }
+            }
+            return result;
         }
 
         public Corners CalculateCorners()
