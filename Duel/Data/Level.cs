@@ -7,6 +7,28 @@ namespace Duel.Data
 {
     public delegate void EntityEvent(Entity entity);
 
+    public class EntityTemplate
+    {
+        private readonly Tag[] tags;
+
+        public EntityTemplate(params Tag[] tags)
+        {
+            this.tags = tags;
+        }
+
+        public Entity Create(LevelSolidProvider provider)
+        {
+            var entity = new Entity(provider);
+
+            foreach (var tag in tags)
+            {
+                entity.Tags.AddTag(tag);
+            }
+
+            return entity;
+        }
+    }
+
     public class Level
     {
         public event Action TilemapChanged;
@@ -27,14 +49,9 @@ namespace Duel.Data
 
         }
 
-        public Entity PutEntityAt(Point startingPosition, params Tag[] tags)
+        public Entity PutEntityAt(Point startingPosition, EntityTemplate template)
         {
-            var entity = new Entity(new LevelSolidProvider(this));
-
-            foreach (var tag in tags)
-            {
-                entity.Tags.AddTag(tag);
-            }
+            var entity = template.Create(new LevelSolidProvider(this));
 
             entity.WarpToPosition(startingPosition);
 
