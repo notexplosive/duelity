@@ -65,7 +65,12 @@ namespace Duel.Data
         {
             Floor,
             Wall,
-            Hook
+            Hook,
+            Water,
+            Ravine,
+            Bramble,
+            FilledWater,
+            Bridge
         }
 
         public TileImageTag(TileImage image)

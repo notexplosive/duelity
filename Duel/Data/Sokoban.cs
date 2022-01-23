@@ -32,6 +32,11 @@ namespace Duel.Data
 
             new Grid(this.rootActor, CurrentLevel);
             this.actorRootComponent = new ActorRoot(this.rootActor, CurrentLevel);
+
+            if (!Headless)
+            {
+                new TileGridRenderer(this.rootActor, CurrentLevel);
+            }
         }
 
         public Actor FindActor(Entity entity)

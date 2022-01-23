@@ -17,7 +17,7 @@ namespace Duel.Components
         public static readonly int TileSize = 64;
 
         private readonly Level level;
-        private Corners levelCorners;
+        public Corners LevelCorners { get; private set; }
 
         public Grid(Actor actor, Level level) : base(actor)
         {
@@ -29,39 +29,7 @@ namespace Duel.Components
 
         private void RecomputeCorners()
         {
-            this.levelCorners = this.level.CalculateCorners();
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            for (int x = this.levelCorners.TopLeft.X; x < this.levelCorners.BottomRight.X; x++)
-            {
-                for (int y = this.levelCorners.TopLeft.Y; y < this.levelCorners.BottomRight.Y; y++)
-                {
-                    DrawCell(spriteBatch, new Point(x, y), this.level.GetTileAt(new Point(x, y)));
-                }
-            }
-        }
-
-        public void DrawCell(SpriteBatch spriteBatch, Point location, TileTemplate tile)
-        {
-            var color = Color.White;
-            var tileDepth = transform.Depth + 100;
-
-            if (tile.Tags.TryGetTag(out TileImageTag imageTag))
-            {
-                if (imageTag.Image == TileImageTag.TileImage.Hook)
-                {
-                    spriteBatch.DrawCircle(new CircleF(TileToLocalPosition(location, true), 10), 10, Color.LightBlue, 2f, transform.Depth);
-                }
-            }
-
-            if (tile.Tags.HasTag<SolidTag>())
-            {
-                spriteBatch.FillRectangle(new RectangleF(TileToLocalPosition(location, false), new Point(TileSize)), Color.Orange, tileDepth - 1);
-            }
-
-            spriteBatch.DrawRectangle(new RectangleF(TileToLocalPosition(location, false), new Point(TileSize)), color, 1f, tileDepth);
+            this.LevelCorners = this.level.CalculateCorners();
         }
 
         public Vector2 TileToLocalPosition(Point location, bool centered = true)
