@@ -106,16 +106,8 @@ namespace Duel.Data
     /// </summary>
     public class Hittable : Tag
     {
-        public Type HitResponseType { get; }
-
-        public enum Type
+        public Hittable()
         {
-            DestroyOnHit
-        }
-
-        public Hittable(Type type)
-        {
-            HitResponseType = type;
         }
     }
 }

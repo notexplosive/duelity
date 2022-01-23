@@ -45,7 +45,7 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
 
 
-            var glass = new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit));
+            var glass = new EntityTemplate(new Hittable());
             game.CurrentLevel.PutEntityAt(new Point(0, 0), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 1), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 2), glass);
@@ -57,7 +57,7 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
 
             game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new BlockProjectileTag(), new SolidTag().PushOnBump().PushOnHit()));
-            game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag().PushOnBump()));
+            game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(), new SolidTag().PushOnBump()));
 
             game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new SolidTag().PushOnBump(), new Grapplable(Grapplable.Type.PulledByLasso)));
             game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));

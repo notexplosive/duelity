@@ -52,12 +52,9 @@ namespace Duel.Data
             var entities = new List<Entity>(this.level.AllEntitiesAt(hitLocation));
             foreach (var entity in entities)
             {
-                if (entity.Tags.TryGetTag(out Hittable hittable))
+                if (entity.Tags.HasTag<Hittable>())
                 {
-                    if (hittable.HitResponseType == Hittable.Type.DestroyOnHit)
-                    {
-                        this.level.RequestDestroyEntity(entity);
-                    }
+                    this.level.RequestDestroyEntity(entity);
                 }
 
                 if (entity.Tags.TryGetTag(out SolidTag solid))
