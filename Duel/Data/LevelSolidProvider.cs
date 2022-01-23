@@ -18,7 +18,7 @@ namespace Duel.Data
         {
             foreach (var entity in this.level.AllEntitiesAt(position))
             {
-                if (entity.Tags.TryGetTag(out SolidTag solidTag))
+                if (entity.Tags.TryGetTag(out Solid solidTag))
                 {
                     if (solidTag.IsPushOnBump)
                     {
@@ -44,7 +44,7 @@ namespace Duel.Data
                 return true;
             }
 
-            return HasTagAt<SolidTag>(position);
+            return HasTagAt<Solid>(position);
         }
 
         public void ApplyHitAt(Point hitLocation, Direction attackDirection)
@@ -57,7 +57,7 @@ namespace Duel.Data
                     this.level.RequestDestroyEntity(entity);
                 }
 
-                if (entity.Tags.TryGetTag(out SolidTag solid))
+                if (entity.Tags.TryGetTag(out Solid solid))
                 {
                     if (solid.IsPushOnHit)
                     {

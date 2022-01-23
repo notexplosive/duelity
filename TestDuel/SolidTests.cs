@@ -29,7 +29,7 @@ namespace TestDuel
         public void solid_entities_are_solid()
         {
             var level = new Level(new Corners(new Point(-2, -2), new Point(2, 2)));
-            level.PutEntityAt(new Point(1, 1), new EntityTemplate(new SolidTag()));
+            level.PutEntityAt(new Point(1, 1), new EntityTemplate(new Solid()));
 
             var solidProvider = new LevelSolidProvider(level);
 
@@ -40,7 +40,7 @@ namespace TestDuel
         public void entity_walking_into_pushable_pushes()
         {
             var level = new Level(new Corners(new Point(-3, -3), new Point(3, 3)));
-            var pushable = level.PutEntityAt(new Point(1, 1), new EntityTemplate(new SolidTag().PushOnBump()));
+            var pushable = level.PutEntityAt(new Point(1, 1), new EntityTemplate(new Solid().PushOnBump()));
             var pusher = level.PutEntityAt(new Point(1, 2), new EntityTemplate());
 
             pusher.WalkAndPushInDirection(Direction.Up);
@@ -53,10 +53,10 @@ namespace TestDuel
         {
             var level = new Level(new Corners(new Point(-10, -10), new Point(10, 10)));
             var pusher = level.PutEntityAt(new Point(0, 0), new EntityTemplate());
-            var a = level.PutEntityAt(new Point(1, 0), new EntityTemplate(new SolidTag().PushOnBump()));
-            var b = level.PutEntityAt(new Point(2, 0), new EntityTemplate(new SolidTag().PushOnBump()));
-            var c = level.PutEntityAt(new Point(3, 0), new EntityTemplate(new SolidTag().PushOnBump()));
-            var d = level.PutEntityAt(new Point(4, 0), new EntityTemplate(new SolidTag().PushOnBump()));
+            var a = level.PutEntityAt(new Point(1, 0), new EntityTemplate(new Solid().PushOnBump()));
+            var b = level.PutEntityAt(new Point(2, 0), new EntityTemplate(new Solid().PushOnBump()));
+            var c = level.PutEntityAt(new Point(3, 0), new EntityTemplate(new Solid().PushOnBump()));
+            var d = level.PutEntityAt(new Point(4, 0), new EntityTemplate(new Solid().PushOnBump()));
 
             pusher.WalkAndPushInDirection(Direction.Right);
 
@@ -70,7 +70,7 @@ namespace TestDuel
         public void hit_at_location_to_push()
         {
             var level = new Level(new Corners(new Point(-10, -10), new Point(10, 10)));
-            var pushable = level.PutEntityAt(Point.Zero, new EntityTemplate(new BlockProjectileTag(), new SolidTag().PushOnHit()));
+            var pushable = level.PutEntityAt(Point.Zero, new EntityTemplate(new BlockProjectileTag(), new Solid().PushOnHit()));
             var solidProvider = new LevelSolidProvider(level);
 
             solidProvider.ApplyHitAt(Point.Zero, Direction.Right);

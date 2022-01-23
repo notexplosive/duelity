@@ -23,24 +23,24 @@ namespace Duel.Data
     {
     }
 
-    public class SolidTag : Tag
+    public class Solid : Tag
     {
         public bool IsPushOnBump { get; private set; }
         public bool IsPushOnHit { get; private set; }
 
-        public SolidTag PushOnBump()
+        public Solid PushOnBump()
         {
             IsPushOnBump = true;
             return this;
         }
 
-        public SolidTag PushOnHit()
+        public Solid PushOnHit()
         {
             IsPushOnHit = true;
             return this;
         }
 
-        public SolidTag()
+        public Solid()
         {
         }
     }

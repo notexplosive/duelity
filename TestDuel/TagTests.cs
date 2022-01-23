@@ -39,7 +39,7 @@ namespace TestDuel
         public void can_try_and_fail_to_find_tag()
         {
             var subject = new TagCollection();
-            var found = subject.TryGetTag<SolidTag>(out SolidTag solidTag);
+            var found = subject.TryGetTag<Solid>(out Solid solidTag);
 
             solidTag.Should().BeNull();
             found.Should().BeFalse();
@@ -79,8 +79,8 @@ namespace TestDuel
         public void can_retrieve_specific_tag_info()
         {
             var subject = new TagCollection();
-            subject.AddTag(new SolidTag().PushOnBump());
-            subject.GetTag<SolidTag>().IsPushOnBump.Should().BeTrue();
+            subject.AddTag(new Solid().PushOnBump());
+            subject.GetTag<Solid>().IsPushOnBump.Should().BeTrue();
         }
     }
 }

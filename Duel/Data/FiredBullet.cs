@@ -23,7 +23,7 @@ namespace Duel.Data
                     HitAtLeastOneThing = true;
                 }
 
-                if (solidProvider.TryGetFirstEntityWithTagAt(hitScanPosition, out Entity foundEntity, out SolidTag solid))
+                if (solidProvider.TryGetFirstEntityWithTagAt(hitScanPosition, out Entity foundEntity, out Solid solid))
                 {
                     if (solid.IsPushOnHit)
                     {

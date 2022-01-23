@@ -31,7 +31,7 @@ namespace Duel
 
             // Walls
             var wall = new TileTemplate();
-            wall.Tags.AddTag(new SolidTag());
+            wall.Tags.AddTag(new Solid());
             wall.Tags.AddTag(new TileImageTag(TileImageTag.TileImage.Wall));
             wall.Tags.AddTag(new BlockProjectileTag());
             game.CurrentLevel.PutTileAt(new Point(5, 6), wall);
@@ -50,16 +50,16 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(0, 1), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 2), glass);
 
-            var metalBox = new EntityTemplate(new SolidTag().PushOnHit(), new BlockProjectileTag());
+            var metalBox = new EntityTemplate(new Solid().PushOnHit(), new BlockProjectileTag());
             game.CurrentLevel.PutEntityAt(new Point(3, 5), metalBox);
 
-            var crate = new EntityTemplate(new SolidTag().PushOnBump().PushOnHit(), new BlockProjectileTag(), new Grapplable(Grapplable.Type.PulledByLasso));
+            var crate = new EntityTemplate(new Solid().PushOnBump().PushOnHit(), new BlockProjectileTag(), new Grapplable(Grapplable.Type.PulledByLasso));
             game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new BlockProjectileTag(), new SolidTag().PushOnBump().PushOnHit()));
-            game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new DestroyOnHit(), new SolidTag().PushOnBump()));
+            game.CurrentLevel.PutEntityAt(new Point(3, 2), new EntityTemplate(new BlockProjectileTag(), new Solid().PushOnBump().PushOnHit()));
+            game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump()));
 
-            game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new SolidTag().PushOnBump(), new Grapplable(Grapplable.Type.PulledByLasso)));
+            game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new Solid().PushOnBump(), new Grapplable(Grapplable.Type.PulledByLasso)));
             game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
         }
 

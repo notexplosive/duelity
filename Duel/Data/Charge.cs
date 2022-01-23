@@ -15,7 +15,7 @@ namespace Duel.Data
             {
                 Path.Add(new ChargeHit(hitScanPosition, travelDirection));
 
-                if (solidProvider.HasTagAt<SolidTag>(hitScanPosition + travelDirection.ToPoint()))
+                if (solidProvider.HasTagAt<Solid>(hitScanPosition + travelDirection.ToPoint()))
                 {
                     return;
                 }
