@@ -92,7 +92,7 @@ namespace Duel.Data
         public bool IsOutOfBounds(Point position)
         {
             var corners = CalculateCorners();
-            return position.X < corners.TopLeft.X || position.Y < corners.TopLeft.Y || position.X > corners.BottomRight.X || position.Y > corners.BottomRight.Y;
+            return position.X < corners.TopLeft.X || position.Y < corners.TopLeft.Y || position.X >= corners.BottomRight.X || position.Y >= corners.BottomRight.Y;
         }
 
         public IEnumerable<Entity> AllEntitiesAt(Point position)

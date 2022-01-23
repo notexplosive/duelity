@@ -36,7 +36,7 @@ namespace TestDuel
             bullet.StartPosition.Should().Be(new Point(0, 0));
             bullet.HitAtLeastOneThing.Should().BeFalse();
             bullet.WasBlocked.Should().BeFalse();
-            bullet.HitLocations.Should().Contain(new Point(0, 11)).And.HaveCount(1);
+            bullet.HitLocations.Should().Contain(new Point(0, 10)).And.HaveCount(1);
         }
 
         [Fact]
@@ -154,11 +154,11 @@ namespace TestDuel
 
             this.gunComponent.Shoot();
 
-            pushedOnHit.Position.Should().Be(new Point(0, 10));
+            pushedOnHit.Position.Should().Be(new Point(0, 9));
 
             this.gunComponent.Shoot();
 
-            pushedOnHit.Position.Should().Be(new Point(0, 10));
+            pushedOnHit.Position.Should().Be(new Point(0, 9));
         }
     }
 }
