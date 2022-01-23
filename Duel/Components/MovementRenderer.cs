@@ -26,6 +26,12 @@ namespace Duel.Components
             this.entity.PositionChanged += OnPositionChanged;
             this.entity.MoveFailed += BumpAnimation;
             this.entity.Nudged += BumpAnimation;
+            this.entity.Jumped += Jump;
+        }
+
+        private void Jump(EaseFunc easeFunc, Point previousPosition)
+        {
+            StartJumpTween(easeFunc, this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
         }
 
         public override void Update(float dt)
@@ -57,7 +63,7 @@ namespace Duel.Components
 
             if (moveType == MoveType.Jump)
             {
-                StartJumpTween(this.renderInfo.TileToLocalPosition(previousPosition), this.renderInfo.TileToLocalPosition(this.entity.Position));
+                // handled on Jumped event
             }
 
             if (moveType == MoveType.Charge)
@@ -94,14 +100,14 @@ namespace Duel.Components
             this.entity.BusySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
         }
 
-        private void StartJumpTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
+        private void StartJumpTween(EaseFunc easeFunc, Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
             this.renderInfo.SnapPositionToGrid();
             var displacement = previousWorldPos - targetWorldPos;
             this.renderInfo.renderOffsetTweenable.setter(displacement);
             this.tween.Clear();
 
-            this.tween.AppendVectorTween(Vector2.Zero, 0.10f * displacement.Length() / Grid.TileSize, EaseFuncs.EaseInBack, this.renderInfo.renderOffsetTweenable);
+            this.tween.AppendVectorTween(Vector2.Zero, 0.10f * displacement.Length() / Grid.TileSize, easeFunc, this.renderInfo.renderOffsetTweenable);
             this.entity.BusySignal.Add(new BusyFunction("JumpTween", this.tween.IsDone));
         }
     }

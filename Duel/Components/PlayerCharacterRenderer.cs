@@ -37,6 +37,8 @@ namespace Duel.Components
             this.renderInfo.DisableDebugGraphic();
         }
 
+        public AnimationWrapper AnimationOverride { get; set; } = AnimationWrapper.None;
+
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
         {
             // technically we don't need to do this, but if we're in framestep it looks weird if we don't
@@ -46,13 +48,21 @@ namespace Duel.Components
         public override void Update(float dt)
         {
             BindSpritePosToRenderOffset();
-            if (this.movement.IsMoving)
+
+            if (AnimationOverride == AnimationWrapper.None)
             {
-                this.spriteRenderer.SetAnimation(this.playerAnimations.Move);
+                if (this.movement.IsMoving)
+                {
+                    this.spriteRenderer.SetAnimation(this.playerAnimations.Move);
+                }
+                else
+                {
+                    this.spriteRenderer.SetAnimation(this.playerAnimations.Idle);
+                }
             }
             else
             {
-                this.spriteRenderer.SetAnimation(this.playerAnimations.Idle);
+                this.spriteRenderer.SetAnimation(AnimationOverride.Animation);
             }
 
             if (this.entity.FacingDirection == Direction.Left)

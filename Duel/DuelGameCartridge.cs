@@ -60,7 +60,7 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump()));
 
             game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new Solid().PushOnBump(), new Grapplable(Grapplable.Type.PulledByLasso)));
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade)));
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
@@ -68,9 +68,12 @@ namespace Duel
             loader.AddMachinaAssetCallback("characters-sheet", () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));
             loader.AddMachinaAssetCallback("ernesto-move", () => new LinearFrameAnimation(2, 1));
+            loader.AddMachinaAssetCallback("ernesto-jump", () => new LinearFrameAnimation(3, 1));
+            loader.AddMachinaAssetCallback("ernesto-throw", () => new LinearFrameAnimation(4, 1));
 
             loader.AddMachinaAssetCallback("miranda-idle", () => new LinearFrameAnimation(6, 2));
             loader.AddMachinaAssetCallback("miranda-move", () => new LinearFrameAnimation(8, 1));
+            loader.AddMachinaAssetCallback("miranda-shoot", () => new LinearFrameAnimation(9, 1));
 
             loader.AddMachinaAssetCallback("steven-idle", () => new LinearFrameAnimation(12, 2));
             loader.AddMachinaAssetCallback("steven-move", () => new LinearFrameAnimation(14, 2));

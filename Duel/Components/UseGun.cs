@@ -10,6 +10,7 @@ namespace Duel.Components
         private readonly Entity entity;
         private readonly LevelSolidProvider solidProvider;
         private readonly BufferedKeyboardListener keyboard;
+        public event Action Fired;
 
         public UseGun(Actor actor, Entity entity, Level level) : base(actor)
         {
@@ -31,7 +32,7 @@ namespace Duel.Components
                 }
             }
 
-            MachinaClient.Print("Bang!");
+            Fired?.Invoke();
         }
 
         public FiredBullet CreateBullet()

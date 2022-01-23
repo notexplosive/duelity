@@ -19,6 +19,11 @@ namespace Duel.Components
         private readonly BufferedKeyboardListener keyboard;
         private readonly LevelSolidProvider solidProvider;
 
+        public event Action Deployed;
+        public event Action YankStart;
+        public event Action JumpStart;
+        public event Action Finished;
+
         public UseLasso(Actor actor, Entity entity, Level level, ActorRoot actorRoot) : base(actor)
         {
             this.actorRoot = actorRoot;
@@ -46,7 +51,7 @@ namespace Duel.Components
         {
             if (lasso.Valid)
             {
-                this.userEntity.Nudge(this.userEntity.FacingDirection);
+                Deployed?.Invoke();
                 yield return lasso.DeployLasso(this.level, actorRoot);
 
                 if (lasso.FoundGrapplable)
@@ -56,11 +61,13 @@ namespace Duel.Components
                         lasso.DestroyLassoActor();
                         yield return new WaitSeconds(0.25f);
                         this.userEntity.Nudge(this.userEntity.FacingDirection.Opposite);
+                        YankStart?.Invoke();
                         yield return lasso.PullEntity();
                     }
                     else
                     {
                         yield return new WaitSeconds(0.25f);
+                        JumpStart?.Invoke();
                         yield return lasso.JumpToDestination();
                         lasso.DestroyLassoActor();
                     }
@@ -72,7 +79,6 @@ namespace Duel.Components
                         this.level.NudgeAt(lasso.FailPoint, this.userEntity.FacingDirection);
                         lasso.NudgeLassoEntity(this.userEntity.FacingDirection);
                     }
-                    yield return new WaitSeconds(0.35f);
                     yield return lasso.ReturnLassoToPlayer();
                     lasso.DestroyLassoActor();
                 }
@@ -81,6 +87,8 @@ namespace Duel.Components
             {
                 this.userEntity.Nudge(userEntity.FacingDirection.Opposite);
             }
+
+            Finished.Invoke();
         }
 
         public override void Update(float dt)

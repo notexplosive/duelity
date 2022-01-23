@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Machina.ThirdParty;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Duel.Data
@@ -7,8 +8,8 @@ namespace Duel.Data
     {
         Warp,
         Walk,
-        Jump,
-        Charge
+        Charge,
+        Jump
     }
 
     public delegate void MoveAction(MoveType moveType, Point previousPosition);
@@ -21,6 +22,7 @@ namespace Duel.Data
         public event MoveAction PositionChanged;
         public event DirectionalAction MoveFailed;
         public event DirectionalAction Nudged;
+        public event Action<EaseFunc, Point> Jumped;
 
         public BusySignal BusySignal { get; } = new BusySignal();
         public TagCollection Tags { get; } = new TagCollection();
@@ -92,7 +94,7 @@ namespace Duel.Data
             PositionChanged?.Invoke(MoveType.Charge, prevPosition);
         }
 
-        public void JumpToPosition(Point position)
+        public void JumpToPosition(Point position, EaseFunc easeFunc = null)
         {
             if (Position == position)
             {
@@ -102,6 +104,12 @@ namespace Duel.Data
             var prevPosition = Position;
             Position = position;
             PositionChanged?.Invoke(MoveType.Jump, prevPosition);
+
+            if (easeFunc == null)
+            {
+                easeFunc = EaseFuncs.EaseInBack;
+            }
+            Jumped?.Invoke(easeFunc, prevPosition);
         }
 
         public void WalkWithoutPushInDirection(Direction direction)

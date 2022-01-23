@@ -1,6 +1,7 @@
 ﻿using Duel.Components;
 using Machina.Data;
 using Machina.Engine;
+using Machina.ThirdParty;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -103,14 +104,14 @@ namespace Duel.Data
         public ICoroutineAction DeployLasso(Level level, ActorRoot actorRoot)
         {
             this.lassoEntity = level.PutEntityAt(this.startingPosition, new EntityTemplate());
-            this.lassoEntity.JumpToPosition(LassoLandingPosition);
+            this.lassoEntity.JumpToPosition(LassoLandingPosition, EaseFuncs.QuadraticEaseOut);
             this.actor = actorRoot.FindActor(this.lassoEntity);
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
         }
 
         public ICoroutineAction ReturnLassoToPlayer()
         {
-            this.lassoEntity.JumpToPosition(this.startingPosition);
+            this.lassoEntity.JumpToPosition(this.startingPosition, EaseFuncs.QuadraticEaseOut);
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
         }
     }
