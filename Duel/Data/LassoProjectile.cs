@@ -78,6 +78,11 @@ namespace Duel.Data
             }
         }
 
+        public void NudgeLassoEntity(Direction direction)
+        {
+            this.lassoEntity.Nudge(direction);
+        }
+
         public ICoroutineAction PullEntity()
         {
             this.entityToPull.JumpToPosition(this.startingPosition + this.throwDirection.ToPoint());

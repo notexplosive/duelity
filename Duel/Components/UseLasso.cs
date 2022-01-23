@@ -46,6 +46,7 @@ namespace Duel.Components
         {
             if (lasso.Valid)
             {
+                this.userEntity.Nudge(this.userEntity.FacingDirection);
                 yield return lasso.DeployLasso(this.level, actorRoot);
 
                 if (lasso.FoundGrapplable)
@@ -54,6 +55,7 @@ namespace Duel.Components
                     {
                         lasso.DestroyLassoActor();
                         yield return new WaitSeconds(0.25f);
+                        this.userEntity.Nudge(this.userEntity.FacingDirection.Opposite);
                         yield return lasso.PullEntity();
                     }
                     else
@@ -68,12 +70,16 @@ namespace Duel.Components
                     if (lasso.WasBlocked)
                     {
                         this.level.NudgeAt(lasso.FailPoint, this.userEntity.FacingDirection);
+                        lasso.NudgeLassoEntity(this.userEntity.FacingDirection);
                     }
-                    yield return new WaitSeconds(0.10f);
+                    yield return new WaitSeconds(0.35f);
                     yield return lasso.ReturnLassoToPlayer();
                     lasso.DestroyLassoActor();
                 }
-
+            }
+            else
+            {
+                this.userEntity.Nudge(userEntity.FacingDirection.Opposite);
             }
         }
 

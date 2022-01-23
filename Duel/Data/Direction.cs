@@ -115,6 +115,34 @@ namespace Duel.Data
             }
         }
 
+        public Direction Opposite
+        {
+            get
+            {
+                if (this == Up)
+                {
+                    return Down;
+                }
+
+                if (this == Right)
+                {
+                    return Left;
+                }
+
+                if (this == Down)
+                {
+                    return Up;
+                }
+
+                if (this == Left)
+                {
+                    return Right;
+                }
+
+                return None;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Direction direction &&
