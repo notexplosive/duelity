@@ -10,7 +10,7 @@ namespace Duel.Components
         private readonly Entity entity;
         private readonly LevelSolidProvider solidProvider;
         private readonly BufferedKeyboardListener keyboard;
-        public event Action Fired;
+        public event Action<FiredBullet> Fired;
 
         public UseGun(Actor actor, Entity entity, Level level) : base(actor)
         {
@@ -32,7 +32,7 @@ namespace Duel.Components
                 }
             }
 
-            Fired?.Invoke();
+            Fired?.Invoke(bullet);
         }
 
         public FiredBullet CreateBullet()

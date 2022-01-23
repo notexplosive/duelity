@@ -74,7 +74,7 @@ namespace Duel.Components
                         {
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Miranda);
                             new PlayerDirectionRenderer(entityActor, entity, Color.Purple);
-                            new GunAnimation(entityActor, entity);
+                            new GunAnimation(entityActor, entity, this.grid);
                         }
                     }
 

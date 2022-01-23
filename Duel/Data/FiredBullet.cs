@@ -57,5 +57,17 @@ namespace Duel.Data
         public bool WasBlocked { get; }
         public Point StartPosition { get; }
         public List<Point> HitLocations { get; } = new List<Point>();
+        public Point LastHitLocation
+        {
+            get
+            {
+                foreach (var location in HitLocationsReversed())
+                {
+                    return location;
+                }
+
+                return StartPosition;
+            }
+        }
     }
 }
