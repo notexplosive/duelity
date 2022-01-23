@@ -60,7 +60,7 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(4, 2), new EntityTemplate(new Hittable(Hittable.Type.DestroyOnHit), new SolidTag(SolidTag.Type.Pushable)));
 
             game.CurrentLevel.PutEntityAt(new Point(6, 5), new EntityTemplate(new SolidTag(SolidTag.Type.Pushable), new Grapplable(Grapplable.Type.PulledByLasso)));
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight)));
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

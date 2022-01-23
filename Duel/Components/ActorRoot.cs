@@ -60,6 +60,7 @@ namespace Duel.Components
                         if (!Sokoban.Headless)
                         {
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Ernesto);
+                            new PlayerDirectionRenderer(entityActor, entity, Color.Crimson);
                         }
                     }
 
@@ -71,6 +72,7 @@ namespace Duel.Components
                         if (!Sokoban.Headless)
                         {
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Miranda);
+                            new PlayerDirectionRenderer(entityActor, entity, Color.Purple);
                         }
                     }
 
