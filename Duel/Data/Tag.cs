@@ -1,4 +1,5 @@
-﻿using Machina.Engine;
+﻿using Duel.Components;
+using Machina.Engine;
 
 namespace Duel.Data
 {
@@ -39,10 +40,35 @@ namespace Duel.Data
             IsPushOnHit = true;
             return this;
         }
+    }
 
-        public Solid()
+    public class SimpleEntityImage : Tag
+    {
+        public class EntityFrameSet
         {
+            public int Normal { get; }
+            public int Lassod { get; }
+            public int Broken { get; }
+
+            public EntityFrameSet(EntityFrame normal, EntityFrame lassod, EntityFrame broken)
+            {
+                Normal = (int) normal;
+                Lassod = (int) lassod;
+                Broken = (int) broken;
+            }
+
+            public static readonly EntityFrameSet GlassBottle = new EntityFrameSet(EntityFrame.GlassHooch, EntityFrame.GlassHoochLassod, EntityFrame.GlassHoochBreak);
+            public static readonly EntityFrameSet Crate = new EntityFrameSet(EntityFrame.Crate, EntityFrame.CrateLassod, EntityFrame.CrateBreak);
+            public static readonly EntityFrameSet Anvil = new EntityFrameSet(EntityFrame.Anvil, EntityFrame.Anvil, EntityFrame.Anvil);
+            public static readonly EntityFrameSet Barrel = new EntityFrameSet(EntityFrame.Barrel, EntityFrame.Barrel, EntityFrame.Barrel);
         }
+        
+        public SimpleEntityImage(EntityFrameSet entityFrameSet)
+        {
+            EntityClass = entityFrameSet;
+        }
+
+        public EntityFrameSet EntityClass { get; }
     }
 
     public class PlayerTag : Tag

@@ -33,7 +33,8 @@ namespace Duel.Components
 
             this.spriteRenderer.SetAnimation(playerAnimations.Idle);
             this.spriteRenderer.FramesPerSecond = 10;
-            spriteActor.transform.LocalPosition = new Vector2(0, -Grid.TileSize / 4);
+            this.spriteActor.transform.LocalPosition = new Vector2(0, -Grid.TileSize / 4);
+            this.spriteActor.transform.LocalDepth -= 10;
             this.renderInfo.DisableDebugGraphic();
         }
 

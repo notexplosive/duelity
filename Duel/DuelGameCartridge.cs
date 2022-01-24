@@ -29,7 +29,7 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(1, 1), new TileTemplate());
             game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
 
-            // Walls
+            // Tiles
             var wall = new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall),
                 new BlockProjectileTag());
             var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new Solid());
@@ -38,6 +38,40 @@ namespace Duel
             var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
             var hook = new TileTemplate(new Grapplable(Grapplable.Type.Static),
                 new TileImageTag(TileImageTag.TileImage.Hook));
+
+            // Entities
+            var glass = new EntityTemplate(
+                new DestroyOnHit(),
+                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.GlassBottle),
+                new Solid().PushOnBump(),
+                new Grapplable(Grapplable.Type.PulledByLasso)
+            );
+
+            var anvil = new EntityTemplate(
+                new Solid().PushOnHit(),
+                new BlockProjectileTag(),
+                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.Anvil)
+            );
+
+            var crate = new EntityTemplate(
+                new Solid().PushOnBump(),
+                new BlockProjectileTag(),
+                new Grapplable(Grapplable.Type.PulledByLasso),
+                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.Crate),
+                new DestroyOnHit()
+            );
+
+            var barrel = new EntityTemplate(
+                new Solid().PushOnBump().PushOnHit(),
+                new BlockProjectileTag(),
+                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.Barrel)
+            );
+
+            // player characters
+            var sheriff = new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff));
+            var renegade = new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade));
+            var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
+            var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
 
             game.CurrentLevel.PutTileAt(new Point(5, 6), wall);
             game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
@@ -48,27 +82,15 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(2, 3), water);
             game.CurrentLevel.PutTileAt(new Point(3, 3), bridge);
             game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
-            
-            var glass = new EntityTemplate(new DestroyOnHit());
+
             game.CurrentLevel.PutEntityAt(new Point(0, 0), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 1), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 2), glass);
-
-            var metalBox = new EntityTemplate(new Solid().PushOnHit(), new BlockProjectileTag());
-            game.CurrentLevel.PutEntityAt(new Point(3, 5), metalBox);
-
-            var crate = new EntityTemplate(new Solid().PushOnBump().PushOnHit(), new BlockProjectileTag(),
-                new Grapplable(Grapplable.Type.PulledByLasso));
+            game.CurrentLevel.PutEntityAt(new Point(3, 5), anvil);
             game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
-
-            game.CurrentLevel.PutEntityAt(new Point(3, 2),
-                new EntityTemplate(new BlockProjectileTag(), new Solid().PushOnBump().PushOnHit()));
-            game.CurrentLevel.PutEntityAt(new Point(4, 2),
-                new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump()));
-
-            game.CurrentLevel.PutEntityAt(new Point(6, 5),
-                new EntityTemplate(new Solid().PushOnBump(), new Grapplable(Grapplable.Type.PulledByLasso)));
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade)));
+            game.CurrentLevel.PutEntityAt(new Point(3, 2), barrel);
+            game.CurrentLevel.PutEntityAt(new Point(4, 2), glass);
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
@@ -77,6 +99,7 @@ namespace Duel
                 () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("tiles-sheet", () => new GridBasedSpriteSheet("tiles", new Point(64)));
             loader.AddMachinaAssetCallback("entities-sheet", () => new GridBasedSpriteSheet("entities", new Point(64)));
+
             loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));
             loader.AddMachinaAssetCallback("ernesto-move", () => new LinearFrameAnimation(2, 1));
             loader.AddMachinaAssetCallback("ernesto-jump", () => new LinearFrameAnimation(3, 1));

@@ -50,7 +50,14 @@ namespace Duel.Components
         {
             foreach (var tag in entity.Tags)
             {
-                if (tag is PlayerTag playerTag)
+                if (tag is SimpleEntityImage image)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SimpleEntityRenderer(entityActor, image.EntityClass, entity);
+                    }
+                }
+                else if (tag is PlayerTag playerTag)
                 {
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
@@ -98,7 +105,8 @@ namespace Duel.Components
 
                         if (!Sokoban.Headless)
                         {
-                            new KnightPreviewRenderer(entityActor, entity, this.grid, new LevelSolidProvider(this.level));
+                            new KnightPreviewRenderer(entityActor, entity, this.grid,
+                                new LevelSolidProvider(this.level));
                             new KnightCharacterRenderer(entityActor);
                         }
                     }
