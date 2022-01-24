@@ -114,5 +114,15 @@ namespace Duel.Data
             this.lassoEntity.JumpToPosition(this.startingPosition, EaseFuncs.QuadraticEaseOut);
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
         }
+
+        public void WrapGrappledEntity()
+        {
+            this.lassoEntity.GrabWithLasso();
+        }
+
+        public void UnwrapGrappledEntity()
+        {
+            this.lassoEntity.ReleaseFromLasso();
+        }
     }
 }

@@ -69,6 +69,9 @@ namespace Duel.Components
             this.frameSet = frameSet;
             this.entity = entity;
 
+            this.entity.GrabbedByLasso += BecomeLassodSprite;
+            this.entity.ReleasedFromLasso += RestoreNormalSprite;
+
             this.movement = RequireComponent<MovementRenderer>();
             this.renderInfo = RequireComponent<EntityRenderInfo>();
 
@@ -79,7 +82,17 @@ namespace Duel.Components
             this.spriteRenderer.SetFrame(this.frameSet.Normal);
             this.renderInfo.DisableDebugGraphic();
         }
-        
+
+        private void RestoreNormalSprite()
+        {
+            this.spriteRenderer.SetFrame(this.frameSet.Normal);
+        }
+
+        private void BecomeLassodSprite()
+        {
+            this.spriteRenderer.SetFrame(this.frameSet.Lassod);
+        }
+
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
         {
             // technically we don't need to do this, but if we're in framestep it looks weird if we don't

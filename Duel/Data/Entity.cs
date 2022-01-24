@@ -13,6 +13,7 @@ namespace Duel.Data
     }
 
     public delegate void MoveAction(MoveType moveType, Point previousPosition);
+
     public delegate void DirectionalAction(Direction direction);
 
     public class Entity
@@ -22,6 +23,8 @@ namespace Duel.Data
         public event MoveAction PositionChanged;
         public event DirectionalAction MoveFailed;
         public event DirectionalAction Nudged;
+        public event Action GrabbedByLasso;
+        public event Action ReleasedFromLasso;
         public event Action<EaseFunc, Point> Jumped;
 
         public BusySignal BusySignal { get; } = new BusySignal();
@@ -37,6 +40,16 @@ namespace Duel.Data
         {
             // Purely graphical
             Nudged?.Invoke(direction);
+        }
+
+        public void GrabWithLasso()
+        {
+            GrabbedByLasso?.Invoke();
+        }
+
+        public void ReleaseFromLasso()
+        {
+            ReleasedFromLasso?.Invoke();
         }
 
         public Entity()
@@ -58,6 +71,7 @@ namespace Duel.Data
             {
                 return other.uniqueId == this.uniqueId;
             }
+
             return false;
         }
 
@@ -109,6 +123,7 @@ namespace Duel.Data
             {
                 easeFunc = EaseFuncs.EaseInBack;
             }
+
             Jumped?.Invoke(easeFunc, prevPosition);
         }
 
