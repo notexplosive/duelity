@@ -72,6 +72,13 @@ namespace Duel
                 new MiasmaImageTag()
             );
 
+            var lever = new EntityTemplate(
+                new BlockProjectileTag(),
+                new Solid(),
+                new ToggleSignal(SignalColor.Red).OnBump().OnGrapple().OnHit(),
+                new LeverImageTag(SignalColor.Red)
+            );
+
             // player characters
             var sheriff = new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff));
             var renegade = new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade));
@@ -90,7 +97,7 @@ namespace Duel
 
             game.CurrentLevel.PutEntityAt(new Point(0, 0), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 1), miasma);
-            game.CurrentLevel.PutEntityAt(new Point(0, 2), glass);
+            game.CurrentLevel.PutEntityAt(new Point(0, 2), lever);
             game.CurrentLevel.PutEntityAt(new Point(3, 5), anvil);
             game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
             game.CurrentLevel.PutEntityAt(new Point(3, 2), barrel);

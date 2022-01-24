@@ -61,7 +61,7 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeTrue();
             bullet.HitLocations.Should().Contain(new Point(0, 3)).And.HaveCount(1);
         }
@@ -69,9 +69,10 @@ namespace TestDuel
         [Fact]
         public void shot_through_several_breakables()
         {
-            this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new DestroyOnHit()));
-            this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit()));
-            this.level.PutEntityAt(new Point(0, 5), new EntityTemplate(new DestroyOnHit()));
+            var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
+            this.level.PutEntityAt(new Point(0, 3), glass);
+            this.level.PutEntityAt(new Point(0, 4), glass);
+            this.level.PutEntityAt(new Point(0, 5), glass);
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -79,6 +80,7 @@ namespace TestDuel
             bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeFalse();
             bullet.HitLocations.Should().ContainInOrder(new Point(0, 3), new Point(0, 4), new Point(0, 5));
+            bullet.LastHitLocation.Should().Be(new Point(0, 10));
         }
 
         [Fact]
@@ -89,7 +91,7 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeTrue();
             bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 4));
         }
@@ -102,7 +104,7 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeTrue();
             bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 1));
         }

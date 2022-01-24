@@ -17,6 +17,8 @@ namespace Duel.Data
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
 
+        public SignalState SignalState { get; internal set; } = new SignalState(); // this should be on a per-screen basis
+
         public Level(Corners corners)
         {
             PutTileAt(corners.TopLeft, new TileTemplate());

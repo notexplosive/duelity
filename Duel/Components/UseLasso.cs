@@ -79,6 +79,7 @@ namespace Duel.Components
                 {
                     if (lasso.WasBlocked)
                     {
+                        this.solidProvider.BumpWithLassoAt(lasso.FailPoint);
                         this.level.NudgeAt(lasso.FailPoint, this.userEntity.FacingDirection);
                         lasso.NudgeLassoEntity(this.userEntity.FacingDirection);
                     }

@@ -21,7 +21,7 @@ namespace Duel.Components
         BlueLockedDoor,
         YellowLockedDoor,
         RedLeverRight,
-        BleLeverRight,
+        BlueLeverRight,
         YellowLeverRight,
         RedKey,
         BlueKey,

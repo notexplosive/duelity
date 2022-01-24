@@ -29,6 +29,28 @@ namespace Duel.Data
                         entity.Nudge(direction);
                     }
                 }
+
+                if (entity.Tags.TryGetTag(out ToggleSignal toggleSignal))
+                {
+                    if (toggleSignal.IsOnBump)
+                    {
+                        this.level.SignalState.Toggle(toggleSignal.Color);
+                    }
+                }
+            }
+        }
+
+        public void BumpWithLassoAt(Point position)
+        {
+            foreach (var entity in this.level.AllEntitiesAt(position))
+            {
+                if (entity.Tags.TryGetTag(out ToggleSignal toggleSignal))
+                {
+                    if (toggleSignal.IsOnGrapple)
+                    {
+                        this.level.SignalState.Toggle(toggleSignal.Color);
+                    }
+                }
             }
         }
 
@@ -37,7 +59,7 @@ namespace Duel.Data
             return this.level.IsOutOfBounds(hitScanPosition);
         }
 
-        public override bool IsSolidAt(Point position)
+        public override bool IsSolidAt(Point position) // todo: rename to "IsNotWalkableAt"
         {
             if (IsOutOfBounds(position))
             {
@@ -62,6 +84,14 @@ namespace Duel.Data
                     if (solid.IsPushOnHit)
                     {
                         entity.WalkAndPushInDirection(attackDirection);
+                    }
+                }
+
+                if (entity.Tags.TryGetTag(out ToggleSignal toggleSignal))
+                {
+                    if (toggleSignal.IsOnHit)
+                    {
+                        this.level.SignalState.Toggle(toggleSignal.Color);
                     }
                 }
             }

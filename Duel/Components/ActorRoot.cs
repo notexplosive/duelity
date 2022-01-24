@@ -57,11 +57,18 @@ namespace Duel.Components
                         new SimpleEntityRenderer(entityActor, image.EntityClass, entity);
                     }
                 }
-                else if (tag is MiasmaImageTag miasma)
+                else if (tag is MiasmaImageTag)
                 {
                     if (!Sokoban.Headless)
                     {
                         new MiasmaRenderer(entityActor);
+                    }
+                }
+                else if (tag is LeverImageTag leverImage)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new LeverRenderer(entityActor, leverImage.Color, this.level.SignalState);
                     }
                 }
                 else if (tag is PlayerTag playerTag)

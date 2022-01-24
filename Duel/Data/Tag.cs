@@ -24,6 +24,55 @@ namespace Duel.Data
     {
     }
 
+    public class ToggleSignal : Tag
+    {
+        public SignalColor Color { get; }
+        public bool IsOnBump { get; private set; }
+        public bool IsOnHit { get; private set; }
+        public bool IsOnGrapple { get; private set; }
+
+        public ToggleSignal(SignalColor color)
+        {
+            Color = color;
+        }
+
+        public ToggleSignal OnBump()
+        {
+            IsOnBump = true;
+            return this;
+        }
+
+        public ToggleSignal OnHit()
+        {
+            IsOnHit = true;
+            return this;
+        }
+
+        public ToggleSignal OnGrapple()
+        {
+            IsOnGrapple = true;
+            return this;
+        }
+    }
+
+    public class LeverImageTag : Tag
+    {
+        public SignalColor Color { get; }
+
+        public LeverImageTag(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
+
+    public enum SignalColor
+    {
+        Red,
+        Blue,
+        Yellow
+    }
+
     public class MiasmaImageTag : Tag
     {
     }
