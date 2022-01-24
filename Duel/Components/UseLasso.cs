@@ -91,7 +91,7 @@ namespace Duel.Components
                 this.userEntity.Nudge(userEntity.FacingDirection.Opposite);
             }
 
-            Finished.Invoke();
+            Finished?.Invoke();
         }
 
         public override void Update(float dt)

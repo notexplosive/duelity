@@ -117,12 +117,18 @@ namespace Duel.Data
 
         public void WrapGrappledEntity()
         {
-            this.entityToPull.GrabWithLasso();
+            if (FoundPullableEntity)
+            {
+                this.entityToPull.GrabWithLasso();
+            }
         }
 
         public void UnwrapGrappledEntity()
         {
-            this.entityToPull.ReleaseFromLasso();
+            if (FoundPullableEntity)
+            {
+                this.entityToPull.ReleaseFromLasso();
+            }
         }
     }
 }
