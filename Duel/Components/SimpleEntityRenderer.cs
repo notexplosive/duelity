@@ -7,7 +7,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Duel.Components
 {
-    public enum EntityFrame {
+    public enum EntityFrame
+    {
         GlassHooch,
         Crate,
         Barrel,
@@ -53,7 +54,7 @@ namespace Duel.Components
         GlassHoochBreak,
         CrateBreak
     }
-    
+
     public class SimpleEntityRenderer : BaseComponent
     {
         private readonly SimpleEntityImage.EntityFrameSet frameSet;
@@ -76,9 +77,8 @@ namespace Duel.Components
             this.renderInfo = RequireComponent<EntityRenderInfo>();
 
             this.spriteActor = transform.AddActorAsChild("sprite");
-            this.spriteRenderer = new SpriteRenderer(actor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet"));
+            this.spriteRenderer = new SpriteRenderer(this.spriteActor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet"));
             this.spriteRenderer.FramesPerSecond = 0;
-            
             this.spriteRenderer.SetFrame(this.frameSet.Normal);
             this.renderInfo.DisableDebugGraphic();
         }
@@ -93,6 +93,16 @@ namespace Duel.Components
             this.spriteRenderer.SetFrame(this.frameSet.Lassod);
         }
 
+        public override void OnActorDestroy()
+        {
+            var debrisActor = this.actor.transform.Parent.AddActorAsChild("DeadSprite");
+            var debrisSpriteRenderer = new SpriteRenderer(debrisActor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet"));
+            debrisSpriteRenderer.FramesPerSecond = 0;
+            debrisSpriteRenderer.SetFrame(this.frameSet.Broken);
+            debrisActor.transform.Position = transform.Position + RenderOffset();
+            new DebrisDestroy(debrisActor);
+        }
+
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
         {
             // technically we don't need to do this, but if we're in framestep it looks weird if we don't
@@ -103,7 +113,7 @@ namespace Duel.Components
         {
             BindSpritePosToRenderOffset();
         }
-        
+
         private void BindSpritePosToRenderOffset()
         {
             this.spriteRenderer.SetOffset(RenderOffset());
