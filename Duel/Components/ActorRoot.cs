@@ -57,6 +57,13 @@ namespace Duel.Components
                         new SimpleEntityRenderer(entityActor, image.EntityClass, entity);
                     }
                 }
+                else if (tag is MiasmaImageTag miasma)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new MiasmaRenderer(entityActor);
+                    }
+                }
                 else if (tag is PlayerTag playerTag)
                 {
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)

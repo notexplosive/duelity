@@ -24,6 +24,10 @@ namespace Duel.Data
     {
     }
 
+    public class MiasmaImageTag : Tag
+    {
+    }
+
     public class Solid : Tag
     {
         public bool IsPushOnBump { get; private set; }
@@ -52,9 +56,9 @@ namespace Duel.Data
 
             public EntityFrameSet(EntityFrame normal, EntityFrame lassod, EntityFrame broken)
             {
-                Normal = (int) normal;
-                Lassod = (int) lassod;
-                Broken = (int) broken;
+                Normal = (int)normal;
+                Lassod = (int)lassod;
+                Broken = (int)broken;
             }
 
             public static readonly EntityFrameSet GlassBottle = new EntityFrameSet(EntityFrame.GlassHooch, EntityFrame.GlassHoochLassod, EntityFrame.GlassHoochBreak);
@@ -62,7 +66,7 @@ namespace Duel.Data
             public static readonly EntityFrameSet Anvil = new EntityFrameSet(EntityFrame.Anvil, EntityFrame.Anvil, EntityFrame.Anvil);
             public static readonly EntityFrameSet Barrel = new EntityFrameSet(EntityFrame.Barrel, EntityFrame.Barrel, EntityFrame.Barrel);
         }
-        
+
         public SimpleEntityImage(EntityFrameSet entityFrameSet)
         {
             EntityClass = entityFrameSet;
