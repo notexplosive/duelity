@@ -102,7 +102,8 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
             game.CurrentLevel.PutEntityAt(new Point(3, 2), barrel);
             game.CurrentLevel.PutEntityAt(new Point(4, 2), glass);
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), renegade);
+
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), cowboy);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

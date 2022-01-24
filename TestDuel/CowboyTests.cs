@@ -49,7 +49,7 @@ namespace TestDuel
         [Fact]
         public void charge_cleaves_through_breakables()
         {
-            var glass = new EntityTemplate(new DestroyOnHit());
+            var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
 
             var actor1 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 6), glass));
             var actor2 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 7), glass));
