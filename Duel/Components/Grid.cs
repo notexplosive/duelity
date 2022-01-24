@@ -33,7 +33,7 @@ namespace Duel.Components
         private void Recompute()
         {
             LevelCorners = this.level.CalculateCorners();
-            WaterAutoTile = this.level.ComputeAutoTile(TileImageTag.TileImage.Water);
+            WaterAutoTile = this.level.ComputeAutoTile(TileImageTag.TileImage.Water, TileImageTag.TileImage.Bridge);
             RavineAutoTile = this.level.ComputeAutoTile(TileImageTag.TileImage.Ravine);
         }
 

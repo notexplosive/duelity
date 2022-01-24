@@ -164,7 +164,7 @@ namespace Duel.Components
                 case TileClass.TopEdge:
                     return TileFrame.WaterTopEdge;
                 case TileClass.TopRightCorner:
-                    return TileFrame.WaterRightEdge;
+                    return TileFrame.WaterTopRight;
                 case TileClass.TopLeftCorner:
                     return TileFrame.WaterTopLeft;
                 case TileClass.BottomLeftCorner:
@@ -207,7 +207,7 @@ namespace Duel.Components
                 case TileClass.TopEdge:
                     return TileFrame.RavineTopEdge;
                 case TileClass.TopRightCorner:
-                    return TileFrame.RavineRightEdge;
+                    return TileFrame.RavineTopRight;
                 case TileClass.TopLeftCorner:
                     return TileFrame.RavineTopLeft;
                 case TileClass.BottomLeftCorner:

@@ -25,7 +25,6 @@ namespace Duel.Data
 
         public Level() : this(new Corners(Point.Zero, Point.Zero))
         {
-
         }
 
         public Entity PutEntityAt(Point startingPosition, EntityTemplate template)
@@ -61,19 +60,24 @@ namespace Duel.Data
             TilemapChanged?.Invoke();
         }
 
-        public AutoTile ComputeAutoTile(TileImageTag.TileImage image)
+        public AutoTile ComputeAutoTile(params TileImageTag.TileImage[] images)
         {
             var result = new AutoTile();
             foreach (var tileAndLocation in this.tileMap)
             {
                 if (tileAndLocation.Value.Tags.TryGetTag(out TileImageTag tileImageTag))
                 {
-                    if (tileImageTag.Image == image)
+                    foreach (var image in images)
                     {
-                        result.PutTileAt(tileAndLocation.Key);
+                        if (tileImageTag.Image == image)
+                        {
+                            result.PutTileAt(tileAndLocation.Key);
+                            break;
+                        }
                     }
                 }
             }
+
             return result;
         }
 
@@ -117,7 +121,8 @@ namespace Duel.Data
         public bool IsOutOfBounds(Point position)
         {
             var corners = CalculateCorners();
-            return position.X < corners.TopLeft.X || position.Y < corners.TopLeft.Y || position.X >= corners.BottomRight.X || position.Y >= corners.BottomRight.Y;
+            return position.X < corners.TopLeft.X || position.Y < corners.TopLeft.Y ||
+                   position.X >= corners.BottomRight.X || position.Y >= corners.BottomRight.Y;
         }
 
         public IEnumerable<Entity> AllEntitiesAt(Point position)
@@ -128,6 +133,14 @@ namespace Duel.Data
                 {
                     yield return entity;
                 }
+            }
+        }
+
+        public void EntityJustSteppedOff(Point previousposition)
+        {
+            if (GetTileAt(previousposition).Tags.TryGetTag(out Collapses collapses))
+            {
+                PutTileAt(previousposition, collapses.TemplateAfterCollapse);
             }
         }
     }

@@ -41,6 +41,7 @@ namespace Duel.Components
             new RemoveEntityOnDestroy(entityActor, this.level, entity);
             new EntityRenderInfo(entityActor, this.grid, entity);
             new MovementRenderer(entityActor, entity);
+            new TriggerMoveOnMove(entityActor, entity, this.level);
 
             ApplyTags(entity, entityActor);
         }

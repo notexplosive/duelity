@@ -177,4 +177,14 @@ namespace Duel.Data
         {
         }
     }
+
+    public class Collapses : Tag
+    {
+        public TileTemplate TemplateAfterCollapse { get; }
+
+        public Collapses(TileTemplate templateAfterCollapse)
+        {
+            this.TemplateAfterCollapse = templateAfterCollapse;
+        }
+    }
 }

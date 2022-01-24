@@ -32,7 +32,8 @@ namespace Duel
             // Walls
             var wall = new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall),
                 new BlockProjectileTag());
-            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water));
+            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new Solid());
+            var bridge = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bridge), new Collapses(water));
             var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine));
             var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
             var hook = new TileTemplate(new Grapplable(Grapplable.Type.Static),
@@ -42,12 +43,10 @@ namespace Duel
             game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
             game.CurrentLevel.PutTileAt(new Point(5, 4), wall);
             game.CurrentLevel.PutTileAt(new Point(0, 6), wall);
-            game.CurrentLevel.PutTileAt(new Point(2, 2), ravine);
-            game.CurrentLevel.PutTileAt(new Point(3, 2), ravine);
-            game.CurrentLevel.PutTileAt(new Point(2, 3), ravine);
-            game.CurrentLevel.PutTileAt(new Point(3, 3), bramble);
-            game.CurrentLevel.PutTileAt(new Point(4, 3), bramble);
-            game.CurrentLevel.PutTileAt(new Point(5, 3), bramble);
+            game.CurrentLevel.PutTileAt(new Point(2, 2), water);
+            game.CurrentLevel.PutTileAt(new Point(3, 2), water);
+            game.CurrentLevel.PutTileAt(new Point(2, 3), water);
+            game.CurrentLevel.PutTileAt(new Point(3, 3), bridge);
             game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
             
             var glass = new EntityTemplate(new DestroyOnHit());
