@@ -18,6 +18,7 @@ namespace Duel.Components
         private readonly Grid grid;
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
+        private readonly HashSet<Entity> knownDestroyedActors = new HashSet<Entity>();
 
         public ActorRoot(Actor actor, Level level) : base(actor)
         {
@@ -29,7 +30,11 @@ namespace Duel.Components
 
         private void DestroyEntityActor(Entity entity, DestroyType type)
         {
-            new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal, type);
+            if (!this.knownDestroyedActors.Contains(entity))
+            {
+                new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal, type);
+                this.knownDestroyedActors.Add(entity);
+            }
         }
 
         private void CreateEntityActor(Entity entity)

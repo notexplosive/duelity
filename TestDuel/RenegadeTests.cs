@@ -3,6 +3,7 @@ using Duel.Data;
 using FluentAssertions;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Xunit;
 
 namespace TestDuel
@@ -123,20 +124,25 @@ namespace TestDuel
         public void shot_pushes_item_out_of_bounds()
         {
             // weird edge case I came across while testing
+            var destroyedEntities = new List<Entity>();
+            this.level.EntityDestroyRequested += (entity, type) =>
+            {
+                destroyedEntities.Add(entity);
+                this.level.RemoveEntity(entity);
+            };
             var pushedOnHit = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new Solid().PushOnHit()));
-            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump()));
+            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit()));
 
             this.gunComponent.Shoot();
 
             pushedOnHit.Position.Should().Be(new Point(0, 4));
-            pushable.Position.Should().Be(new Point(0, 5));
+            pushable.Position.Should().Be(new Point(0, 4));
 
-            this.scene.FlushBuffers(); // because an actor got destroyed. ugh.
+            destroyedEntities.Should().Contain(pushable);
 
             this.gunComponent.Shoot();
 
             pushedOnHit.Position.Should().Be(new Point(0, 5));
-            pushable.Position.Should().Be(new Point(0, 5)); // didn't move because it got destroyed (should really have a better way to measure that)
 
             this.gunComponent.Shoot();
 
