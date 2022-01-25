@@ -29,7 +29,7 @@ namespace Duel.Components
 
         private void DestroyEntityActor(Entity entity)
         {
-            FindActor(entity).Destroy();
+            new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal);
         }
 
         private void CreateEntityActor(Entity entity)

@@ -29,6 +29,20 @@ namespace TestDuel
         }
 
         [Fact]
+        public void busy_signal_wont_accept_when_locked()
+        {
+            var subject = new BusySignal();
+            subject.Add(new BusyFunction("BeforeAlwaysBusy", () => false));
+            subject.StopAcceptingNewFunctions();
+            subject.Add(new BusyFunction("AfterAlwaysBusy", () => false));
+
+            foreach (var busyFunction in subject.PendingBusyFunctions())
+            {
+                busyFunction.Name.Should().Be("BeforeAlwaysBusy");
+            }
+        }
+
+        [Fact]
         public void busy_signal_becomes_unbusy()
         {
             var subject = new BusySignal();

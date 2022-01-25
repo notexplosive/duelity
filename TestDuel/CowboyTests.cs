@@ -3,6 +3,7 @@ using Duel.Data;
 using FluentAssertions;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Xunit;
 
 namespace TestDuel
@@ -60,17 +61,17 @@ namespace TestDuel
         public void charge_cleaves_through_breakables()
         {
             var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
+            var destroyedEntities = new List<Entity>();
+            this.level.EntityDestroyRequested += (e) => { destroyedEntities.Add(e); };
 
-            var actor1 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 6), glass));
-            var actor2 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 7), glass));
-            var actor3 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 8), glass));
+            var actor1 = this.level.PutEntityAt(new Point(0, 6), glass);
+            var actor2 = this.level.PutEntityAt(new Point(0, 7), glass);
+            var actor3 = this.level.PutEntityAt(new Point(0, 8), glass);
 
             DoChargeDown();
             scene.FlushBuffers();
 
-            actor1.IsDestroyed.Should().BeTrue();
-            actor2.IsDestroyed.Should().BeTrue();
-            actor3.IsDestroyed.Should().BeTrue();
+            destroyedEntities.Should().Contain(actor1).And.Contain(actor2).And.Contain(actor3).And.HaveCount(3);
         }
 
         [Fact]
