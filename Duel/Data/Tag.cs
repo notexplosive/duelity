@@ -4,6 +4,11 @@ namespace Duel.Data
 {
     public abstract class Tag
     {
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
+
         public override bool Equals(object obj)
         {
             return obj.GetType() == this.GetType();
@@ -36,8 +41,15 @@ namespace Duel.Data
 
     public class Water : Tag
     {
+        public Entity FillingEntity { get; private set; }
+
         public Water()
         {
+        }
+
+        public void Fill(Entity entity)
+        {
+            FillingEntity = entity;
         }
     }
 

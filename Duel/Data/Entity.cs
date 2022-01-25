@@ -85,7 +85,7 @@ namespace Duel.Data
 
         public override string ToString()
         {
-            return this.uniqueId.ToString();
+            return $"Entity {this.uniqueId}: {Tags}";
         }
 
         // /Overrides //

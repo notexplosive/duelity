@@ -7,44 +7,6 @@ using Xunit;
 
 namespace TestDuel
 {
-    public class WaterTests
-    {
-        private readonly Level level;
-        private readonly TileTemplate water;
-        private readonly EntityTemplate sinkable;
-        private readonly EntityTemplate floatable;
-
-        public WaterTests()
-        {
-            this.level = new Level(new Corners(new Point(-10, 10), new Point(10, 10)));
-            this.water = new TileTemplate(new Water());
-            this.sinkable = new EntityTemplate(new WaterFiller(WaterFiller.Type.Sinks));
-            this.floatable = new EntityTemplate(new WaterFiller(WaterFiller.Type.Floats));
-        }
-
-        [Fact]
-        public void things_cannot_walk_on_water()
-        {
-            var walker = this.level.PutEntityAt(Point.Zero, new EntityTemplate());
-            this.level.PutTileAt(new Point(1, 0), this.water);
-
-            walker.WalkAndPushInDirection(Direction.Right);
-
-            walker.Position.Should().Be(Point.Zero);
-        }
-
-        [Fact]
-        public void floatable_can_walk_on_water()
-        {
-            var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
-            this.level.PutTileAt(new Point(1, 0), this.water);
-
-            floater.WalkAndPushInDirection(Direction.Right);
-
-            floater.Position.Should().Be(new Point(1, 0));
-        }
-    }
-
     public class SheriffTests
     {
         private readonly Entity playerEntity;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 
 namespace Duel.Data
 {
@@ -80,6 +81,20 @@ namespace Duel.Data
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.content.GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (var tag in this.content)
+            {
+                stringBuilder.Append('[');
+                stringBuilder.Append(tag.ToString());
+                stringBuilder.Append(']');
+                stringBuilder.Append(' ');
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

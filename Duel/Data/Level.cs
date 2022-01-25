@@ -48,7 +48,7 @@ namespace Duel.Data
             entity.PositionChanged += EntityMoved;
             entity.Bumped += EntityBumped;
 
-            EntityJustSteppedOn(entity.Position);
+            EntityJustSteppedOn(entity, entity.Position);
         }
 
         private void EntityBumped(Entity entity, Point position, Direction direction)
@@ -164,9 +164,18 @@ namespace Duel.Data
             }
         }
 
-        private void EntityJustSteppedOn(Point position)
+        private void EntityJustSteppedOn(Entity stepper, Point position)
         {
+            var solidProvider = new LevelSolidProvider(this);
+            var waterTileExists = solidProvider.TryGetTagFromTileAt(position, out Water water);
+            if (stepper.Tags.HasTag<WaterFiller>() && waterTileExists)
+            {
+                RequestDestroyEntity(stepper);
+                water.Fill(stepper);
+            }
+
             UpdatePressurePlateAt(position);
+
         }
 
         private void UpdatePressurePlateAt(Point position)
@@ -200,7 +209,7 @@ namespace Duel.Data
             if (moveType != MoveType.Warp)
             {
                 EntityJustSteppedOff(previousPosition);
-                EntityJustSteppedOn(mover.Position);
+                EntityJustSteppedOn(mover, mover.Position);
             }
         }
     }
