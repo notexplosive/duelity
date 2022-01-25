@@ -42,6 +42,7 @@ namespace Duel.Data
     public class Water : Tag
     {
         public Entity FillingEntity { get; private set; }
+        public bool IsFilled => FillingEntity != null;
 
         public Water()
         {

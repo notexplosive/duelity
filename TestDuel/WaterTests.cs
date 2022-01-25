@@ -60,7 +60,17 @@ namespace TestDuel
             this.level.GetTileAt(new Point(1, 0)).Tags.GetTag<Water>().FillingEntity.Should().Be(floater);
         }
 
+        [Fact]
+        public void filled_water_can_be_walked_on()
+        {
+            var walker = this.level.PutEntityAt(new Point(2, 0), new EntityTemplate());
+            var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
+            this.level.PutTileAt(new Point(1, 0), this.water);
+            floater.WalkAndPushInDirection(Direction.Right);
+            walker.WalkAndPushInDirection(Direction.Left);
 
+            walker.Position.Should().Be(new Point(1, 0));
+        }
 
         // filled water can be walked on
         // filled water does not consume floatable
