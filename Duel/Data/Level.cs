@@ -44,9 +44,26 @@ namespace Duel.Data
         {
             this.entities.Add(entity);
             EntityAdded?.Invoke(entity);
+
             entity.PositionChanged += EntityMoved;
+            entity.Bumped += EntityBumped;
 
             EntityJustSteppedOn(entity.Position);
+        }
+
+        private void EntityBumped(Entity entity, Point position, Direction direction)
+        {
+            if (entity.Tags.TryGetTag(out Key key))
+            {
+                if (new LevelSolidProvider(this).TryGetFirstEntityWithTagAt(position, out Entity doorEntity, out KeyDoor keyDoor))
+                {
+                    if (keyDoor.Color == key.Color)
+                    {
+                        RequestDestroyEntity(doorEntity);
+                        RequestDestroyEntity(entity);
+                    }
+                }
+            }
         }
 
         public void RemoveEntity(Entity entity)
@@ -54,7 +71,9 @@ namespace Duel.Data
             this.entities.Remove(entity);
 
             EntityJustSteppedOff(entity.Position);
+
             entity.PositionChanged -= EntityMoved;
+            entity.Bumped -= EntityBumped;
         }
 
         public void RequestDestroyEntity(Entity entity)
@@ -135,7 +154,8 @@ namespace Duel.Data
 
         public IEnumerable<Entity> AllEntitiesAt(Point position)
         {
-            foreach (var entity in this.entities)
+            var entitiesCopy = new List<Entity>(this.entities);
+            foreach (var entity in entitiesCopy)
             {
                 if (entity.Position == position)
                 {

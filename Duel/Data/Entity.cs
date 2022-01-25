@@ -14,6 +14,7 @@ namespace Duel.Data
     }
 
     public delegate void MoveAction(Entity mover, MoveType moveType, Point previousPosition);
+    public delegate void BumpAction(Entity entity, Point position, Direction direction);
 
     public delegate void DirectionalAction(Direction direction);
 
@@ -24,6 +25,7 @@ namespace Duel.Data
         public event MoveAction PositionChanged;
         public event DirectionalAction MoveFailed;
         public event DirectionalAction Nudged;
+        public event BumpAction Bumped;
         public event Action GrabbedByLasso;
         public event Action ReleasedFromLasso;
         public event Action<EaseFunc, Point> Jumped;
@@ -149,6 +151,7 @@ namespace Duel.Data
 
             if (SolidProvider.IsNotWalkableAt(Position + direction.ToPoint()))
             {
+                Bumped?.Invoke(this, Position + direction.ToPoint(), direction);
                 SolidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
 
                 // If it's still solid, give up, otherwise we move

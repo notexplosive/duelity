@@ -41,18 +41,17 @@ namespace Duel.Data
 
         public static EntityFrameSet KeyDoor(SignalColor color)
         {
-            // this is way stupid because KeyDoors do not have a Broken or Lassod state, but whatever
             if (color == SignalColor.Red)
             {
-                return new EntityFrameSet(EntityFrame.RedLockedDoor, EntityFrame.RedLockedDoor, EntityFrame.RedLockedDoor);
+                return new EntityFrameSet(EntityFrame.RedLockedDoor, EntityFrame.RedLockedDoor, EntityFrame.RedDoorOpen);
             }
             else if (color == SignalColor.Blue)
             {
-                return new EntityFrameSet(EntityFrame.BlueLockedDoor, EntityFrame.BlueLockedDoor, EntityFrame.BlueLockedDoor);
+                return new EntityFrameSet(EntityFrame.BlueLockedDoor, EntityFrame.BlueLockedDoor, EntityFrame.BlueDoorOpen);
             }
             else if (color == SignalColor.Yellow)
             {
-                return new EntityFrameSet(EntityFrame.YellowLockedDoor, EntityFrame.YellowLockedDoor, EntityFrame.YellowLockedDoor);
+                return new EntityFrameSet(EntityFrame.YellowLockedDoor, EntityFrame.YellowLockedDoor, EntityFrame.YellowDoorOpen);
             }
 
             throw new Exception($"Invalid signal color {color}");
