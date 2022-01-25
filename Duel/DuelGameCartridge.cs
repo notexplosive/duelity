@@ -32,9 +32,9 @@ namespace Duel
             // Tiles
             var wall = new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall),
                 new BlockProjectileTag());
-            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new Deep(Deep.Type.Water));
+            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new Water());
             var bridge = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bridge), new Collapses(water));
-            var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine), new Deep(Deep.Type.Ravine));
+            var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine));
             var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
             var hook = new TileTemplate(new Grapplable(Grapplable.Type.Static),
                 new TileImageTag(TileImageTag.TileImage.Hook));
@@ -44,13 +44,15 @@ namespace Duel
                 new DestroyOnHit(),
                 new SimpleEntityImage(EntityFrameSet.GlassBottle),
                 new Solid().PushOnBump(),
-                new Grapplable(Grapplable.Type.PulledByLasso)
+                new Grapplable(Grapplable.Type.PulledByLasso),
+                new WaterFiller(WaterFiller.Type.Floats)
             );
 
             var anvil = new EntityTemplate(
                 new Solid().PushOnHit(),
                 new BlockProjectileTag(),
-                new SimpleEntityImage(EntityFrameSet.Anvil)
+                new SimpleEntityImage(EntityFrameSet.Anvil),
+                new WaterFiller(WaterFiller.Type.Sinks)
             );
 
             var crate = new EntityTemplate(
@@ -58,13 +60,15 @@ namespace Duel
                 new BlockProjectileTag(),
                 new Grapplable(Grapplable.Type.PulledByLasso),
                 new SimpleEntityImage(EntityFrameSet.Crate),
-                new DestroyOnHit()
+                new DestroyOnHit(),
+                new WaterFiller(WaterFiller.Type.Floats)
             );
 
             var barrel = new EntityTemplate(
                 new Solid().PushOnBump().PushOnHit(),
                 new BlockProjectileTag(),
-                new SimpleEntityImage(EntityFrameSet.Barrel)
+                new SimpleEntityImage(EntityFrameSet.Barrel),
+                new WaterFiller(WaterFiller.Type.Floats)
             );
 
             var miasma = new EntityTemplate(

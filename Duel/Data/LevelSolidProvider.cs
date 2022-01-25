@@ -59,12 +59,9 @@ namespace Duel.Data
 
         public bool IsWaterAt(Point position)
         {
-            if (TryGetTagFromTileAt(position, out Deep deep))
+            if (HasTagAt<Water>(position))
             {
-                if (deep.FillType == Deep.Type.Water)
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;

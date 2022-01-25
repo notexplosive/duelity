@@ -17,7 +17,7 @@ namespace TestDuel
         public WaterTests()
         {
             this.level = new Level(new Corners(new Point(-10, 10), new Point(10, 10)));
-            this.water = new TileTemplate(new Deep(Deep.Type.Water));
+            this.water = new TileTemplate(new Water());
             this.sinkable = new EntityTemplate(new WaterFiller(WaterFiller.Type.Sinks));
             this.floatable = new EntityTemplate(new WaterFiller(WaterFiller.Type.Floats));
         }

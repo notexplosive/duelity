@@ -34,19 +34,10 @@ namespace Duel.Data
         }
     }
 
-    public class Deep : Tag
+    public class Water : Tag
     {
-        public enum Type
+        public Water()
         {
-            Water,
-            Ravine
-        }
-
-        public Type FillType { get; }
-
-        public Deep(Type fillType)
-        {
-            FillType = fillType;
         }
     }
 
