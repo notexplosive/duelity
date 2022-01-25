@@ -15,12 +15,39 @@ namespace Duel.Data
         }
     }
 
-    public class SpriteTag : Tag
+    public class BlockProjectileTag : Tag
     {
     }
 
-    public class BlockProjectileTag : Tag
+    public class WaterFiller : Tag
     {
+        public enum Type
+        {
+            Floats,
+            Sinks
+        }
+
+        public Type FillerType { get; }
+        public WaterFiller(Type fillerType)
+        {
+            FillerType = fillerType;
+        }
+    }
+
+    public class Deep : Tag
+    {
+        public enum Type
+        {
+            Water,
+            Ravine
+        }
+
+        public Type FillType { get; }
+
+        public Deep(Type fillType)
+        {
+            FillType = fillType;
+        }
     }
 
     public class ToggleSignal : Tag

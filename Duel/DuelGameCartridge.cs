@@ -32,9 +32,9 @@ namespace Duel
             // Tiles
             var wall = new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall),
                 new BlockProjectileTag());
-            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new Solid());
+            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new Deep(Deep.Type.Water));
             var bridge = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bridge), new Collapses(water));
-            var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine));
+            var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine), new Deep(Deep.Type.Ravine));
             var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
             var hook = new TileTemplate(new Grapplable(Grapplable.Type.Static),
                 new TileImageTag(TileImageTag.TileImage.Hook));

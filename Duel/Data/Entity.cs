@@ -130,12 +130,13 @@ namespace Duel.Data
             Jumped?.Invoke(easeFunc, prevPosition);
         }
 
-        public void WalkWithoutPushInDirection(Direction direction)
+        public void WalkWithoutPushInDirection(Direction direction) // dead code???
         {
             FacingDirection = direction;
 
             if (SolidProvider.IsNotWalkableAt(Position + direction.ToPoint()))
             {
+                // Bumped???
                 MoveFailed?.Invoke(direction);
                 return;
             }

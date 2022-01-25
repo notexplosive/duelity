@@ -45,6 +45,31 @@ namespace Duel.Data
             return HasTagAt<BlockProjectileTag>(position) || IsClosedDoorAt(position);
         }
 
+        public bool TryGetTagFromTileAt<T>(Point position, out T foundTileTag) where T : Tag
+        {
+            if (this.level.GetTileAt(position).Tags.TryGetTag(out T result))
+            {
+                foundTileTag = result;
+                return true;
+            }
+
+            foundTileTag = null;
+            return false;
+        }
+
+        public bool IsWaterAt(Point position)
+        {
+            if (TryGetTagFromTileAt(position, out Deep deep))
+            {
+                if (deep.FillType == Deep.Type.Water)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public bool IsClosedDoorAt(Point position)
         {
             if (TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out SignalDoor door))
@@ -84,6 +109,11 @@ namespace Duel.Data
             }
 
             if (IsClosedDoorAt(position))
+            {
+                return true;
+            }
+
+            if (IsWaterAt(position))
             {
                 return true;
             }
