@@ -6,12 +6,20 @@ using System.Text;
 namespace Duel.Data
 {
     public delegate void EntityEvent(Entity entity);
+    public delegate void DestroyEvent(Entity entity, DestroyType destroyType);
+
+    public enum DestroyType
+    {
+        Break,
+        Sink,
+        Vanish
+    }
 
     public class Level
     {
         public event Action TilemapChanged;
         public event EntityEvent EntityAdded;
-        public event EntityEvent EntityDestroyRequested;
+        public event DestroyEvent EntityDestroyRequested;
 
         private readonly List<Entity> entities = new List<Entity>();
 
@@ -59,8 +67,8 @@ namespace Duel.Data
                 {
                     if (keyDoor.Color == key.Color)
                     {
-                        RequestDestroyEntity(doorEntity);
-                        RequestDestroyEntity(entity);
+                        RequestDestroyEntity(doorEntity, DestroyType.Vanish);
+                        RequestDestroyEntity(entity, DestroyType.Break);
                     }
                 }
             }
@@ -76,9 +84,9 @@ namespace Duel.Data
             entity.Bumped -= EntityBumped;
         }
 
-        public void RequestDestroyEntity(Entity entity)
+        public void RequestDestroyEntity(Entity entity, DestroyType destroyType)
         {
-            EntityDestroyRequested?.Invoke(entity);
+            EntityDestroyRequested?.Invoke(entity, destroyType);
         }
 
         public void PutTileAt(Point position, TileTemplate tile)
@@ -182,7 +190,7 @@ namespace Duel.Data
                     water.Fill(stepper);
                 }
 
-                RequestDestroyEntity(stepper);
+                RequestDestroyEntity(stepper, DestroyType.Sink);
             }
         }
 

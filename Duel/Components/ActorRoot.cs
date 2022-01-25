@@ -27,9 +27,9 @@ namespace Duel.Components
             this.level.EntityDestroyRequested += DestroyEntityActor;
         }
 
-        private void DestroyEntityActor(Entity entity)
+        private void DestroyEntityActor(Entity entity, DestroyType type)
         {
-            new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal);
+            new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal, type);
         }
 
         private void CreateEntityActor(Entity entity)

@@ -15,17 +15,23 @@ namespace Duel.Components
 {
     public class TileGridRenderer : BaseComponent
     {
+        private readonly ActorRoot actorRoot;
         private readonly Level level;
         private readonly Grid grid;
+        private readonly SpriteSheet entitiesSheet;
         private readonly SpriteSheet tilesheet;
         private readonly TileFrame[] groundTiles;
         private readonly TileFrame[] brambleTiles;
+
+        private float timer = 0;
         public bool ShowGrid { get; set; } = false;
 
         public TileGridRenderer(Actor actor, Level level) : base(actor)
         {
+            this.actorRoot = RequireComponent<ActorRoot>();
             this.level = level;
             this.grid = RequireComponent<Grid>();
+            this.entitiesSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet");
             this.tilesheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("tiles-sheet");
             this.brambleTiles = new TileFrame[]
             {
@@ -62,6 +68,11 @@ namespace Duel.Components
                     DrawCell(spriteBatch, new Point(x, y), this.level.GetTileAt(new Point(x, y)));
                 }
             }
+        }
+
+        public override void Update(float dt)
+        {
+            this.timer += dt;
         }
 
         public void DrawCell(SpriteBatch spriteBatch, Point location, TileTemplate tile)
@@ -108,6 +119,18 @@ namespace Duel.Components
                 // floor
                 DrawFloorTile(spriteBatch, location, floorDepth);
             }
+
+            if (tile.Tags.TryGetTag(out Water water))
+            {
+                if (water.IsFilled)
+                {
+                    if (water.FillingEntity.Tags.TryGetTag(out SimpleEntityImage simpleEntityImage) && !this.actorRoot.FindActor(water.FillingEntity).Visible)
+                    {
+                        var angle = MathF.Sin(this.timer + new NoiseBasedRNG((uint)NoiseAt(location)).NextFloat()) / 16;
+                        this.entitiesSheet.DrawFrame(spriteBatch, simpleEntityImage.EntityFrameSet.Normal, this.grid.TileToLocalPosition(location, true), 0.8f, angle, XYBool.False, tileDepth - 1, Color.White);
+                    }
+                }
+            }
         }
 
         private void DrawFloorTile(SpriteBatch spriteBatch, Point location, Depth floorDepth)
@@ -121,7 +144,7 @@ namespace Duel.Components
             var noise = NoiseAt(location);
             return (int)this.groundTiles[noise % this.groundTiles.Length];
         }
-        
+
         private int GetRandomBrambleTile(Point location)
         {
             var noise = NoiseAt(location);
@@ -175,7 +198,7 @@ namespace Duel.Components
 
             return TileFrame.WaterCenter;
         }
-        
+
         private TileFrame AutoTileClassToRavineFrame(TileClass tileClass)
         {
             switch (tileClass)

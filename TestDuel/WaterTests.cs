@@ -49,7 +49,7 @@ namespace TestDuel
             var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
             this.level.PutTileAt(new Point(1, 0), this.water);
             var destroyedEntities = new List<Entity>();
-            this.level.EntityDestroyRequested += (entity) =>
+            this.level.EntityDestroyRequested += (entity, type) =>
             {
                 destroyedEntities.Add(entity);
             };
@@ -80,7 +80,7 @@ namespace TestDuel
             var secondFloater = this.level.PutEntityAt(new Point(2, 0), this.floatable);
             this.level.PutTileAt(new Point(1, 0), this.water);
             var destroyedEntities = new List<Entity>();
-            this.level.EntityDestroyRequested += (entity) =>
+            this.level.EntityDestroyRequested += (entity, type) =>
             {
                 destroyedEntities.Add(entity);
             };
@@ -97,7 +97,7 @@ namespace TestDuel
             var floater = this.level.PutEntityAt(Point.Zero, this.sinkable);
             this.level.PutTileAt(new Point(1, 0), this.water);
             var destroyedEntities = new List<Entity>();
-            this.level.EntityDestroyRequested += (entity) =>
+            this.level.EntityDestroyRequested += (entity, type) =>
             {
                 destroyedEntities.Add(entity);
             };

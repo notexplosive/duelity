@@ -14,18 +14,27 @@ namespace Duel.Components
     public class DestroyWhenBusySignalFree : BaseComponent
     {
         private readonly BusySignal busySignal;
+        private DestroyType destroyType;
 
-        public DestroyWhenBusySignalFree(Actor actor, BusySignal busySignal) : base(actor)
+        public DestroyWhenBusySignalFree(Actor actor, BusySignal busySignal, DestroyType destroyType) : base(actor)
         {
             this.busySignal = busySignal;
             this.busySignal.StopAcceptingNewFunctions();
+            this.destroyType = destroyType;
         }
 
         public override void Update(float dt)
         {
             if (this.busySignal.IsFree())
             {
-                this.actor.Destroy();
+                if (this.destroyType == DestroyType.Break)
+                {
+                    this.actor.Destroy();
+                }
+                else
+                {
+                    this.actor.Delete();
+                }
             }
         }
     }

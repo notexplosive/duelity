@@ -125,7 +125,7 @@ namespace Duel.Data
             {
                 if (entity.Tags.HasTag<DestroyOnHit>())
                 {
-                    this.level.RequestDestroyEntity(entity);
+                    this.level.RequestDestroyEntity(entity, DestroyType.Break);
                 }
 
                 if (entity.Tags.TryGetTag(out Solid solid))

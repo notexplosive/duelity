@@ -30,7 +30,7 @@ namespace TestDuel
 
             var destroyedEntites = new List<Entity>();
 
-            this.level.EntityDestroyRequested += (entity) =>
+            this.level.EntityDestroyRequested += (entity, type) =>
             {
                 destroyedEntites.Add(entity);
             };

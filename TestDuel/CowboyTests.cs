@@ -62,7 +62,7 @@ namespace TestDuel
         {
             var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
             var destroyedEntities = new List<Entity>();
-            this.level.EntityDestroyRequested += (e) => { destroyedEntities.Add(e); };
+            this.level.EntityDestroyRequested += (e, t) => { destroyedEntities.Add(e); };
 
             var actor1 = this.level.PutEntityAt(new Point(0, 6), glass);
             var actor2 = this.level.PutEntityAt(new Point(0, 7), glass);
