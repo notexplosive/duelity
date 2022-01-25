@@ -120,15 +120,12 @@ namespace Duel.Components
                 DrawFloorTile(spriteBatch, location, floorDepth);
             }
 
-            if (tile.Tags.TryGetTag(out Water water))
+            if (tile.Tags.TryGetTag(out FilledWater water))
             {
-                if (water.IsFilled)
+                if (water.FillingEntity.Tags.TryGetTag(out SimpleEntityImage simpleEntityImage) && !this.actorRoot.FindActor(water.FillingEntity).Visible)
                 {
-                    if (water.FillingEntity.Tags.TryGetTag(out SimpleEntityImage simpleEntityImage) && !this.actorRoot.FindActor(water.FillingEntity).Visible)
-                    {
-                        var angle = MathF.Sin(this.timer + new NoiseBasedRNG((uint)NoiseAt(location)).NextFloat()) / 16;
-                        this.entitiesSheet.DrawFrame(spriteBatch, simpleEntityImage.EntityFrameSet.Normal, this.grid.TileToLocalPosition(location, true), 0.8f, angle, XYBool.False, tileDepth - 1, Color.White);
-                    }
+                    var angle = MathF.Sin(this.timer + new NoiseBasedRNG((uint)NoiseAt(location)).NextFloat()) / 16;
+                    this.entitiesSheet.DrawFrame(spriteBatch, simpleEntityImage.EntityFrameSet.Normal, this.grid.TileToLocalPosition(location, true), 0.8f, angle, XYBool.False, tileDepth - 1, Color.White);
                 }
             }
         }

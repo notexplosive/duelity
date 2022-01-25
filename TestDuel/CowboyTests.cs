@@ -52,7 +52,7 @@ namespace TestDuel
         {
             var subject = new Charge(new Point(5, 5), Direction.Down, new LevelSolidProvider(this.level));
 
-            this.level.PutTileAt(new Point(5, 8), new TileTemplate(new Water()));
+            this.level.PutTileAt(new Point(5, 8), new TileTemplate(new UnfilledWater()));
 
             subject.Path.Should().Contain(new ChargeHit(new Point(5, 9), Direction.Down));
         }

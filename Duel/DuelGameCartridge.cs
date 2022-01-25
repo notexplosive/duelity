@@ -32,7 +32,7 @@ namespace Duel
             // Tiles
             var wall = new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall),
                 new BlockProjectileTag());
-            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new Water());
+            var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new UnfilledWater());
             var bridge = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bridge), new Collapses(water));
             var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine));
             var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
@@ -130,17 +130,24 @@ namespace Duel
             var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
             var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
 
-            game.CurrentLevel.PutTileAt(new Point(4, 3), bridge);
+            game.CurrentLevel.PutTileAt(new Point(4, 5), water);
+            game.CurrentLevel.PutTileAt(new Point(4, 6), water);
+            game.CurrentLevel.PutTileAt(new Point(4, 7), water);
+            game.CurrentLevel.PutTileAt(new Point(4, 8), water);
 
             game.CurrentLevel.PutEntityAt(new Point(0, 0), openRedDoor);
             game.CurrentLevel.PutEntityAt(new Point(0, 1), closedRedDoor);
             game.CurrentLevel.PutEntityAt(new Point(0, 2), redLever);
 
-            game.CurrentLevel.PutEntityAt(new Point(4, 2), crate);
+            game.CurrentLevel.PutEntityAt(new Point(4, 1), anvil);
+            game.CurrentLevel.PutEntityAt(new Point(4, 2), barrel);
+            game.CurrentLevel.PutEntityAt(new Point(4, 3), glass);
+            game.CurrentLevel.PutEntityAt(new Point(4, 4), crate);
+
             game.CurrentLevel.PutEntityAt(new Point(5, 2), blueKey);
             game.CurrentLevel.PutEntityAt(new Point(7, 2), blueKeyDoor);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), renegade);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

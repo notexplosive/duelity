@@ -39,19 +39,23 @@ namespace Duel.Data
         }
     }
 
-    public class Water : Tag
+    public class UnfilledWater : Tag
     {
-        public Entity FillingEntity { get; private set; }
-        public bool IsFilled => FillingEntity != null;
 
-        public Water()
+        public UnfilledWater()
         {
         }
+    }
 
-        public void Fill(Entity entity)
+    public class FilledWater : Tag
+    {
+        public Entity FillingEntity { get; private set; }
+
+        public FilledWater(Entity entity)
         {
             FillingEntity = entity;
         }
+
     }
 
     public class ToggleSignal : Tag

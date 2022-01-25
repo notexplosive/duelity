@@ -182,12 +182,22 @@ namespace Duel.Data
         private void FillWaterIfApplicable(Entity stepper, Point position)
         {
             var solidProvider = new LevelSolidProvider(this);
-            var waterTileExists = solidProvider.TryGetTagFromTileAt(position, out Water water);
-            if (stepper.Tags.TryGetTag(out WaterFiller waterFiller) && waterTileExists && !water.IsFilled)
+            var waterTileExists = solidProvider.TryGetTagFromTileAt(position, out UnfilledWater water);
+            if (stepper.Tags.TryGetTag(out WaterFiller waterFiller) && waterTileExists)
             {
                 if (waterFiller.FillerType == WaterFiller.Type.Floats)
                 {
-                    water.Fill(stepper);
+                    var tags = new TagCollection();
+                    foreach (var tag in GetTileAt(position).Tags)
+                    {
+                        if (!(tag is UnfilledWater))
+                        {
+                            tags.AddTag(tag);
+                        }
+                    }
+
+                    tags.AddTag(new FilledWater(stepper));
+                    PutTileAt(position, new TileTemplate(tags));
                 }
 
                 RequestDestroyEntity(stepper, DestroyType.Sink);

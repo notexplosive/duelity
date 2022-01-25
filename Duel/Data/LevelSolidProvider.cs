@@ -59,9 +59,9 @@ namespace Duel.Data
 
         public bool IsWaterAt(Point position)
         {
-            if (TryGetTagFromTileAt(position, out Water water))
+            if (TryGetTagFromTileAt(position, out UnfilledWater water))
             {
-                return !water.IsFilled;
+                return true;
             }
 
             return false;

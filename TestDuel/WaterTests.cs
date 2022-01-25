@@ -16,7 +16,7 @@ namespace TestDuel
         public WaterTests()
         {
             this.level = new Level(new Corners(new Point(-10, 10), new Point(10, 10)));
-            this.water = new TileTemplate(new Water());
+            this.water = new TileTemplate(new UnfilledWater());
             this.sinkable = new EntityTemplate(new WaterFiller(WaterFiller.Type.Sinks));
             this.floatable = new EntityTemplate(new WaterFiller(WaterFiller.Type.Floats));
         }
@@ -57,7 +57,7 @@ namespace TestDuel
             floater.WalkAndPushInDirection(Direction.Right);
 
             destroyedEntities.Should().Contain(floater).And.HaveCount(1);
-            this.level.GetTileAt(new Point(1, 0)).Tags.GetTag<Water>().FillingEntity.Should().Be(floater);
+            this.level.GetTileAt(new Point(1, 0)).Tags.GetTag<FilledWater>().FillingEntity.Should().Be(floater);
         }
 
         [Fact]
@@ -105,7 +105,20 @@ namespace TestDuel
             floater.WalkAndPushInDirection(Direction.Right);
 
             destroyedEntities.Should().Contain(floater).And.HaveCount(1);
-            this.level.GetTileAt(new Point(1, 0)).Tags.GetTag<Water>().IsFilled.Should().BeFalse();
+            this.level.GetTileAt(new Point(1, 0)).Tags.HasTag<UnfilledWater>().Should().BeTrue();
+        }
+
+        [Fact]
+        public void filling_one_water_does_not_fill_all()
+        {
+            var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
+            this.level.PutTileAt(new Point(1, 0), this.water);
+            this.level.PutTileAt(new Point(2, 0), this.water);
+
+            floater.WalkAndPushInDirection(Direction.Right);
+
+            this.level.GetTileAt(new Point(1, 0)).Tags.HasTag<FilledWater>().Should().BeTrue();
+            this.level.GetTileAt(new Point(2, 0)).Tags.HasTag<UnfilledWater>().Should().BeTrue();
         }
     }
 }
