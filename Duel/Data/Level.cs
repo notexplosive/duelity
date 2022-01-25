@@ -46,7 +46,7 @@ namespace Duel.Data
             EntityAdded?.Invoke(entity);
             entity.PositionChanged += EntityMoved;
 
-            EntityMoved(entity, MoveType.Spawn, entity.Position);
+            EntityJustSteppedOn(entity.Position);
         }
 
         public void RemoveEntity(Entity entity)
