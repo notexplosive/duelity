@@ -59,7 +59,7 @@ namespace Duel.Data
             return this.level.IsOutOfBounds(hitScanPosition);
         }
 
-        public override bool IsSolidAt(Point position) // todo: rename to "IsNotWalkableAt"
+        public override bool IsNotWalkableAt(Point position) // todo: rename to "IsNotWalkableAt"
         {
             if (IsOutOfBounds(position))
             {

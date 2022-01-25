@@ -8,7 +8,7 @@ namespace Duel.Data
         {
         }
 
-        public override bool IsSolidAt(Point position)
+        public override bool IsNotWalkableAt(Point position)
         {
             return false;
         }

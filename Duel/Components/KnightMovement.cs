@@ -63,7 +63,7 @@ namespace Duel.Components
                         var offset = LongLeg.ToPoint() + LongLeg.ToPoint() + direction.ToPoint();
                         var targetPosition = this.entity.Position + offset;
 
-                        if (!this.solidProvider.IsSolidAt(targetPosition))
+                        if (!this.solidProvider.IsNotWalkableAt(targetPosition))
                         {
                             MoveComplete?.Invoke();
                             this.entity.JumpToPosition(targetPosition);

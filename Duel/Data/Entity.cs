@@ -132,7 +132,7 @@ namespace Duel.Data
         {
             FacingDirection = direction;
 
-            if (SolidProvider.IsSolidAt(Position + direction.ToPoint()))
+            if (SolidProvider.IsNotWalkableAt(Position + direction.ToPoint()))
             {
                 MoveFailed?.Invoke(direction);
                 return;
@@ -147,12 +147,12 @@ namespace Duel.Data
         {
             FacingDirection = direction;
 
-            if (SolidProvider.IsSolidAt(Position + direction.ToPoint()))
+            if (SolidProvider.IsNotWalkableAt(Position + direction.ToPoint()))
             {
                 SolidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
 
                 // If it's still solid, give up, otherwise we move
-                if (SolidProvider.IsSolidAt(Position + direction.ToPoint()))
+                if (SolidProvider.IsNotWalkableAt(Position + direction.ToPoint()))
                 {
                     MoveFailed?.Invoke(direction);
                     return;
