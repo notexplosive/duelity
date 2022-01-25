@@ -77,6 +77,14 @@ namespace Duel.Components
                         new SignalableRenderer(entityActor, new PressurePlateImages(pressurePlateImage.Color), this.level.SignalState);
                     }
                 }
+                else if (tag is SignalDoor signalDoor)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        var doorImages = signalDoor.DefaultOpened ? (ISignalableImages)new OpenedDoorImages(signalDoor.Color) : new ClosedDoorImages(signalDoor.Color);
+                        new SignalableRenderer(entityActor, doorImages, this.level.SignalState);
+                    }
+                }
                 else if (tag is PlayerTag playerTag)
                 {
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)

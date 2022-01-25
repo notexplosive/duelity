@@ -91,9 +91,21 @@ namespace Duel
                 new PressurePlateImageTag(SignalColor.Red)
             );
 
-            var bluePressurePlate = new EntityTemplate(
+            var bluePressurePlate = new EntityTemplate( // duplicate
                 new EnableSignalWhenSteppedOn(SignalColor.Blue),
                 new PressurePlateImageTag(SignalColor.Blue)
+            );
+
+            var openRedDoor = new EntityTemplate(
+                new SignalDoor(SignalColor.Red, true)
+            );
+
+            var closedRedDoor = new EntityTemplate( // duplicate
+                new SignalDoor(SignalColor.Red, false)
+            );
+
+            var openBlueDoor = new EntityTemplate( // duplicate
+                new SignalDoor(SignalColor.Blue, true)
             );
 
             // player characters
@@ -102,23 +114,16 @@ namespace Duel
             var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
             var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
 
-            game.CurrentLevel.PutTileAt(new Point(5, 6), wall);
-            game.CurrentLevel.PutTileAt(new Point(5, 5), wall);
-            game.CurrentLevel.PutTileAt(new Point(5, 4), wall);
-            game.CurrentLevel.PutTileAt(new Point(0, 6), wall);
-            game.CurrentLevel.PutTileAt(new Point(2, 2), water);
-            game.CurrentLevel.PutTileAt(new Point(3, 2), water);
-            game.CurrentLevel.PutTileAt(new Point(2, 3), water);
-            game.CurrentLevel.PutTileAt(new Point(3, 3), bridge);
-            game.CurrentLevel.PutTileAt(new Point(6, 6), hook);
+            game.CurrentLevel.PutTileAt(new Point(4, 3), bridge);
 
-            game.CurrentLevel.PutEntityAt(new Point(0, 0), glass);
-            game.CurrentLevel.PutEntityAt(new Point(0, 1), miasma);
+            game.CurrentLevel.PutEntityAt(new Point(0, 0), openRedDoor);
+            game.CurrentLevel.PutEntityAt(new Point(0, 1), closedRedDoor);
             game.CurrentLevel.PutEntityAt(new Point(0, 2), redLever);
-            game.CurrentLevel.PutEntityAt(new Point(3, 5), bluePressurePlate);
-            game.CurrentLevel.PutEntityAt(new Point(3, 6), blueLever);
-            game.CurrentLevel.PutEntityAt(new Point(3, 2), redPressurePlate);
-            game.CurrentLevel.PutEntityAt(new Point(4, 2), glass);
+
+            game.CurrentLevel.PutEntityAt(new Point(4, 2), crate);
+            game.CurrentLevel.PutEntityAt(new Point(5, 2), crate);
+            game.CurrentLevel.PutEntityAt(new Point(6, 2), redPressurePlate);
+            game.CurrentLevel.PutEntityAt(new Point(7, 2), closedRedDoor);
 
             game.CurrentLevel.PutEntityAt(new Point(3, 3), renegade);
         }
