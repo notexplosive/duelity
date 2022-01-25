@@ -168,7 +168,7 @@ namespace Duel.Data
         {
             var solidProvider = new LevelSolidProvider(this);
             var waterTileExists = solidProvider.TryGetTagFromTileAt(position, out Water water);
-            if (stepper.Tags.HasTag<WaterFiller>() && waterTileExists)
+            if (stepper.Tags.HasTag<WaterFiller>() && waterTileExists && !water.IsFilled)
             {
                 RequestDestroyEntity(stepper);
                 water.Fill(stepper);

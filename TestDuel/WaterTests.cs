@@ -46,9 +46,9 @@ namespace TestDuel
         [Fact]
         public void floatable_is_replaced_when_on_water()
         {
-            var destroyedEntities = new List<Entity>();
             var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
             this.level.PutTileAt(new Point(1, 0), this.water);
+            var destroyedEntities = new List<Entity>();
             this.level.EntityDestroyRequested += (entity) =>
             {
                 destroyedEntities.Add(entity);
@@ -66,14 +66,31 @@ namespace TestDuel
             var walker = this.level.PutEntityAt(new Point(2, 0), new EntityTemplate());
             var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
             this.level.PutTileAt(new Point(1, 0), this.water);
+
             floater.WalkAndPushInDirection(Direction.Right);
             walker.WalkAndPushInDirection(Direction.Left);
 
             walker.Position.Should().Be(new Point(1, 0));
         }
 
-        // filled water can be walked on
-        // filled water does not consume floatable
+        [Fact]
+        public void filled_water_does_not_consume_floatable()
+        {
+            var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
+            var secondFloater = this.level.PutEntityAt(new Point(2, 0), this.floatable);
+            this.level.PutTileAt(new Point(1, 0), this.water);
+            var destroyedEntities = new List<Entity>();
+            this.level.EntityDestroyRequested += (entity) =>
+            {
+                destroyedEntities.Add(entity);
+            };
+
+            floater.WalkAndPushInDirection(Direction.Right);
+            secondFloater.WalkAndPushInDirection(Direction.Left);
+
+            destroyedEntities.Should().Contain(floater).And.HaveCount(1);
+        }
+
         // sinkable_does_not_replace_water_tile
         // sinkable_is_destroyed_when_on_water
     }
