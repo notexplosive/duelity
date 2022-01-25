@@ -166,16 +166,24 @@ namespace Duel.Data
 
         private void EntityJustSteppedOn(Entity stepper, Point position)
         {
-            var solidProvider = new LevelSolidProvider(this);
-            var waterTileExists = solidProvider.TryGetTagFromTileAt(position, out Water water);
-            if (stepper.Tags.HasTag<WaterFiller>() && waterTileExists && !water.IsFilled)
-            {
-                RequestDestroyEntity(stepper);
-                water.Fill(stepper);
-            }
-
+            FillWaterIfApplicable(stepper, position);
             UpdatePressurePlateAt(position);
 
+        }
+
+        private void FillWaterIfApplicable(Entity stepper, Point position)
+        {
+            var solidProvider = new LevelSolidProvider(this);
+            var waterTileExists = solidProvider.TryGetTagFromTileAt(position, out Water water);
+            if (stepper.Tags.TryGetTag(out WaterFiller waterFiller) && waterTileExists && !water.IsFilled)
+            {
+                if (waterFiller.FillerType == WaterFiller.Type.Floats)
+                {
+                    water.Fill(stepper);
+                }
+
+                RequestDestroyEntity(stepper);
+            }
         }
 
         private void UpdatePressurePlateAt(Point position)

@@ -91,7 +91,21 @@ namespace TestDuel
             destroyedEntities.Should().Contain(floater).And.HaveCount(1);
         }
 
-        // sinkable_does_not_replace_water_tile
-        // sinkable_is_destroyed_when_on_water
+        [Fact]
+        public void sinkable_does_not_replace_tile()
+        {
+            var floater = this.level.PutEntityAt(Point.Zero, this.sinkable);
+            this.level.PutTileAt(new Point(1, 0), this.water);
+            var destroyedEntities = new List<Entity>();
+            this.level.EntityDestroyRequested += (entity) =>
+            {
+                destroyedEntities.Add(entity);
+            };
+
+            floater.WalkAndPushInDirection(Direction.Right);
+
+            destroyedEntities.Should().Contain(floater).And.HaveCount(1);
+            this.level.GetTileAt(new Point(1, 0)).Tags.GetTag<Water>().IsFilled.Should().BeFalse();
+        }
     }
 }
