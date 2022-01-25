@@ -1,5 +1,4 @@
-﻿using Duel.Components;
-using Machina.Engine;
+﻿using Machina.Engine;
 
 namespace Duel.Data
 {
@@ -86,6 +85,26 @@ namespace Duel.Data
     }
 
 
+    public class Key : Tag
+    {
+        public SignalColor Color { get; }
+
+        public Key(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
+    public class KeyDoor : Tag
+    {
+        public SignalColor Color { get; }
+
+        public KeyDoor(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
     public enum SignalColor
     {
         Red,
@@ -129,31 +148,13 @@ namespace Duel.Data
 
     public class SimpleEntityImage : Tag
     {
-        public class EntityFrameSet
-        {
-            public int Normal { get; }
-            public int Lassod { get; }
-            public int Broken { get; }
-
-            public EntityFrameSet(EntityFrame normal, EntityFrame lassod, EntityFrame broken)
-            {
-                Normal = (int)normal;
-                Lassod = (int)lassod;
-                Broken = (int)broken;
-            }
-
-            public static readonly EntityFrameSet GlassBottle = new EntityFrameSet(EntityFrame.GlassHooch, EntityFrame.GlassHoochLassod, EntityFrame.GlassHoochBreak);
-            public static readonly EntityFrameSet Crate = new EntityFrameSet(EntityFrame.Crate, EntityFrame.CrateLassod, EntityFrame.CrateBreak);
-            public static readonly EntityFrameSet Anvil = new EntityFrameSet(EntityFrame.Anvil, EntityFrame.Anvil, EntityFrame.Anvil);
-            public static readonly EntityFrameSet Barrel = new EntityFrameSet(EntityFrame.Barrel, EntityFrame.Barrel, EntityFrame.Barrel);
-        }
 
         public SimpleEntityImage(EntityFrameSet entityFrameSet)
         {
-            EntityClass = entityFrameSet;
+            EntityFrameSet = entityFrameSet;
         }
 
-        public EntityFrameSet EntityClass { get; }
+        public EntityFrameSet EntityFrameSet { get; }
     }
 
     public class PlayerTag : Tag

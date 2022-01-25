@@ -42,7 +42,7 @@ namespace Duel
             // Entities
             var glass = new EntityTemplate(
                 new DestroyOnHit(),
-                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.GlassBottle),
+                new SimpleEntityImage(EntityFrameSet.GlassBottle),
                 new Solid().PushOnBump(),
                 new Grapplable(Grapplable.Type.PulledByLasso)
             );
@@ -50,21 +50,21 @@ namespace Duel
             var anvil = new EntityTemplate(
                 new Solid().PushOnHit(),
                 new BlockProjectileTag(),
-                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.Anvil)
+                new SimpleEntityImage(EntityFrameSet.Anvil)
             );
 
             var crate = new EntityTemplate(
                 new Solid().PushOnBump(),
                 new BlockProjectileTag(),
                 new Grapplable(Grapplable.Type.PulledByLasso),
-                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.Crate),
+                new SimpleEntityImage(EntityFrameSet.Crate),
                 new DestroyOnHit()
             );
 
             var barrel = new EntityTemplate(
                 new Solid().PushOnBump().PushOnHit(),
                 new BlockProjectileTag(),
-                new SimpleEntityImage(SimpleEntityImage.EntityFrameSet.Barrel)
+                new SimpleEntityImage(EntityFrameSet.Barrel)
             );
 
             var miasma = new EntityTemplate(
@@ -108,6 +108,18 @@ namespace Duel
                 new SignalDoor(SignalColor.Blue, true)
             );
 
+            var blueKey = new EntityTemplate(
+                new Solid().PushOnBump(),
+                new Key(SignalColor.Blue),
+                new Grapplable(Grapplable.Type.PulledByLasso)
+            );
+
+            var blueKeyDoor = new EntityTemplate(
+                new Solid(),
+                new BlockProjectileTag(),
+                new KeyDoor(SignalColor.Blue)
+            );
+
             // player characters
             var sheriff = new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff));
             var renegade = new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade));
@@ -121,11 +133,10 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(0, 2), redLever);
 
             game.CurrentLevel.PutEntityAt(new Point(4, 2), crate);
-            game.CurrentLevel.PutEntityAt(new Point(5, 2), crate);
-            game.CurrentLevel.PutEntityAt(new Point(6, 2), redPressurePlate);
-            game.CurrentLevel.PutEntityAt(new Point(7, 2), closedRedDoor);
+            game.CurrentLevel.PutEntityAt(new Point(5, 2), blueKey);
+            game.CurrentLevel.PutEntityAt(new Point(7, 2), blueKeyDoor);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), renegade);
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

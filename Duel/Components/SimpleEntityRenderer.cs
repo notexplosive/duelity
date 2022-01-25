@@ -57,14 +57,14 @@ namespace Duel.Components
 
     public class SimpleEntityRenderer : BaseComponent
     {
-        private readonly SimpleEntityImage.EntityFrameSet frameSet;
+        private readonly EntityFrameSet frameSet;
         private readonly Entity entity;
         private readonly MovementRenderer movement;
         private readonly EntityRenderInfo renderInfo;
         private readonly Actor spriteActor;
         private readonly SpriteRenderer spriteRenderer;
 
-        public SimpleEntityRenderer(Actor actor, SimpleEntityImage.EntityFrameSet frameSet, Entity entity) :
+        public SimpleEntityRenderer(Actor actor, EntityFrameSet frameSet, Entity entity) :
             base(actor)
         {
             this.frameSet = frameSet;

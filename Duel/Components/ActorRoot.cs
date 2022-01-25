@@ -53,7 +53,7 @@ namespace Duel.Components
                 {
                     if (!Sokoban.Headless)
                     {
-                        new SimpleEntityRenderer(entityActor, image.EntityClass, entity);
+                        new SimpleEntityRenderer(entityActor, image.EntityFrameSet, entity);
                     }
                 }
                 else if (tag is MiasmaImageTag)
@@ -61,6 +61,20 @@ namespace Duel.Components
                     if (!Sokoban.Headless)
                     {
                         new MiasmaRenderer(entityActor);
+                    }
+                }
+                else if (tag is Key key)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SimpleEntityRenderer(entityActor, EntityFrameSet.Key(key.Color), entity);
+                    }
+                }
+                else if (tag is KeyDoor keyDoor)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SimpleEntityRenderer(entityActor, EntityFrameSet.KeyDoor(keyDoor.Color), entity);
                     }
                 }
                 else if (tag is LeverImageTag leverImage)
