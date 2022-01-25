@@ -47,6 +47,16 @@ namespace TestDuel
         }
 
         [Fact]
+        public void charge_treads_on_water()
+        {
+            var subject = new Charge(new Point(5, 5), Direction.Down, new LevelSolidProvider(this.level));
+
+            this.level.PutTileAt(new Point(5, 8), new TileTemplate(new Water()));
+
+            subject.Path.Should().Contain(new ChargeHit(new Point(5, 9), Direction.Down));
+        }
+
+        [Fact]
         public void charge_cleaves_through_breakables()
         {
             var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
