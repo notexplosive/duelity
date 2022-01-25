@@ -48,7 +48,7 @@ namespace Duel.Components
             }
         }
 
-        private void OnPositionChanged(MoveType moveType, Point previousPosition)
+        private void OnPositionChanged(Entity mover, MoveType moveType, Point previousPosition)
         {
             if (moveType == MoveType.Warp)
             {

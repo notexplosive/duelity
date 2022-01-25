@@ -44,11 +44,17 @@ namespace Duel.Data
         {
             this.entities.Add(entity);
             EntityAdded?.Invoke(entity);
+            entity.PositionChanged += EntityMoved;
+
+            EntityMoved(entity, MoveType.Spawn, entity.Position);
         }
 
         public void RemoveEntity(Entity entity)
         {
             this.entities.Remove(entity);
+
+            EntityJustSteppedOff(entity.Position);
+            entity.PositionChanged -= EntityMoved;
         }
 
         public void RequestDestroyEntity(Entity entity)
@@ -138,11 +144,43 @@ namespace Duel.Data
             }
         }
 
-        public void EntityJustSteppedOff(Point previousposition)
+        private void EntityJustSteppedOn(Point position)
         {
-            if (GetTileAt(previousposition).Tags.TryGetTag(out Collapses collapses))
+            UpdatePressurePlateAt(position);
+        }
+
+        private void UpdatePressurePlateAt(Point position)
+        {
+            var solidProvider = new LevelSolidProvider(this);
+            if (solidProvider.TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out EnableSignalWhenSteppedOn pressurePlateTag))
             {
-                PutTileAt(previousposition, collapses.TemplateAfterCollapse);
+                if (solidProvider.HasTagAt<Solid>(position) || solidProvider.HasTagAt<PlayerTag>(position))
+                {
+                    SignalState.TurnOn(pressurePlateTag.Color);
+                }
+                else
+                {
+                    SignalState.TurnOff(pressurePlateTag.Color);
+                }
+            }
+        }
+
+        public void EntityJustSteppedOff(Point previousPosition)
+        {
+            if (GetTileAt(previousPosition).Tags.TryGetTag(out Collapses collapses))
+            {
+                PutTileAt(previousPosition, collapses.TemplateAfterCollapse);
+            }
+
+            UpdatePressurePlateAt(previousPosition);
+        }
+
+        private void EntityMoved(Entity mover, MoveType moveType, Point previousPosition)
+        {
+            if (moveType != MoveType.Warp)
+            {
+                EntityJustSteppedOff(previousPosition);
+                EntityJustSteppedOn(mover.Position);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Duel.Components
             this.skipDebug = true;
         }
 
-        private void SnapPositionIfWarp(MoveType moveType, Point previousPosition)
+        private void SnapPositionIfWarp(Entity mover, MoveType moveType, Point previousPosition)
         {
             if (moveType == MoveType.Warp)
             {

@@ -55,6 +55,16 @@ namespace Duel.Data
         }
     }
 
+    public class EnableSignalWhenSteppedOn : Tag
+    {
+        public EnableSignalWhenSteppedOn(SignalColor color)
+        {
+            Color = color;
+        }
+
+        public SignalColor Color { get; }
+    }
+
     public class LeverImageTag : Tag
     {
         public SignalColor Color { get; }

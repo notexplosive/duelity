@@ -9,10 +9,11 @@ namespace Duel.Data
         Warp,
         Walk,
         Charge,
-        Jump
+        Jump,
+        Spawn
     }
 
-    public delegate void MoveAction(MoveType moveType, Point previousPosition);
+    public delegate void MoveAction(Entity mover, MoveType moveType, Point previousPosition);
 
     public delegate void DirectionalAction(Direction direction);
 
@@ -91,7 +92,7 @@ namespace Duel.Data
         {
             var prevPosition = Position;
             Position = position;
-            PositionChanged?.Invoke(MoveType.Warp, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Warp, prevPosition);
         }
 
         public void ChargeToPosition(Point position, Direction direction)
@@ -105,7 +106,7 @@ namespace Duel.Data
 
             var prevPosition = Position;
             Position = position;
-            PositionChanged?.Invoke(MoveType.Charge, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Charge, prevPosition);
         }
 
         public void JumpToPosition(Point position, EaseFunc easeFunc = null)
@@ -117,7 +118,7 @@ namespace Duel.Data
 
             var prevPosition = Position;
             Position = position;
-            PositionChanged?.Invoke(MoveType.Jump, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Jump, prevPosition);
 
             if (easeFunc == null)
             {
@@ -139,7 +140,7 @@ namespace Duel.Data
 
             var prevPosition = Position;
             Position += direction.ToPoint();
-            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Walk, prevPosition);
         }
 
         public void WalkAndPushInDirection(Direction direction)
@@ -160,7 +161,7 @@ namespace Duel.Data
 
             var prevPosition = Position;
             Position += direction.ToPoint();
-            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Walk, prevPosition);
         }
     }
 }
