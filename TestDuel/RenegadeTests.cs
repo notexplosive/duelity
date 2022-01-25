@@ -162,5 +162,63 @@ namespace TestDuel
 
             pushedOnHit.Position.Should().Be(new Point(0, 9));
         }
+
+        [Fact]
+        public void shot_blocked_by_closed_door()
+        {
+            var closedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, false));
+            this.level.PutEntityAt(new Point(0, 5), closedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 5));
+        }
+
+        [Fact]
+        public void shot_not_blocked_by_opened_door()
+        {
+            var closedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, false));
+            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.PutEntityAt(new Point(0, 5), closedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.WasBlocked.Should().BeFalse();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 10));
+        }
+
+        [Fact]
+        public void shot_not_blocked_by_pre_open_door()
+        {
+            var openedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, true));
+            this.level.PutEntityAt(new Point(0, 5), openedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.WasBlocked.Should().BeFalse();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 10));
+        }
+
+        [Fact]
+        public void shot_blocked_by_newly_closed_door()
+        {
+            var openedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, true));
+            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.PutEntityAt(new Point(0, 5), openedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 5));
+        }
     }
 }

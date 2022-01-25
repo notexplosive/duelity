@@ -40,6 +40,23 @@ namespace Duel.Data
             }
         }
 
+        public bool BlocksBulletsAt(Point position)
+        {
+            return HasTagAt<BlockProjectileTag>(position) || IsClosedDoorAt(position);
+        }
+
+        public bool IsClosedDoorAt(Point position)
+        {
+            if (TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out SignalDoor door))
+            {
+                var signalIsOffAndStartClosed = !this.level.SignalState.IsOn(door.Color) && !door.DefaultOpened;
+                var signalIsOnAndStartOpened = this.level.SignalState.IsOn(door.Color) && door.DefaultOpened;
+                return signalIsOffAndStartClosed || signalIsOnAndStartOpened;
+            }
+
+            return false;
+        }
+
         public void BumpWithLassoAt(Point position)
         {
             foreach (var entity in this.level.AllEntitiesAt(position))
@@ -66,14 +83,9 @@ namespace Duel.Data
                 return true;
             }
 
-            if (TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out SignalDoor door))
+            if (IsClosedDoorAt(position))
             {
-                var signalIsOffAndStartClosed = !this.level.SignalState.IsOn(door.Color) && !door.DefaultOpened;
-                var signalIsOnAndStartOpened = this.level.SignalState.IsOn(door.Color) && door.DefaultOpened;
-                if (signalIsOffAndStartClosed || signalIsOnAndStartOpened)
-                {
-                    return true;
-                }
+                return true;
             }
 
             return HasTagAt<Solid>(position);

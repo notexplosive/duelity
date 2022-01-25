@@ -32,7 +32,7 @@ namespace Duel.Data
                     }
                 }
 
-                if (solidProvider.HasTagAt<BlockProjectileTag>(hitScanPosition))
+                if (solidProvider.BlocksBulletsAt(hitScanPosition))
                 {
                     HitAtLeastOneThing = true;
                     WasBlocked = true;
