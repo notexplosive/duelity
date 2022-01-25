@@ -101,7 +101,7 @@ namespace Duel.Data
             return this.level.IsOutOfBounds(hitScanPosition);
         }
 
-        public override bool IsNotWalkableAt(Point position)
+        public override bool IsNotWalkableAt(Entity walker, Point position)
         {
             if (IsOutOfBounds(position))
             {
@@ -113,7 +113,7 @@ namespace Duel.Data
                 return true;
             }
 
-            if (IsWaterAt(position))
+            if (IsWaterAt(position) && !walker.Tags.HasTag<WaterFiller>())
             {
                 return true;
             }

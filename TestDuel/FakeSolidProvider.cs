@@ -17,7 +17,7 @@ namespace TestDuel
             this.positions.Add(position);
         }
 
-        public override bool IsNotWalkableAt(Point position)
+        public override bool IsNotWalkableAt(Entity walker, Point position)
         {
             return this.positions.Contains(position);
         }

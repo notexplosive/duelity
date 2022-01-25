@@ -46,7 +46,7 @@ namespace Duel.Components
                 foreach (var spot in possibleLandingSpots)
                 {
                     var radius = Grid.TileSize / 4;
-                    var isSolid = this.solidProvider.IsNotWalkableAt(spot);
+                    var isSolid = this.solidProvider.IsNotWalkableAt(this.entity, spot);
                     spriteBatch.DrawCircle(new CircleF(this.grid.TileToLocalPosition(spot), radius), 25, isSolid ? Color.OrangeRed : Color.White, isSolid ? radius / 4 : radius / 2, transform.Depth - 10);
                 }
             }

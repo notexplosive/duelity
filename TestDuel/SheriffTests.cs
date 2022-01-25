@@ -32,6 +32,17 @@ namespace TestDuel
 
             walker.Position.Should().Be(Point.Zero);
         }
+
+        [Fact]
+        public void floatable_can_walk_on_water()
+        {
+            var floater = this.level.PutEntityAt(Point.Zero, this.floatable);
+            this.level.PutTileAt(new Point(1, 0), this.water);
+
+            floater.WalkAndPushInDirection(Direction.Right);
+
+            floater.Position.Should().Be(new Point(1, 0));
+        }
     }
 
     public class SheriffTests
