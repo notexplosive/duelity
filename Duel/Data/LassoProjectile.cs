@@ -32,7 +32,7 @@ namespace Duel.Data
             LassoLandingPosition = this.startingPosition;
             FoundGrapplable = false;
 
-            if (solidProvider.HasTagAt<BlockProjectileTag>(this.startingPosition + throwDirection.ToPoint()))
+            if (solidProvider.BlocksBulletsAt(this.startingPosition + throwDirection.ToPoint()))
             {
                 this.invalid = true;
             }
@@ -51,7 +51,7 @@ namespace Duel.Data
                         FoundGrapplable = true;
                     }
 
-                    if (solidProvider.HasTagAt<BlockProjectileTag>(LassoLandingPosition))
+                    if (solidProvider.BlocksBulletsAt(LassoLandingPosition))
                     {
                         WasBlocked = true;
                     }
