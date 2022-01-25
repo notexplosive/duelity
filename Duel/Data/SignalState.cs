@@ -6,7 +6,7 @@ namespace Duel.Data
 {
     public class SignalState
     {
-        public HashSet<SignalColor> onSignals = new HashSet<SignalColor>();
+        private readonly HashSet<SignalColor> onSignals = new HashSet<SignalColor>();
 
         public void TurnOn(SignalColor signalColor)
         {

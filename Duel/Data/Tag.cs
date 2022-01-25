@@ -97,6 +97,18 @@ namespace Duel.Data
     {
     }
 
+    public class SignalDoor : Tag
+    {
+        public SignalColor Color { get; }
+        public bool DefaultOpened { get; }
+
+        public SignalDoor(SignalColor signalColor, bool defaultOpened)
+        {
+            Color = signalColor;
+            DefaultOpened = defaultOpened;
+        }
+    }
+
     public class Solid : Tag
     {
         public bool IsPushOnBump { get; private set; }

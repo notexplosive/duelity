@@ -66,6 +66,16 @@ namespace Duel.Data
                 return true;
             }
 
+            if (TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out SignalDoor door))
+            {
+                var signalIsOffAndStartClosed = !this.level.SignalState.IsOn(door.Color) && !door.DefaultOpened;
+                var signalIsOnAndStartOpened = this.level.SignalState.IsOn(door.Color) && door.DefaultOpened;
+                if (signalIsOffAndStartClosed || signalIsOnAndStartOpened)
+                {
+                    return true;
+                }
+            }
+
             return HasTagAt<Solid>(position);
         }
 
