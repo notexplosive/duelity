@@ -75,6 +75,16 @@ namespace Duel.Data
         }
     }
 
+    public class PressurePlateImageTag : Tag
+    {
+        public SignalColor Color { get; }
+
+        public PressurePlateImageTag(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
 
     public enum SignalColor
     {

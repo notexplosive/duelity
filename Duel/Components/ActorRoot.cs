@@ -67,7 +67,14 @@ namespace Duel.Components
                 {
                     if (!Sokoban.Headless)
                     {
-                        new LeverRenderer(entityActor, leverImage.Color, this.level.SignalState);
+                        new SignalableRenderer(entityActor, new LeverFrames(leverImage.Color), this.level.SignalState);
+                    }
+                }
+                else if (tag is PressurePlateImageTag pressurePlateImage)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SignalableRenderer(entityActor, new PressurePlateImages(pressurePlateImage.Color), this.level.SignalState);
                     }
                 }
                 else if (tag is PlayerTag playerTag)

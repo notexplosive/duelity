@@ -72,11 +72,28 @@ namespace Duel
                 new MiasmaImageTag()
             );
 
-            var lever = new EntityTemplate(
+            var redLever = new EntityTemplate(
                 new BlockProjectileTag(),
                 new Solid(),
                 new ToggleSignal(SignalColor.Red).OnBump().OnGrapple().OnHit(),
                 new LeverImageTag(SignalColor.Red)
+            );
+
+            var blueLever = new EntityTemplate( // duplicate of red, refactor this when we make editor
+                new BlockProjectileTag(),
+                new Solid(),
+                new ToggleSignal(SignalColor.Blue).OnBump().OnGrapple().OnHit(),
+                new LeverImageTag(SignalColor.Blue)
+            );
+
+            var redPressurePlate = new EntityTemplate(
+                new EnableSignalWhenSteppedOn(SignalColor.Red),
+                new PressurePlateImageTag(SignalColor.Red)
+            );
+
+            var bluePressurePlate = new EntityTemplate(
+                new EnableSignalWhenSteppedOn(SignalColor.Blue),
+                new PressurePlateImageTag(SignalColor.Blue)
             );
 
             // player characters
@@ -97,13 +114,13 @@ namespace Duel
 
             game.CurrentLevel.PutEntityAt(new Point(0, 0), glass);
             game.CurrentLevel.PutEntityAt(new Point(0, 1), miasma);
-            game.CurrentLevel.PutEntityAt(new Point(0, 2), lever);
-            game.CurrentLevel.PutEntityAt(new Point(3, 5), anvil);
-            game.CurrentLevel.PutEntityAt(new Point(3, 6), crate);
-            game.CurrentLevel.PutEntityAt(new Point(3, 2), barrel);
+            game.CurrentLevel.PutEntityAt(new Point(0, 2), redLever);
+            game.CurrentLevel.PutEntityAt(new Point(3, 5), bluePressurePlate);
+            game.CurrentLevel.PutEntityAt(new Point(3, 6), blueLever);
+            game.CurrentLevel.PutEntityAt(new Point(3, 2), redPressurePlate);
             game.CurrentLevel.PutEntityAt(new Point(4, 2), glass);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), cowboy);
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), renegade);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

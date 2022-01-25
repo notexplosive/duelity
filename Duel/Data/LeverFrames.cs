@@ -5,10 +5,12 @@ using System.Text;
 
 namespace Duel.Data
 {
-    public class LeverImages
+    public class LeverFrames : ISignalableImages
     {
-        public LeverImages(SignalColor color)
+        public LeverFrames(SignalColor color)
         {
+            SignalColor = color;
+
             if (color == SignalColor.Blue)
             {
                 LeftImage = EntityFrame.BlueLeverLeft;
@@ -30,5 +32,10 @@ namespace Duel.Data
 
         public EntityFrame LeftImage { get; }
         public EntityFrame RightImage { get; }
+
+        public EntityFrame OnImage => LeftImage;
+        public EntityFrame OffImage => RightImage;
+
+        public SignalColor SignalColor { get; }
     }
 }

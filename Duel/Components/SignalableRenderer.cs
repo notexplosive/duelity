@@ -11,25 +11,25 @@ using System.Text;
 
 namespace Duel.Components
 {
-    public class LeverRenderer : BaseComponent
+    public class SignalableRenderer : BaseComponent
     {
         private readonly SignalState signalState;
         private readonly SpriteSheet spriteSheet;
-        private readonly LeverImages images;
+        private readonly ISignalableImages images;
         private readonly SignalColor color;
 
-        public LeverRenderer(Actor actor, SignalColor signalColor, SignalState signalState) : base(actor)
+        public SignalableRenderer(Actor actor, ISignalableImages images, SignalState signalState) : base(actor)
         {
             RequireComponent<EntityRenderInfo>().DisableDebugGraphic();
             this.signalState = signalState;
             this.spriteSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet");
-            this.images = new LeverImages(signalColor);
-            this.color = signalColor;
+            this.color = images.SignalColor;
+            this.images = images;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var frame = this.signalState.IsOn(this.color) ? this.images.RightImage : this.images.LeftImage;
+            var frame = this.signalState.IsOn(this.color) ? this.images.OnImage : this.images.OffImage;
             this.spriteSheet.DrawFrame(spriteBatch, (int)frame, transform.Position, transform.Depth + 10);
         }
     }
