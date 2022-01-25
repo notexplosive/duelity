@@ -100,6 +100,7 @@ namespace Duel.Components
             debrisSpriteRenderer.FramesPerSecond = 0;
             debrisSpriteRenderer.SetFrame(this.frameSet.Broken);
             debrisActor.transform.Position = transform.Position + RenderOffset();
+            debrisActor.transform.Depth = transform.Depth - 1;
             new DebrisDestroy(debrisActor);
         }
 

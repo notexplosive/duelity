@@ -33,8 +33,8 @@ namespace Duel.Components
             scaleChannel.AppendFloatTween(1f, 0.05f, EaseFuncs.QuadraticEaseOut, this.scale);
 
             var opacityChannel = multi.AddChannel();
-            opacityChannel.AppendWaitTween(0.25f);
-            opacityChannel.AppendFloatTween(0, 1, EaseFuncs.CubicEaseIn, this.opacity);
+            opacityChannel.AppendWaitTween(0.15f);
+            opacityChannel.AppendFloatTween(0, 0.5f, EaseFuncs.CubicEaseIn, this.opacity);
         }
 
         public override void Update(float dt)
