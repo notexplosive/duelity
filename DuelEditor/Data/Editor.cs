@@ -6,7 +6,6 @@ using Machina.Data;
 using Machina.Data.Layout;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Text;
 

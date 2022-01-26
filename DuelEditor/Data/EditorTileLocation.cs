@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Duel.Data
+namespace DuelEditor.Data
 {
     public struct EditorTileLocation
     {
@@ -53,4 +51,5 @@ namespace Duel.Data
             return !(left == right);
         }
     }
+
 }

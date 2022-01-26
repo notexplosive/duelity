@@ -1,6 +1,7 @@
 ﻿using Duel.Components;
 using Duel.Data;
 using DuelEditor.Components;
+using DuelEditor.Data;
 using Machina.Components;
 using Machina.Data;
 using Machina.Engine;
