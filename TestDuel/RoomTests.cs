@@ -17,14 +17,25 @@ namespace TestDuel
         [Fact]
         public void find_room_grid_pos()
         {
-            this.level.LevelPosToRoomPos(new Point(-20, 0)).Should().Be(new Point(-2, 0));
-            this.level.LevelPosToRoomPos(new Point(-10, 0)).Should().Be(new Point(-1, 0));
+            Room.LevelPosToRoomPos(new Point(-20, 0)).Should().Be(new Point(-2, 0));
+            Room.LevelPosToRoomPos(new Point(-10, 0)).Should().Be(new Point(-1, 0));
 
-            this.level.LevelPosToRoomPos(new Point(0, 0)).Should().Be(new Point(0, 0));
-            this.level.LevelPosToRoomPos(new Point(8, 5)).Should().Be(new Point(0, 0));
+            Room.LevelPosToRoomPos(new Point(0, 0)).Should().Be(new Point(0, 0));
+            Room.LevelPosToRoomPos(new Point(8, 5)).Should().Be(new Point(0, 0));
 
-            this.level.LevelPosToRoomPos(new Point(20, 0)).Should().Be(new Point(1, 0));
-            this.level.LevelPosToRoomPos(new Point(35, 0)).Should().Be(new Point(2, 0));
+            Room.LevelPosToRoomPos(new Point(20, 0)).Should().Be(new Point(1, 0));
+            Room.LevelPosToRoomPos(new Point(35, 0)).Should().Be(new Point(2, 0));
+        }
+
+        [Fact]
+        public void get_bounds_for_room()
+        {
+            var subject = new Room(new Point(2, 3));
+
+            var bounds = subject.GetBounds();
+
+            bounds.TopLeft.Should().Be(new Point(Room.Size.X * 2, Room.Size.Y * 3));
+            bounds.BottomRight.Should().Be(new Point(Room.Size.X * 2, Room.Size.Y * 3) + Room.Size);
         }
     }
 }
