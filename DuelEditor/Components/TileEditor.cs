@@ -19,22 +19,51 @@ namespace DuelEditor.Components
     public class TileEditor : BaseComponent
     {
         private readonly Level level;
+        private readonly TemplateSelection templateSelection;
         private EditorTileLocation? hoveredTile;
         private bool leftMouseDown;
+        private bool rightMouseDown;
+
         public Point CameraOffset { get; set; }
 
-        public TileEditor(Actor actor, Level level) : base(actor)
+        public TileEditor(Actor actor, Level level, TemplateSelection templateSelection) : base(actor)
         {
             this.level = level;
+            this.templateSelection = templateSelection;
         }
 
         public override void Update(float dt)
         {
             if (this.hoveredTile.HasValue)
             {
+                var position = this.hoveredTile.Value.LevelPosition(CameraOffset);
                 if (this.leftMouseDown)
                 {
-                    this.level.PutTileAt(this.hoveredTile.Value.LevelPosition(CameraOffset), new TileTemplate(new TileImageTag(TileImageTag.TileImage.Wall)));
+                    if (this.templateSelection.Primary is TileTemplate tileTemplate)
+                    {
+                        this.level.PutTileAt(position, tileTemplate);
+                    }
+
+                    if (this.templateSelection.Primary is EntityTemplate entityTemplate)
+                    {
+                        this.level.PutEntityAt(position, entityTemplate);
+                    }
+                }
+
+                if (rightMouseDown)
+                {
+                    if (this.templateSelection.IsInEntityMode)
+                    {
+                        foreach (var entity in this.level.AllEntitiesAt(position))
+                        {
+                            this.level.RequestDestroyEntity(entity, DestroyType.Break);
+                        }
+                    }
+
+                    if (this.templateSelection.IsInTileMode)
+                    {
+                        this.level.ClearTileAt(position);
+                    }
                 }
             }
         }
@@ -77,6 +106,11 @@ namespace DuelEditor.Components
             if (button == MouseButton.Left)
             {
                 this.leftMouseDown = state == ButtonState.Pressed;
+            }
+
+            if (button == MouseButton.Right)
+            {
+                this.rightMouseDown = state == ButtonState.Pressed;
             }
         }
 

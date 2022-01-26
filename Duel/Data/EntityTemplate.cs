@@ -20,5 +20,18 @@
 
             return entity;
         }
+
+        public TagCollection Tags
+        {
+            get
+            {
+                var tagCollection = new TagCollection();
+                foreach (var tag in tags)
+                {
+                    tagCollection.AddTag(tag);
+                }
+                return tagCollection;
+            }
+        }
     }
 }

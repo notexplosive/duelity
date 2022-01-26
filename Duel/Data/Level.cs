@@ -67,6 +67,12 @@ namespace Duel.Data
             }
         }
 
+        public void ClearTileAt(Point position)
+        {
+            this.tileMap.Remove(position);
+            TilemapChanged?.Invoke();
+        }
+
         public void RemoveEntity(Entity entity)
         {
             this.entities.Remove(entity);

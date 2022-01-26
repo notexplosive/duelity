@@ -151,5 +151,16 @@ namespace Duel.Data
 
             return templateLibrary;
         }
+
+        public IEnumerable<TileTemplate> GetAllTileTemplates()
+        {
+            foreach (var template in this.lookupTable.Values)
+            {
+                if (template is TileTemplate tileTemplate)
+                {
+                    yield return tileTemplate;
+                }
+            }
+        }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IEntityOrTileTemplate
     {
-
+        TagCollection Tags { get; }
     }
 }
