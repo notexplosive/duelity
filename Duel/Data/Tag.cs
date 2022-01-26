@@ -1,10 +1,14 @@
-﻿using Duel.Components;
-using Machina.Engine;
+﻿using Machina.Engine;
 
 namespace Duel.Data
 {
     public abstract class Tag
     {
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
+
         public override bool Equals(object obj)
         {
             return obj.GetType() == this.GetType();
@@ -16,12 +20,148 @@ namespace Duel.Data
         }
     }
 
-    public class SpriteTag : Tag
+    public class BlockProjectileTag : Tag
     {
     }
 
-    public class BlockProjectileTag : Tag
+    public class WaterFiller : Tag
     {
+        public enum Type
+        {
+            Floats,
+            Sinks
+        }
+
+        public Type FillerType { get; }
+        public WaterFiller(Type fillerType)
+        {
+            FillerType = fillerType;
+        }
+    }
+
+    public class Ravine : Tag
+    {
+
+    }
+
+    public class UnfilledWater : Tag
+    {
+    }
+
+    public class FilledWater : Tag
+    {
+        public Entity FillingEntity { get; private set; }
+
+        public FilledWater(Entity entity)
+        {
+            FillingEntity = entity;
+        }
+
+    }
+
+    public class ToggleSignal : Tag
+    {
+        public SignalColor Color { get; }
+        public bool IsOnBump { get; private set; }
+        public bool IsOnHit { get; private set; }
+        public bool IsOnGrapple { get; private set; }
+
+        public ToggleSignal(SignalColor color)
+        {
+            Color = color;
+        }
+
+        public ToggleSignal OnBump()
+        {
+            IsOnBump = true;
+            return this;
+        }
+
+        public ToggleSignal OnHit()
+        {
+            IsOnHit = true;
+            return this;
+        }
+
+        public ToggleSignal OnGrapple()
+        {
+            IsOnGrapple = true;
+            return this;
+        }
+    }
+
+    public class EnableSignalWhenSteppedOn : Tag
+    {
+        public EnableSignalWhenSteppedOn(SignalColor color)
+        {
+            Color = color;
+        }
+
+        public SignalColor Color { get; }
+    }
+
+    public class LeverImageTag : Tag
+    {
+        public SignalColor Color { get; }
+
+        public LeverImageTag(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
+    public class PressurePlateImageTag : Tag
+    {
+        public SignalColor Color { get; }
+
+        public PressurePlateImageTag(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
+
+    public class Key : Tag
+    {
+        public SignalColor Color { get; }
+
+        public Key(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
+    public class KeyDoor : Tag
+    {
+        public SignalColor Color { get; }
+
+        public KeyDoor(SignalColor color)
+        {
+            Color = color;
+        }
+    }
+
+    public enum SignalColor
+    {
+        Red,
+        Blue,
+        Yellow
+    }
+
+    public class MiasmaImageTag : Tag
+    {
+    }
+
+    public class SignalDoor : Tag
+    {
+        public SignalColor Color { get; }
+        public bool DefaultOpened { get; }
+
+        public SignalDoor(SignalColor signalColor, bool defaultOpened)
+        {
+            Color = signalColor;
+            DefaultOpened = defaultOpened;
+        }
     }
 
     public class Solid : Tag
@@ -44,31 +184,13 @@ namespace Duel.Data
 
     public class SimpleEntityImage : Tag
     {
-        public class EntityFrameSet
-        {
-            public int Normal { get; }
-            public int Lassod { get; }
-            public int Broken { get; }
 
-            public EntityFrameSet(EntityFrame normal, EntityFrame lassod, EntityFrame broken)
-            {
-                Normal = (int) normal;
-                Lassod = (int) lassod;
-                Broken = (int) broken;
-            }
-
-            public static readonly EntityFrameSet GlassBottle = new EntityFrameSet(EntityFrame.GlassHooch, EntityFrame.GlassHoochLassod, EntityFrame.GlassHoochBreak);
-            public static readonly EntityFrameSet Crate = new EntityFrameSet(EntityFrame.Crate, EntityFrame.CrateLassod, EntityFrame.CrateBreak);
-            public static readonly EntityFrameSet Anvil = new EntityFrameSet(EntityFrame.Anvil, EntityFrame.Anvil, EntityFrame.Anvil);
-            public static readonly EntityFrameSet Barrel = new EntityFrameSet(EntityFrame.Barrel, EntityFrame.Barrel, EntityFrame.Barrel);
-        }
-        
         public SimpleEntityImage(EntityFrameSet entityFrameSet)
         {
-            EntityClass = entityFrameSet;
+            EntityFrameSet = entityFrameSet;
         }
 
-        public EntityFrameSet EntityClass { get; }
+        public EntityFrameSet EntityFrameSet { get; }
     }
 
     public class PlayerTag : Tag

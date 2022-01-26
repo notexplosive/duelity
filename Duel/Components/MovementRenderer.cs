@@ -48,7 +48,7 @@ namespace Duel.Components
             }
         }
 
-        private void OnPositionChanged(MoveType moveType, Point previousPosition)
+        private void OnPositionChanged(Entity mover, MoveType moveType, Point previousPosition)
         {
             if (moveType == MoveType.Warp)
             {
@@ -74,11 +74,14 @@ namespace Duel.Components
 
         private void StartChargeTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
-            this.renderInfo.SnapPositionToGrid();
             var displacement = previousWorldPos - targetWorldPos;
-            this.renderInfo.renderOffsetTweenable.setter(displacement);
 
             this.tween.Clear();
+            this.tween.AppendCallback(() =>
+            {
+                this.renderInfo.SnapPositionToGrid();
+                this.renderInfo.renderOffsetTweenable.setter(displacement);
+            });
             this.tween.AppendVectorTween(Vector2.Zero, 0.05f * displacement.Length() / Grid.TileSize, EaseFuncs.QuadraticEaseIn, this.renderInfo.renderOffsetTweenable);
             this.entity.BusySignal.Add(new BusyFunction("ChargeTween", this.tween.IsDone));
         }
@@ -93,20 +96,26 @@ namespace Duel.Components
 
         private void StartWalkTween(Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
-            this.renderInfo.SnapPositionToGrid();
-            this.renderInfo.renderOffsetTweenable.setter(previousWorldPos - targetWorldPos);
             this.tween.Clear();
+            this.tween.AppendCallback(() =>
+            {
+                this.renderInfo.SnapPositionToGrid();
+                this.renderInfo.renderOffsetTweenable.setter(previousWorldPos - targetWorldPos);
+            });
             this.tween.AppendVectorTween(Vector2.Zero, 0.10f, EaseFuncs.CubicEaseIn, this.renderInfo.renderOffsetTweenable);
             this.entity.BusySignal.Add(new BusyFunction("MoveTween", this.tween.IsDone));
         }
 
         private void StartJumpTween(EaseFunc easeFunc, Vector2 previousWorldPos, Vector2 targetWorldPos)
         {
-            this.renderInfo.SnapPositionToGrid();
             var displacement = previousWorldPos - targetWorldPos;
-            this.renderInfo.renderOffsetTweenable.setter(displacement);
-            this.tween.Clear();
 
+            this.tween.Clear();
+            this.tween.AppendCallback(() =>
+            {
+                this.renderInfo.SnapPositionToGrid();
+                this.renderInfo.renderOffsetTweenable.setter(displacement);
+            });
             this.tween.AppendVectorTween(Vector2.Zero, 0.10f * displacement.Length() / Grid.TileSize, easeFunc, this.renderInfo.renderOffsetTweenable);
             this.entity.BusySignal.Add(new BusyFunction("JumpTween", this.tween.IsDone));
         }

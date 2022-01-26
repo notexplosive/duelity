@@ -3,6 +3,7 @@ using Duel.Data;
 using FluentAssertions;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Xunit;
 
 namespace TestDuel
@@ -61,7 +62,7 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeTrue();
             bullet.HitLocations.Should().Contain(new Point(0, 3)).And.HaveCount(1);
         }
@@ -69,9 +70,10 @@ namespace TestDuel
         [Fact]
         public void shot_through_several_breakables()
         {
-            this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new DestroyOnHit()));
-            this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit()));
-            this.level.PutEntityAt(new Point(0, 5), new EntityTemplate(new DestroyOnHit()));
+            var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
+            this.level.PutEntityAt(new Point(0, 3), glass);
+            this.level.PutEntityAt(new Point(0, 4), glass);
+            this.level.PutEntityAt(new Point(0, 5), glass);
 
             var bullet = this.gunComponent.CreateBullet();
 
@@ -79,6 +81,7 @@ namespace TestDuel
             bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeFalse();
             bullet.HitLocations.Should().ContainInOrder(new Point(0, 3), new Point(0, 4), new Point(0, 5));
+            bullet.LastHitLocation.Should().Be(new Point(0, 10));
         }
 
         [Fact]
@@ -89,7 +92,7 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeTrue();
             bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 4));
         }
@@ -102,7 +105,7 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.HitAtLeastOneThing.Should().BeTrue();
             bullet.WasBlocked.Should().BeTrue();
             bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 1));
         }
@@ -121,20 +124,25 @@ namespace TestDuel
         public void shot_pushes_item_out_of_bounds()
         {
             // weird edge case I came across while testing
+            var destroyedEntities = new List<Entity>();
+            this.level.EntityDestroyRequested += (entity, type) =>
+            {
+                destroyedEntities.Add(entity);
+                this.level.RemoveEntity(entity);
+            };
             var pushedOnHit = this.level.PutEntityAt(new Point(0, 3), new EntityTemplate(new Solid().PushOnHit()));
-            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump()));
+            var pushable = this.level.PutEntityAt(new Point(0, 4), new EntityTemplate(new DestroyOnHit()));
 
             this.gunComponent.Shoot();
 
             pushedOnHit.Position.Should().Be(new Point(0, 4));
-            pushable.Position.Should().Be(new Point(0, 5));
+            pushable.Position.Should().Be(new Point(0, 4));
 
-            this.scene.FlushBuffers(); // because an actor got destroyed. ugh.
+            destroyedEntities.Should().Contain(pushable);
 
             this.gunComponent.Shoot();
 
             pushedOnHit.Position.Should().Be(new Point(0, 5));
-            pushable.Position.Should().Be(new Point(0, 5)); // didn't move because it got destroyed (should really have a better way to measure that)
 
             this.gunComponent.Shoot();
 
@@ -159,6 +167,64 @@ namespace TestDuel
             this.gunComponent.Shoot();
 
             pushedOnHit.Position.Should().Be(new Point(0, 9));
+        }
+
+        [Fact]
+        public void shot_blocked_by_closed_door()
+        {
+            var closedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, false));
+            this.level.PutEntityAt(new Point(0, 5), closedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 5));
+        }
+
+        [Fact]
+        public void shot_not_blocked_by_opened_door()
+        {
+            var closedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, false));
+            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.PutEntityAt(new Point(0, 5), closedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.WasBlocked.Should().BeFalse();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 10));
+        }
+
+        [Fact]
+        public void shot_not_blocked_by_pre_open_door()
+        {
+            var openedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, true));
+            this.level.PutEntityAt(new Point(0, 5), openedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeFalse();
+            bullet.WasBlocked.Should().BeFalse();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 10));
+        }
+
+        [Fact]
+        public void shot_blocked_by_newly_closed_door()
+        {
+            var openedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, true));
+            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.PutEntityAt(new Point(0, 5), openedDoor);
+
+            var bullet = this.gunComponent.CreateBullet();
+
+            bullet.StartPosition.Should().Be(new Point(0, 0));
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 5));
         }
     }
 }

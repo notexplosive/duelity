@@ -32,7 +32,7 @@ namespace Duel.Data
             LassoLandingPosition = this.startingPosition;
             FoundGrapplable = false;
 
-            if (solidProvider.HasTagAt<BlockProjectileTag>(this.startingPosition + throwDirection.ToPoint()))
+            if (solidProvider.BlocksBulletsAt(this.startingPosition + throwDirection.ToPoint()))
             {
                 this.invalid = true;
             }
@@ -51,7 +51,7 @@ namespace Duel.Data
                         FoundGrapplable = true;
                     }
 
-                    if (solidProvider.HasTagAt<BlockProjectileTag>(LassoLandingPosition))
+                    if (solidProvider.BlocksBulletsAt(LassoLandingPosition))
                     {
                         WasBlocked = true;
                     }
@@ -113,6 +113,22 @@ namespace Duel.Data
         {
             this.lassoEntity.JumpToPosition(this.startingPosition, EaseFuncs.QuadraticEaseOut);
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
+        }
+
+        public void WrapGrappledEntity()
+        {
+            if (FoundPullableEntity)
+            {
+                this.entityToPull.GrabWithLasso();
+            }
+        }
+
+        public void UnwrapGrappledEntity()
+        {
+            if (FoundPullableEntity)
+            {
+                this.entityToPull.ReleaseFromLasso();
+            }
         }
     }
 }

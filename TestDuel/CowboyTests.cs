@@ -3,6 +3,7 @@ using Duel.Data;
 using FluentAssertions;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Xunit;
 
 namespace TestDuel
@@ -47,20 +48,30 @@ namespace TestDuel
         }
 
         [Fact]
+        public void charge_treads_on_water()
+        {
+            var subject = new Charge(new Point(5, 5), Direction.Down, new LevelSolidProvider(this.level));
+
+            this.level.PutTileAt(new Point(5, 8), new TileTemplate(new UnfilledWater()));
+
+            subject.Path.Should().Contain(new ChargeHit(new Point(5, 9), Direction.Down));
+        }
+
+        [Fact]
         public void charge_cleaves_through_breakables()
         {
-            var glass = new EntityTemplate(new DestroyOnHit());
+            var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
+            var destroyedEntities = new List<Entity>();
+            this.level.EntityDestroyRequested += (e, t) => { destroyedEntities.Add(e); };
 
-            var actor1 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 6), glass));
-            var actor2 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 7), glass));
-            var actor3 = this.game.FindActor(this.level.PutEntityAt(new Point(0, 8), glass));
+            var actor1 = this.level.PutEntityAt(new Point(0, 6), glass);
+            var actor2 = this.level.PutEntityAt(new Point(0, 7), glass);
+            var actor3 = this.level.PutEntityAt(new Point(0, 8), glass);
 
             DoChargeDown();
             scene.FlushBuffers();
 
-            actor1.IsDestroyed.Should().BeTrue();
-            actor2.IsDestroyed.Should().BeTrue();
-            actor3.IsDestroyed.Should().BeTrue();
+            destroyedEntities.Should().Contain(actor1).And.Contain(actor2).And.Contain(actor3).And.HaveCount(3);
         }
 
         [Fact]

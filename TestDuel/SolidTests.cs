@@ -13,7 +13,7 @@ namespace TestDuel
             var level = new Level(new Corners(new Point(-2, -2), new Point(2, 2)));
             var solidProvider = new LevelSolidProvider(level);
 
-            solidProvider.IsSolidAt(new Point(0, 0)).Should().BeFalse();
+            solidProvider.IsNotWalkableAt(new Entity(), new Point(0, 0)).Should().BeFalse();
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace TestDuel
             var level = new Level(new Corners(new Point(-2, -2), new Point(2, 2)));
             var solidProvider = new LevelSolidProvider(level);
 
-            solidProvider.IsSolidAt(new Point(10, 10)).Should().BeTrue();
+            solidProvider.IsNotWalkableAt(new Entity(), new Point(10, 10)).Should().BeTrue();
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace TestDuel
 
             var solidProvider = new LevelSolidProvider(level);
 
-            solidProvider.IsSolidAt(new Point(1, 1)).Should().BeTrue();
+            solidProvider.IsNotWalkableAt(new Entity(), new Point(1, 1)).Should().BeTrue();
         }
 
         [Fact]

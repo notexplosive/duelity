@@ -56,9 +56,11 @@ namespace Duel.Components
 
                 if (lasso.FoundGrapplable)
                 {
+                    lasso.WrapGrappledEntity();
+                    lasso.DestroyLassoActor();
+
                     if (lasso.FoundPullableEntity)
                     {
-                        lasso.DestroyLassoActor();
                         yield return new WaitSeconds(0.25f);
                         this.userEntity.Nudge(this.userEntity.FacingDirection.Opposite);
                         YankStart?.Invoke();
@@ -69,13 +71,15 @@ namespace Duel.Components
                         yield return new WaitSeconds(0.25f);
                         JumpStart?.Invoke();
                         yield return lasso.JumpToDestination();
-                        lasso.DestroyLassoActor();
                     }
+
+                    lasso.UnwrapGrappledEntity();
                 }
                 else
                 {
                     if (lasso.WasBlocked)
                     {
+                        this.solidProvider.BumpWithLassoAt(lasso.FailPoint);
                         this.level.NudgeAt(lasso.FailPoint, this.userEntity.FacingDirection);
                         lasso.NudgeLassoEntity(this.userEntity.FacingDirection);
                     }
@@ -88,7 +92,7 @@ namespace Duel.Components
                 this.userEntity.Nudge(userEntity.FacingDirection.Opposite);
             }
 
-            Finished.Invoke();
+            Finished?.Invoke();
         }
 
         public override void Update(float dt)

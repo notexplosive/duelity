@@ -6,16 +6,19 @@ using System.Text;
 namespace Duel.Data
 {
     public delegate void EntityEvent(Entity entity);
+    public delegate void DestroyEvent(Entity entity, DestroyType destroyType);
 
     public class Level
     {
         public event Action TilemapChanged;
         public event EntityEvent EntityAdded;
-        public event EntityEvent EntityDestroyRequested;
+        public event DestroyEvent EntityDestroyRequested;
 
         private readonly List<Entity> entities = new List<Entity>();
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
+
+        public SignalState SignalState { get; internal set; } = new SignalState(); // this should be on a per-screen basis
 
         public Level(Corners corners)
         {
@@ -42,16 +45,41 @@ namespace Duel.Data
         {
             this.entities.Add(entity);
             EntityAdded?.Invoke(entity);
+
+            entity.PositionChanged += EntityMoved;
+            entity.Bumped += EntityBumped;
+
+            EntityJustSteppedOn(entity, entity.Position);
+        }
+
+        private void EntityBumped(Entity entity, Point position, Direction direction)
+        {
+            if (entity.Tags.TryGetTag(out Key key))
+            {
+                if (new LevelSolidProvider(this).TryGetFirstEntityWithTagAt(position, out Entity doorEntity, out KeyDoor keyDoor))
+                {
+                    if (keyDoor.Color == key.Color)
+                    {
+                        RequestDestroyEntity(doorEntity, DestroyType.Vanish);
+                        RequestDestroyEntity(entity, DestroyType.Break);
+                    }
+                }
+            }
         }
 
         public void RemoveEntity(Entity entity)
         {
             this.entities.Remove(entity);
+
+            EntityJustSteppedOff(entity.Position);
+
+            entity.PositionChanged -= EntityMoved;
+            entity.Bumped -= EntityBumped;
         }
 
-        public void RequestDestroyEntity(Entity entity)
+        public void RequestDestroyEntity(Entity entity, DestroyType destroyType)
         {
-            EntityDestroyRequested?.Invoke(entity);
+            EntityDestroyRequested?.Invoke(entity, destroyType);
         }
 
         public void PutTileAt(Point position, TileTemplate tile)
@@ -127,7 +155,8 @@ namespace Duel.Data
 
         public IEnumerable<Entity> AllEntitiesAt(Point position)
         {
-            foreach (var entity in this.entities)
+            var entitiesCopy = new List<Entity>(this.entities);
+            foreach (var entity in entitiesCopy)
             {
                 if (entity.Position == position)
                 {
@@ -136,12 +165,98 @@ namespace Duel.Data
             }
         }
 
-        public void EntityJustSteppedOff(Point previousposition)
+        private void EntityJustSteppedOn(Entity stepper, Point position)
         {
-            if (GetTileAt(previousposition).Tags.TryGetTag(out Collapses collapses))
+            FillWaterIfApplicable(stepper, position);
+            UpdatePressurePlateAt(position);
+
+        }
+
+        private void FillWaterIfApplicable(Entity stepper, Point position)
+        {
+            var solidProvider = new LevelSolidProvider(this);
+            var waterTileExists = solidProvider.HasTagAt<UnfilledWater>(position);
+            var ravineTileExists = solidProvider.HasTagAt<Ravine>(position);
+
+            if (stepper.Tags.TryGetTag(out WaterFiller waterFiller))
             {
-                PutTileAt(previousposition, collapses.TemplateAfterCollapse);
+                if (ravineTileExists)
+                {
+                    RequestDestroyEntity(stepper, DestroyType.Fall);
+                }
+
+                if (waterTileExists)
+                {
+                    if (waterFiller.FillerType == WaterFiller.Type.Floats)
+                    {
+                        var tags = new TagCollection();
+                        foreach (var tag in GetTileAt(position).Tags)
+                        {
+                            if (!(tag is UnfilledWater))
+                            {
+                                tags.AddTag(tag);
+                            }
+                        }
+
+                        tags.AddTag(new FilledWater(stepper));
+                        PutTileAt(position, new TileTemplate(tags));
+                    }
+
+                    RequestDestroyEntity(stepper, DestroyType.Sink);
+                }
             }
+        }
+
+        private void UpdatePressurePlateAt(Point position)
+        {
+            var solidProvider = new LevelSolidProvider(this);
+            if (solidProvider.TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out EnableSignalWhenSteppedOn pressurePlateTag))
+            {
+                if (solidProvider.HasTagAt<Solid>(position) || solidProvider.HasTagAt<PlayerTag>(position))
+                {
+                    SignalState.TurnOn(pressurePlateTag.Color);
+                }
+                else
+                {
+                    SignalState.TurnOff(pressurePlateTag.Color);
+                }
+            }
+        }
+
+        public void EntityJustSteppedOff(Point previousPosition)
+        {
+            if (GetTileAt(previousPosition).Tags.TryGetTag(out Collapses collapses))
+            {
+                PutTileAt(previousPosition, collapses.TemplateAfterCollapse);
+            }
+
+            UpdatePressurePlateAt(previousPosition);
+        }
+
+        private void EntityMoved(Entity mover, MoveType moveType, Point previousPosition)
+        {
+            if (moveType != MoveType.Warp)
+            {
+                EntityJustSteppedOff(previousPosition);
+                EntityJustSteppedOn(mover, mover.Position);
+            }
+        }
+
+        public Point LevelPosToRoomPos(Point levelGridPos)
+        {
+            var offsetX = 0;
+            if (levelGridPos.X < 0)
+            {
+                offsetX = -1;
+            }
+
+            var offsetY = 0;
+            if (levelGridPos.Y < 0)
+            {
+                offsetY = -1;
+            }
+
+            return new Point(levelGridPos.X / Room.Size.X + offsetX, levelGridPos.Y / Room.Size.Y + offsetY);
         }
     }
 }

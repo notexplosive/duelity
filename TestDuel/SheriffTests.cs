@@ -126,5 +126,20 @@ namespace TestDuel
             lasso.LassoLandingPosition.Should().Be(new Point(0, 2));
             this.playerEntity.Position.Should().Be(new Point(0, 2));
         }
+
+        [Fact]
+        public void lasso_is_blocked_by_closed_door()
+        {
+            var door = new EntityTemplate(new SignalDoor(SignalColor.Red, false));
+            this.level.PutEntityAt(new Point(0, 2), door);
+
+            var lasso = ThrowLassoDown();
+
+            lasso.Valid.Should().BeTrue();
+            lasso.FoundGrapplable.Should().BeFalse();
+            lasso.FoundPullableEntity.Should().BeFalse();
+            lasso.LassoLandingPosition.Should().Be(new Point(0, 1));
+            this.playerEntity.Position.Should().Be(new Point(0, 0));
+        }
     }
 }

@@ -11,5 +11,13 @@
                 Tags.AddTag(tag);
             }
         }
+
+        public TileTemplate(TagCollection tags)
+        {
+            foreach (var tag in tags)
+            {
+                Tags.AddTag(tag);
+            }
+        }
     }
 }

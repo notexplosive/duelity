@@ -15,12 +15,19 @@ namespace Duel.Data
             {
                 Path.Add(new ChargeHit(hitScanPosition, travelDirection));
 
-                if (solidProvider.HasTagAt<Solid>(hitScanPosition + travelDirection.ToPoint()))
+                var nextPos = hitScanPosition + travelDirection.ToPoint();
+                if (solidProvider.HasTagAt<Solid>(nextPos))
                 {
-                    return;
+                    var hitSolidEntity = solidProvider.IsEntityWithTagAt<Solid>(nextPos) && !solidProvider.IsEntityWithTagAt<DestroyOnHit>(nextPos);
+                    var hitSolidTile = solidProvider.TryGetTagFromTileAt(nextPos, out Solid foundSolid);
+
+                    if (hitSolidEntity || hitSolidTile)
+                    {
+                        return;
+                    }
                 }
 
-                hitScanPosition += travelDirection.ToPoint();
+                hitScanPosition = nextPos;
             }
         }
 

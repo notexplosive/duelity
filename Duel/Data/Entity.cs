@@ -9,10 +9,13 @@ namespace Duel.Data
         Warp,
         Walk,
         Charge,
-        Jump
+        Jump,
+        Spawn
     }
 
-    public delegate void MoveAction(MoveType moveType, Point previousPosition);
+    public delegate void MoveAction(Entity mover, MoveType moveType, Point previousPosition);
+    public delegate void BumpAction(Entity entity, Point position, Direction direction);
+
     public delegate void DirectionalAction(Direction direction);
 
     public class Entity
@@ -22,6 +25,9 @@ namespace Duel.Data
         public event MoveAction PositionChanged;
         public event DirectionalAction MoveFailed;
         public event DirectionalAction Nudged;
+        public event BumpAction Bumped;
+        public event Action GrabbedByLasso;
+        public event Action ReleasedFromLasso;
         public event Action<EaseFunc, Point> Jumped;
 
         public BusySignal BusySignal { get; } = new BusySignal();
@@ -37,6 +43,16 @@ namespace Duel.Data
         {
             // Purely graphical
             Nudged?.Invoke(direction);
+        }
+
+        public void GrabWithLasso()
+        {
+            GrabbedByLasso?.Invoke();
+        }
+
+        public void ReleaseFromLasso()
+        {
+            ReleasedFromLasso?.Invoke();
         }
 
         public Entity()
@@ -58,6 +74,7 @@ namespace Duel.Data
             {
                 return other.uniqueId == this.uniqueId;
             }
+
             return false;
         }
 
@@ -68,7 +85,7 @@ namespace Duel.Data
 
         public override string ToString()
         {
-            return this.uniqueId.ToString();
+            return $"Entity {this.uniqueId}: {Tags}";
         }
 
         // /Overrides //
@@ -77,7 +94,7 @@ namespace Duel.Data
         {
             var prevPosition = Position;
             Position = position;
-            PositionChanged?.Invoke(MoveType.Warp, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Warp, prevPosition);
         }
 
         public void ChargeToPosition(Point position, Direction direction)
@@ -91,7 +108,7 @@ namespace Duel.Data
 
             var prevPosition = Position;
             Position = position;
-            PositionChanged?.Invoke(MoveType.Charge, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Charge, prevPosition);
         }
 
         public void JumpToPosition(Point position, EaseFunc easeFunc = null)
@@ -103,40 +120,43 @@ namespace Duel.Data
 
             var prevPosition = Position;
             Position = position;
-            PositionChanged?.Invoke(MoveType.Jump, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Jump, prevPosition);
 
             if (easeFunc == null)
             {
                 easeFunc = EaseFuncs.EaseInBack;
             }
+
             Jumped?.Invoke(easeFunc, prevPosition);
         }
 
-        public void WalkWithoutPushInDirection(Direction direction)
+        public void WalkWithoutPushInDirection(Direction direction) // dead code???
         {
             FacingDirection = direction;
 
-            if (this.SolidProvider.IsSolidAt(Position + direction.ToPoint()))
+            if (SolidProvider.IsNotWalkableAt(this, Position + direction.ToPoint()))
             {
+                // Bumped???
                 MoveFailed?.Invoke(direction);
                 return;
             }
 
             var prevPosition = Position;
             Position += direction.ToPoint();
-            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Walk, prevPosition);
         }
 
         public void WalkAndPushInDirection(Direction direction)
         {
             FacingDirection = direction;
 
-            if (this.SolidProvider.IsSolidAt(Position + direction.ToPoint()))
+            if (SolidProvider.IsNotWalkableAt(this, Position + direction.ToPoint()))
             {
+                Bumped?.Invoke(this, Position + direction.ToPoint(), direction);
                 SolidProvider.ApplyPushAt(Position + direction.ToPoint(), direction);
 
                 // If it's still solid, give up, otherwise we move
-                if (this.SolidProvider.IsSolidAt(Position + direction.ToPoint()))
+                if (SolidProvider.IsNotWalkableAt(this, Position + direction.ToPoint()))
                 {
                     MoveFailed?.Invoke(direction);
                     return;
@@ -145,7 +165,7 @@ namespace Duel.Data
 
             var prevPosition = Position;
             Position += direction.ToPoint();
-            PositionChanged?.Invoke(MoveType.Walk, prevPosition);
+            PositionChanged?.Invoke(this, MoveType.Walk, prevPosition);
         }
     }
 }

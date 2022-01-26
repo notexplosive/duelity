@@ -18,6 +18,7 @@ namespace Duel.Components
         private readonly Grid grid;
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
+        private readonly HashSet<Entity> knownDestroyedActors = new HashSet<Entity>();
 
         public ActorRoot(Actor actor, Level level) : base(actor)
         {
@@ -27,9 +28,13 @@ namespace Duel.Components
             this.level.EntityDestroyRequested += DestroyEntityActor;
         }
 
-        private void DestroyEntityActor(Entity entity)
+        private void DestroyEntityActor(Entity entity, DestroyType type)
         {
-            FindActor(entity).Destroy();
+            if (!this.knownDestroyedActors.Contains(entity))
+            {
+                new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal, type);
+                this.knownDestroyedActors.Add(entity);
+            }
         }
 
         private void CreateEntityActor(Entity entity)
@@ -41,7 +46,6 @@ namespace Duel.Components
             new RemoveEntityOnDestroy(entityActor, this.level, entity);
             new EntityRenderInfo(entityActor, this.grid, entity);
             new MovementRenderer(entityActor, entity);
-            new TriggerMoveOnMove(entityActor, entity, this.level);
 
             ApplyTags(entity, entityActor);
         }
@@ -54,11 +58,56 @@ namespace Duel.Components
                 {
                     if (!Sokoban.Headless)
                     {
-                        new SimpleEntityRenderer(entityActor, image.EntityClass, entity);
+                        new SimpleEntityRenderer(entityActor, image.EntityFrameSet, entity);
+                    }
+                }
+                else if (tag is MiasmaImageTag)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new MiasmaRenderer(entityActor);
+                    }
+                }
+                else if (tag is Key key)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SimpleEntityRenderer(entityActor, EntityFrameSet.Key(key.Color), entity);
+                    }
+                }
+                else if (tag is KeyDoor keyDoor)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SimpleEntityRenderer(entityActor, EntityFrameSet.KeyDoor(keyDoor.Color), entity);
+                    }
+                }
+                else if (tag is LeverImageTag leverImage)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SignalableRenderer(entityActor, new LeverFrames(leverImage.Color), this.level.SignalState);
+                    }
+                }
+                else if (tag is PressurePlateImageTag pressurePlateImage)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new SignalableRenderer(entityActor, new PressurePlateImages(pressurePlateImage.Color), this.level.SignalState);
+                    }
+                }
+                else if (tag is SignalDoor signalDoor)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        var doorImages = signalDoor.DefaultOpened ? (ISignalableImages)new OpenedDoorImages(signalDoor.Color) : new ClosedDoorImages(signalDoor.Color);
+                        new SignalableRenderer(entityActor, doorImages, this.level.SignalState);
                     }
                 }
                 else if (tag is PlayerTag playerTag)
                 {
+                    new LevelTransition(entityActor, this.level, entity);
+
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
@@ -78,6 +127,7 @@ namespace Duel.Components
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseGun(entityActor, entity, this.level);
+
                         if (!Sokoban.Headless)
                         {
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Miranda);

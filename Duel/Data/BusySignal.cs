@@ -9,6 +9,7 @@ namespace Duel.Data
     {
         private readonly List<BusyFunction> busyFunctions = new List<BusyFunction>();
         private readonly BusySignal parent = null;
+        private bool stoppedAcceptingNewFunctions;
 
         public BusySignal()
         {
@@ -46,6 +47,11 @@ namespace Duel.Data
             return false;
         }
 
+        public void StopAcceptingNewFunctions()
+        {
+            this.stoppedAcceptingNewFunctions = true;
+        }
+
         public bool ParentIsBusy()
         {
             return this.parent != null && this.parent.IsBusy();
@@ -53,6 +59,11 @@ namespace Duel.Data
 
         public void Add(BusyFunction busyFunction)
         {
+            if (this.stoppedAcceptingNewFunctions)
+            {
+                return;
+            }
+
             this.busyFunctions.Add(busyFunction);
         }
 

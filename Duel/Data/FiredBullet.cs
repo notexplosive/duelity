@@ -32,14 +32,15 @@ namespace Duel.Data
                     }
                 }
 
-                if (solidProvider.HasTagAt<BlockProjectileTag>(hitScanPosition))
+                if (solidProvider.BlocksBulletsAt(hitScanPosition))
                 {
+                    HitAtLeastOneThing = true;
                     WasBlocked = true;
                     break;
                 }
             }
 
-            if (HitLocations.Count == 0)
+            if (!HitLocations.Contains(hitScanPosition))
             {
                 HitLocations.Add(hitScanPosition);
             }
