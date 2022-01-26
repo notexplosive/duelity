@@ -111,7 +111,7 @@ namespace Duel.Data
                 }
 
                 // all 3 levers
-                templateLibrary.AddTemplate($"{color}Lever", new EntityTemplate(
+                templateLibrary.AddTemplate($"{colorName}Lever", new EntityTemplate(
                     new BlockProjectileTag(),
                     new Solid(),
                     new ToggleSignal(color).OnBump().OnGrapple().OnHit(),
@@ -119,30 +119,30 @@ namespace Duel.Data
                 ));
 
                 // all 3 plates
-                templateLibrary.AddTemplate($"{color}PressurePlate", new EntityTemplate(
+                templateLibrary.AddTemplate($"{colorName}PressurePlate", new EntityTemplate(
                     new EnableSignalWhenSteppedOn(color),
                     new PressurePlateImageTag(color)
                 ));
 
                 // all 3 open doors
-                templateLibrary.AddTemplate($"{color}OpenDoor", new EntityTemplate(
+                templateLibrary.AddTemplate($"{colorName}OpenDoor", new EntityTemplate(
                     new SignalDoor(color, true)
                 ));
 
                 // all 3 closed doors
-                templateLibrary.AddTemplate($"{color}ClosedDoor", new EntityTemplate(
+                templateLibrary.AddTemplate($"{colorName}ClosedDoor", new EntityTemplate(
                     new SignalDoor(color, true)
                 ));
 
                 // all 3 keys
-                templateLibrary.AddTemplate($"{color}Key", new EntityTemplate(
+                templateLibrary.AddTemplate($"{colorName}Key", new EntityTemplate(
                     new Solid().PushOnBump(),
                     new Key(color),
                     new Grapplable(Grapplable.Type.PulledByLasso)
                 ));
 
                 // all 3 keyDoors
-                templateLibrary.AddTemplate($"{color}KeyDoor", new EntityTemplate(
+                templateLibrary.AddTemplate($"{colorName}KeyDoor", new EntityTemplate(
                     new Solid(),
                     new BlockProjectileTag(),
                     new KeyDoor(color)
