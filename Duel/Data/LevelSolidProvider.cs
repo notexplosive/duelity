@@ -59,7 +59,17 @@ namespace Duel.Data
 
         public bool IsWaterAt(Point position)
         {
-            if (TryGetTagFromTileAt(position, out UnfilledWater water))
+            if (HasTagAt<UnfilledWater>(position))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsRavineAt(Point position)
+        {
+            if (HasTagAt<Ravine>(position))
             {
                 return true;
             }
@@ -111,6 +121,11 @@ namespace Duel.Data
             }
 
             if (IsWaterAt(position) && !walker.Tags.HasTag<WaterFiller>())
+            {
+                return true;
+            }
+
+            if (IsRavineAt(position) && !walker.Tags.HasTag<WaterFiller>())
             {
                 return true;
             }

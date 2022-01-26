@@ -1,4 +1,5 @@
 ﻿using Duel.Components;
+using Duel.Data;
 using Machina.Components;
 using Machina.Data;
 using Machina.Engine;
@@ -18,7 +19,7 @@ namespace Duel.Components
         private readonly TweenAccessors<float> opacity;
         private readonly TweenAccessors<float> scale;
 
-        public DebrisDestroy(Actor actor) : base(actor)
+        public DebrisDestroy(Actor actor, DestroyType destroyType) : base(actor)
         {
             this.spriteRenderer = RequireComponent<SpriteRenderer>();
 
@@ -27,14 +28,25 @@ namespace Duel.Components
 
             var multi = this.tween.AppendMulticastTween();
 
-            var scaleChannel = multi.AddChannel();
-            scaleChannel.AppendFloatTween(1.2f, 0.15f, EaseFuncs.QuadraticEaseOut, this.scale);
-            scaleChannel.AppendFloatTween(0.8f, 0.05f, EaseFuncs.QuadraticEaseIn, this.scale);
-            scaleChannel.AppendFloatTween(1f, 0.05f, EaseFuncs.QuadraticEaseOut, this.scale);
+            if (destroyType == DestroyType.Break)
+            {
+                var scaleChannel = multi.AddChannel();
+                scaleChannel.AppendFloatTween(1.2f, 0.15f, EaseFuncs.QuadraticEaseOut, this.scale);
+                scaleChannel.AppendFloatTween(0.8f, 0.05f, EaseFuncs.QuadraticEaseIn, this.scale);
+                scaleChannel.AppendFloatTween(1f, 0.05f, EaseFuncs.QuadraticEaseOut, this.scale);
 
-            var opacityChannel = multi.AddChannel();
-            opacityChannel.AppendWaitTween(0.15f);
-            opacityChannel.AppendFloatTween(0, 0.5f, EaseFuncs.CubicEaseIn, this.opacity);
+                var opacityChannel = multi.AddChannel();
+                opacityChannel.AppendWaitTween(0.15f);
+                opacityChannel.AppendFloatTween(0, 0.5f, EaseFuncs.CubicEaseIn, this.opacity);
+            }
+            else if (destroyType == DestroyType.Fall)
+            {
+                var opacityChannel = multi.AddChannel();
+                opacityChannel.AppendFloatTween(0, 0.25f, EaseFuncs.QuadraticEaseIn, this.opacity);
+
+                var scaleChannel = multi.AddChannel();
+                scaleChannel.AppendFloatTween(0, 0.5f, EaseFuncs.QuadraticEaseIn, this.scale);
+            }
         }
 
         public override void Update(float dt)
@@ -42,11 +54,6 @@ namespace Duel.Components
             this.tween.Update(dt);
             this.spriteRenderer.color.A = (byte)(255 * this.opacity.CurrentValue);
             this.spriteRenderer.scale = this.scale.CurrentValue;
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-
         }
     }
 }

@@ -27,14 +27,13 @@ namespace Duel.Components
         {
             if (this.busySignal.IsFree())
             {
-                if (this.destroyType == DestroyType.Break)
+                var simpleEntityRenderer = this.actor.GetComponent<SimpleEntityRenderer>();
+                if (simpleEntityRenderer != null)
                 {
-                    this.actor.Destroy();
+                    simpleEntityRenderer.MakeDebris(destroyType);
                 }
-                else
-                {
-                    this.actor.Delete();
-                }
+
+                this.actor.Destroy();
             }
         }
     }

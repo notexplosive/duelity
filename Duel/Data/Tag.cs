@@ -39,12 +39,13 @@ namespace Duel.Data
         }
     }
 
-    public class UnfilledWater : Tag
+    public class Ravine : Tag
     {
 
-        public UnfilledWater()
-        {
-        }
+    }
+
+    public class UnfilledWater : Tag
+    {
     }
 
     public class FilledWater : Tag

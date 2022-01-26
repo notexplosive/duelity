@@ -93,15 +93,29 @@ namespace Duel.Components
             this.spriteRenderer.SetFrame(this.frameSet.Lassod);
         }
 
-        public override void OnActorDestroy()
+        public void MakeDebris(DestroyType destroyType)
         {
+            if (destroyType == DestroyType.Vanish)
+            {
+                return;
+            }
+
             var debrisActor = this.actor.transform.Parent.AddActorAsChild("DeadSprite");
             var debrisSpriteRenderer = new SpriteRenderer(debrisActor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet"));
             debrisSpriteRenderer.FramesPerSecond = 0;
-            debrisSpriteRenderer.SetFrame(this.frameSet.Broken);
+
+            if (destroyType == DestroyType.Break)
+            {
+                debrisSpriteRenderer.SetFrame(this.frameSet.Broken);
+            }
+            else
+            {
+                debrisSpriteRenderer.SetFrame(this.frameSet.Normal);
+            }
+
             debrisActor.transform.Position = transform.Position + RenderOffset();
             debrisActor.transform.Depth = transform.Depth - 1;
-            new DebrisDestroy(debrisActor);
+            new DebrisDestroy(debrisActor, destroyType);
         }
 
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)

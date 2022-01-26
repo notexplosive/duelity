@@ -8,13 +8,6 @@ namespace Duel.Data
     public delegate void EntityEvent(Entity entity);
     public delegate void DestroyEvent(Entity entity, DestroyType destroyType);
 
-    public enum DestroyType
-    {
-        Break,
-        Sink,
-        Vanish
-    }
-
     public class Level
     {
         public event Action TilemapChanged;
@@ -182,25 +175,35 @@ namespace Duel.Data
         private void FillWaterIfApplicable(Entity stepper, Point position)
         {
             var solidProvider = new LevelSolidProvider(this);
-            var waterTileExists = solidProvider.TryGetTagFromTileAt(position, out UnfilledWater water);
-            if (stepper.Tags.TryGetTag(out WaterFiller waterFiller) && waterTileExists)
-            {
-                if (waterFiller.FillerType == WaterFiller.Type.Floats)
-                {
-                    var tags = new TagCollection();
-                    foreach (var tag in GetTileAt(position).Tags)
-                    {
-                        if (!(tag is UnfilledWater))
-                        {
-                            tags.AddTag(tag);
-                        }
-                    }
+            var waterTileExists = solidProvider.HasTagAt<UnfilledWater>(position);
+            var ravineTileExists = solidProvider.HasTagAt<Ravine>(position);
 
-                    tags.AddTag(new FilledWater(stepper));
-                    PutTileAt(position, new TileTemplate(tags));
+            if (stepper.Tags.TryGetTag(out WaterFiller waterFiller))
+            {
+                if (ravineTileExists)
+                {
+                    RequestDestroyEntity(stepper, DestroyType.Fall);
                 }
 
-                RequestDestroyEntity(stepper, DestroyType.Sink);
+                if (waterTileExists)
+                {
+                    if (waterFiller.FillerType == WaterFiller.Type.Floats)
+                    {
+                        var tags = new TagCollection();
+                        foreach (var tag in GetTileAt(position).Tags)
+                        {
+                            if (!(tag is UnfilledWater))
+                            {
+                                tags.AddTag(tag);
+                            }
+                        }
+
+                        tags.AddTag(new FilledWater(stepper));
+                        PutTileAt(position, new TileTemplate(tags));
+                    }
+
+                    RequestDestroyEntity(stepper, DestroyType.Sink);
+                }
             }
         }
 

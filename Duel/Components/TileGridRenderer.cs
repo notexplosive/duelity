@@ -124,7 +124,7 @@ namespace Duel.Components
             {
                 if (water.FillingEntity.Tags.TryGetTag(out SimpleEntityImage simpleEntityImage) && !this.actorRoot.FindActor(water.FillingEntity).Visible)
                 {
-                    var angle = MathF.Sin(this.timer + new NoiseBasedRNG((uint)NoiseAt(location)).NextFloat()) / 16;
+                    var angle = MathF.Sin(this.timer + new NoiseBasedRNG((uint)NoiseAt(location)).NextFloat() * MathF.PI * 2) / 16;
                     this.entitiesSheet.DrawFrame(spriteBatch, simpleEntityImage.EntityFrameSet.Normal, this.grid.TileToLocalPosition(location, true), 0.8f, angle, XYBool.False, tileDepth - 1, Color.White);
                 }
             }

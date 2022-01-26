@@ -34,7 +34,7 @@ namespace Duel
                 new BlockProjectileTag());
             var water = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new UnfilledWater());
             var bridge = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bridge), new Collapses(water));
-            var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine));
+            var ravine = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine), new Ravine());
             var bramble = new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid());
             var hook = new TileTemplate(new Grapplable(Grapplable.Type.Static),
                 new TileImageTag(TileImageTag.TileImage.Hook));
@@ -130,8 +130,8 @@ namespace Duel
             var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
             var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
 
-            game.CurrentLevel.PutTileAt(new Point(4, 5), water);
-            game.CurrentLevel.PutTileAt(new Point(4, 6), water);
+            game.CurrentLevel.PutTileAt(new Point(4, 5), ravine);
+            game.CurrentLevel.PutTileAt(new Point(4, 6), ravine);
             game.CurrentLevel.PutTileAt(new Point(4, 7), water);
             game.CurrentLevel.PutTileAt(new Point(4, 8), water);
 
