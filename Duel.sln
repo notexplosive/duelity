@@ -15,11 +15,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMachina", "machina\Test
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MachinaAssets", "machina\MachinaAssets\MachinaAssets.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDuel", "TestDuel\TestDuel.csproj", "{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDuel", "TestDuel\TestDuel.csproj", "{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuelEditor", "DuelEditor\DuelEditor.csproj", "{D666F7C7-AF1F-4E97-A2D1-38EE9996B547}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		machina\MachinaAssets\MachinaAssets.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+		machina\MachinaAssets\MachinaAssets.projitems*{d666f7c7-af1f-4e97-a2d1-38ee9996b547}*SharedItemsImports = 5
 		machina\MachinaAssets\MachinaAssets.projitems*{de4b7104-500a-44db-82b7-1b05a357cd8d}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +50,10 @@ Global
 		{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1B4457B-3CF9-42C6-97A3-E3C3D4A95A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D666F7C7-AF1F-4E97-A2D1-38EE9996B547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D666F7C7-AF1F-4E97-A2D1-38EE9996B547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D666F7C7-AF1F-4E97-A2D1-38EE9996B547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D666F7C7-AF1F-4E97-A2D1-38EE9996B547}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

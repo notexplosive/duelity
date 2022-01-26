@@ -1,5 +1,6 @@
 ﻿using Duel.Components;
 using Machina.Engine;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +43,11 @@ namespace Duel.Data
         public Actor FindActor(Entity entity)
         {
             return this.actorRootComponent.FindActor(entity);
+        }
+
+        public void SetRootActorPosition(Vector2 position)
+        {
+            this.actorRootComponent.transform.Position = position;
         }
     }
 }

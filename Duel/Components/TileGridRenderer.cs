@@ -61,9 +61,9 @@ namespace Duel.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            for (int x = this.LevelCorners.TopLeft.X; x < this.LevelCorners.BottomRight.X; x++)
+            for (int x = this.LevelCorners.TopLeft.X; x <= this.LevelCorners.BottomRight.X; x++)
             {
-                for (int y = this.LevelCorners.TopLeft.Y; y < this.LevelCorners.BottomRight.Y; y++)
+                for (int y = this.LevelCorners.TopLeft.Y; y <= this.LevelCorners.BottomRight.Y; y++)
                 {
                     DrawCell(spriteBatch, new Point(x, y), this.level.GetTileAt(new Point(x, y)));
                 }
@@ -84,7 +84,7 @@ namespace Duel.Components
             {
                 if ((location.X % 2 == 0 && location.Y % 2 == 1) || (location.X % 2 == 1 && location.Y % 2 == 0))
                 {
-                    var rect = new RectangleF(this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize));
+                    var rect = new RectangleF(transform.Position + this.grid.TileToLocalPosition(location, false), new Point(Grid.TileSize));
                     rect.Inflate(-5, -5);
                     spriteBatch.DrawRectangle(rect, new Color(Color.Tan.R - 10, Color.Tan.G - 10, Color.Tan.B - 10), 1f, floorDepth);
                 }
@@ -95,22 +95,22 @@ namespace Duel.Components
                 switch (imageTag.Image)
                 {
                     case TileImageTag.TileImage.Wall:
-                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Wall, this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Wall, transform.Position + this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Hook:
-                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Hook, this.grid.TileToLocalPosition(location, true), floorDepth, Color.White); // hooks are floorDepth
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Hook, transform.Position + this.grid.TileToLocalPosition(location, true), floorDepth, Color.White); // hooks are floorDepth
                         break;
                     case TileImageTag.TileImage.Water:
-                        this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToWaterFrame(this.grid.GetWaterClassAt(location)), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToWaterFrame(this.grid.GetWaterClassAt(location)), transform.Position + this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Ravine:
-                        this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToRavineFrame(this.grid.GetRavineClassAt(location)), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToRavineFrame(this.grid.GetRavineClassAt(location)), transform.Position + this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Bramble:
-                        this.tilesheet.DrawFrame(spriteBatch, GetRandomBrambleTile(location), this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
+                        this.tilesheet.DrawFrame(spriteBatch, GetRandomBrambleTile(location), transform.Position + this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                     case TileImageTag.TileImage.Bridge:
-                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Bridge, this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Bridge, transform.Position + this.grid.TileToLocalPosition(location, true), tileDepth, Color.White);
                         break;
                 }
             }
@@ -125,14 +125,14 @@ namespace Duel.Components
                 if (water.FillingEntity.Tags.TryGetTag(out SimpleEntityImage simpleEntityImage) && this.actorRoot.IsActorDestroyed(water.FillingEntity))
                 {
                     var angle = MathF.Sin(this.timer + new NoiseBasedRNG((uint)NoiseAt(location)).NextFloat() * MathF.PI * 2) / 16;
-                    this.entitiesSheet.DrawFrame(spriteBatch, simpleEntityImage.EntityFrameSet.Normal, this.grid.TileToLocalPosition(location, true), 0.8f, angle, XYBool.False, tileDepth - 1, Color.White);
+                    this.entitiesSheet.DrawFrame(spriteBatch, simpleEntityImage.EntityFrameSet.Normal, transform.Position + this.grid.TileToLocalPosition(location, true), 0.8f, angle, XYBool.False, tileDepth - 1, Color.White);
                 }
             }
         }
 
         private void DrawFloorTile(SpriteBatch spriteBatch, Point location, Depth floorDepth)
         {
-            this.tilesheet.DrawFrame(spriteBatch, GetRandomFloorTile(location), this.grid.TileToLocalPosition(location, true),
+            this.tilesheet.DrawFrame(spriteBatch, GetRandomFloorTile(location), transform.Position + this.grid.TileToLocalPosition(location, true),
                 floorDepth + 10, Color.White);
         }
 

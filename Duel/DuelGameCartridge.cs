@@ -1,7 +1,6 @@
 ﻿using Duel.Components;
 using Duel.Data;
 using Machina.Data;
-using Machina.Data.Layout;
 using Machina.Engine;
 using Machina.Engine.Assets;
 using Machina.Engine.Cartridges;
@@ -14,7 +13,7 @@ namespace Duel
 {
     public class DuelGameCartridge : GameCartridge
     {
-        public DuelGameCartridge() : base(new Point(960, 540), ResizeBehavior.KeepAspectRatio)
+        public DuelGameCartridge(Point renderResolution /*arg so it can be exposed to the editor*/) : base(renderResolution, ResizeBehavior.KeepAspectRatio)
         {
         }
 
@@ -152,23 +151,11 @@ namespace Duel
 
             game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
 
-
-            specification.commandLineArgs.RegisterFlagArg("editor", () =>
-            {
-                game.ClearEverything();
-                LoadEditor(gameScene);
-            });
+            PostLoad(game);
         }
 
-        public void LoadEditor(Scene scene)
+        protected virtual void PostLoad(Sokoban game)
         {
-            LayoutNode.HorizontalParent("root", LayoutSize.Pixels(scene.camera.UnscaledViewportSize), LayoutStyle.Empty,
-                LayoutNode.VerticalParent("left-sidebar", LayoutSize.StretchedBoth(), LayoutStyle.Empty),
-                LayoutNode.VerticalParent("editor", LayoutSize.StretchedVertically(Room.Size.X * 32), LayoutStyle.Empty,
-                    LayoutNode.Leaf("tile-editor", LayoutSize.Pixels(new Point(Room.Size.X * 32, Room.Size.Y * 32)))
-                ),
-                LayoutNode.VerticalParent("right-sidebar", LayoutSize.StretchedBoth(), LayoutStyle.Empty)
-                );
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
