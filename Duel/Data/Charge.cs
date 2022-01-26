@@ -15,23 +15,19 @@ namespace Duel.Data
             {
                 Path.Add(new ChargeHit(hitScanPosition, travelDirection));
 
-                if (solidProvider.HasTagAt<Solid>(hitScanPosition + travelDirection.ToPoint()))
+                var nextPos = hitScanPosition + travelDirection.ToPoint();
+                if (solidProvider.HasTagAt<Solid>(nextPos))
                 {
-                    if (solidProvider.TryGetFirstEntityWithTagAt(hitScanPosition + travelDirection.ToPoint(), out Entity foundEntity, out Solid solid))
+                    var hitSolidEntity = solidProvider.IsEntityWithTagAt<Solid>(nextPos) && !solidProvider.IsEntityWithTagAt<DestroyOnHit>(nextPos);
+                    var hitSolidTile = solidProvider.TryGetTagFromTileAt(nextPos, out Solid foundSolid);
+
+                    if (hitSolidEntity || hitSolidTile)
                     {
-                        if (!foundEntity.Tags.HasTag<DestroyOnHit>() /* or is water */)
-                        {
-                            return; // this will have weird behavior if we charge onto a glass object that's also inside a wall
-                        }
-                    }
-                    else
-                    {
-                        // there was only a solid tile there, return
                         return;
                     }
                 }
 
-                hitScanPosition += travelDirection.ToPoint();
+                hitScanPosition = nextPos;
             }
         }
 

@@ -40,6 +40,19 @@ namespace Duel.Data
             }
         }
 
+        public bool IsEntityWithTagAt<T>(Point position) where T : Tag
+        {
+            foreach (var entity in this.level.AllEntitiesAt(position))
+            {
+                if (entity.Tags.TryGetTag(out T tag))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public bool BlocksBulletsAt(Point position)
         {
             return HasTagAt<BlockProjectileTag>(position) || IsClosedDoorAt(position);
