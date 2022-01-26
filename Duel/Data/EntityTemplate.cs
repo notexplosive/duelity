@@ -1,6 +1,6 @@
 ﻿namespace Duel.Data
 {
-    public class EntityTemplate
+    public class EntityTemplate : IEntityOrTileTemplate
     {
         private readonly Tag[] tags;
 

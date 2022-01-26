@@ -31,9 +31,9 @@ namespace DuelEditor.Data
 
             var layoutActors = new LayoutActors(scene, layout);
 
-            BecomePane(layoutActors.GetActor("left-sidebar"));
-            BecomePane(layoutActors.GetActor("right-sidebar"));
-            BecomePane(layoutActors.GetActor("bottom-section"));
+            BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"));
+            BecomeBasicPane(layoutActors.GetActor("right-sidebar"));
+            BecomeBasicPane(layoutActors.GetActor("bottom-section"));
             BecomeTileEditor(layoutActors.GetActor("tile-editor"));
         }
 
@@ -44,9 +44,14 @@ namespace DuelEditor.Data
             new EditorPanner(actor, game);
         }
 
-        private void BecomePane(Actor sidebarActor)
+        private void BecomeBasicPane(Actor sidebarActor)
         {
             new NinepatchRenderer(sidebarActor, MachinaClient.DefaultStyle.windowSheet, NinepatchSheet.GenerationDirection.Inner);
+        }
+
+        private void BecomeTileSelectorPane(Actor sidebarActor)
+        {
+            BecomeBasicPane(sidebarActor);
         }
     }
 }
