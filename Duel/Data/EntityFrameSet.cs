@@ -25,15 +25,15 @@ namespace Duel.Data
         {
             if (color == SignalColor.Red)
             {
-                return new EntityFrameSet(EntityFrame.RedKey, EntityFrame.RedKeyLassod, EntityFrame.RedKey);
+                return new EntityFrameSet(EntityFrame.RedKey, EntityFrame.RedKeyLassod, EntityFrame.RedKeyBroken);
             }
             else if (color == SignalColor.Blue)
             {
-                return new EntityFrameSet(EntityFrame.BlueKey, EntityFrame.BlueKeyLassod, EntityFrame.BlueKey);
+                return new EntityFrameSet(EntityFrame.BlueKey, EntityFrame.BlueKeyLassod, EntityFrame.BlueKeyBroken);
             }
             else if (color == SignalColor.Yellow)
             {
-                return new EntityFrameSet(EntityFrame.YellowKey, EntityFrame.YellowKeyLassod, EntityFrame.YellowKey);
+                return new EntityFrameSet(EntityFrame.YellowKey, EntityFrame.YellowKeyLassod, EntityFrame.YellowKeyBroken);
             }
 
             throw new Exception($"Invalid signal color {color}");

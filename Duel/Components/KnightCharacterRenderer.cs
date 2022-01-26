@@ -70,12 +70,12 @@ namespace Duel.Components
         {
             if (this.knightMovement.LongLeg == Direction.Left)
             {
-                this.spriteRenderer.FlipX = true;
+                this.spriteRenderer.FlipX = false;
             }
 
             if (this.knightMovement.LongLeg == Direction.Right)
             {
-                this.spriteRenderer.FlipX = false;
+                this.spriteRenderer.FlipX = true;
             }
 
             this.spriteRenderer.SetAnimation(this.hoverAnimation);
