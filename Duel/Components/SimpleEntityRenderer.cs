@@ -110,7 +110,7 @@ namespace Duel.Components
 
         public void MakeDebris(DestroyType destroyType)
         {
-            if (destroyType == DestroyType.Vanish)
+            if (destroyType == DestroyType.Vanish || destroyType == DestroyType.Sink)
             {
                 return;
             }

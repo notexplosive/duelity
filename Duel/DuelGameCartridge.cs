@@ -1,6 +1,7 @@
 ﻿using Duel.Components;
 using Duel.Data;
 using Machina.Data;
+using Machina.Data.Layout;
 using Machina.Engine;
 using Machina.Engine.Assets;
 using Machina.Engine.Cartridges;
@@ -24,6 +25,8 @@ namespace Duel
             var gameScene = SceneLayers.AddNewScene();
             var game = new Sokoban(gameScene);
 
+            var tileDictionary = new Dictionary<string, TileTemplate>();
+            var entityDictionary = new Dictionary<string, EntityTemplate>();
 
             // Corners
             game.CurrentLevel.PutTileAt(new Point(-15, -9), new TileTemplate());
@@ -147,7 +150,25 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(5, 2), blueKey);
             game.CurrentLevel.PutEntityAt(new Point(7, 2), blueKeyDoor);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), knight);
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
+
+
+            specification.commandLineArgs.RegisterFlagArg("editor", () =>
+            {
+                game.ClearEverything();
+                LoadEditor(gameScene);
+            });
+        }
+
+        public void LoadEditor(Scene scene)
+        {
+            LayoutNode.HorizontalParent("root", LayoutSize.Pixels(scene.camera.UnscaledViewportSize), LayoutStyle.Empty,
+                LayoutNode.VerticalParent("left-sidebar", LayoutSize.StretchedBoth(), LayoutStyle.Empty),
+                LayoutNode.VerticalParent("editor", LayoutSize.StretchedVertically(Room.Size.X * 32), LayoutStyle.Empty,
+                    LayoutNode.Leaf("tile-editor", LayoutSize.Pixels(new Point(Room.Size.X * 32, Room.Size.Y * 32)))
+                ),
+                LayoutNode.VerticalParent("right-sidebar", LayoutSize.StretchedBoth(), LayoutStyle.Empty)
+                );
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

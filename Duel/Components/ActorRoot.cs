@@ -168,5 +168,10 @@ namespace Duel.Components
         {
             return this.entityToActorTable[entity];
         }
+
+        public bool IsActorDestroyed(Entity entity)
+        {
+            return this.knownDestroyedActors.Contains(entity);
+        }
     }
 }
