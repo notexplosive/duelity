@@ -241,5 +241,22 @@ namespace Duel.Data
                 EntityJustSteppedOn(mover, mover.Position);
             }
         }
+
+        public Point LevelPosToRoomPos(Point levelGridPos)
+        {
+            var offsetX = 0;
+            if (levelGridPos.X < 0)
+            {
+                offsetX = -1;
+            }
+
+            var offsetY = 0;
+            if (levelGridPos.Y < 0)
+            {
+                offsetY = -1;
+            }
+
+            return new Point(levelGridPos.X / Room.Size.X + offsetX, levelGridPos.Y / Room.Size.Y + offsetY);
+        }
     }
 }

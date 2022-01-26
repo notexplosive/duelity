@@ -26,8 +26,8 @@ namespace Duel
 
 
             // Corners
-            game.CurrentLevel.PutTileAt(new Point(1, 1), new TileTemplate());
-            game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
+            game.CurrentLevel.PutTileAt(new Point(-15, -9), new TileTemplate());
+            game.CurrentLevel.PutTileAt(new Point(15, 9), new TileTemplate());
 
             // Tiles
             var wall = new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall),

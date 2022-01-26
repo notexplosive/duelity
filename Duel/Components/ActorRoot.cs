@@ -106,6 +106,8 @@ namespace Duel.Components
                 }
                 else if (tag is PlayerTag playerTag)
                 {
+                    new LevelTransition(entityActor, this.level, entity);
+
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
@@ -125,6 +127,7 @@ namespace Duel.Components
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
                         new NormalKeyboardMovement(entityActor, entity);
                         new UseGun(entityActor, entity, this.level);
+
                         if (!Sokoban.Headless)
                         {
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Miranda);
