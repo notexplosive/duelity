@@ -24,7 +24,7 @@ namespace Duel.Components
 
         public override void Update(float dt)
         {
-            MachinaClient.Print(this.playerEntity.Position, this.level.LevelPosToRoomPos(this.playerEntity.Position));
+            // MachinaClient.Print(this.playerEntity.Position, this.level.LevelPosToRoomPos(this.playerEntity.Position));
         }
 
         public override void Draw(SpriteBatch spriteBatch)

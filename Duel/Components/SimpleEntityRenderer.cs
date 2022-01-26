@@ -52,7 +52,22 @@ namespace Duel.Components
         YellowPlateDown,
         // next row
         GlassHoochBreak,
-        CrateBreak
+        CrateBreak,
+        FFF,
+        GGG,
+        HHH,
+        III,
+        JJJ,
+        KKK,
+        LLL,
+        MMM,
+        NNN,
+        OOO,
+        PPP,
+        QQQ,
+        RedKeyBroken,
+        BlueKeyBroken,
+        YellowKeyBroken
     }
 
     public class SimpleEntityRenderer : BaseComponent

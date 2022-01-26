@@ -147,7 +147,7 @@ namespace Duel
             game.CurrentLevel.PutEntityAt(new Point(5, 2), blueKey);
             game.CurrentLevel.PutEntityAt(new Point(7, 2), blueKeyDoor);
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), renegade);
+            game.CurrentLevel.PutEntityAt(new Point(3, 3), knight);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
@@ -170,9 +170,8 @@ namespace Duel
             loader.AddMachinaAssetCallback("steven-move", () => new LinearFrameAnimation(14, 2));
 
             loader.AddMachinaAssetCallback("bennigan-idle", () => new LinearFrameAnimation(18, 2));
-            loader.AddMachinaAssetCallback("bennigan-hover", () => new LinearFrameAnimation(20, 1));
-            loader.AddMachinaAssetCallback("bennigan-land", () => new LinearFrameAnimation(21, 1));
-            loader.AddMachinaAssetCallback("bennigan-swing", () => new LinearFrameAnimation(22, 1));
+            loader.AddMachinaAssetCallback("bennigan-hover", () => new LinearFrameAnimation(20, 2));
+            loader.AddMachinaAssetCallback("bennigan-land", () => new LinearFrameAnimation(22, 1));
         }
     }
 }
