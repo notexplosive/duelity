@@ -18,18 +18,33 @@ namespace DuelEditor.Components
     {
         private readonly BoundingRect boundingRect;
         private readonly Clickable clickable;
+        private readonly TooltipText tooltipText;
         private readonly IEntityOrTileTemplate template;
         private readonly TemplateSelection selection;
 
-        public TemplateSelectorCell(Actor actor, IEntityOrTileTemplate template, TemplateSelection selection) : base(actor)
+        public TemplateSelectorCell(Actor actor, IEntityOrTileTemplate template, TemplateSelection selection, TooltipText tooltipText) : base(actor)
         {
             this.template = template;
             this.selection = selection;
 
             this.boundingRect = RequireComponent<BoundingRect>();
             this.clickable = RequireComponent<Clickable>();
+            this.tooltipText = tooltipText;
 
             this.clickable.OnClick += OnClick;
+        }
+
+        public override void Update(float dt)
+        {
+            if (this.selection.Primary == this.template)
+            {
+                var entityOrTileName = "tile";
+                if (this.selection.Primary is EntityTemplate)
+                {
+                    entityOrTileName = "entity";
+                }
+                this.tooltipText.Add($"selected {entityOrTileName}: {this.selection.Primary.Tags}");
+            }
         }
 
         private void OnClick(MouseButton button)

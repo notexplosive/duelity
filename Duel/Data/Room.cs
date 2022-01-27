@@ -21,19 +21,20 @@ namespace Duel.Data
 
         public static Point LevelPosToRoomPos(Point levelGridPos)
         {
-            var offsetX = 0;
-            if (levelGridPos.X < 0)
-            {
-                offsetX = -1;
-            }
 
-            var offsetY = 0;
-            if (levelGridPos.Y < 0)
-            {
-                offsetY = -1;
-            }
 
-            return new Point(levelGridPos.X / Room.Size.X + offsetX, levelGridPos.Y / Room.Size.Y + offsetY);
+            return new Point(levelGridPos.X / Room.Size.X, levelGridPos.Y / Room.Size.Y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Room room &&
+                   Position.Equals(room.Position);
+        }
+
+        public override int GetHashCode()
+        {
+            return System.HashCode.Combine(Position);
         }
     }
 }

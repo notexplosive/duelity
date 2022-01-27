@@ -11,6 +11,9 @@ namespace Duel.Data
     {
         private readonly Scene scene;
         private Actor rootActor;
+
+        public Grid Grid { get; private set; }
+
         private ActorRoot actorRootComponent;
 
         public Level CurrentLevel { get; private set; }
@@ -31,7 +34,7 @@ namespace Duel.Data
             CurrentLevel = new Level();
             this.rootActor = scene.AddActor("Level");
 
-            new Grid(this.rootActor, CurrentLevel);
+            Grid = new Grid(this.rootActor, CurrentLevel);
             this.actorRootComponent = new ActorRoot(this.rootActor, CurrentLevel);
 
             if (!Headless)
@@ -48,6 +51,11 @@ namespace Duel.Data
         public void SetRootActorPosition(Vector2 position)
         {
             this.actorRootComponent.transform.Position = position;
+        }
+
+        public Vector2 GetRootActorPosition()
+        {
+            return this.actorRootComponent.transform.Position;
         }
     }
 }

@@ -21,25 +21,32 @@ namespace DuelEditor.Components
         private readonly Hoverable hoverable;
         private readonly Level level;
         private readonly TemplateSelection templateSelection;
-        private EditorTileLocation? hoveredTile;
+        private readonly Sokoban game;
+        private readonly TooltipText tooltip;
         private bool leftMouseDown;
         private bool rightMouseDown;
         private bool hasPlacedEntity;
 
+        public EditorTileLocation? HoveredTile { get; private set; }
         public Point CameraOffset { get; set; }
 
-        public RoomEditor(Actor actor, Level level, TemplateSelection templateSelection) : base(actor)
+        public RoomEditor(Actor actor, Sokoban game, TemplateSelection templateSelection, TooltipText tooltipText) : base(actor)
         {
             this.hoverable = RequireComponent<Hoverable>();
-            this.level = level;
+            this.level = game.CurrentLevel;
             this.templateSelection = templateSelection;
+            this.game = game;
+            this.tooltip = tooltipText;
         }
 
         public override void Update(float dt)
         {
-            if (this.hoverable.IsHovered && this.hoveredTile.HasValue)
+            if (this.hoverable.IsHovered && this.HoveredTile.HasValue)
             {
-                var position = this.hoveredTile.Value.LevelPosition(CameraOffset);
+                var position = this.HoveredTile.Value.LevelPosition(CameraOffset);
+                this.tooltip.Add($"world coords: {position.X}, {position.Y}");
+                var room = new Room(Room.LevelPosToRoomPos(position));
+                this.tooltip.Add($"room pos: {room.Position.X}, {room.Position.Y}");
                 if (this.leftMouseDown)
                 {
                     if (this.templateSelection.Primary is TileTemplate tileTemplate)
@@ -76,31 +83,35 @@ namespace DuelEditor.Components
         {
             foreach (var tile in GetEditorTileLocations())
             {
-                var isHovered = tile == this.hoveredTile;
-                var unHoveredColor = Color.LightBlue;
+                var position = tile.LevelPosition(CameraOffset);
 
-                var roomPos = Room.LevelPosToRoomPos(tile.LevelPosition(CameraOffset));
-
-                if ((roomPos.X % 2 == 0 && roomPos.Y % 2 == 1) || (roomPos.X % 2 == 1 && roomPos.Y % 2 == 0))
+                if (position == new Point(-Room.Size.X, -Room.Size.Y))
                 {
-                    unHoveredColor = Color.Orange;
+                    var realRectPosition = game.GetRootActorPosition() + game.Grid.TileToLocalPosition(position, false);
+                    spriteBatch.DrawRectangle(new RectangleF(realRectPosition, new Point(10)), Color.White, 5f, transform.Depth);
                 }
 
-                spriteBatch.DrawRectangle(tile.RenderRect, isHovered ? Color.White : unHoveredColor, isHovered ? 3f : 1f, transform.Depth - 10);
-
-                this.level.GetTileAt(tile.LevelPosition(CameraOffset));
+                var room = new Room(Room.LevelPosToRoomPos(position));
+                var bounds = room.GetBounds();
+                if (bounds.TopLeft == position)
+                {
+                    var realRectSize = (Size2)Room.Size * Grid.TileSize;
+                    var realRectPosition = game.GetRootActorPosition() + game.Grid.TileToLocalPosition(position, false);
+                    var realRect = new RectangleF(realRectPosition, realRectSize);
+                    spriteBatch.DrawRectangle(realRect, Color.White, 5f, transform.Depth);
+                }
             }
         }
 
         public override void OnMouseUpdate(Vector2 currentPosition, Vector2 positionDelta, Vector2 rawDelta)
         {
-            this.hoveredTile = null;
+            this.HoveredTile = null;
 
             foreach (var tile in GetEditorTileLocations())
             {
                 if (tile.OnScreenRect.Contains(currentPosition))
                 {
-                    this.hoveredTile = tile;
+                    this.HoveredTile = tile;
                 }
             }
         }

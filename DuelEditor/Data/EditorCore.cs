@@ -15,6 +15,7 @@ namespace DuelEditor.Data
     {
         private readonly Sokoban game;
         private readonly TemplateSelection templateSelection;
+        private TooltipText tooltip;
 
         public EditorCore(Scene scene, Sokoban game)
         {
@@ -35,17 +36,42 @@ namespace DuelEditor.Data
 
             var bakedLayout = layout.Bake();
 
-            BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), bakedLayout.GetNode("left-sidebar"), scene);
+            BecomeInfoBox(layoutActors.GetActor("bottom-section"), bakedLayout.GetNode("bottom-section"), scene);
             BecomeBasicPane(layoutActors.GetActor("right-sidebar"));
-            BecomeBasicPane(layoutActors.GetActor("bottom-section"));
-            BecomeTileEditor(layoutActors.GetActor("tile-editor"));
+
+            BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), bakedLayout.GetNode("left-sidebar"), scene, this.tooltip);
+            BecomeTileEditor(layoutActors.GetActor("tile-editor"), this.tooltip);
         }
 
-        private void BecomeTileEditor(Actor actor)
+        private void BecomeInfoBox(Actor infoBoxActor, NodePositionAndSize node, Scene scene)
+        {
+            BecomeBasicPane(infoBoxActor);
+            var headerSize = 40;
+
+            var layout = LayoutNode.VerticalParent("root", LayoutSize.Pixels(node.Size), LayoutStyle.Empty,
+                LayoutNode.Leaf("header", LayoutSize.StretchedHorizontally(headerSize)),
+                LayoutNode.HorizontalParent("body", LayoutSize.StretchedBoth(), new LayoutStyle(margin: new Point(15, 5)),
+                    LayoutNode.Leaf("text", LayoutSize.StretchedHorizontally(headerSize))
+                )
+            );
+
+            var layoutActors = new LayoutActors(scene, layout);
+            var root = layoutActors.GetActor("root");
+            root.transform.SetParent(infoBoxActor);
+            root.transform.LocalPosition = Vector2.Zero;
+            root.transform.LocalDepth = -10;
+
+            var tooltipActor = layoutActors.GetActor("text");
+
+            new BoundedTextRenderer(tooltipActor, "text goes here", MachinaClient.DefaultStyle.uiElementFont, Color.Black);
+            this.tooltip = new TooltipText(tooltipActor);
+        }
+
+        private void BecomeTileEditor(Actor actor, TooltipText tooltip)
         {
             game.SetRootActorPosition(actor.transform.Position);
             new Hoverable(actor);
-            new RoomEditor(actor, game.CurrentLevel, this.templateSelection);
+            new RoomEditor(actor, game, this.templateSelection, tooltip);
             new EditorPanner(actor, game);
         }
 
@@ -54,7 +80,7 @@ namespace DuelEditor.Data
             new NinepatchRenderer(sidebarActor, MachinaClient.DefaultStyle.windowSheet, NinepatchSheet.GenerationDirection.Inner);
         }
 
-        private void BecomeTileSelectorPane(Actor sidebarActor, NodePositionAndSize node, Scene scene)
+        private void BecomeTileSelectorPane(Actor sidebarActor, NodePositionAndSize node, Scene scene, TooltipText tooltip)
         {
             BecomeBasicPane(sidebarActor);
             var headerSize = 40;
@@ -112,18 +138,18 @@ namespace DuelEditor.Data
                 }
 
                 var template = templates.Current;
-                CreateSelectorCell(layoutActors, itemName, template);
+                CreateSelectorCell(layoutActors, itemName, template, tooltip);
             }
 
         }
 
-        private void CreateSelectorCell(LayoutActors layoutActors, string itemName, IEntityOrTileTemplate template)
+        private void CreateSelectorCell(LayoutActors layoutActors, string itemName, IEntityOrTileTemplate template, TooltipText tooltip)
         {
             var gridItemActor = layoutActors.GetActor(itemName);
             gridItemActor.GetComponent<BoundingRect>().CenterToBounds();
             new Hoverable(gridItemActor);
             new Clickable(gridItemActor);
-            new TemplateSelectorCell(gridItemActor, template, this.templateSelection);
+            new TemplateSelectorCell(gridItemActor, template, this.templateSelection, tooltip);
 
 
             foreach (var tag in template.Tags)
