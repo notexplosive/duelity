@@ -15,7 +15,7 @@ namespace DuelEditor
         protected override void PostLoad(Sokoban game)
         {
             game.ClearEverything();
-            new Editor(SceneLayers.AddNewScene(), game);
+            new EditorCore(SceneLayers.AddNewScene(), game);
         }
     }
 }

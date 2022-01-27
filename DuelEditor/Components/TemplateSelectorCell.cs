@@ -19,12 +19,12 @@ namespace DuelEditor.Components
         private readonly BoundingRect boundingRect;
         private readonly Clickable clickable;
         private readonly IEntityOrTileTemplate template;
-        private readonly TemplateSelection templateSelectorCell;
+        private readonly TemplateSelection selection;
 
-        public TemplateSelectorCell(Actor actor, IEntityOrTileTemplate template, TemplateSelection templateSelectorCell) : base(actor)
+        public TemplateSelectorCell(Actor actor, IEntityOrTileTemplate template, TemplateSelection selection) : base(actor)
         {
             this.template = template;
-            this.templateSelectorCell = templateSelectorCell;
+            this.selection = selection;
 
             this.boundingRect = RequireComponent<BoundingRect>();
             this.clickable = RequireComponent<Clickable>();
@@ -36,7 +36,7 @@ namespace DuelEditor.Components
         {
             if (button == MouseButton.Left)
             {
-                templateSelectorCell.Primary = this.template;
+                selection.Primary = this.template;
             }
         }
 
@@ -45,6 +45,13 @@ namespace DuelEditor.Components
             if (this.clickable.IsHovered)
             {
                 spriteBatch.DrawRectangle(boundingRect.Rect, Color.Blue, 3f, transform.Depth - 10);
+            }
+
+            if (this.selection.Primary == this.template)
+            {
+                var rect = boundingRect.Rect;
+                rect.Inflate(5, 5);
+                spriteBatch.DrawRectangle(rect, Color.Cyan, 5f, transform.Depth - 8);
             }
         }
     }

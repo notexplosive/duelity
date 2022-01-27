@@ -11,12 +11,12 @@ using System.Text;
 
 namespace DuelEditor.Data
 {
-    public class Editor
+    public class EditorCore
     {
         private readonly Sokoban game;
         private readonly TemplateSelection templateSelection;
 
-        public Editor(Scene scene, Sokoban game)
+        public EditorCore(Scene scene, Sokoban game)
         {
             this.game = game;
             this.templateSelection = new TemplateSelection();
