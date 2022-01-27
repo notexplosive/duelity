@@ -1,4 +1,5 @@
-﻿using Duel.Data;
+﻿using Duel.Components;
+using Duel.Data;
 using DuelEditor.Components;
 using Machina.Components;
 using Machina.Data;
@@ -14,17 +15,17 @@ namespace DuelEditor.Components
     public class EntityImageRenderer : BaseComponent
     {
         private readonly SpriteSheet spriteSheet;
-        private readonly EntityFrameSet entityFrameSet;
+        private readonly EntityFrame entityFrame;
 
-        public EntityImageRenderer(Actor actor, EntityFrameSet entityFrameSet) : base(actor)
+        public EntityImageRenderer(Actor actor, EntityFrame entityFrame) : base(actor)
         {
             this.spriteSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet");
-            this.entityFrameSet = entityFrameSet;
+            this.entityFrame = entityFrame;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this.spriteSheet.DrawFrame(spriteBatch, this.entityFrameSet.Normal, transform);
+            this.spriteSheet.DrawFrame(spriteBatch, (int)this.entityFrame, transform);
         }
     }
 

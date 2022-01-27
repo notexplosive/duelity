@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Duel.Components;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -91,7 +92,8 @@ namespace Duel.Data
 
             templateLibrary.AddTemplate("miasma", new EntityTemplate(
                 new BlockProjectileTag(),
-                new MiasmaImageTag()
+                new MiasmaImageTag(),
+                new EditorImage(EntityFrame.Miasma)
             ));
 
             foreach (SignalColor color in Enum.GetValues(typeof(SignalColor)))
@@ -131,7 +133,7 @@ namespace Duel.Data
 
                 // all 3 closed doors
                 templateLibrary.AddTemplate($"{colorName}ClosedDoor", new EntityTemplate(
-                    new SignalDoor(color, true)
+                    new SignalDoor(color, false)
                 ));
 
                 // all 3 keys

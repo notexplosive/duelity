@@ -16,7 +16,7 @@ using System.Text;
 
 namespace DuelEditor.Components
 {
-    public class TileEditor : BaseComponent
+    public class RoomEditor : BaseComponent
     {
         private readonly Hoverable hoverable;
         private readonly Level level;
@@ -24,10 +24,11 @@ namespace DuelEditor.Components
         private EditorTileLocation? hoveredTile;
         private bool leftMouseDown;
         private bool rightMouseDown;
+        private bool hasPlacedEntity;
 
         public Point CameraOffset { get; set; }
 
-        public TileEditor(Actor actor, Level level, TemplateSelection templateSelection) : base(actor)
+        public RoomEditor(Actor actor, Level level, TemplateSelection templateSelection) : base(actor)
         {
             this.hoverable = RequireComponent<Hoverable>();
             this.level = level;
@@ -46,10 +47,13 @@ namespace DuelEditor.Components
                         this.level.PutTileAt(position, tileTemplate);
                     }
 
-                    if (this.templateSelection.Primary is EntityTemplate entityTemplate)
+                    if (!this.hasPlacedEntity)
                     {
-                        ClearEntitiesAt(position);
-                        this.level.PutEntityAt(position, entityTemplate);
+                        this.hasPlacedEntity = true;
+                        if (this.templateSelection.Primary is EntityTemplate entityTemplate)
+                        {
+                            this.level.PutEntityAt(position, entityTemplate);
+                        }
                     }
                 }
 
@@ -57,7 +61,7 @@ namespace DuelEditor.Components
                 {
                     if (this.templateSelection.IsInEntityMode)
                     {
-                        ClearEntitiesAt(position);
+                        ClearEntitiesAt(position, DestroyType.Break);
                     }
 
                     if (this.templateSelection.IsInTileMode)
@@ -106,6 +110,11 @@ namespace DuelEditor.Components
             if (button == MouseButton.Left)
             {
                 this.leftMouseDown = state == ButtonState.Pressed;
+
+                if (state == ButtonState.Released)
+                {
+                    this.hasPlacedEntity = false;
+                }
             }
 
             if (button == MouseButton.Right)
@@ -125,11 +134,11 @@ namespace DuelEditor.Components
             }
         }
 
-        private void ClearEntitiesAt(Point position)
+        private void ClearEntitiesAt(Point position, DestroyType destroyType)
         {
             foreach (var entity in this.level.AllEntitiesAt(position))
             {
-                this.level.RequestDestroyEntity(entity, DestroyType.Break);
+                this.level.RequestDestroyEntity(entity, destroyType);
             }
         }
     }

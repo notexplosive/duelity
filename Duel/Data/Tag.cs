@@ -1,4 +1,5 @@
-﻿using Machina.Engine;
+﻿using Duel.Components;
+using Machina.Engine;
 
 namespace Duel.Data
 {
@@ -146,6 +147,16 @@ namespace Duel.Data
         Red,
         Blue,
         Yellow
+    }
+
+    public class EditorImage : Tag
+    {
+        public EditorImage(EntityFrame frame)
+        {
+            EntityFrame = frame;
+        }
+
+        public EntityFrame EntityFrame { get; }
     }
 
     public class MiasmaImageTag : Tag

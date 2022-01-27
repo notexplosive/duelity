@@ -16,14 +16,14 @@ namespace DuelEditor.Components
     public class EditorPanner : BaseComponent
     {
         private readonly Sokoban game;
-        private readonly TileEditor tileEditor;
+        private readonly RoomEditor tileEditor;
 
         public Point CameraPosition { get; private set; }
 
         public EditorPanner(Actor actor, Sokoban game) : base(actor)
         {
             this.game = game;
-            this.tileEditor = RequireComponent<TileEditor>();
+            this.tileEditor = RequireComponent<RoomEditor>();
         }
 
         public override void Update(float dt)

@@ -45,7 +45,7 @@ namespace DuelEditor.Data
         {
             game.SetRootActorPosition(actor.transform.Position);
             new Hoverable(actor);
-            new TileEditor(actor, game.CurrentLevel, this.templateSelection);
+            new RoomEditor(actor, game.CurrentLevel, this.templateSelection);
             new EditorPanner(actor, game);
         }
 
@@ -106,12 +106,14 @@ namespace DuelEditor.Data
             {
                 if (!templates.MoveNext())
                 {
+                    templates.Dispose();
                     break;
                 }
 
                 var template = templates.Current;
                 CreateSelectorCell(layoutActors, itemName, template);
             }
+
         }
 
         private void CreateSelectorCell(LayoutActors layoutActors, string itemName, IEntityOrTileTemplate template)
@@ -122,16 +124,41 @@ namespace DuelEditor.Data
             new Clickable(gridItemActor);
             new TemplateSelectorCell(gridItemActor, template, this.templateSelection);
 
+
             foreach (var tag in template.Tags)
             {
                 if (tag is TileImageTag imageTag)
                 {
                     new TileImageRenderer(gridItemActor, imageTag.Image);
                 }
-
-                if (tag is SimpleEntityImage entityImage)
+                else if (tag is SimpleEntityImage entityImage)
                 {
-                    new EntityImageRenderer(gridItemActor, entityImage.EntityFrameSet);
+                    new EntityImageRenderer(gridItemActor, (EntityFrame)entityImage.EntityFrameSet.Normal);
+                }
+                else if (tag is EditorImage editorImage)
+                {
+                    new EntityImageRenderer(gridItemActor, editorImage.EntityFrame);
+                }
+                else if (tag is Key key)
+                {
+                    new EntityImageRenderer(gridItemActor, (EntityFrame)EntityFrameSet.Key(key.Color).Normal);
+                }
+                else if (tag is KeyDoor keyDoor)
+                {
+                    new EntityImageRenderer(gridItemActor, (EntityFrame)EntityFrameSet.KeyDoor(keyDoor.Color).Normal);
+                }
+                else if (tag is LeverImageTag leverImage)
+                {
+                    new EntityImageRenderer(gridItemActor, new LeverFrames(leverImage.Color).OffImage);
+                }
+                else if (tag is PressurePlateImageTag pressurePlateImage)
+                {
+                    new EntityImageRenderer(gridItemActor, new PressurePlateImages(pressurePlateImage.Color).OffImage);
+                }
+                else if (tag is SignalDoor signalDoor)
+                {
+                    var doorImages = signalDoor.DefaultOpened ? (ISignalableImages)new OpenedDoorImages(signalDoor.Color) : new ClosedDoorImages(signalDoor.Color);
+                    new EntityImageRenderer(gridItemActor, doorImages.OnImage);
                 }
             }
         }
