@@ -50,7 +50,7 @@ namespace DuelEditor.Components
                     }
                 }
 
-                if (rightMouseDown)
+                if (this.rightMouseDown)
                 {
                     if (this.templateSelection.IsInEntityMode)
                     {
@@ -84,7 +84,7 @@ namespace DuelEditor.Components
 
                 spriteBatch.DrawRectangle(tile.RenderRect, isHovered ? Color.White : unHoveredColor, isHovered ? 3f : 1f, transform.Depth - 10);
 
-                level.GetTileAt(tile.LevelPosition(CameraOffset));
+                this.level.GetTileAt(tile.LevelPosition(CameraOffset));
             }
         }
 
