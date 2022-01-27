@@ -18,18 +18,6 @@ namespace Duel.Data
             this.onSignals.Remove(signalColor);
         }
 
-        public void Toggle(SignalColor signalColor)
-        {
-            if (IsOn(signalColor))
-            {
-                TurnOff(signalColor);
-            }
-            else
-            {
-                TurnOn(signalColor);
-            }
-        }
-
         public bool IsOn(SignalColor signalColor)
         {
             return this.onSignals.Contains(signalColor);

@@ -57,18 +57,5 @@ namespace TestDuel
 
             subject.IsOn(SignalColor.Red).Should().BeFalse();
         }
-
-        [Fact]
-        public void toggle()
-        {
-            var subject = new SignalState();
-
-            subject.Toggle(SignalColor.Red);
-            subject.IsOn(SignalColor.Red).Should().BeTrue();
-            subject.Toggle(SignalColor.Red);
-            subject.IsOn(SignalColor.Red).Should().BeFalse();
-            subject.Toggle(SignalColor.Red);
-            subject.IsOn(SignalColor.Red).Should().BeTrue();
-        }
     }
 }

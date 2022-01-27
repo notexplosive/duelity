@@ -13,6 +13,7 @@ namespace Duel.Data
         public event Action TilemapChanged;
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
+        public event Action NotableEventHappened;
 
         private readonly List<Entity> entities = new List<Entity>();
 
@@ -28,6 +29,7 @@ namespace Duel.Data
 
         public Level() : this(new Corners(Point.Zero, Point.Zero))
         {
+            NotableEventHappened += UpdateSignalState;
         }
 
         public Entity PutEntityAt(Point startingPosition, EntityTemplate template)
@@ -37,6 +39,7 @@ namespace Duel.Data
             entity.WarpToPosition(startingPosition);
 
             AddEntity(entity);
+            NotableEventHappened?.Invoke();
 
             return entity;
         }
@@ -81,6 +84,8 @@ namespace Duel.Data
 
             entity.PositionChanged -= EntityMoved;
             entity.Bumped -= EntityBumped;
+
+            NotableEventHappened?.Invoke();
         }
 
         public void RequestDestroyEntity(Entity entity, DestroyType destroyType)
@@ -174,7 +179,6 @@ namespace Duel.Data
         private void EntityJustSteppedOn(Entity stepper, Point position)
         {
             FillWaterIfApplicable(stepper, position);
-            UpdatePressurePlateAt(position, true);
         }
 
         private void FillWaterIfApplicable(Entity stepper, Point position)
@@ -212,31 +216,12 @@ namespace Duel.Data
             }
         }
 
-        private void UpdatePressurePlateAt(Point position, bool steppedOn)
-        {
-            var solidProvider = new LevelSolidProvider(this);
-            if (solidProvider.TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out EnableSignalWhenSteppedOn pressurePlateTag))
-            {
-                if (steppedOn && solidProvider.HasTagAt<Solid>(position) || solidProvider.HasTagAt<PlayerTag>(position))
-                {
-                    SignalState.TurnOn(pressurePlateTag.Color);
-                }
-
-                if (!steppedOn)
-                {
-                    SignalState.TurnOff(pressurePlateTag.Color);
-                }
-            }
-        }
-
         public void EntityJustSteppedOff(Point previousPosition)
         {
             if (GetTileAt(previousPosition).Tags.TryGetTag(out Collapses collapses))
             {
                 PutTileAt(previousPosition, collapses.TemplateAfterCollapse);
             }
-
-            UpdatePressurePlateAt(previousPosition, false);
         }
 
         private void EntityMoved(Entity mover, MoveType moveType, Point previousPosition)
@@ -245,6 +230,47 @@ namespace Duel.Data
             {
                 EntityJustSteppedOff(previousPosition);
                 EntityJustSteppedOn(mover, mover.Position);
+            }
+
+            NotableEventHappened?.Invoke();
+        }
+
+        private void UpdateSignalState()
+        {
+            var solidProvider = new LevelSolidProvider(this);
+            var pressurePlateIsDown = new HashSet<SignalColor>();
+            var leverIsOn = new HashSet<SignalColor>();
+
+            foreach (var entity in this.entities)
+            {
+                var position = entity.Position;
+                if (entity.Tags.TryGetTag(out EnableSignalWhenSteppedOn pressurePlateTag))
+                {
+                    if (solidProvider.HasTagAt<Solid>(position) || solidProvider.HasTagAt<PlayerTag>(position))
+                    {
+                        pressurePlateIsDown.Add(pressurePlateTag.Color);
+                    }
+                }
+
+                if (entity.Tags.TryGetTag(out ToggleSignal toggleSignal))
+                {
+                    if (toggleSignal.IsOn())
+                    {
+                        leverIsOn.Add(toggleSignal.Color);
+                    }
+                }
+            }
+
+            foreach (SignalColor color in Enum.GetValues(typeof(SignalColor)))
+            {
+                if (pressurePlateIsDown.Contains(color) || leverIsOn.Contains(color))
+                {
+                    SignalState.TurnOn(color);
+                }
+                else
+                {
+                    SignalState.TurnOff(color);
+                }
             }
         }
     }
