@@ -19,10 +19,10 @@ namespace DuelEditor.Components
         private readonly BoundingRect boundingRect;
         private readonly Clickable clickable;
         private readonly TooltipText tooltipText;
-        private readonly IEntityOrTileTemplate template;
+        private readonly ITemplate template;
         private readonly TemplateSelection selection;
 
-        public TemplateSelectorCell(Actor actor, IEntityOrTileTemplate template, TemplateSelection selection, TooltipText tooltipText) : base(actor)
+        public TemplateSelectorCell(Actor actor, ITemplate template, TemplateSelection selection, TooltipText tooltipText) : base(actor)
         {
             this.template = template;
             this.selection = selection;

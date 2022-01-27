@@ -1,6 +1,6 @@
 ﻿namespace Duel.Data
 {
-    public interface IEntityOrTileTemplate
+    public interface ITemplate
     {
         TagCollection Tags { get; }
     }

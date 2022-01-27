@@ -1,4 +1,5 @@
 ﻿using Duel.Components;
+using Machina.Engine;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,14 +8,14 @@ namespace Duel.Data
 {
     public class TemplateLibrary
     {
-        private readonly Dictionary<string, IEntityOrTileTemplate> lookupTable = new Dictionary<string, IEntityOrTileTemplate>();
+        private readonly Dictionary<string, ITemplate> lookupTable = new Dictionary<string, ITemplate>();
 
-        public void AddTemplate(string templateName, IEntityOrTileTemplate template)
+        public void AddTemplate(string templateName, ITemplate template)
         {
             this.lookupTable.Add(templateName, template);
         }
 
-        private IEntityOrTileTemplate GetTemplate(string templateName)
+        private ITemplate GetTemplate(string templateName)
         {
             if (this.lookupTable.ContainsKey(templateName))
             {
@@ -46,9 +47,29 @@ namespace Duel.Data
             throw new Exception($"Template is not EntityTemplate: {templateName}");
         }
 
+        public PropTemplate GetPropTemplate(string templateName)
+        {
+            var template = GetTemplate(templateName);
+            if (template is PropTemplate propTemplate)
+            {
+                return propTemplate;
+            }
+
+            throw new Exception($"Template is not PropTemplate: {templateName}");
+        }
+
         public static TemplateLibrary Build()
         {
             var templateLibrary = new TemplateLibrary();
+
+            // Props
+            templateLibrary.AddTemplate("large_cactus", new PropTemplate("props_large_cactus"));
+            templateLibrary.AddTemplate("house", new PropTemplate("props_house"));
+            templateLibrary.AddTemplate("large_rock", new PropTemplate("props_large_rock"));
+            templateLibrary.AddTemplate("sloon", new PropTemplate("props_sloon"));
+            templateLibrary.AddTemplate("small_cactus", new PropTemplate("props_small_cactus"));
+            templateLibrary.AddTemplate("small_rock", new PropTemplate("props_small_rock"));
+            templateLibrary.AddTemplate("thistown_sign", new PropTemplate("props_thistown_sign"));
 
             // Tiles
             templateLibrary.AddTemplate("wall", new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall), new BlockProjectileTag()));
@@ -154,7 +175,7 @@ namespace Duel.Data
             return templateLibrary;
         }
 
-        public IEnumerable<IEntityOrTileTemplate> GetAllTemplates()
+        public IEnumerable<ITemplate> GetAllTemplates()
         {
             foreach (var template in this.lookupTable.Values)
             {

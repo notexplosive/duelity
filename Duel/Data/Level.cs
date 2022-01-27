@@ -11,7 +11,7 @@ namespace Duel.Data
     public class Level
     {
         public event Action TilemapChanged;
-        public event Action<Vector2> PropAdded;
+        public event Action<Vector2, PropTemplate> PropAdded;
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
         public event Action NotableEventHappened;
@@ -46,9 +46,9 @@ namespace Duel.Data
             return entity;
         }
 
-        public void PutPropAt(Vector2 worldPosition)
+        public void PutPropAt(Vector2 worldPosition, PropTemplate template)
         {
-            PropAdded?.Invoke(worldPosition);
+            PropAdded?.Invoke(worldPosition, template);
         }
 
         private void AddEntity(Entity entity)

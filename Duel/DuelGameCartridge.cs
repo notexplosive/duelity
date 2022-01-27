@@ -30,9 +30,11 @@ namespace Duel
             var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
             var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
 
+            var templates = TemplateLibrary.Build();
+
             game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
 
-            game.CurrentLevel.PutPropAt(new Vector2(200, 200));
+            game.CurrentLevel.PutPropAt(new Vector2(200, 200), templates.GetPropTemplate("large_cactus"));
 
             PostLoad(game);
         }

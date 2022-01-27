@@ -143,7 +143,7 @@ namespace DuelEditor.Data
 
         }
 
-        private void CreateSelectorCell(LayoutActors layoutActors, string itemName, IEntityOrTileTemplate template, TooltipText tooltip)
+        private void CreateSelectorCell(LayoutActors layoutActors, string itemName, ITemplate template, TooltipText tooltip)
         {
             var gridItemActor = layoutActors.GetActor(itemName);
             gridItemActor.GetComponent<BoundingRect>().CenterToBounds();

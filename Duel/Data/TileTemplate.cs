@@ -1,6 +1,6 @@
 ﻿namespace Duel.Data
 {
-    public class TileTemplate : IEntityOrTileTemplate
+    public class TileTemplate : ITemplate
     {
         public TagCollection Tags { get; } = new TagCollection();
 

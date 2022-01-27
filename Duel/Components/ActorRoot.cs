@@ -29,12 +29,12 @@ namespace Duel.Components
             this.level.PropAdded += CreateProp;
         }
 
-        private void CreateProp(Vector2 worldPosition)
+        private void CreateProp(Vector2 worldPosition, PropTemplate propTemplate)
         {
             var propActor = transform.AddActorAsChild("Prop");
             propActor.transform.LocalPosition = worldPosition;
             propActor.transform.LocalDepth -= 250;
-            new TextureRenderer(propActor, MachinaClient.Assets.GetTexture("props_large_cactus"));
+            new TextureRenderer(propActor, propTemplate.Texture);
         }
 
         private void DestroyEntityActor(Entity entity, DestroyType type)
