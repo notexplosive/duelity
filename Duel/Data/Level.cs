@@ -174,8 +174,7 @@ namespace Duel.Data
         private void EntityJustSteppedOn(Entity stepper, Point position)
         {
             FillWaterIfApplicable(stepper, position);
-            UpdatePressurePlateAt(position);
-
+            UpdatePressurePlateAt(position, true);
         }
 
         private void FillWaterIfApplicable(Entity stepper, Point position)
@@ -213,16 +212,17 @@ namespace Duel.Data
             }
         }
 
-        private void UpdatePressurePlateAt(Point position)
+        private void UpdatePressurePlateAt(Point position, bool steppedOn)
         {
             var solidProvider = new LevelSolidProvider(this);
             if (solidProvider.TryGetFirstEntityWithTagAt(position, out Entity foundEntity, out EnableSignalWhenSteppedOn pressurePlateTag))
             {
-                if (solidProvider.HasTagAt<Solid>(position) || solidProvider.HasTagAt<PlayerTag>(position))
+                if (steppedOn && solidProvider.HasTagAt<Solid>(position) || solidProvider.HasTagAt<PlayerTag>(position))
                 {
                     SignalState.TurnOn(pressurePlateTag.Color);
                 }
-                else
+
+                if (!steppedOn)
                 {
                     SignalState.TurnOff(pressurePlateTag.Color);
                 }
@@ -236,7 +236,7 @@ namespace Duel.Data
                 PutTileAt(previousPosition, collapses.TemplateAfterCollapse);
             }
 
-            UpdatePressurePlateAt(previousPosition);
+            UpdatePressurePlateAt(previousPosition, false);
         }
 
         private void EntityMoved(Entity mover, MoveType moveType, Point previousPosition)
