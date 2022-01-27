@@ -187,7 +187,7 @@ namespace TestDuel
         public void shot_not_blocked_by_opened_door()
         {
             var closedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, false));
-            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.ForceSignalOn(SignalColor.Red);
             this.level.PutEntityAt(new Point(0, 5), closedDoor);
 
             var bullet = this.gunComponent.CreateBullet();
@@ -216,7 +216,7 @@ namespace TestDuel
         public void shot_blocked_by_newly_closed_door()
         {
             var openedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, true));
-            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.ForceSignalOn(SignalColor.Red);
             this.level.PutEntityAt(new Point(0, 5), openedDoor);
 
             var bullet = this.gunComponent.CreateBullet();

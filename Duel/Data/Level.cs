@@ -18,6 +18,7 @@ namespace Duel.Data
         private readonly List<Entity> entities = new List<Entity>();
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
+        private SignalState signalOverrideLayer = new SignalState();
 
         public SignalState SignalState { get; internal set; } = new SignalState(); // this should be on a per-screen basis
 
@@ -25,11 +26,11 @@ namespace Duel.Data
         {
             PutTileAt(corners.TopLeft, new TileTemplate());
             PutTileAt(corners.BottomRight, new TileTemplate());
+            NotableEventHappened += UpdateSignalState;
         }
 
         public Level() : this(new Corners(Point.Zero, Point.Zero))
         {
-            NotableEventHappened += UpdateSignalState;
         }
 
         public Entity PutEntityAt(Point startingPosition, EntityTemplate template)
@@ -131,6 +132,11 @@ namespace Duel.Data
             }
 
             return new Corners(minTile, maxTile);
+        }
+
+        public void ForceSignalOn(SignalColor color)
+        {
+            this.signalOverrideLayer.TurnOn(color);
         }
 
         public TileTemplate GetTileAt(Point position)
@@ -263,6 +269,12 @@ namespace Duel.Data
 
             foreach (SignalColor color in Enum.GetValues(typeof(SignalColor)))
             {
+                if (this.signalOverrideLayer.IsOn(color))
+                {
+                    SignalState.TurnOn(color);
+                    continue;
+                }
+
                 if (pressurePlateIsDown.Contains(color) || leverIsOn.Contains(color))
                 {
                     SignalState.TurnOn(color);

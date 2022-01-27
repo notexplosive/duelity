@@ -99,7 +99,7 @@ namespace TestDuel
         [Fact]
         public void spawning_pressure_plate_should_not_affect_signal()
         {
-            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.ForceSignalOn(SignalColor.Red);
             this.level.PutEntityAt(Point.Zero, this.pressurePlateTemplate);
             this.level.SignalState.IsOn(SignalColor.Red).Should().BeTrue();
         }

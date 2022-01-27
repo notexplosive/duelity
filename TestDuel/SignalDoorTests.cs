@@ -42,7 +42,7 @@ namespace TestDuel
         public void entity_can_walk_through_closed_door_if_signaled_open()
         {
             this.level.PutEntityAt(Point.Zero, this.closedDoor);
-            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.ForceSignalOn(SignalColor.Red);
             var walker = this.level.PutEntityAt(new Point(-1, 0), new EntityTemplate());
             walker.WalkAndPushInDirection(Direction.Right);
 
@@ -53,7 +53,7 @@ namespace TestDuel
         public void entity_cannot_walk_through_opened_door_if_signaled_close()
         {
             this.level.PutEntityAt(Point.Zero, this.openDoor);
-            this.level.SignalState.TurnOn(SignalColor.Red);
+            this.level.ForceSignalOn(SignalColor.Red);
             var walker = this.level.PutEntityAt(new Point(-1, 0), new EntityTemplate());
             walker.WalkAndPushInDirection(Direction.Right);
 
