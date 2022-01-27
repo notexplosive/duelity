@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Duel.Data
 {
@@ -21,9 +22,7 @@ namespace Duel.Data
 
         public static Point LevelPosToRoomPos(Point levelGridPos)
         {
-
-
-            return new Point(levelGridPos.X / Room.Size.X, levelGridPos.Y / Room.Size.Y);
+            return new Point((int)MathF.Floor((float)levelGridPos.X / Room.Size.X), (int)MathF.Floor((float)levelGridPos.Y / Room.Size.Y));
         }
 
         public override bool Equals(object obj)
