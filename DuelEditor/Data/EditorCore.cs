@@ -81,6 +81,7 @@ namespace DuelEditor.Data
             new Hoverable(actor);
             new RoomEditor(actor, game, this.templateSelection, tooltip);
             new EditorPanner(actor, game);
+            new EditorSaveLoad(actor, game);
         }
 
         private void BecomeBasicPane(Actor sidebarActor)

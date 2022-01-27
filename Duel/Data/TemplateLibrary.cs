@@ -13,6 +13,7 @@ namespace Duel.Data
         public void AddTemplate(string templateName, ITemplate template)
         {
             this.lookupTable.Add(templateName, template);
+            template.NameInLibrary = templateName;
         }
 
         private ITemplate GetTemplate(string templateName)
@@ -72,6 +73,7 @@ namespace Duel.Data
             templateLibrary.AddTemplate("thistown_sign", new PropTemplate("props_thistown_sign"));
 
             // Tiles
+            templateLibrary.AddTemplate("empty_tile", new TileTemplate());
             templateLibrary.AddTemplate("wall", new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall), new BlockProjectileTag()));
             templateLibrary.AddTemplate("invisible_wall", new TileTemplate(new Solid(), new BlockProjectileTag(), new EditorImage(EntityFrame.CrateBreak)));
             templateLibrary.AddTemplate("water", new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new UnfilledWater()));

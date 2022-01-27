@@ -3,6 +3,7 @@
     public class TileTemplate : ITemplate
     {
         public TagCollection Tags { get; } = new TagCollection();
+        public string NameInLibrary { get; set; }
 
         public TileTemplate(params Tag[] tags)
         {

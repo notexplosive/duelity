@@ -26,7 +26,7 @@ namespace TestDuel
         {
             var solidProvider = new FakeSolidProvider();
             solidProvider.BecomeSolidAt(new Point(1, 1));
-            var subject = new Entity(solidProvider);
+            var subject = new Entity(solidProvider, "");
             subject.WarpToPosition(new Point(1, 2));
             subject.WalkAndPushInDirection(Direction.Up);
 

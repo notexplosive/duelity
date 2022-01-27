@@ -21,6 +21,7 @@ namespace Duel.Components
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
         private readonly HashSet<Entity> knownDestroyedActors = new HashSet<Entity>();
+        private readonly List<PropInstance> props = new List<PropInstance>();
 
         public ActorRoot(Actor actor, Level level) : base(actor)
         {
@@ -41,7 +42,31 @@ namespace Duel.Components
 
             propActor.transform.LocalPosition -= boundingRect.SizeF / 2;
 
+            this.props.Add(new PropInstance(propActor, propTemplate));
+
             PropCreated?.Invoke(propActor);
+        }
+
+        public IEnumerable<TemplateInstance> GetAllInstances()
+        {
+            foreach (var tile in this.level.AllKnownTiles())
+            {
+                yield return tile;
+            }
+
+            foreach (var entity in this.level.AllEntities())
+            {
+                yield return entity;
+            }
+
+            foreach (var prop in this.props)
+            {
+                // todo: props should be removed from the list on destroy
+                if (!prop.IsDestroyed)
+                {
+                    yield return prop;
+                }
+            }
         }
 
         private void DestroyEntityActor(Entity entity, DestroyType type)

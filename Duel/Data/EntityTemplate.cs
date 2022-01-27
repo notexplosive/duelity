@@ -11,7 +11,7 @@
 
         public Entity Create(LevelSolidProvider provider)
         {
-            var entity = new Entity(provider);
+            var entity = new Entity(provider, NameInLibrary);
 
             foreach (var tag in tags)
             {
@@ -33,5 +33,7 @@
                 return tagCollection;
             }
         }
+
+        public string NameInLibrary { get; set; }
     }
 }

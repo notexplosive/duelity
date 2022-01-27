@@ -49,10 +49,10 @@ namespace DuelEditor.Components
                 if (this.selection.Primary is PropTemplate prop)
                 {
                     entityOrTileName = "prop";
-                    info = prop.Name;
+                    info = prop.NameInLibrary;
                 }
 
-                this.tooltipText.Add($"selected {entityOrTileName}: {info}");
+                this.tooltipText.Add($"selected {this.selection.Primary.NameInLibrary} {entityOrTileName}: {info}");
             }
         }
 

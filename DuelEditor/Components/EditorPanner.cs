@@ -36,7 +36,13 @@ namespace DuelEditor.Components
         {
             if (state == ButtonState.Pressed)
             {
-                int x = 1;
+                int x = 0;
+
+                if (modifiers.None)
+                {
+                    x = 1;
+                }
+
                 if (modifiers.Shift)
                 {
                     x *= 10;
@@ -62,11 +68,6 @@ namespace DuelEditor.Components
                     CameraPosition += new Point(0, -x);
                 }
             }
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-
         }
     }
 }

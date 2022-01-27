@@ -18,7 +18,7 @@ namespace Duel.Data
 
     public delegate void DirectionalAction(Direction direction);
 
-    public class Entity
+    public class Entity : TemplateInstance
     {
         public static int UniqueIdPool = 0;
 
@@ -61,9 +61,10 @@ namespace Duel.Data
             SolidProvider = new EmptySolidProvider();
         }
 
-        public Entity(SolidProvider solidProvider) : this()
+        public Entity(SolidProvider solidProvider, string templateName) : this()
         {
             SolidProvider = solidProvider;
+            TemplateName = templateName;
         }
 
         // Overrides //
@@ -166,6 +167,19 @@ namespace Duel.Data
             var prevPosition = Position;
             Position += direction.ToPoint();
             PositionChanged?.Invoke(this, MoveType.Walk, prevPosition);
+        }
+
+        protected override TemplateClass TemplateClass => TemplateClass.Entity;
+
+        public override string TemplateName { get; }
+
+        public override string CoordinateString
+        {
+            get
+            {
+                var pos = Position;
+                return $"{pos.X},{pos.Y}";
+            }
         }
     }
 }

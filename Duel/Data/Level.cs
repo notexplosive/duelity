@@ -62,6 +62,14 @@ namespace Duel.Data
             EntityJustSteppedOn(entity, entity.Position);
         }
 
+        public IEnumerable<TileInstance> AllKnownTiles()
+        {
+            foreach (var tile in this.tileMap)
+            {
+                yield return new TileInstance(tile.Key, tile.Value);
+            }
+        }
+
         private void EntityBumped(Entity entity, Point position, Direction direction)
         {
             if (entity.Tags.TryGetTag(out Key key))
@@ -102,6 +110,11 @@ namespace Duel.Data
 
         public void PutTileAt(Point position, TileTemplate tile)
         {
+            if (tile.NameInLibrary == "")
+            {
+                tile.NameInLibrary = "emptyTile";
+            }
+
             this.tileMap[position] = tile;
             TilemapChanged?.Invoke();
         }
