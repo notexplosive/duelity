@@ -33,7 +33,9 @@ namespace DuelEditor.Data
 
             var layoutActors = new LayoutActors(scene, layout);
 
-            BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), layout.Bake().GetNode("left-sidebar"), scene);
+            var bakedLayout = layout.Bake();
+
+            BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), bakedLayout.GetNode("left-sidebar"), scene);
             BecomeBasicPane(layoutActors.GetActor("right-sidebar"));
             BecomeBasicPane(layoutActors.GetActor("bottom-section"));
             BecomeTileEditor(layoutActors.GetActor("tile-editor"));
@@ -42,6 +44,7 @@ namespace DuelEditor.Data
         private void BecomeTileEditor(Actor actor)
         {
             game.SetRootActorPosition(actor.transform.Position);
+            new Hoverable(actor);
             new TileEditor(actor, game.CurrentLevel, this.templateSelection);
             new EditorPanner(actor, game);
         }
@@ -97,7 +100,7 @@ namespace DuelEditor.Data
             layoutActors.GetActor("root").transform.SetParent(sidebarActor);
 
             var templateLibrary = TemplateLibrary.Build();
-            var templates = templateLibrary.GetAllTileTemplates().GetEnumerator();
+            var templates = templateLibrary.GetAllTemplates().GetEnumerator();
 
             foreach (var itemName in itemNames)
             {
@@ -111,7 +114,7 @@ namespace DuelEditor.Data
             }
         }
 
-        private void CreateSelectorCell(LayoutActors layoutActors, string itemName, TileTemplate template)
+        private void CreateSelectorCell(LayoutActors layoutActors, string itemName, IEntityOrTileTemplate template)
         {
             var gridItemActor = layoutActors.GetActor(itemName);
             gridItemActor.GetComponent<BoundingRect>().CenterToBounds();
@@ -124,6 +127,11 @@ namespace DuelEditor.Data
                 if (tag is TileImageTag imageTag)
                 {
                     new TileImageRenderer(gridItemActor, imageTag.Image);
+                }
+
+                if (tag is SimpleEntityImage entityImage)
+                {
+                    new EntityImageRenderer(gridItemActor, entityImage.EntityFrameSet);
                 }
             }
         }

@@ -152,11 +152,19 @@ namespace Duel.Data
             return templateLibrary;
         }
 
-        public IEnumerable<TileTemplate> GetAllTileTemplates()
+        public IEnumerable<IEntityOrTileTemplate> GetAllTemplates()
         {
             foreach (var template in this.lookupTable.Values)
             {
                 if (template is TileTemplate tileTemplate)
+                {
+                    yield return tileTemplate;
+                }
+            }
+
+            foreach (var template in this.lookupTable.Values)
+            {
+                if (template is EntityTemplate tileTemplate)
                 {
                     yield return tileTemplate;
                 }

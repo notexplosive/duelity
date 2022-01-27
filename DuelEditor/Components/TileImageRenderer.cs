@@ -11,6 +11,23 @@ using System.Text;
 
 namespace DuelEditor.Components
 {
+    public class EntityImageRenderer : BaseComponent
+    {
+        private readonly SpriteSheet spriteSheet;
+        private readonly EntityFrameSet entityFrameSet;
+
+        public EntityImageRenderer(Actor actor, EntityFrameSet entityFrameSet) : base(actor)
+        {
+            this.spriteSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet");
+            this.entityFrameSet = entityFrameSet;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            this.spriteSheet.DrawFrame(spriteBatch, this.entityFrameSet.Normal, transform);
+        }
+    }
+
     public class TileImageRenderer : BaseComponent
     {
         private readonly SpriteSheet spriteSheet;

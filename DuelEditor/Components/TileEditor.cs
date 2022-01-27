@@ -18,6 +18,7 @@ namespace DuelEditor.Components
 {
     public class TileEditor : BaseComponent
     {
+        private readonly Hoverable hoverable;
         private readonly Level level;
         private readonly TemplateSelection templateSelection;
         private EditorTileLocation? hoveredTile;
@@ -28,13 +29,14 @@ namespace DuelEditor.Components
 
         public TileEditor(Actor actor, Level level, TemplateSelection templateSelection) : base(actor)
         {
+            this.hoverable = RequireComponent<Hoverable>();
             this.level = level;
             this.templateSelection = templateSelection;
         }
 
         public override void Update(float dt)
         {
-            if (this.hoveredTile.HasValue)
+            if (this.hoverable.IsHovered && this.hoveredTile.HasValue)
             {
                 var position = this.hoveredTile.Value.LevelPosition(CameraOffset);
                 if (this.leftMouseDown)
@@ -46,6 +48,7 @@ namespace DuelEditor.Components
 
                     if (this.templateSelection.Primary is EntityTemplate entityTemplate)
                     {
+                        ClearEntitiesAt(position);
                         this.level.PutEntityAt(position, entityTemplate);
                     }
                 }
@@ -54,10 +57,7 @@ namespace DuelEditor.Components
                 {
                     if (this.templateSelection.IsInEntityMode)
                     {
-                        foreach (var entity in this.level.AllEntitiesAt(position))
-                        {
-                            this.level.RequestDestroyEntity(entity, DestroyType.Break);
-                        }
+                        ClearEntitiesAt(position);
                     }
 
                     if (this.templateSelection.IsInTileMode)
@@ -122,6 +122,14 @@ namespace DuelEditor.Components
                 {
                     yield return new EditorTileLocation(new Point(x, y), new Rectangle(new Point(x * Grid.TileSize, y * Grid.TileSize) + transform.Position.ToPoint(), new Point(Grid.TileSize)));
                 }
+            }
+        }
+
+        private void ClearEntitiesAt(Point position)
+        {
+            foreach (var entity in this.level.AllEntitiesAt(position))
+            {
+                this.level.RequestDestroyEntity(entity, DestroyType.Break);
             }
         }
     }
