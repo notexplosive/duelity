@@ -98,6 +98,7 @@ namespace DuelEditor.Data
 
             var layoutActors = new LayoutActors(scene, layout);
             layoutActors.GetActor("root").transform.SetParent(sidebarActor);
+            new SignalIndicator(layoutActors.GetActor("header"), this.game.CurrentLevel);
 
             var templateLibrary = TemplateLibrary.Build();
             var templates = templateLibrary.GetAllTemplates().GetEnumerator();
@@ -158,7 +159,7 @@ namespace DuelEditor.Data
                 else if (tag is SignalDoor signalDoor)
                 {
                     var doorImages = signalDoor.DefaultOpened ? (ISignalableImages)new OpenedDoorImages(signalDoor.Color) : new ClosedDoorImages(signalDoor.Color);
-                    new EntityImageRenderer(gridItemActor, doorImages.OnImage);
+                    new EntityImageRenderer(gridItemActor, doorImages.OffImage);
                 }
             }
         }
