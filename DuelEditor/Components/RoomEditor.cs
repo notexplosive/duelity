@@ -41,6 +41,18 @@ namespace DuelEditor.Components
 
         public override void Update(float dt)
         {
+            this.game.TileRenderer.GhostMode = templateSelection.IsInEntityMode;
+
+            if (templateSelection.IsInEntityMode)
+            {
+                this.tooltip.Add("ENTITY MODE");
+            }
+
+            if (templateSelection.IsInTileMode)
+            {
+                this.tooltip.Add("TILE MODE");
+            }
+
             if (this.hoverable.IsHovered && this.HoveredTile.HasValue)
             {
                 var position = this.HoveredTile.Value.LevelPosition(CameraOffset);

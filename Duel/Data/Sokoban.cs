@@ -20,6 +20,7 @@ namespace Duel.Data
 
         // Set to true for tests (ughhhhhhhhhhhhhhhhh)
         public static bool Headless { get; set; }
+        public TileGridRenderer TileRenderer { get; private set; }
 
         public Sokoban(Scene scene)
         {
@@ -39,7 +40,7 @@ namespace Duel.Data
 
             if (!Headless)
             {
-                new TileGridRenderer(this.rootActor, CurrentLevel);
+                TileRenderer = new TileGridRenderer(this.rootActor, CurrentLevel);
             }
         }
 
