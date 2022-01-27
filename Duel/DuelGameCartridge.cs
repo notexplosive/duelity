@@ -32,6 +32,8 @@ namespace Duel
 
             game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
 
+            game.CurrentLevel.PutPropAt(new Vector2(200, 200));
+
             PostLoad(game);
         }
 
