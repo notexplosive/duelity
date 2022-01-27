@@ -85,20 +85,17 @@ namespace DuelEditor.Components
             {
                 var position = tile.LevelPosition(CameraOffset);
 
-                if (position == new Point(-Room.Size.X, -Room.Size.Y))
-                {
-                    var realRectPosition = game.GetRootActorPosition() + game.Grid.TileToLocalPosition(position, false);
-                    spriteBatch.DrawRectangle(new RectangleF(realRectPosition, new Point(10)), Color.White, 5f, transform.Depth);
-                }
-
                 var room = new Room(Room.LevelPosToRoomPos(position));
                 var bounds = room.GetBounds();
-                if (bounds.TopLeft == position)
+                var realPos = this.game.GetRootActorPosition() + this.game.Grid.TileToLocalPosition(position, false);
+                if (bounds.TopLeft.X == position.X)
                 {
-                    var realRectSize = (Size2)Room.Size * Grid.TileSize;
-                    var realRectPosition = game.GetRootActorPosition() + game.Grid.TileToLocalPosition(position, false);
-                    var realRect = new RectangleF(realRectPosition, realRectSize);
-                    spriteBatch.DrawRectangle(realRect, Color.White, 5f, transform.Depth);
+                    spriteBatch.DrawLine(realPos, realPos + new Vector2(0, Grid.TileSize), Color.Cyan, 2f, transform.Depth - 10);
+                }
+
+                if (bounds.TopLeft.Y == position.Y)
+                {
+                    spriteBatch.DrawLine(realPos, realPos + new Vector2(Grid.TileSize, 0), Color.Cyan, 2f, transform.Depth - 10);
                 }
             }
         }
