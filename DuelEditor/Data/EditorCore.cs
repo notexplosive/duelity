@@ -28,7 +28,7 @@ namespace DuelEditor.Data
                     LayoutNode.Leaf("tile-editor", LayoutSize.Pixels(viewportPixels)),
                     LayoutNode.Leaf("bottom-section", LayoutSize.StretchedBoth())
                 ),
-                LayoutNode.VerticalParent("right-sidebar", LayoutSize.StretchedBoth(), LayoutStyle.Empty)
+                LayoutNode.VerticalParent("right-sidebar", LayoutSize.StretchedVertically(Grid.TileSize * 2), LayoutStyle.Empty)
             );
 
 
