@@ -9,12 +9,12 @@ namespace Duel.Data
 {
     public class Sokoban
     {
-        private readonly Scene scene;
         private Actor rootActor;
 
+        public Scene Scene { get; }
         public Grid Grid { get; private set; }
 
-        private ActorRoot actorRootComponent;
+        public ActorRoot ActorRoot { get; private set; }
 
         public Level CurrentLevel { get; private set; }
 
@@ -24,7 +24,7 @@ namespace Duel.Data
 
         public Sokoban(Scene scene)
         {
-            this.scene = scene;
+            Scene = scene;
             ClearEverything();
         }
 
@@ -33,10 +33,10 @@ namespace Duel.Data
             this.rootActor?.Delete();
 
             CurrentLevel = new Level();
-            this.rootActor = scene.AddActor("Level");
+            this.rootActor = Scene.AddActor("Level");
 
             Grid = new Grid(this.rootActor, CurrentLevel);
-            this.actorRootComponent = new ActorRoot(this.rootActor, CurrentLevel);
+            ActorRoot = new ActorRoot(this.rootActor, CurrentLevel);
 
             if (!Headless)
             {
@@ -46,17 +46,17 @@ namespace Duel.Data
 
         public Actor FindActor(Entity entity)
         {
-            return this.actorRootComponent.FindActor(entity);
+            return ActorRoot.FindActor(entity);
         }
 
         public void SetRootActorPosition(Vector2 position)
         {
-            this.actorRootComponent.transform.Position = position;
+            ActorRoot.transform.Position = position;
         }
 
         public Vector2 GetRootActorPosition()
         {
-            return this.actorRootComponent.transform.Position;
+            return ActorRoot.transform.Position;
         }
     }
 }

@@ -41,6 +41,14 @@ namespace DuelEditor.Data
 
             BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), bakedLayout.GetNode("left-sidebar"), scene, this.tooltip);
             BecomeTileEditor(layoutActors.GetActor("tile-editor"), this.tooltip);
+
+            game.ActorRoot.PropCreated += InterceptProp;
+        }
+
+        private void InterceptProp(Actor propActor)
+        {
+            new Hoverable(propActor);
+            new PropKeyComponent_DeleteThis(propActor, this.templateSelection); // unique tag that only applies to props
         }
 
         private void BecomeInfoBox(Actor infoBoxActor, NodePositionAndSize node, Scene scene)
@@ -151,6 +159,10 @@ namespace DuelEditor.Data
             new Clickable(gridItemActor);
             new TemplateSelectorCell(gridItemActor, template, this.templateSelection, tooltip);
 
+            if (template is PropTemplate propTemplate)
+            {
+                new PropSubsetRenderer(gridItemActor, propTemplate.Texture);
+            }
 
             foreach (var tag in template.Tags)
             {

@@ -43,7 +43,16 @@ namespace DuelEditor.Components
                 {
                     entityOrTileName = "entity";
                 }
-                this.tooltipText.Add($"selected {entityOrTileName}: {this.selection.Primary.Tags}");
+
+                var info = this.selection.Primary.Tags.ToString();
+
+                if (this.selection.Primary is PropTemplate prop)
+                {
+                    entityOrTileName = "prop";
+                    info = prop.Name;
+                }
+
+                this.tooltipText.Add($"selected {entityOrTileName}: {info}");
             }
         }
 

@@ -192,6 +192,14 @@ namespace Duel.Data
                     yield return tileTemplate;
                 }
             }
+
+            foreach (var template in this.lookupTable.Values)
+            {
+                if (template is PropTemplate propTemplate)
+                {
+                    yield return propTemplate;
+                }
+            }
         }
     }
 }

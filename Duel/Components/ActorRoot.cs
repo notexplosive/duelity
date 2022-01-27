@@ -15,6 +15,8 @@ namespace Duel.Components
 
     public class ActorRoot : BaseComponent
     {
+        public event Action<Actor> PropCreated;
+
         private readonly Grid grid;
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
@@ -34,7 +36,12 @@ namespace Duel.Components
             var propActor = transform.AddActorAsChild("Prop");
             propActor.transform.LocalPosition = worldPosition;
             propActor.transform.LocalDepth -= 250;
-            new TextureRenderer(propActor, propTemplate.Texture);
+            var boundingRect = new BoundingRect(propActor, Point.Zero);
+            new TextureRenderer(propActor, propTemplate.Texture).SetupBoundingRect();
+
+            propActor.transform.LocalPosition -= boundingRect.SizeF / 2;
+
+            PropCreated?.Invoke(propActor);
         }
 
         private void DestroyEntityActor(Entity entity, DestroyType type)

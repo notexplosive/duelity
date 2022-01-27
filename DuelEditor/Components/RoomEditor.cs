@@ -25,7 +25,9 @@ namespace DuelEditor.Components
         private readonly TooltipText tooltip;
         private bool leftMouseDown;
         private bool rightMouseDown;
-        private bool hasPlacedEntity;
+        private bool hasLeftClickedWaitingForRelease;
+        private Vector2 mouseWorldPos;
+        private bool hasRightClickedWaitingForRelease;
 
         public EditorTileLocation? HoveredTile { get; private set; }
         public Point CameraOffset { get; set; }
@@ -53,6 +55,11 @@ namespace DuelEditor.Components
                 this.tooltip.Add("TILE MODE");
             }
 
+            if (templateSelection.IsInPropMode)
+            {
+                this.tooltip.Add("PROP MODE");
+            }
+
             if (this.hoverable.IsHovered && this.HoveredTile.HasValue)
             {
                 var position = this.HoveredTile.Value.LevelPosition(CameraOffset);
@@ -66,12 +73,17 @@ namespace DuelEditor.Components
                         this.level.PutTileAt(position, tileTemplate);
                     }
 
-                    if (!this.hasPlacedEntity)
+                    if (!this.hasLeftClickedWaitingForRelease)
                     {
-                        this.hasPlacedEntity = true;
+                        this.hasLeftClickedWaitingForRelease = true;
                         if (this.templateSelection.Primary is EntityTemplate entityTemplate)
                         {
                             this.level.PutEntityAt(position, entityTemplate);
+                        }
+
+                        if (this.templateSelection.Primary is PropTemplate propTemplate)
+                        {
+                            this.level.PutPropAt(this.mouseWorldPos - game.GetRootActorPosition(), propTemplate);
                         }
                     }
                 }
@@ -86,6 +98,28 @@ namespace DuelEditor.Components
                     if (this.templateSelection.IsInTileMode)
                     {
                         this.level.ClearTileAt(position);
+                    }
+
+                    if (this.templateSelection.IsInPropMode)
+                    {
+                        if (!this.hasRightClickedWaitingForRelease)
+                        {
+                            this.hasRightClickedWaitingForRelease = true;
+
+                            // fuck it, find the prop by searching through all actors
+                            foreach (var actor in this.game.Scene.GetAllActors())
+                            {
+                                var propKey = actor.GetComponent<PropKeyComponent_DeleteThis>();
+                                if (propKey != null)
+                                {
+                                    // because we're on an upper scene layer, regular hovered is no good
+                                    if (actor.GetComponent<Hoverable>().IsSoftHovered)
+                                    {
+                                        actor.Destroy();
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -123,6 +157,8 @@ namespace DuelEditor.Components
                     this.HoveredTile = tile;
                 }
             }
+
+            this.mouseWorldPos = currentPosition;
         }
 
         public override void OnMouseButton(MouseButton button, Vector2 currentPosition, ButtonState state)
@@ -133,13 +169,18 @@ namespace DuelEditor.Components
 
                 if (state == ButtonState.Released)
                 {
-                    this.hasPlacedEntity = false;
+                    this.hasLeftClickedWaitingForRelease = false;
                 }
             }
 
             if (button == MouseButton.Right)
             {
                 this.rightMouseDown = state == ButtonState.Pressed;
+
+                if (state == ButtonState.Released)
+                {
+                    this.hasRightClickedWaitingForRelease = false;
+                }
             }
         }
 

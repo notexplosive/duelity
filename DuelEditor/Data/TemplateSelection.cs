@@ -9,5 +9,6 @@ namespace DuelEditor.Data
 
         public bool IsInEntityMode => Primary is EntityTemplate;
         public bool IsInTileMode => Primary is TileTemplate;
+        public bool IsInPropMode => Primary is PropTemplate;
     }
 }
