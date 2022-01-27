@@ -143,6 +143,14 @@ namespace DuelEditor.Components
                 {
                     spriteBatch.DrawLine(realPos, realPos + new Vector2(Grid.TileSize, 0), Color.Cyan, 2f, transform.Depth - 10);
                 }
+
+                if (this.templateSelection.IsInTileMode)
+                {
+                    if (this.level.GetTileAt(position).Tags.HasTag<Solid>())
+                    {
+                        spriteBatch.DrawRectangle(new RectangleF(realPos, new Vector2(Grid.TileSize)), Color.Red, 1f, transform.Depth + 5);
+                    }
+                }
             }
         }
 
