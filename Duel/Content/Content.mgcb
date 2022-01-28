@@ -174,3 +174,27 @@
 
 #begin levels/level_2.bunk
 /copy:levels/level_2.bunk
+
+#begin levels/level_3.bunk
+/copy:levels/level_3.bunk
+
+#begin levels/level_4.bunk
+/copy:levels/level_4.bunk
+
+#begin levels/level_5.bunk
+/copy:levels/level_5.bunk
+
+#begin levels/level_6.bunk
+/copy:levels/level_6.bunk
+
+#begin levels/level_7.bunk
+/copy:levels/level_7.bunk
+
+#begin levels/level_8.bunk
+/copy:levels/level_8.bunk
+
+#begin levels/level_9.bunk
+/copy:levels/level_9.bunk
+
+#begin levels/level_10.bunk
+/copy:levels/level_10.bunk

@@ -28,6 +28,13 @@ namespace Duel.Data
             {
                 yield return "level_1";
                 yield return "level_2";
+                yield return "level_3";
+                yield return "level_4";
+                yield return "level_5";
+                yield return "level_6";
+                yield return "level_7";
+                yield return "level_8";
+                yield return "level_9";
             }
         }
 
