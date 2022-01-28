@@ -35,6 +35,7 @@ namespace Duel.Data
                     if (toggleSignal.IsOnBump)
                     {
                         toggleSignal.Toggle();
+                        this.level.UpdateSignalState();
                     }
                 }
             }
@@ -111,6 +112,7 @@ namespace Duel.Data
                     if (toggleSignal.IsOnGrapple)
                     {
                         toggleSignal.Toggle();
+                        this.level.UpdateSignalState();
                     }
                 }
             }
@@ -169,6 +171,7 @@ namespace Duel.Data
                     if (toggleSignal.IsOnHit)
                     {
                         toggleSignal.Toggle();
+                        this.level.UpdateSignalState();
                     }
                 }
             }

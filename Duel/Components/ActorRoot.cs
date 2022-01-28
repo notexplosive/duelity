@@ -110,7 +110,7 @@ namespace Duel.Components
 
         private void CreateEntityActor(Entity entity)
         {
-            var entityActor = transform.AddActorAsChild("EntityActor");
+            var entityActor = transform.AddActorAsChild(entity.ToString());
             entityActor.transform.LocalDepth -= 200;
             entityToActorTable[entity] = entityActor;
 

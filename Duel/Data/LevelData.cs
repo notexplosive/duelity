@@ -43,7 +43,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Sheriff)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("sheriff"));
-                        game.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position,entity.Position);
+                        game.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position, entity.Position);
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-bennigan")

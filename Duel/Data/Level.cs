@@ -15,7 +15,6 @@ namespace Duel.Data
         public event Action<Vector2, PropTemplate> PropAdded;
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
-        public event Action NotableEventHappened;
         public event Action RemoveAllProps;
         public event Action<Point, Point> RoomTransitionAttempted;
         public event Action<Entity, Entity, Point> RoomTransitionFinished;
@@ -31,7 +30,6 @@ namespace Duel.Data
         {
             PutTileAt(corners.TopLeft, new TileTemplate());
             PutTileAt(corners.BottomRight, new TileTemplate());
-            NotableEventHappened += UpdateSignalState;
         }
 
         public void ClearAllTilesAndEntities()
@@ -58,7 +56,7 @@ namespace Duel.Data
             entity.WarpToPosition(startingPosition);
 
             AddEntity(entity);
-            NotableEventHappened?.Invoke();
+            UpdateSignalState();
 
             return entity;
         }
@@ -102,9 +100,10 @@ namespace Duel.Data
             }
         }
 
-        internal void OnPlayerRoomTransition(Entity playerFromPreviousRoom, Entity playerFromThisRoom, PlayerTag.Type moveType, Point playerPosition)
+        public void OnPlayerRoomTransition(Entity playerFromPreviousRoom, Entity playerFromThisRoom, PlayerTag.Type moveType, Point playerPosition)
         {
             RoomTransitionFinished?.Invoke(playerFromPreviousRoom, playerFromThisRoom, playerPosition);
+            UpdateSignalState();
         }
 
         public void ClearTileAt(Point position)
@@ -122,7 +121,7 @@ namespace Duel.Data
             entity.PositionChanged -= EntityMoved;
             entity.Bumped -= EntityBumped;
 
-            NotableEventHappened?.Invoke();
+            UpdateSignalState();
         }
 
         public void RequestDestroyEntity(Entity entity, DestroyType destroyType)
@@ -288,10 +287,10 @@ namespace Duel.Data
                 ChangeRoomsIfApplicable(mover, previousPosition, mover.Position);
             }
 
-            NotableEventHappened?.Invoke();
+            UpdateSignalState();
         }
 
-        private void UpdateSignalState()
+        public void UpdateSignalState()
         {
             var solidProvider = new LevelSolidProvider(this);
             var pressurePlateIsDown = new HashSet<SignalColor>();

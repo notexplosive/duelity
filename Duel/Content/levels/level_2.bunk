@@ -152,3 +152,8 @@ entt crate 7,-3
 entt redClosedDoor 3,-11
 entt redClosedDoor 3,-5
 entt redPressurePlate 6,-3
+entt yellowPressurePlate 1,-2
+entt barrel 1,-2
+entt yellowClosedDoor 1,-4
+entt yellowClosedDoor 4,-11
+entt yellowLever 5,-11

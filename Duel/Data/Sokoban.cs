@@ -76,7 +76,6 @@ namespace Duel.Data
                     if (entity.Tags.HasTag<PlayerTag>())
                     {
                         previousPlayer = entity;
-                        break;
                     }
                 }
 
@@ -89,6 +88,14 @@ namespace Duel.Data
                 var player = CurrentLevel.PutEntityAt(playerPreviousPosition, playerTemplate);
 
                 CurrentLevel.OnPlayerRoomTransition(previousPlayer, player, this.previouslyLoadedData.Item2, playerPosition);
+            }
+
+            foreach (var entity in CurrentLevel.AllEntities())
+            {
+                if (CurrentRoomPos != Room.LevelPosToRoomPos(entity.Position))
+                {
+                    CurrentLevel.RequestDestroyEntity(entity, DestroyType.Vanish);
+                }
             }
         }
 
