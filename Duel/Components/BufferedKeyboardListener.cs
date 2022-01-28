@@ -20,6 +20,7 @@ namespace Duel.Components
 
         private float bufferedActionTimer;
         private Action bufferedActionImpl;
+        private bool isAllowedToStart;
 
         public Action BufferedAction
         {
@@ -44,42 +45,52 @@ namespace Duel.Components
 
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
         {
-            if (state == ButtonState.Pressed)
+            if (this.isAllowedToStart)
             {
-                this.heldKeyTimer = 0.2f;
-
-                DoOrBuffer(DirectionToAction(KeyToDirection(key)));
-
-                if (key == Keys.Z || key == Keys.Space && modifiers.None)
+                if (state == ButtonState.Pressed)
                 {
-                    DoOrBuffer(ActionPressed);
+                    this.heldKeyTimer = 0.2f;
+
+                    DoOrBuffer(DirectionToAction(KeyToDirection(key)));
+
+                    if (key == Keys.Z || key == Keys.Space && modifiers.None)
+                    {
+                        DoOrBuffer(ActionPressed);
+                    }
                 }
-            }
 
-            var pressed = state == ButtonState.Pressed;
-            if (KeyToDirection(key) == Direction.Left)
-            {
-                this.heldDirections.left = pressed;
-            }
+                var pressed = state == ButtonState.Pressed;
 
-            if (KeyToDirection(key) == Direction.Right)
-            {
-                this.heldDirections.right = pressed;
-            }
+                if (KeyToDirection(key) == Direction.Left)
+                {
+                    this.heldDirections.left = pressed;
+                }
 
-            if (KeyToDirection(key) == Direction.Up)
-            {
-                this.heldDirections.up = pressed;
-            }
+                if (KeyToDirection(key) == Direction.Right)
+                {
+                    this.heldDirections.right = pressed;
+                }
 
-            if (KeyToDirection(key) == Direction.Down)
-            {
-                this.heldDirections.down = pressed;
+                if (KeyToDirection(key) == Direction.Up)
+                {
+                    this.heldDirections.up = pressed;
+                }
+
+                if (KeyToDirection(key) == Direction.Down)
+                {
+                    this.heldDirections.down = pressed;
+                }
             }
         }
 
         public override void Update(float dt)
         {
+            if (!this.heldDirections.HasPressed())
+            {
+                // weird edge case involving room transitions
+                this.isAllowedToStart = true;
+            }
+
             if (this.bufferedActionTimer > 0)
             {
                 this.bufferedActionTimer -= dt;
