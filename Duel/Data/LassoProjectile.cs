@@ -11,24 +11,25 @@ namespace Duel.Data
     {
         private readonly Entity userEntity;
         private readonly Point startingPosition;
-        private readonly Direction throwDirection;
         private readonly Entity entityToPull = null;
         private Entity lassoEntity;
         private readonly bool invalid;
         private Actor actor;
 
+        public Direction ThrowDirection { get; }
         public Point LassoLandingPosition { get; }
         public bool Valid => !this.invalid;
         public bool FoundGrapplable { get; }
         public bool FoundPullableEntity { get; }
         public bool WasBlocked { get; }
         public Point FailPoint { get; }
+        public bool IsReturning { get; private set; }
 
         public LassoProjectile(Entity userEntity, Direction throwDirection, LevelSolidProvider solidProvider)
         {
             this.userEntity = userEntity;
             this.startingPosition = this.userEntity.Position;
-            this.throwDirection = throwDirection;
+            this.ThrowDirection = throwDirection;
             LassoLandingPosition = this.startingPosition;
             FoundGrapplable = false;
 
@@ -86,7 +87,7 @@ namespace Duel.Data
 
         public ICoroutineAction PullEntity()
         {
-            this.entityToPull.JumpToPosition(this.startingPosition + this.throwDirection.ToPoint());
+            this.entityToPull.JumpToPosition(this.startingPosition + this.ThrowDirection.ToPoint());
             return new WaitUntil(this.entityToPull.BusySignal.IsFree);
         }
 
@@ -106,12 +107,17 @@ namespace Duel.Data
             this.lassoEntity = level.PutEntityAt(this.startingPosition, new EntityTemplate());
             this.lassoEntity.JumpToPosition(LassoLandingPosition, EaseFuncs.QuadraticEaseOut);
             this.actor = actorRoot.FindActor(this.lassoEntity);
+            if (!Sokoban.Headless)
+            {
+                new LassoRenderer(this.actor, this, actorRoot.FindActor(userEntity));
+            }
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
         }
 
         public ICoroutineAction ReturnLassoToPlayer()
         {
             this.lassoEntity.JumpToPosition(this.startingPosition, EaseFuncs.QuadraticEaseOut);
+            IsReturning = true;
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
         }
 

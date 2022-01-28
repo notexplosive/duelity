@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Duel.Components;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Duel.Data
@@ -57,6 +58,36 @@ namespace Duel.Data
             }
 
             return None;
+        }
+
+        public Vector2 ToGridCellSizedVector()
+        {
+            return ToPoint().ToVector2() * Grid.TileSize / 2;
+        }
+
+        public float Radians()
+        {
+            if (this == Up)
+            {
+                return MathF.PI;
+            }
+
+            if (this == Right)
+            {
+                return MathF.PI + MathF.PI / 2;
+            }
+
+            if (this == Down)
+            {
+                return 0;
+            }
+
+            if (this == Left)
+            {
+                return MathF.PI / 2;
+            }
+
+            return 0;
         }
 
         public Direction Previous
