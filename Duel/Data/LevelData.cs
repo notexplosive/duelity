@@ -42,7 +42,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Sheriff)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("sheriff"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-bennigan")
@@ -50,7 +50,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Knight)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("knight"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-miranda")
@@ -58,7 +58,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Renegade)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("renegade"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-steven")
@@ -66,7 +66,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Cowboy)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("cowboy"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else
