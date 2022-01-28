@@ -42,25 +42,37 @@ namespace Duel.Data
 
             foreach (var entity in Entities)
             {
-                if (entity.Template.NameInLibrary == "spawn-ernesto" && movementType == PlayerTag.Type.Sheriff)
+                if (entity.Template.NameInLibrary == "spawn-ernesto")
                 {
-                    currentLevel.PutEntityAt(entity.Position, sheriff);
-                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    if (movementType == PlayerTag.Type.Sheriff)
+                    {
+                        currentLevel.PutEntityAt(entity.Position, sheriff);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    }
                 }
-                else if (entity.Template.NameInLibrary == "spawn-bennigan" && movementType == PlayerTag.Type.Knight)
+                else if (entity.Template.NameInLibrary == "spawn-bennigan")
                 {
-                    currentLevel.PutEntityAt(entity.Position, knight);
-                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    if (movementType == PlayerTag.Type.Knight)
+                    {
+                        currentLevel.PutEntityAt(entity.Position, knight);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    }
                 }
-                else if (entity.Template.NameInLibrary == "spawn-miranda" && movementType == PlayerTag.Type.Renegade)
+                else if (entity.Template.NameInLibrary == "spawn-miranda")
                 {
-                    currentLevel.PutEntityAt(entity.Position, renegade);
-                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    if (movementType == PlayerTag.Type.Renegade)
+                    {
+                        currentLevel.PutEntityAt(entity.Position, renegade);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    }
                 }
-                else if (entity.Template.NameInLibrary == "spawn-steven" && movementType == PlayerTag.Type.Cowboy)
+                else if (entity.Template.NameInLibrary == "spawn-steven")
                 {
-                    currentLevel.PutEntityAt(entity.Position, cowboy);
-                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    if (movementType == PlayerTag.Type.Cowboy)
+                    {
+                        currentLevel.PutEntityAt(entity.Position, cowboy);
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                    }
                 }
                 else
                 {
