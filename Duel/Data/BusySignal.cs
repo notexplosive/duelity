@@ -86,6 +86,18 @@ namespace Duel.Data
             }
         }
 
+        public bool Exists(string name)
+        {
+            foreach (var busyFunction in this.busyFunctions)
+            {
+                if (busyFunction.Name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public BusySignal MakeChild()
         {
             return new BusySignal(this);

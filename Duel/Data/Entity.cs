@@ -36,7 +36,7 @@ namespace Duel.Data
         private readonly int uniqueId;
 
         public Point Position { get; private set; }
-        public Direction FacingDirection { get; private set; } = Direction.Down;
+        public Direction FacingDirection { get; set; } = Direction.Down;
         public SolidProvider SolidProvider { get; }
 
         public void Nudge(Direction direction)

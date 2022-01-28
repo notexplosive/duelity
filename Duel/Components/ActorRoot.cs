@@ -24,6 +24,7 @@ namespace Duel.Components
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
         private readonly HashSet<Entity> knownDestroyedActors = new HashSet<Entity>();
         private readonly List<PropInstance> props = new List<PropInstance>();
+        private IPlayerMovementComponent playerMovementComponent;
 
         public ActorRoot(Actor actor, Sokoban game) : base(actor)
         {
@@ -34,11 +35,17 @@ namespace Duel.Components
             this.level.EntityDestroyRequested += DestroyEntityActor;
             this.level.PropAdded += CreateProp;
             this.level.RemoveAllProps += RemoveAllProps;
+            this.level.RoomTransitionFinished += MovePlayerToNewRoom;
 
             if (!Sokoban.Headless)
             {
                 this.game.RoomChanged += MoveCameraToRoom;
             }
+        }
+
+        private void MovePlayerToNewRoom(Entity playerFromPreviousRoom, Entity playerFromCurrentRoom, Point newPlayerPosition)
+        {
+            this.playerMovementComponent.ResumeMoveFromOldInstance(playerFromPreviousRoom, newPlayerPosition);
         }
 
         private void MoveCameraToRoom(Room room)
@@ -177,7 +184,7 @@ namespace Duel.Components
                     if (playerTag.MovementType == PlayerTag.Type.Sheriff)
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
-                        new NormalKeyboardMovement(entityActor, entity);
+                        this.playerMovementComponent = new NormalKeyboardMovement(entityActor, entity);
                         new UseLasso(entityActor, entity, this.level, this);
 
                         if (!Sokoban.Headless)
@@ -191,7 +198,7 @@ namespace Duel.Components
                     if (playerTag.MovementType == PlayerTag.Type.Renegade)
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
-                        new NormalKeyboardMovement(entityActor, entity);
+                        this.playerMovementComponent = new NormalKeyboardMovement(entityActor, entity);
                         new UseGun(entityActor, entity, this.level);
 
                         if (!Sokoban.Headless)
@@ -205,7 +212,7 @@ namespace Duel.Components
                     if (playerTag.MovementType == PlayerTag.Type.Cowboy)
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
-                        new CowboyMovement(entityActor, entity, new LevelSolidProvider(this.level));
+                        this.playerMovementComponent = new CowboyMovement(entityActor, entity, new LevelSolidProvider(this.level));
 
                         if (!Sokoban.Headless)
                         {
@@ -216,7 +223,7 @@ namespace Duel.Components
                     if (playerTag.MovementType == PlayerTag.Type.Knight)
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
-                        new KnightMovement(entityActor, entity, new LevelSolidProvider(this.level));
+                        this.playerMovementComponent = new KnightMovement(entityActor, entity, new LevelSolidProvider(this.level));
                         new KnightSwing(entityActor, entity);
 
                         if (!Sokoban.Headless)

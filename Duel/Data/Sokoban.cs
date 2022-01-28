@@ -70,6 +70,16 @@ namespace Duel.Data
         {
             if (this.previouslyLoadedData != null)
             {
+                Entity previousPlayer = null;
+                foreach (var entity in CurrentLevel.AllEntities())
+                {
+                    if (entity.Tags.HasTag<PlayerTag>())
+                    {
+                        previousPlayer = entity;
+                        break;
+                    }
+                }
+
                 CurrentLevel.ClearAllTilesAndEntities();
 
                 // There won't be any player spawners to activate
@@ -77,7 +87,8 @@ namespace Duel.Data
 
                 var playerTemplate = TemplateLibrary.GetPlayerTemplate(this.previouslyLoadedData.Item2);
                 var player = CurrentLevel.PutEntityAt(playerPreviousPosition, playerTemplate);
-                player.JumpToPosition(playerPosition);
+
+                CurrentLevel.OnPlayerRoomTransition(previousPlayer, player, this.previouslyLoadedData.Item2, playerPosition);
             }
         }
 

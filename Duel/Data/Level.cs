@@ -18,6 +18,7 @@ namespace Duel.Data
         public event Action NotableEventHappened;
         public event Action RemoveAllProps;
         public event Action<Point, Point> RoomTransitionAttempted;
+        public event Action<Entity, Entity, Point> RoomTransitionFinished;
 
         private readonly List<Entity> entities = new List<Entity>();
 
@@ -99,6 +100,11 @@ namespace Duel.Data
                     }
                 }
             }
+        }
+
+        internal void OnPlayerRoomTransition(Entity playerFromPreviousRoom, Entity playerFromThisRoom, PlayerTag.Type moveType, Point playerPosition)
+        {
+            RoomTransitionFinished?.Invoke(playerFromPreviousRoom, playerFromThisRoom, playerPosition);
         }
 
         public void ClearTileAt(Point position)

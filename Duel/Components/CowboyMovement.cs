@@ -2,12 +2,13 @@
 using Machina.Components;
 using Machina.Data;
 using Machina.Engine;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
 namespace Duel.Components
 {
-    public class CowboyMovement : BaseComponent
+    public class CowboyMovement : BaseComponent, IPlayerMovementComponent
     {
         private readonly BufferedKeyboardListener keyboard;
         private readonly Entity entity;
@@ -48,6 +49,7 @@ namespace Duel.Components
                 if (chargeHit.StandingPosition != this.entity.Position)
                 {
                     this.entity.ChargeToPosition(chargeHit.StandingPosition, chargeHit.Direction);
+                    yield return new WaitUntil(() => this.entity.BusySignal.Exists("ChargeTween"));
                     yield return new WaitUntil(this.entity.BusySignal.GetSpecific("ChargeTween").IsFree);
                 }
                 this.solidProvider.ApplyHitAt(chargeHit.RammedPosition, chargeHit.Direction);
@@ -57,6 +59,11 @@ namespace Duel.Components
         public void Charge(Direction direction)
         {
             Move(direction)(); // exec a Move (only useful for tests)
+        }
+
+        public void ResumeMoveFromOldInstance(Entity playerFromPreviousRoom, Point newPlayerPosition)
+        {
+            Move(playerFromPreviousRoom.FacingDirection)();
         }
     }
 }

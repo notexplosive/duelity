@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Duel.Components
 {
-    public class NormalKeyboardMovement : BaseComponent
+    public class NormalKeyboardMovement : BaseComponent, IPlayerMovementComponent
     {
         private readonly Entity entity;
         private readonly BufferedKeyboardListener keyboard;
@@ -26,6 +26,12 @@ namespace Duel.Components
             this.keyboard.RightPressed += Move(Direction.Right);
             this.keyboard.DownPressed += Move(Direction.Down);
             this.keyboard.UpPressed += Move(Direction.Up);
+        }
+
+        public void ResumeMoveFromOldInstance(Entity playerFromPreviousRoom, Point newPlayerPosition)
+        {
+            this.entity.FacingDirection = playerFromPreviousRoom.FacingDirection;
+            Move(playerFromPreviousRoom.FacingDirection)();
         }
 
         private Action Move(Direction direction)

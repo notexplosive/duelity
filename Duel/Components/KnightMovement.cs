@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Duel.Components
 {
-    public class KnightMovement : BaseComponent
+    public class KnightMovement : BaseComponent, IPlayerMovementComponent
     {
         private readonly SolidProvider solidProvider;
         private readonly Entity entity;
@@ -78,6 +78,11 @@ namespace Duel.Components
                     }
                 }
             };
+        }
+
+        public void ResumeMoveFromOldInstance(Entity playerFromPreviousRoom, Point newPlayerPosition)
+        {
+            this.entity.JumpToPosition(newPlayerPosition);
         }
     }
 }
