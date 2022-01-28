@@ -64,8 +64,6 @@ namespace Duel.Data
     {
         public SignalColor Color { get; }
 
-        private bool isOn;
-
         public bool IsOnBump { get; private set; }
         public bool IsOnHit { get; private set; }
         public bool IsOnGrapple { get; private set; }
@@ -73,7 +71,6 @@ namespace Duel.Data
         public ToggleSignal(SignalColor color)
         {
             Color = color;
-            isOn = false;
         }
 
         public ToggleSignal OnBump()
@@ -92,16 +89,6 @@ namespace Duel.Data
         {
             IsOnGrapple = true;
             return this;
-        }
-
-        public void Toggle()
-        {
-            isOn = !isOn;
-        }
-
-        public bool IsOn()
-        {
-            return isOn;
         }
     }
 

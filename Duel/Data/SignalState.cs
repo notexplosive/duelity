@@ -22,5 +22,13 @@ namespace Duel.Data
         {
             return this.onSignals.Contains(signalColor);
         }
+
+        public void Toggle(SignalColor signalColor)
+        {
+            if (IsOn(signalColor))
+                TurnOff(signalColor);
+            else
+                TurnOn(signalColor);
+        }
     }
 }

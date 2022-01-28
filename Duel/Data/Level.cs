@@ -25,6 +25,7 @@ namespace Duel.Data
         private readonly SignalState signalOverrideLayer = new SignalState();
 
         public SignalState SignalState { get; internal set; } = new SignalState(); // this should be on a per-screen basis
+        public SignalState LeversState { get; internal set; } = new SignalState();
 
         public Level(Corners corners)
         {
@@ -103,6 +104,7 @@ namespace Duel.Data
         public void OnPlayerRoomTransition(Entity playerFromPreviousRoom, Entity playerFromThisRoom, PlayerTag.Type moveType, Point playerPosition)
         {
             RoomTransitionFinished?.Invoke(playerFromPreviousRoom, playerFromThisRoom, playerPosition);
+            LeversState = new SignalState();
             UpdateSignalState();
         }
 
@@ -309,7 +311,7 @@ namespace Duel.Data
 
                 if (entity.Tags.TryGetTag(out ToggleSignal toggleSignal))
                 {
-                    if (toggleSignal.IsOn())
+                    if (LeversState.IsOn(toggleSignal.Color))
                     {
                         leverIsOn.Add(toggleSignal.Color);
                     }

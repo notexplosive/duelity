@@ -34,7 +34,7 @@ namespace Duel.Data
                 {
                     if (toggleSignal.IsOnBump)
                     {
-                        toggleSignal.Toggle();
+                        level.LeversState.Toggle(toggleSignal.Color);
                         this.level.UpdateSignalState();
                     }
                 }
@@ -111,7 +111,7 @@ namespace Duel.Data
                 {
                     if (toggleSignal.IsOnGrapple)
                     {
-                        toggleSignal.Toggle();
+                        level.LeversState.Toggle(toggleSignal.Color);
                         this.level.UpdateSignalState();
                     }
                 }
@@ -170,7 +170,7 @@ namespace Duel.Data
                 {
                     if (toggleSignal.IsOnHit)
                     {
-                        toggleSignal.Toggle();
+                        level.LeversState.Toggle(toggleSignal.Color);
                         this.level.UpdateSignalState();
                     }
                 }
