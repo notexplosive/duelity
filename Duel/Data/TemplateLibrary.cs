@@ -26,6 +26,23 @@ namespace Duel.Data
             throw new Exception($"Template not found: {templateName}");
         }
 
+        public static TemplateLibrary BuildWithPlayers()
+        {
+            var library = Build();
+
+            var sheriff = new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff));
+            var renegade = new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade));
+            var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
+            var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
+
+            library.AddTemplate("sheriff", sheriff);
+            library.AddTemplate("renegade", renegade);
+            library.AddTemplate("cowboy", cowboy);
+            library.AddTemplate("knight", knight);
+
+            return library;
+        }
+
         public EntityTemplate GetEntityTemplate(string templateName)
         {
             var template = GetTemplate(templateName);
