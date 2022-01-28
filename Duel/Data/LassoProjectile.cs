@@ -35,7 +35,7 @@ namespace Duel.Data
             LassoLandingPosition = this.startingPosition;
             FoundGrapplable = false;
 
-            if (solidProvider.BlocksBulletsAt(this.startingPosition + throwDirection.ToPoint()))
+            if (solidProvider.BlocksBulletsAt(this.startingPosition, this.startingPosition + throwDirection.ToPoint()))
             {
                 this.invalid = true;
             }
@@ -54,7 +54,7 @@ namespace Duel.Data
                         FoundGrapplable = true;
                     }
 
-                    if (solidProvider.BlocksBulletsAt(LassoLandingPosition))
+                    if (solidProvider.BlocksBulletsAt(this.userEntity.Position, LassoLandingPosition))
                     {
                         WasBlocked = true;
                     }

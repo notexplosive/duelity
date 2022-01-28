@@ -54,9 +54,9 @@ namespace Duel.Data
             return false;
         }
 
-        public bool BlocksBulletsAt(Point position)
+        public bool BlocksBulletsAt(Point shooterPosition, Point bulletPosition)
         {
-            return HasTagAt<BlockProjectileTag>(position) || IsClosedDoorAt(position);
+            return HasTagAt<BlockProjectileTag>(bulletPosition) || IsClosedDoorAt(bulletPosition) || IsOutOfBoundsOfCurrentRoomOrLevel(shooterPosition, bulletPosition);
         }
 
         public bool TryGetTagFromTileAt<T>(Point position, out T foundTileTag) where T : Tag
@@ -121,6 +121,11 @@ namespace Duel.Data
         public bool IsOutOfBounds(Point hitScanPosition)
         {
             return this.level.IsOutOfBounds(hitScanPosition);
+        }
+
+        public bool IsOutOfBoundsOfCurrentRoomOrLevel(Point casterPosition, Point hitScanPosition)
+        {
+            return this.level.IsOutOfBounds(hitScanPosition) || Room.LevelPosToRoomPos(hitScanPosition) != Room.LevelPosToRoomPos(casterPosition);
         }
 
         public override bool IsNotWalkableAt(Entity walker, Point position)

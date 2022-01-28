@@ -13,7 +13,7 @@ namespace Duel.Data
             StartPosition = position;
             var hitScanPosition = position;
 
-            while (!solidProvider.IsOutOfBounds(hitScanPosition))
+            while (!solidProvider.IsOutOfBoundsOfCurrentRoomOrLevel(position, hitScanPosition))
             {
                 hitScanPosition += shootDirection.ToPoint();
 
@@ -32,7 +32,7 @@ namespace Duel.Data
                     }
                 }
 
-                if (solidProvider.BlocksBulletsAt(hitScanPosition))
+                if (solidProvider.BlocksBulletsAt(position, hitScanPosition))
                 {
                     HitAtLeastOneThing = true;
                     WasBlocked = true;
