@@ -1,4 +1,5 @@
-﻿using Duel.Components;
+﻿using Duel;
+using Duel.Components;
 using Duel.Data;
 using DuelEditor.Components;
 using Machina.Components;
@@ -18,15 +19,16 @@ namespace DuelEditor.Data
         private readonly Sokoban game;
         private readonly TemplateSelection templateSelection;
         private TooltipText tooltip;
+        private EditorSaveLoad saver;
 
         public event Action<string> LevelLoaded;
 
-        public EditorCore(Scene scene, Sokoban game)
+        public EditorCore(Scene editorScene, Sokoban game)
         {
             this.game = game;
             this.templateSelection = new TemplateSelection();
             var viewportPixels = new Point((Room.Size.X + 2) * Grid.TileSize, (Room.Size.Y + 2) * Grid.TileSize);
-            var layout = LayoutNode.HorizontalParent("root", LayoutSize.Pixels(scene.camera.UnscaledViewportSize), LayoutStyle.Empty,
+            var layout = LayoutNode.HorizontalParent("root", LayoutSize.Pixels(editorScene.camera.UnscaledViewportSize), LayoutStyle.Empty,
                 LayoutNode.VerticalParent("left-sidebar", LayoutSize.StretchedBoth(), LayoutStyle.Empty),
                 LayoutNode.VerticalParent("editor", LayoutSize.StretchedVertically(viewportPixels.X), LayoutStyle.Empty,
                     LayoutNode.Leaf("tile-editor", LayoutSize.Pixels(viewportPixels)),
@@ -36,14 +38,14 @@ namespace DuelEditor.Data
             );
 
 
-            var layoutActors = new LayoutActors(scene, layout);
+            var layoutActors = new LayoutActors(editorScene, layout);
 
             var bakedLayout = layout.Bake();
 
-            BecomeInfoBox(layoutActors.GetActor("bottom-section"), bakedLayout.GetNode("bottom-section"), scene);
-            BecomeLevelSelector(layoutActors.GetActor("right-sidebar"), bakedLayout.GetNode("right-sidebar"), scene);
+            BecomeInfoBox(layoutActors.GetActor("bottom-section"), bakedLayout.GetNode("bottom-section"), editorScene);
+            BecomeLevelSelector(layoutActors.GetActor("right-sidebar"), bakedLayout.GetNode("right-sidebar"), editorScene);
 
-            BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), bakedLayout.GetNode("left-sidebar"), scene, this.tooltip);
+            BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), bakedLayout.GetNode("left-sidebar"), editorScene, this.tooltip);
             BecomeTileEditor(layoutActors.GetActor("tile-editor"), this.tooltip);
 
             game.ActorRoot.PropCreated += InterceptProp;
@@ -97,6 +99,26 @@ namespace DuelEditor.Data
             {
                 var buttonActor = layoutActors.GetActor(playButtonNode.Name.Text);
                 var clickable = MakeButton(buttonActor, $"Play\n{(PlayerTag.Type)playerIndex}");
+                clickable.OnClick += (mb) =>
+                {
+                    if (mb == MouseButton.Left)
+                    {
+                        var builder = new WindowBuilder(new Point(960, 540))
+                            .OnLaunch((win) =>
+                            {
+                                var game = DuelGameCartridge.LoadGame(win.PrimaryScene);
+                                game.LoadLevel(this.saver.GetCurrentLevel());
+                                win.rootTransform.Depth -= 500;
+                                // HaltControl();
+                            })
+                            .DestroyViaCloseButton()
+                            .Title("gameing")
+                        //.OnClose((win) => { RestoreControl(); })
+                        ;
+
+                        builder.Build(scene, MachinaClient.DefaultStyle);
+                    }
+                };
                 playerIndex++;
             }
 
@@ -119,7 +141,7 @@ namespace DuelEditor.Data
                 levelIndex++;
             }
 
-            new EditorSaveLoad(levelSelectorActor, game, this);
+            this.saver = new EditorSaveLoad(levelSelectorActor, game, this);
         }
 
         private Clickable MakeButton(Actor buttonActor, string levelName)

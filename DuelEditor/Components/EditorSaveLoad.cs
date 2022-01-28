@@ -67,5 +67,29 @@ namespace DuelEditor.Components
 
             MachinaClient.FileSystem.WriteStringToAppData(builder.ToString(), fileName, false);
         }
+
+        public LevelData GetCurrentLevel()
+        {
+            var data = new LevelData(this.currentLevelName ?? "nameless");
+            foreach (var instance in this.game.ActorRoot.GetAllInstances())
+            {
+                switch (instance.TemplateClassName)
+                {
+                    case "entt":
+                        data.AddEntity(instance.TemplateName, LevelData.ConvertPositionStringToPoint(instance.CoordinateString));
+                        break;
+                    case "tile":
+                        data.AddTile(instance.TemplateName, LevelData.ConvertPositionStringToPoint(instance.CoordinateString));
+                        break;
+                    case "prop":
+                        data.AddProp(instance.TemplateName, LevelData.ConvertPositionStringToPoint(instance.CoordinateString));
+                        break;
+                    default:
+                        MachinaClient.Print($"skipped {instance.TemplateClassName} {instance.TemplateName}");
+                        break;
+                }
+            }
+            return data;
+        }
     }
 }

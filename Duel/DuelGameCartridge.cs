@@ -22,6 +22,15 @@ namespace Duel
             SceneLayers.BackgroundColor = Color.Black;
 
             var gameScene = SceneLayers.AddNewScene();
+            var game = LoadGame(gameScene);
+
+            game.LoadLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_1"));
+
+            PostLoad(game);
+        }
+
+        public static Sokoban LoadGame(Scene gameScene)
+        {
             var game = new Sokoban(gameScene);
 
             // player characters
@@ -32,11 +41,7 @@ namespace Duel
 
             var templates = TemplateLibrary.Build();
 
-            game.CurrentLevel.PutEntityAt(new Point(3, 3), sheriff);
-
-            game.CurrentLevel.PutPropAt(new Vector2(200, 200), templates.GetPropTemplate("large_cactus"));
-
-            PostLoad(game);
+            return game;
         }
 
         protected virtual void PostLoad(Sokoban game)
