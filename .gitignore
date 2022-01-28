@@ -371,3 +371,4 @@ launchSettings.json
 *.received.*
 .DS_Store
 TEMPLEVEL*
+*.zip
