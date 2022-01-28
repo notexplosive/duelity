@@ -1,4 +1,5 @@
-﻿using Machina.Engine;
+﻿using Machina.Data;
+using Machina.Engine;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.IO;
 
 namespace Duel.Data
 {
-    public class LevelData
+    public class LevelData : IAsset
     {
         public string Name { get; }
         public TemplateLibrary TemplateLibrary { get; }
@@ -24,6 +25,24 @@ namespace Duel.Data
         {
             var split = xyString.Split(',');
             return new Point(int.Parse(split[0]), int.Parse(split[1]));
+        }
+
+        public void Load(Level currentLevel)
+        {
+            foreach (var tile in Tiles)
+            {
+                currentLevel.PutTileAt(tile.Position, tile.Template);
+            }
+
+            foreach (var entity in Entities)
+            {
+                currentLevel.PutTileAt(entity.Position, entity.Template);
+            }
+
+            foreach (var prop in Props)
+            {
+                currentLevel.PutPropAt(prop.Position.ToVector2(), prop.Template);
+            }
         }
 
         public void AddTile(string templateName, Point position)
@@ -72,6 +91,10 @@ namespace Duel.Data
             }
 
             return level;
+        }
+
+        public void OnCleanup()
+        {
         }
     }
 }

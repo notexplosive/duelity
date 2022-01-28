@@ -5,6 +5,7 @@ using Machina.Components;
 using Machina.Data;
 using Machina.Data.Layout;
 using Machina.Engine;
+using Machina.Engine.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Text;
@@ -37,12 +38,58 @@ namespace DuelEditor.Data
             var bakedLayout = layout.Bake();
 
             BecomeInfoBox(layoutActors.GetActor("bottom-section"), bakedLayout.GetNode("bottom-section"), scene);
-            BecomeBasicPane(layoutActors.GetActor("right-sidebar"));
+            BecomeLevelSelector(layoutActors.GetActor("right-sidebar"), bakedLayout.GetNode("right-sidebar"), scene);
 
             BecomeTileSelectorPane(layoutActors.GetActor("left-sidebar"), bakedLayout.GetNode("left-sidebar"), scene, this.tooltip);
             BecomeTileEditor(layoutActors.GetActor("tile-editor"), this.tooltip);
 
             game.ActorRoot.PropCreated += InterceptProp;
+        }
+
+        private void BecomeLevelSelector(Actor levelSelectorActor, NodePositionAndSize node, Scene scene)
+        {
+            BecomeBasicPane(levelSelectorActor);
+
+            var levelButtonNodes = new List<LayoutNode>();
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                levelButtonNodes.Add(LayoutNode.Leaf($"load-level-{i}", LayoutSize.StretchedHorizontally(40)));
+            }
+
+            var layout = LayoutNode.VerticalParent("root", LayoutSize.Pixels(node.Size), new LayoutStyle(new Point(10, 32)),
+                levelButtonNodes.ToArray()
+            );
+
+            var layoutActors = new LayoutActors(scene, layout);
+            var root = layoutActors.GetActor("root");
+            root.transform.SetParent(levelSelectorActor);
+            root.transform.LocalPosition = Vector2.Zero;
+            root.transform.LocalDepth = -10;
+
+            var levelIndex = 0;
+            foreach (var levelName in Sokoban.LevelNames)
+            {
+                var buttonActor = layoutActors.GetActor(levelButtonNodes[levelIndex].Name.Text);
+
+                new NinepatchRenderer(buttonActor, MachinaClient.DefaultStyle.buttonDefault);
+                new Hoverable(buttonActor);
+                var clickable = new Clickable(buttonActor);
+                new ButtonNinepatchHandler(buttonActor, MachinaClient.DefaultStyle.buttonHover, MachinaClient.DefaultStyle.buttonPress);
+                new BoundedTextRenderer(buttonActor, levelName, MachinaClient.DefaultStyle.uiElementFont, Color.White, HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Elide, depthOffset: -10);
+
+                var levelData = MachinaClient.Assets.GetMachinaAsset<LevelData>(levelName);
+                clickable.OnClick += (mb) =>
+                {
+                    if (mb == MouseButton.Left)
+                    {
+                        this.game.LoadLevel(levelData);
+                    }
+                };
+
+                levelIndex++;
+            }
         }
 
         private void InterceptProp(Actor propActor)

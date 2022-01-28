@@ -1,5 +1,6 @@
 ﻿using Machina.Engine;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Duel.Data
 {
@@ -32,5 +33,10 @@ namespace Duel.Data
         }
 
         protected override TemplateClass TemplateClass => TemplateClass.Prop;
+
+        public void Destroy()
+        {
+            this.actor.Destroy();
+        }
     }
 }

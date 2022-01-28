@@ -15,6 +15,7 @@ namespace Duel.Data
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
         public event Action NotableEventHappened;
+        public event Action RemoveAllProps;
 
         private readonly List<Entity> entities = new List<Entity>();
 
@@ -28,6 +29,19 @@ namespace Duel.Data
             PutTileAt(corners.TopLeft, new TileTemplate());
             PutTileAt(corners.BottomRight, new TileTemplate());
             NotableEventHappened += UpdateSignalState;
+        }
+
+        public void ClearAllTilesAndEntities()
+        {
+            this.tileMap.Clear();
+
+            foreach (var entity in this.entities)
+            {
+                RequestDestroyEntity(entity, DestroyType.Vanish);
+            }
+            this.entities.Clear();
+
+            RemoveAllProps?.Invoke();
         }
 
         public Level() : this(new Corners(Point.Zero, Point.Zero))

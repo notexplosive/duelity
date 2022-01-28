@@ -45,6 +45,11 @@ namespace Duel
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
         {
+            foreach (var levelName in Sokoban.LevelNames)
+            {
+                loader.AddMachinaAssetCallback(levelName, () => LevelData.LoadLevelDataFromDisk(levelName));
+            }
+
             loader.AddMachinaAssetCallback("characters-sheet",
                 () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("tiles-sheet", () => new GridBasedSpriteSheet("tiles", new Point(64)));

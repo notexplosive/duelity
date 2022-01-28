@@ -30,6 +30,16 @@ namespace Duel.Components
             this.level.EntityAdded += CreateEntityActor;
             this.level.EntityDestroyRequested += DestroyEntityActor;
             this.level.PropAdded += CreateProp;
+            this.level.RemoveAllProps += RemoveAllProps;
+        }
+
+        private void RemoveAllProps()
+        {
+            foreach (var prop in this.props)
+            {
+                prop.Destroy();
+            }
+            this.props.Clear();
         }
 
         private void CreateProp(Vector2 worldPosition, PropTemplate propTemplate)

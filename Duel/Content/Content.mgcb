@@ -172,3 +172,5 @@
 #begin levels/level_1.bunk
 /copy:levels/level_1.bunk
 
+#begin levels/level_2.bunk
+/copy:levels/level_2.bunk

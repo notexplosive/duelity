@@ -22,14 +22,28 @@ namespace Duel.Data
         // Set to true for tests (ughhhhhhhhhhhhhhhhh)
         public static bool Headless { get; set; }
         public TileGridRenderer TileRenderer { get; private set; }
+        public static IEnumerable<string> LevelNames
+        {
+            get
+            {
+                yield return "level_1";
+                yield return "level_2";
+            }
+        }
 
         public Sokoban(Scene scene)
         {
             Scene = scene;
-            ClearEverything();
+            StartFresh();
         }
 
-        public void ClearEverything()
+        public void LoadLevel(LevelData levelData)
+        {
+            CurrentLevel.ClearAllTilesAndEntities();
+            levelData.Load(CurrentLevel);
+        }
+
+        public void StartFresh()
         {
             this.rootActor?.Delete();
 
