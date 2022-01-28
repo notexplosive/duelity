@@ -25,7 +25,7 @@ namespace Duel.Data
         {
             get
             {
-                var pos = this.actor.transform.Position;
+                var pos = this.actor.transform.LocalPosition;
                 pos.Floor();
                 return $"{pos.X},{pos.Y}";
             }

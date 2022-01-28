@@ -11,7 +11,7 @@ namespace DuelEditor
         [STAThread]
         static void Main(string[] args)
         {
-            MachinaBootstrap.Run(new GameSpecification("Duel-editor", args, new GameSettings(new Point(1600, 900))), new DuelEditorCartridge(new Point(1600, 900)), ".");
+            MachinaBootstrap.Run(new GameSpecification("Duel-editor", args, new GameSettings(new Point(1600, 900))), new DuelEditorCartridge(new Point(1600, 900)), "../Duel/Duel");
         }
     }
 }

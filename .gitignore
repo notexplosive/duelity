@@ -370,3 +370,4 @@ launchSettings.json
 # ApprovalTests
 *.received.*
 .DS_Store
+TEMPLEVEL*

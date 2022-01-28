@@ -22,16 +22,6 @@ namespace DuelEditor.Components
             this.game = game;
         }
 
-        public override void Update(float dt)
-        {
-
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
-
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
         {
             if (key == Keys.S && state == ButtonState.Pressed && modifiers.Control)
@@ -43,7 +33,7 @@ namespace DuelEditor.Components
         public void Save()
         {
             var fileTime = DateTime.Now.ToFileTimeUtc();
-            var fileName = $"{fileTime}.bunk";
+            var fileName = $"levels/TEMPLEVEL{fileTime}.bunk";
 
             var builder = new StringBuilder();
 
@@ -58,7 +48,7 @@ namespace DuelEditor.Components
                 builder.Append('\n');
             }
 
-            MachinaClient.FileSystem.WriteStringToAppData(builder.ToString(), fileName, true);
+            MachinaClient.FileSystem.WriteStringToAppData(builder.ToString(), fileName, false);
         }
     }
 }

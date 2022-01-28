@@ -3,7 +3,7 @@
     public class TileTemplate : ITemplate
     {
         public TagCollection Tags { get; } = new TagCollection();
-        public string NameInLibrary { get; set; }
+        public string NameInLibrary { get; set; } = "empty_tile";
 
         public TileTemplate(params Tag[] tags)
         {
