@@ -19,29 +19,39 @@ namespace Duel.Components
         private readonly EntityRenderInfo renderInfo;
         private readonly Direction throwDirection;
         private readonly LassoProjectile lasso;
+        private readonly ActorRoot actorRoot;
         private readonly EntityRenderInfo casterRenderInfo;
         private float timer;
 
-        public LassoRenderer(Actor actor, LassoProjectile lasso, Actor caster) : base(actor)
+        public LassoRenderer(Actor actor, LassoProjectile lasso, Actor caster, ActorRoot actorRoot) : base(actor)
         {
             this.spriteSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("characters-sheet");
             this.renderInfo = RequireComponent<EntityRenderInfo>();
             this.renderInfo.DisableDebugGraphic();
             this.throwDirection = lasso.ThrowDirection;
             this.lasso = lasso;
+            this.actorRoot = actorRoot;
             this.casterRenderInfo = caster.GetComponent<EntityRenderInfo>();
             this.timer = 0;
         }
 
         public override void Update(float dt)
         {
-            if (!this.lasso.IsReturning)
+            if (!this.lasso.RopedLocation.HasValue)
             {
-                this.timer += dt;
+
+                if (!this.lasso.IsReturning)
+                {
+                    this.timer += dt;
+                }
+                else
+                {
+                    this.timer -= dt;
+                }
             }
             else
             {
-                this.timer -= dt;
+                this.timer -= dt * 2;
             }
         }
 
@@ -51,12 +61,33 @@ namespace Duel.Components
             var easedClampedTimer = EaseFuncs.CubicEaseIn(clampedTimer);
             this.spriteSheet.DrawFrame(spriteBatch, 5, this.renderInfo.RenderPosition, easedClampedTimer, this.throwDirection.Radians(), XYBool.False, transform.Depth - 20, Color.White);
 
-            if (clampedTimer > 0.25)
+            if (!this.lasso.RopedLocation.HasValue)
             {
-                var lineStart = this.casterRenderInfo.RenderPosition + this.throwDirection.ToGridCellSizedVector();
-                var lineEnd = this.renderInfo.RenderPosition - this.throwDirection.ToGridCellSizedVector() * easedClampedTimer;
-                spriteBatch.DrawLine(lineStart, lineEnd, Color.Black, 6, transform.Depth - 20);
-                spriteBatch.DrawLine(lineStart, lineEnd, new Color(102, 38, 58), 3, transform.Depth - 25);
+                if (clampedTimer > 0.25)
+                {
+                    var lineStart = this.casterRenderInfo.RenderPosition + this.throwDirection.ToGridCellSizedVector();
+                    var lineEnd = this.renderInfo.RenderPosition - this.throwDirection.ToGridCellSizedVector() * easedClampedTimer;
+                    spriteBatch.DrawLine(lineStart, lineEnd, Color.Black, 6, transform.Depth - 20);
+                    spriteBatch.DrawLine(lineStart, lineEnd, new Color(102, 38, 58), 3, transform.Depth - 25);
+                }
+            }
+            else
+            {
+                if (this.lasso.RopedEntity != null)
+                {
+                    var targetActor = this.actorRoot.FindActor(this.lasso.RopedEntity).GetComponent<EntityRenderInfo>();
+                    var lineStart = this.casterRenderInfo.RenderPosition + this.throwDirection.ToGridCellSizedVector();
+                    var lineEnd = targetActor.RenderPosition;
+                    spriteBatch.DrawLine(lineStart, lineEnd, Color.Black, 6, transform.Depth - 20);
+                    spriteBatch.DrawLine(lineStart, lineEnd, new Color(102, 38, 58), 3, transform.Depth - 25);
+                }
+                else
+                {
+                    var lineStart = this.casterRenderInfo.RenderPosition + this.throwDirection.ToGridCellSizedVector();
+                    var lineEnd = this.renderInfo.RenderPosition;
+                    spriteBatch.DrawLine(lineStart, lineEnd, Color.Black, 6, transform.Depth - 20);
+                    spriteBatch.DrawLine(lineStart, lineEnd, new Color(102, 38, 58), 3, transform.Depth - 25);
+                }
             }
         }
     }

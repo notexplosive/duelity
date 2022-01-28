@@ -24,6 +24,8 @@ namespace Duel.Data
         public bool WasBlocked { get; }
         public Point FailPoint { get; }
         public bool IsReturning { get; private set; }
+        public Entity RopedEntity { get; private set; }
+        public Point? RopedLocation { get; private set; }
 
         public LassoProjectile(Entity userEntity, Direction throwDirection, LevelSolidProvider solidProvider)
         {
@@ -109,7 +111,7 @@ namespace Duel.Data
             this.actor = actorRoot.FindActor(this.lassoEntity);
             if (!Sokoban.Headless)
             {
-                new LassoRenderer(this.actor, this, actorRoot.FindActor(userEntity));
+                new LassoRenderer(this.actor, this, actorRoot.FindActor(userEntity), actorRoot);
             }
             return new WaitUntil(this.lassoEntity.BusySignal.IsFree);
         }
@@ -126,7 +128,9 @@ namespace Duel.Data
             if (FoundPullableEntity)
             {
                 this.entityToPull.GrabWithLasso();
+                RopedEntity = this.entityToPull;
             }
+            RopedLocation = LassoLandingPosition;
         }
 
         public void UnwrapGrappledEntity()

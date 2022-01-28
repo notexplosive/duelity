@@ -57,7 +57,6 @@ namespace Duel.Components
                 if (lasso.FoundGrapplable)
                 {
                     lasso.WrapGrappledEntity();
-                    lasso.DestroyLassoActor();
 
                     if (lasso.FoundPullableEntity)
                     {
@@ -74,6 +73,7 @@ namespace Duel.Components
                     }
 
                     lasso.UnwrapGrappledEntity();
+                    lasso.DestroyLassoActor();
                 }
                 else
                 {
