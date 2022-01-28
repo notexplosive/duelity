@@ -47,6 +47,15 @@ namespace DuelEditor.Data
             BecomeTileEditor(layoutActors.GetActor("tile-editor"), this.tooltip);
 
             game.ActorRoot.PropCreated += InterceptProp;
+            game.ActorRoot.EntityCreated += InterceptEntity;
+        }
+
+        private void InterceptEntity(Actor entityActor, Entity entity)
+        {
+            if (entity.Tags.TryGetTag(out PlayerSpawn playerSpawn))
+            {
+                new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.FromPlayerType(playerSpawn.Player));
+            }
         }
 
         private void BecomeLevelSelector(Actor levelSelectorActor, NodePositionAndSize node, Scene scene)

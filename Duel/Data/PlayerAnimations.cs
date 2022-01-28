@@ -23,6 +23,23 @@ namespace Duel.Data
         public static readonly PlayerAnimations Ernesto = new PlayerAnimations("ernesto-idle", "ernesto-move", "ernesto-move");
         public static readonly PlayerAnimations Miranda = new PlayerAnimations("miranda-idle", "miranda-move", "miranda-move");
         public static readonly PlayerAnimations Steven = new PlayerAnimations("steven-idle", "steven-move", "steven-move");
-        // There is no Bennigan PlayerAnimation because he's different
+        public static readonly PlayerAnimations Bennigan = new PlayerAnimations("bennigan-idle", "bennigan-hover", "bennigan-land"); // only used in the editor, and even then just idle
+
+        public static PlayerAnimations FromPlayerType(PlayerTag.Type type)
+        {
+            switch (type)
+            {
+                case PlayerTag.Type.Sheriff:
+                    return Ernesto;
+                case PlayerTag.Type.Renegade:
+                    return Miranda;
+                case PlayerTag.Type.Cowboy:
+                    return Steven;
+                case PlayerTag.Type.Knight:
+                    return Bennigan;
+            }
+
+            throw new Exception("pppptthtttttpppppptththhhhhh");
+        }
     }
 }

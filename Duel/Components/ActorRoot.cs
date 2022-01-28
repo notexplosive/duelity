@@ -16,6 +16,7 @@ namespace Duel.Components
     public class ActorRoot : BaseComponent
     {
         public event Action<Actor> PropCreated;
+        public event Action<Actor, Entity> EntityCreated;
 
         private readonly Grid grid;
         private readonly Level level;
@@ -99,6 +100,8 @@ namespace Duel.Components
             new MovementRenderer(entityActor, entity);
 
             ApplyTags(entity, entityActor);
+
+            EntityCreated?.Invoke(entityActor, entity);
         }
 
         private void ApplyTags(Entity entity, Actor entityActor)
