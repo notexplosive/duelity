@@ -70,7 +70,7 @@ namespace DuelEditor.Components
 
         public LevelData GetCurrentLevel()
         {
-            return this.game.BuildData(this.currentLevelName ?? "nameless");
+            return this.game.BuildDataFromCurrentLevel(this.currentLevelName ?? "nameless");
         }
     }
 }

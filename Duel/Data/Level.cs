@@ -17,7 +17,7 @@ namespace Duel.Data
         public event DestroyEvent EntityDestroyRequested;
         public event Action NotableEventHappened;
         public event Action RemoveAllProps;
-        public event Action<Point> RoomTransitionAttempted;
+        public event Action<Point, Point> RoomTransitionAttempted;
 
         private readonly List<Entity> entities = new List<Entity>();
 
@@ -220,14 +220,13 @@ namespace Duel.Data
         private void EntityJustSteppedOn(Entity stepper, Point position)
         {
             FillWaterIfApplicable(stepper, position);
-            ChangeRoomsIfApplicable(stepper, position);
         }
 
-        private void ChangeRoomsIfApplicable(Entity stepper, Point position)
+        private void ChangeRoomsIfApplicable(Entity stepper, Point previousPosition, Point position)
         {
             if (stepper.Tags.HasTag<PlayerTag>())
             {
-                RoomTransitionAttempted?.Invoke(position);
+                RoomTransitionAttempted?.Invoke(previousPosition, position);
             }
         }
 
@@ -280,6 +279,7 @@ namespace Duel.Data
             {
                 EntityJustSteppedOff(previousPosition);
                 EntityJustSteppedOn(mover, mover.Position);
+                ChangeRoomsIfApplicable(mover, previousPosition, mover.Position);
             }
 
             NotableEventHappened?.Invoke();

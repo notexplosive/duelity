@@ -50,8 +50,14 @@ namespace Duel.Data
         public void PlayLevel(LevelData levelData, PlayerTag.Type playerCharacter)
         {
             CurrentLevel.ClearAllTilesAndEntities();
-            levelData.LoadForPlay(this, playerCharacter);
-            this.previouslyLoadedData = new Tuple<LevelData, PlayerTag.Type>(levelData, playerCharacter);
+            levelData.LoadAndActivatePlayerSpawners(this, playerCharacter);
+
+            // We get the loaded level's data minus the player
+            var dataMinusPlayer = BuildDataFromCurrentLevel("live-from-gameplay");
+            var player = dataMinusPlayer.Entities.Find(e => e.Template.Tags.HasTag<PlayerTag>());
+            dataMinusPlayer.Entities.Remove(player);
+
+            this.previouslyLoadedData = new Tuple<LevelData, PlayerTag.Type>(dataMinusPlayer, playerCharacter);
         }
 
         public void LoadLevelData(LevelData levelData)
@@ -60,26 +66,27 @@ namespace Duel.Data
             levelData.LoadForEditor(CurrentLevel);
         }
 
-        public void ReloadLevelAndPutPlayerAtPosition(Point playerPosition)
+        public void ReloadLevelAndPutPlayerAtPosition(Point playerPreviousPosition, Point playerPosition)
         {
-            CurrentLevel.ClearAllTilesAndEntities();
-            this.previouslyLoadedData.Item1.LoadForPlay(this, this.previouslyLoadedData.Item2);
-
-            foreach (var entity in CurrentLevel.AllEntities())
+            if (this.previouslyLoadedData != null)
             {
-                if (entity.Tags.TryGetTag(out PlayerTag playerTag))
-                {
-                    entity.WarpToPosition(playerPosition);
-                }
+                CurrentLevel.ClearAllTilesAndEntities();
+
+                // There won't be any player spawners to activate
+                this.previouslyLoadedData.Item1.LoadAndActivatePlayerSpawners(this, this.previouslyLoadedData.Item2);
+
+                var playerTemplate = TemplateLibrary.GetPlayerTemplate(this.previouslyLoadedData.Item2);
+                var player = CurrentLevel.PutEntityAt(playerPreviousPosition, playerTemplate);
+                player.JumpToPosition(playerPosition);
             }
         }
 
-        private void DoRoomTransitionIfApplicable(Point playerPosition)
+        private void DoRoomTransitionIfApplicable(Point previousPlayerPosition, Point playerPosition)
         {
             var newRoom = new Room(Room.LevelPosToRoomPos(playerPosition));
             if (!CurrentRoomPos.HasValue)
             {
-                SetCurrentRoomPos(newRoom.Position);
+                SetCurrentRoomPos(newRoom.Position, previousPlayerPosition, playerPosition);
                 return;
             }
 
@@ -87,16 +94,17 @@ namespace Duel.Data
 
             if (previousRoom != newRoom)
             {
-                SetCurrentRoomPos(newRoom.Position);
+                SetCurrentRoomPos(newRoom.Position, previousPlayerPosition, playerPosition);
             }
         }
 
-        public void SetCurrentRoomPos(Point roomPos)
+        public void SetCurrentRoomPos(Point roomPos, Point previousPosition, Point levelPosition)
         {
             if (CurrentRoomPos != roomPos)
             {
                 CurrentRoomPos = roomPos;
                 RoomChanged?.Invoke(new Room(roomPos));
+                ReloadLevelAndPutPlayerAtPosition(previousPosition, levelPosition);
             }
         }
 
@@ -123,7 +131,7 @@ namespace Duel.Data
             return ActorRoot.FindActor(entity);
         }
 
-        public LevelData BuildData(string name)
+        public LevelData BuildDataFromCurrentLevel(string name)
         {
             var data = new LevelData(name);
             foreach (var instance in ActorRoot.GetAllInstances())
