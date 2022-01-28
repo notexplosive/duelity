@@ -18,7 +18,7 @@ namespace Duel.Data
         public LevelData(string levelName)
         {
             Name = levelName;
-            TemplateLibrary = TemplateLibrary.Build();
+            TemplateLibrary = TemplateLibrary.BuildWithPlayers();
         }
 
         public static Point ConvertPositionStringToPoint(string xyString)
@@ -34,11 +34,6 @@ namespace Duel.Data
                 currentLevel.PutTileAt(tile.Position, tile.Template);
             }
 
-            var sheriff = new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff));
-            var renegade = new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade));
-            var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
-            var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
-
 
             foreach (var entity in Entities)
             {
@@ -46,32 +41,32 @@ namespace Duel.Data
                 {
                     if (movementType == PlayerTag.Type.Sheriff)
                     {
-                        currentLevel.PutEntityAt(entity.Position, sheriff);
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("sheriff"));
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-bennigan")
                 {
                     if (movementType == PlayerTag.Type.Knight)
                     {
-                        currentLevel.PutEntityAt(entity.Position, knight);
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("knight"));
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-miranda")
                 {
                     if (movementType == PlayerTag.Type.Renegade)
                     {
-                        currentLevel.PutEntityAt(entity.Position, renegade);
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("renegade"));
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-steven")
                 {
                     if (movementType == PlayerTag.Type.Cowboy)
                     {
-                        currentLevel.PutEntityAt(entity.Position, cowboy);
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("cowboy"));
+                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position), entity.Position);
                     }
                 }
                 else
