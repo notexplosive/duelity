@@ -18,21 +18,27 @@ namespace Duel.Components
         public event Action<Actor> PropCreated;
         public event Action<Actor, Entity> EntityCreated;
 
+        private readonly Sokoban game;
         private readonly Grid grid;
         private readonly Level level;
         private readonly Dictionary<Entity, Actor> entityToActorTable = new Dictionary<Entity, Actor>();
         private readonly HashSet<Entity> knownDestroyedActors = new HashSet<Entity>();
         private readonly List<PropInstance> props = new List<PropInstance>();
 
-        public ActorRoot(Actor actor, Level level) : base(actor)
+        public ActorRoot(Actor actor, Sokoban game) : base(actor)
         {
+            this.game = game;
             this.grid = RequireComponent<Grid>();
-            this.level = level;
+            this.level = game.CurrentLevel;
             this.level.EntityAdded += CreateEntityActor;
             this.level.EntityDestroyRequested += DestroyEntityActor;
             this.level.PropAdded += CreateProp;
             this.level.RemoveAllProps += RemoveAllProps;
-            this.level.RoomChanged += MoveCameraToRoom;
+
+            if (!Sokoban.Headless)
+            {
+                this.level.RoomChanged += MoveCameraToRoom;
+            }
         }
 
         private void MoveCameraToRoom(Room room)

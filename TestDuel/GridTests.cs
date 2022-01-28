@@ -17,10 +17,11 @@ namespace TestDuel
         public GridTests()
         {
             this.scene = new Scene(null);
-            this.level = new Level();
+            var game = new Sokoban(this.scene);
+            this.level = game.CurrentLevel;
             this.baseActor = this.scene.AddActor("ActorRoot");
             this.subject = new Grid(this.baseActor, this.level);
-            new ActorRoot(this.baseActor, this.level);
+            new ActorRoot(this.baseActor, game);
         }
 
         private void FlushScene()

@@ -18,10 +18,11 @@ namespace TestDuel
         public ActorRootTest()
         {
             this.scene = new Scene(null);
-            this.level = new Level();
+            var game = new Sokoban(this.scene);
+            this.level = game.CurrentLevel;
             this.baseActor = this.scene.AddActor("ActorRoot");
             new Grid(this.baseActor, this.level);
-            this.subject = new ActorRoot(this.baseActor, this.level);
+            this.subject = new ActorRoot(this.baseActor, game);
         }
 
         private void FlushScene()

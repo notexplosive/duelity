@@ -64,7 +64,7 @@ namespace Duel.Data
             this.rootActor = Scene.AddActor("Level");
 
             Grid = new Grid(this.rootActor, CurrentLevel);
-            ActorRoot = new ActorRoot(this.rootActor, CurrentLevel);
+            ActorRoot = new ActorRoot(this.rootActor, this);
 
             if (!Headless)
             {
