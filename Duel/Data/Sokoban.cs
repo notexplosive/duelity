@@ -77,6 +77,30 @@ namespace Duel.Data
             return ActorRoot.FindActor(entity);
         }
 
+        public LevelData BuildData(string name)
+        {
+            var data = new LevelData(name);
+            foreach (var instance in ActorRoot.GetAllInstances())
+            {
+                switch (instance.TemplateClassName)
+                {
+                    case "entt":
+                        data.AddEntity(instance.TemplateName, LevelData.ConvertPositionStringToPoint(instance.CoordinateString));
+                        break;
+                    case "tile":
+                        data.AddTile(instance.TemplateName, LevelData.ConvertPositionStringToPoint(instance.CoordinateString));
+                        break;
+                    case "prop":
+                        data.AddProp(instance.TemplateName, LevelData.ConvertPositionStringToPoint(instance.CoordinateString));
+                        break;
+                    default:
+                        MachinaClient.Print($"skipped {instance.TemplateClassName} {instance.TemplateName}");
+                        break;
+                }
+            }
+            return data;
+        }
+
         public void SetRootActorPosition(Vector2 position)
         {
             ActorRoot.transform.Position = position;
