@@ -12,20 +12,19 @@ namespace Duel.Data
     public class Level
     {
         public event Action TilemapChanged;
-        public event Action<Room> RoomChanged;
         public event Action<Vector2, PropTemplate> PropAdded;
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
         public event Action NotableEventHappened;
         public event Action RemoveAllProps;
+        public event Action<Point> RoomTransitionAttempted;
 
         private readonly List<Entity> entities = new List<Entity>();
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();
-        private SignalState signalOverrideLayer = new SignalState();
+        private readonly SignalState signalOverrideLayer = new SignalState();
 
         public SignalState SignalState { get; internal set; } = new SignalState(); // this should be on a per-screen basis
-        public Point CurrentRoomPos { get; private set; }
 
         public Level(Corners corners)
         {
@@ -61,15 +60,6 @@ namespace Duel.Data
             NotableEventHappened?.Invoke();
 
             return entity;
-        }
-
-        public void SetCurrentRoomPos(Point roomPos)
-        {
-            if (CurrentRoomPos != roomPos)
-            {
-                CurrentRoomPos = roomPos;
-                RoomChanged?.Invoke(new Room(roomPos));
-            }
         }
 
         public void PutPropAt(Vector2 worldPosition, PropTemplate template)
@@ -237,13 +227,7 @@ namespace Duel.Data
         {
             if (stepper.Tags.HasTag<PlayerTag>())
             {
-                var previousRoom = new Room(CurrentRoomPos);
-                var newRoom = new Room(Room.LevelPosToRoomPos(position));
-
-                if (previousRoom != newRoom)
-                {
-                    SetCurrentRoomPos(newRoom.Position);
-                }
+                RoomTransitionAttempted?.Invoke(position);
             }
         }
 

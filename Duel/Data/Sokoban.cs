@@ -10,9 +10,11 @@ namespace Duel.Data
 {
     public class Sokoban
     {
+        public event Action<Room> RoomChanged;
         private Actor rootActor;
         private Tuple<LevelData, PlayerTag.Type> previouslyLoadedData;
 
+        public Point? CurrentRoomPos { get; private set; } = null;
         public Scene Scene { get; }
         public Grid Grid { get; private set; }
 
@@ -48,7 +50,7 @@ namespace Duel.Data
         public void PlayLevel(LevelData levelData, PlayerTag.Type playerCharacter)
         {
             CurrentLevel.ClearAllTilesAndEntities();
-            levelData.LoadForPlay(CurrentLevel, playerCharacter);
+            levelData.LoadForPlay(this, playerCharacter);
             this.previouslyLoadedData = new Tuple<LevelData, PlayerTag.Type>(levelData, playerCharacter);
         }
 
@@ -61,7 +63,7 @@ namespace Duel.Data
         public void ReloadLevelAndPutPlayerAtPosition(Point playerPosition)
         {
             CurrentLevel.ClearAllTilesAndEntities();
-            this.previouslyLoadedData.Item1.LoadForPlay(CurrentLevel, this.previouslyLoadedData.Item2);
+            this.previouslyLoadedData.Item1.LoadForPlay(this, this.previouslyLoadedData.Item2);
 
             foreach (var entity in CurrentLevel.AllEntities())
             {
@@ -72,11 +74,39 @@ namespace Duel.Data
             }
         }
 
+        private void DoRoomTransitionIfApplicable(Point playerPosition)
+        {
+            var newRoom = new Room(Room.LevelPosToRoomPos(playerPosition));
+            if (!CurrentRoomPos.HasValue)
+            {
+                SetCurrentRoomPos(newRoom.Position);
+                return;
+            }
+
+            var previousRoom = new Room(CurrentRoomPos.Value);
+
+            if (previousRoom != newRoom)
+            {
+                SetCurrentRoomPos(newRoom.Position);
+            }
+        }
+
+        public void SetCurrentRoomPos(Point roomPos)
+        {
+            if (CurrentRoomPos != roomPos)
+            {
+                CurrentRoomPos = roomPos;
+                RoomChanged?.Invoke(new Room(roomPos));
+            }
+        }
+
         public void StartFresh()
         {
             this.rootActor?.Delete();
 
             CurrentLevel = new Level();
+            CurrentLevel.RoomTransitionAttempted += DoRoomTransitionIfApplicable;
+
             this.rootActor = Scene.AddActor("Level");
 
             Grid = new Grid(this.rootActor, CurrentLevel);

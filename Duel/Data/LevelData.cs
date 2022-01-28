@@ -27,8 +27,9 @@ namespace Duel.Data
             return new Point(int.Parse(split[0]), int.Parse(split[1]));
         }
 
-        public void LoadForPlay(Level currentLevel, PlayerTag.Type movementType)
+        public void LoadForPlay(Sokoban game, PlayerTag.Type movementType)
         {
+            var currentLevel = game.CurrentLevel;
             foreach (var tile in Tiles)
             {
                 currentLevel.PutTileAt(tile.Position, tile.Template);
@@ -42,7 +43,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Sheriff)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("sheriff"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        game.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-bennigan")
@@ -50,7 +51,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Knight)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("knight"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        game.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-miranda")
@@ -58,7 +59,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Renegade)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("renegade"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        game.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else if (entity.Template.NameInLibrary == "spawn-steven")
@@ -66,7 +67,7 @@ namespace Duel.Data
                     if (movementType == PlayerTag.Type.Cowboy)
                     {
                         currentLevel.PutEntityAt(entity.Position, TemplateLibrary.GetEntityTemplate("cowboy"));
-                        currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                        game.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
                     }
                 }
                 else

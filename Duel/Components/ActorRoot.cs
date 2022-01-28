@@ -37,7 +37,7 @@ namespace Duel.Components
 
             if (!Sokoban.Headless)
             {
-                this.level.RoomChanged += MoveCameraToRoom;
+                this.game.RoomChanged += MoveCameraToRoom;
             }
         }
 
