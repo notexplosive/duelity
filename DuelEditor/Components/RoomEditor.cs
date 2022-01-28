@@ -136,13 +136,17 @@ namespace DuelEditor.Components
                 var realPos = this.game.GetRootActorPosition() + this.game.Grid.TileToLocalPosition(position, false);
                 if (bounds.TopLeft.X == position.X)
                 {
-                    spriteBatch.DrawLine(realPos, realPos + new Vector2(0, Grid.TileSize), Color.Cyan, 2f, transform.Depth - 10);
+                    var horizontalShift = new Vector2(Grid.TileSize, 0) / 2;
+                    spriteBatch.DrawLine(realPos + horizontalShift, realPos + horizontalShift + new Vector2(0, Grid.TileSize), Color.Cyan, 2f, transform.Depth - 10);
+                    spriteBatch.DrawLine(realPos, realPos + new Vector2(0, Grid.TileSize), Color.Orange, 2f, transform.Depth - 10);
                 }
 
                 if (bounds.TopLeft.Y == position.Y)
                 {
                     var verticalShift = new Vector2(0, Grid.TileSize) / 2;
                     spriteBatch.DrawLine(realPos + verticalShift, realPos + verticalShift + new Vector2(Grid.TileSize, 0), Color.Cyan, 2f, transform.Depth - 10);
+                    spriteBatch.DrawLine(realPos, realPos + new Vector2(Grid.TileSize, 0), Color.Orange, 2f, transform.Depth - 10);
+
                 }
 
                 if (this.templateSelection.IsInTileMode)
