@@ -58,7 +58,7 @@ namespace Duel.Data
             levelData.LoadForEditor(CurrentLevel);
         }
 
-        public void ReloadLevel(Point playerPosition)
+        public void ReloadLevelAndPutPlayerAtPosition(Point playerPosition)
         {
             CurrentLevel.ClearAllTilesAndEntities();
             this.previouslyLoadedData.Item1.LoadForPlay(CurrentLevel, this.previouslyLoadedData.Item2);
