@@ -7,6 +7,7 @@ using Machina.Data.Layout;
 using Machina.Engine;
 using Machina.Engine.Input;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +18,8 @@ namespace DuelEditor.Data
         private readonly Sokoban game;
         private readonly TemplateSelection templateSelection;
         private TooltipText tooltip;
+
+        public event Action<string> LevelLoaded;
 
         public EditorCore(Scene scene, Sokoban game)
         {
@@ -85,11 +88,14 @@ namespace DuelEditor.Data
                     if (mb == MouseButton.Left)
                     {
                         this.game.LoadLevel(levelData);
+                        LevelLoaded?.Invoke(levelName);
                     }
                 };
 
                 levelIndex++;
             }
+
+            new EditorSaveLoad(levelSelectorActor, game, this);
         }
 
         private void InterceptProp(Actor propActor)
@@ -128,7 +134,6 @@ namespace DuelEditor.Data
             new Hoverable(actor);
             new RoomEditor(actor, game, this.templateSelection, tooltip);
             new EditorPanner(actor, game);
-            new EditorSaveLoad(actor, game);
         }
 
         private void BecomeBasicPane(Actor sidebarActor)

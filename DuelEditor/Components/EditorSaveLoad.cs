@@ -1,5 +1,6 @@
 ﻿using Duel.Data;
 using DuelEditor.Components;
+using DuelEditor.Data;
 using Machina.Components;
 using Machina.Data;
 using Machina.Engine;
@@ -16,10 +17,19 @@ namespace DuelEditor.Components
     public class EditorSaveLoad : BaseComponent
     {
         private Sokoban game;
+        private string currentLevelName = null;
 
-        public EditorSaveLoad(Actor actor, Sokoban game) : base(actor)
+        public EditorSaveLoad(Actor actor, Sokoban game, EditorCore editor) : base(actor)
         {
             this.game = game;
+
+            editor.LevelLoaded += SaveLevelName;
+        }
+
+        private void SaveLevelName(string levelName)
+        {
+            MachinaClient.Print("level loaded", levelName);
+            this.currentLevelName = levelName;
         }
 
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
@@ -33,7 +43,14 @@ namespace DuelEditor.Components
         public void Save()
         {
             var fileTime = DateTime.Now.ToFileTimeUtc();
-            var fileName = $"levels/TEMPLEVEL{fileTime}.bunk";
+            var levelName = $"TEMPLEVEL{fileTime}";
+
+            if (this.currentLevelName != null)
+            {
+                levelName = this.currentLevelName;
+            }
+
+            var fileName = $"levels/{levelName}.bunk";
 
             var builder = new StringBuilder();
 
