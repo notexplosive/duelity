@@ -47,6 +47,8 @@ namespace Duel.Components
                 var scaleChannel = multi.AddChannel();
                 scaleChannel.AppendFloatTween(0, 0.5f, EaseFuncs.QuadraticEaseIn, this.scale);
             }
+
+            this.tween.AppendCallback(() => this.actor.Destroy());
         }
 
         public override void Update(float dt)
