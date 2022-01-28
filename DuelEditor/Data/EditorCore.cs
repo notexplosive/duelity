@@ -54,15 +54,27 @@ namespace DuelEditor.Data
             BecomeBasicPane(levelSelectorActor);
 
             var levelButtonNodes = new List<LayoutNode>();
-
+            var playButtonNodes = new List<LayoutNode>();
 
             for (int i = 0; i < 10; i++)
             {
                 levelButtonNodes.Add(LayoutNode.Leaf($"load-level-{i}", LayoutSize.StretchedHorizontally(40)));
             }
 
-            var layout = LayoutNode.VerticalParent("root", LayoutSize.Pixels(node.Size), new LayoutStyle(new Point(10, 32)),
-                levelButtonNodes.ToArray()
+            for (int i = 0; i < 4; i++)
+            {
+                playButtonNodes.Add(LayoutNode.Leaf($"play-button-{i}", LayoutSize.StretchedBoth()));
+            }
+
+            var layout = LayoutNode.VerticalParent("root", LayoutSize.Pixels(node.Size), LayoutStyle.Empty,
+                LayoutNode.Spacer(32),
+                LayoutNode.VerticalParent("play-buttons", LayoutSize.StretchedHorizontally(node.Size.Y / 5), new LayoutStyle(new Point(10, 0)),
+                    playButtonNodes.ToArray()
+                ),
+                LayoutNode.Spacer(16),
+                LayoutNode.VerticalParent("level-buttons", LayoutSize.StretchedBoth(), new LayoutStyle(new Point(10, 0)),
+                    levelButtonNodes.ToArray()
+                )
             );
 
             var layoutActors = new LayoutActors(scene, layout);
@@ -71,16 +83,19 @@ namespace DuelEditor.Data
             root.transform.LocalPosition = Vector2.Zero;
             root.transform.LocalDepth = -10;
 
+            var playerIndex = 0;
+            foreach (var playButtonNode in playButtonNodes)
+            {
+                var buttonActor = layoutActors.GetActor(playButtonNode.Name.Text);
+                var clickable = MakeButton(buttonActor, $"Play\n{(PlayerTag.Type)playerIndex}");
+                playerIndex++;
+            }
+
             var levelIndex = 0;
             foreach (var levelName in Sokoban.LevelNames)
             {
                 var buttonActor = layoutActors.GetActor(levelButtonNodes[levelIndex].Name.Text);
-
-                new NinepatchRenderer(buttonActor, MachinaClient.DefaultStyle.buttonDefault);
-                new Hoverable(buttonActor);
-                var clickable = new Clickable(buttonActor);
-                new ButtonNinepatchHandler(buttonActor, MachinaClient.DefaultStyle.buttonHover, MachinaClient.DefaultStyle.buttonPress);
-                new BoundedTextRenderer(buttonActor, levelName, MachinaClient.DefaultStyle.uiElementFont, Color.White, HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Elide, depthOffset: -10);
+                var clickable = MakeButton(buttonActor, levelName);
 
                 var levelData = MachinaClient.Assets.GetMachinaAsset<LevelData>(levelName);
                 clickable.OnClick += (mb) =>
@@ -96,6 +111,16 @@ namespace DuelEditor.Data
             }
 
             new EditorSaveLoad(levelSelectorActor, game, this);
+        }
+
+        private Clickable MakeButton(Actor buttonActor, string levelName)
+        {
+            new NinepatchRenderer(buttonActor, MachinaClient.DefaultStyle.buttonDefault);
+            new Hoverable(buttonActor);
+            var clickable = new Clickable(buttonActor);
+            new ButtonNinepatchHandler(buttonActor, MachinaClient.DefaultStyle.buttonHover, MachinaClient.DefaultStyle.buttonPress);
+            new BoundedTextRenderer(buttonActor, levelName, MachinaClient.DefaultStyle.uiElementFont, Color.White, HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Elide, depthOffset: -10);
+            return clickable;
         }
 
         private void InterceptProp(Actor propActor)
@@ -222,6 +247,10 @@ namespace DuelEditor.Data
                 if (tag is TileImageTag imageTag)
                 {
                     new TileImageRenderer(gridItemActor, imageTag.Image);
+                }
+                else if (tag is PlayerSpawn playerSpawn)
+                {
+                    new PlayerImageRenderer(gridItemActor, playerSpawn.Player);
                 }
                 else if (tag is SimpleEntityImage entityImage)
                 {

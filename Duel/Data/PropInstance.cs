@@ -1,4 +1,5 @@
-﻿using Machina.Engine;
+﻿using Machina.Components;
+using Machina.Engine;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -26,7 +27,7 @@ namespace Duel.Data
         {
             get
             {
-                var pos = this.actor.transform.LocalPosition;
+                var pos = this.actor.transform.LocalPosition + this.actor.GetComponent<BoundingRect>().SizeF / 2;
                 pos.Floor();
                 return $"{pos.X},{pos.Y}";
             }

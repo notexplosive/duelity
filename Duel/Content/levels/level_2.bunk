@@ -1,2 +1,3 @@
 tile empty_tile 0,0
 tile wall 10,5
+prop small_cactus 2,4

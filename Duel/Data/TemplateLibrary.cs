@@ -45,7 +45,7 @@ namespace Duel.Data
                 return tileTemplate;
             }
 
-            throw new Exception($"Template is not EntityTemplate: {templateName}");
+            throw new Exception($"Template is not TileTemplate: {templateName}");
         }
 
         public PropTemplate GetPropTemplate(string templateName)
@@ -118,6 +118,22 @@ namespace Duel.Data
                 new BlockProjectileTag(),
                 new MiasmaImageTag(),
                 new EditorImage(EntityFrame.Miasma)
+            ));
+
+            templateLibrary.AddTemplate("spawn-ernesto", new EntityTemplate(
+                new PlayerSpawn(PlayerTag.Type.Sheriff)
+            ));
+
+            templateLibrary.AddTemplate("spawn-miranda", new EntityTemplate(
+                new PlayerSpawn(PlayerTag.Type.Renegade)
+            ));
+
+            templateLibrary.AddTemplate("spawn-steven", new EntityTemplate(
+                new PlayerSpawn(PlayerTag.Type.Cowboy)
+            ));
+
+            templateLibrary.AddTemplate("spawn-bennigan", new EntityTemplate(
+                new PlayerSpawn(PlayerTag.Type.Knight)
             ));
 
             foreach (SignalColor color in Enum.GetValues(typeof(SignalColor)))

@@ -218,6 +218,17 @@ namespace Duel.Data
         public EntityFrameSet EntityFrameSet { get; }
     }
 
+
+    public class PlayerSpawn : Tag
+    {
+        public PlayerSpawn(PlayerTag.Type player)
+        {
+            Player = player;
+        }
+
+        public PlayerTag.Type Player { get; }
+    }
+
     public class PlayerTag : Tag
     {
         public Type MovementType { get; }

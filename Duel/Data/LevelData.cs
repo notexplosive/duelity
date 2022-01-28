@@ -36,7 +36,7 @@ namespace Duel.Data
 
             foreach (var entity in Entities)
             {
-                currentLevel.PutTileAt(entity.Position, entity.Template);
+                currentLevel.PutEntityAt(entity.Position, entity.Template);
             }
 
             foreach (var prop in Props)
@@ -52,7 +52,7 @@ namespace Duel.Data
 
         public void AddEntity(string templateName, Point position)
         {
-            Entities.Add(new EntityInstance(position, TemplateLibrary.GetTileTemplate(templateName)));
+            Entities.Add(new EntityInstance(position, TemplateLibrary.GetEntityTemplate(templateName)));
         }
 
         public void AddProp(string templateName, Point position)
@@ -78,7 +78,7 @@ namespace Duel.Data
                         case "tile":
                             level.AddTile(templateName, position);
                             break;
-                        case "entity":
+                        case "entt":
                             level.AddEntity(templateName, position);
                             break;
                         case "prop":
