@@ -135,7 +135,7 @@ namespace DuelEditor.Data
                 {
                     if (mb == MouseButton.Left)
                     {
-                        this.game.LoadLevelForEditor(levelData);
+                        this.game.LoadLevelData(levelData);
                         LevelLoaded?.Invoke(levelName);
                     }
                 };
