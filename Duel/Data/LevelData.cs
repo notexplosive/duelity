@@ -27,7 +27,54 @@ namespace Duel.Data
             return new Point(int.Parse(split[0]), int.Parse(split[1]));
         }
 
-        public void Load(Level currentLevel)
+        public void LoadForPlay(Level currentLevel, PlayerTag.Type movementType)
+        {
+            foreach (var tile in Tiles)
+            {
+                currentLevel.PutTileAt(tile.Position, tile.Template);
+            }
+
+            var sheriff = new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff));
+            var renegade = new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade));
+            var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
+            var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
+
+
+            foreach (var entity in Entities)
+            {
+                if (entity.Template.NameInLibrary == "spawn-ernesto" && movementType == PlayerTag.Type.Sheriff)
+                {
+                    currentLevel.PutEntityAt(entity.Position, sheriff);
+                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                }
+                else if (entity.Template.NameInLibrary == "spawn-bennigan" && movementType == PlayerTag.Type.Knight)
+                {
+                    currentLevel.PutEntityAt(entity.Position, knight);
+                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                }
+                else if (entity.Template.NameInLibrary == "spawn-miranda" && movementType == PlayerTag.Type.Renegade)
+                {
+                    currentLevel.PutEntityAt(entity.Position, renegade);
+                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                }
+                else if (entity.Template.NameInLibrary == "spawn-steven" && movementType == PlayerTag.Type.Cowboy)
+                {
+                    currentLevel.PutEntityAt(entity.Position, cowboy);
+                    currentLevel.SetCurrentRoomPos(Room.LevelPosToRoomPos(entity.Position));
+                }
+                else
+                {
+                    currentLevel.PutEntityAt(entity.Position, entity.Template);
+                }
+            }
+
+            foreach (var prop in Props)
+            {
+                currentLevel.PutPropAt(prop.Position.ToVector2(), prop.Template);
+            }
+        }
+
+        public void LoadForEditor(Level currentLevel)
         {
             foreach (var tile in Tiles)
             {

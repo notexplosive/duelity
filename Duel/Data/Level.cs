@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Machina.Engine;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Duel.Data
     public class Level
     {
         public event Action TilemapChanged;
+        public event Action<Room> RoomChanged;
         public event Action<Vector2, PropTemplate> PropAdded;
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
@@ -23,6 +25,7 @@ namespace Duel.Data
         private SignalState signalOverrideLayer = new SignalState();
 
         public SignalState SignalState { get; internal set; } = new SignalState(); // this should be on a per-screen basis
+        public Point CurrentRoomPos { get; private set; }
 
         public Level(Corners corners)
         {
@@ -58,6 +61,15 @@ namespace Duel.Data
             NotableEventHappened?.Invoke();
 
             return entity;
+        }
+
+        public void SetCurrentRoomPos(Point roomPos)
+        {
+            if (CurrentRoomPos != roomPos)
+            {
+                CurrentRoomPos = roomPos;
+                RoomChanged?.Invoke(new Room(roomPos));
+            }
         }
 
         public void PutPropAt(Vector2 worldPosition, PropTemplate template)
@@ -218,6 +230,21 @@ namespace Duel.Data
         private void EntityJustSteppedOn(Entity stepper, Point position)
         {
             FillWaterIfApplicable(stepper, position);
+            ChangeRoomsIfApplicable(stepper, position);
+        }
+
+        private void ChangeRoomsIfApplicable(Entity stepper, Point position)
+        {
+            if (stepper.Tags.HasTag<PlayerTag>())
+            {
+                var previousRoom = new Room(CurrentRoomPos);
+                var newRoom = new Room(Room.LevelPosToRoomPos(position));
+
+                if (previousRoom != newRoom)
+                {
+                    SetCurrentRoomPos(newRoom.Position);
+                }
+            }
         }
 
         private void FillWaterIfApplicable(Entity stepper, Point position)

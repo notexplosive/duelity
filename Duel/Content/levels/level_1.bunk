@@ -244,6 +244,7 @@ tile water -5,17
 tile water -6,17
 tile water -7,17
 tile water -7,16
+tile hook 10,15
 entt spawn-ernesto 7,20
 entt spawn-bennigan 3,19
 entt spawn-miranda 20,13

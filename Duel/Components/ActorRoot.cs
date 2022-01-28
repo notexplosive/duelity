@@ -32,6 +32,12 @@ namespace Duel.Components
             this.level.EntityDestroyRequested += DestroyEntityActor;
             this.level.PropAdded += CreateProp;
             this.level.RemoveAllProps += RemoveAllProps;
+            this.level.RoomChanged += MoveCameraToRoom;
+        }
+
+        private void MoveCameraToRoom(Room room)
+        {
+            this.actor.scene.camera.UnscaledPosition = this.grid.TileToLocalPosition(room.GetBounds().TopLeft, true);
         }
 
         private void RemoveAllProps()

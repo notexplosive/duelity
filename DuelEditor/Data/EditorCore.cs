@@ -97,6 +97,7 @@ namespace DuelEditor.Data
             var playerIndex = 0;
             foreach (var playButtonNode in playButtonNodes)
             {
+                var capturedIndex = playerIndex;
                 var buttonActor = layoutActors.GetActor(playButtonNode.Name.Text);
                 var clickable = MakeButton(buttonActor, $"Play\n{(PlayerTag.Type)playerIndex}");
                 clickable.OnClick += (mb) =>
@@ -107,11 +108,12 @@ namespace DuelEditor.Data
                             .OnLaunch((win) =>
                             {
                                 var game = DuelGameCartridge.LoadGame(win.PrimaryScene);
-                                game.LoadLevel(this.saver.GetCurrentLevel());
+                                game.PlayLevel(this.saver.GetCurrentLevel(), (PlayerTag.Type)capturedIndex);
                                 win.rootTransform.Depth -= 500;
                                 // HaltControl();
                             })
                             .DestroyViaCloseButton()
+                            .AllowKeyboardEvents()
                             .Title("gameing")
                         //.OnClose((win) => { RestoreControl(); })
                         ;
@@ -133,7 +135,7 @@ namespace DuelEditor.Data
                 {
                     if (mb == MouseButton.Left)
                     {
-                        this.game.LoadLevel(levelData);
+                        this.game.LoadLevelForEditor(levelData);
                         LevelLoaded?.Invoke(levelName);
                     }
                 };

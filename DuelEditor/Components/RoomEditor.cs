@@ -141,7 +141,8 @@ namespace DuelEditor.Components
 
                 if (bounds.TopLeft.Y == position.Y)
                 {
-                    spriteBatch.DrawLine(realPos, realPos + new Vector2(Grid.TileSize, 0), Color.Cyan, 2f, transform.Depth - 10);
+                    var verticalShift = new Vector2(0, Grid.TileSize) / 2;
+                    spriteBatch.DrawLine(realPos + verticalShift, realPos + verticalShift + new Vector2(Grid.TileSize, 0), Color.Cyan, 2f, transform.Depth - 10);
                 }
 
                 if (this.templateSelection.IsInTileMode)

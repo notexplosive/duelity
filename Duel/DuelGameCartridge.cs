@@ -24,8 +24,6 @@ namespace Duel
             var gameScene = SceneLayers.AddNewScene();
             var game = LoadGame(gameScene);
 
-            game.LoadLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_1"));
-
             PostLoad(game);
         }
 
@@ -33,19 +31,12 @@ namespace Duel
         {
             var game = new Sokoban(gameScene);
 
-            // player characters
-            var sheriff = new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff));
-            var renegade = new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade));
-            var cowboy = new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy));
-            var knight = new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight));
-
-            var templates = TemplateLibrary.Build();
-
             return game;
         }
 
         protected virtual void PostLoad(Sokoban game)
         {
+            game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_1"), PlayerTag.Type.Sheriff);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

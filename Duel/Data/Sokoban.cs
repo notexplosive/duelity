@@ -37,10 +37,16 @@ namespace Duel.Data
             StartFresh();
         }
 
-        public void LoadLevel(LevelData levelData)
+        public void PlayLevel(LevelData levelData, PlayerTag.Type playerCharacter)
         {
             CurrentLevel.ClearAllTilesAndEntities();
-            levelData.Load(CurrentLevel);
+            levelData.LoadForPlay(CurrentLevel, playerCharacter);
+        }
+
+        public void LoadLevelForEditor(LevelData levelData)
+        {
+            CurrentLevel.ClearAllTilesAndEntities();
+            levelData.LoadForEditor(CurrentLevel);
         }
 
         public void StartFresh()
