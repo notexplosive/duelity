@@ -11,6 +11,7 @@ namespace Duel.Data
     public class Sokoban
     {
         private Actor rootActor;
+        private Tuple<LevelData, PlayerTag.Type> previouslyLoadedData;
 
         public Scene Scene { get; }
         public Grid Grid { get; private set; }
@@ -48,12 +49,27 @@ namespace Duel.Data
         {
             CurrentLevel.ClearAllTilesAndEntities();
             levelData.LoadForPlay(CurrentLevel, playerCharacter);
+            this.previouslyLoadedData = new Tuple<LevelData, PlayerTag.Type>(levelData, playerCharacter);
         }
 
-        public void LoadLevelForEditor(LevelData levelData)
+        public void LoadLevelData(LevelData levelData)
         {
             CurrentLevel.ClearAllTilesAndEntities();
             levelData.LoadForEditor(CurrentLevel);
+        }
+
+        public void ReloadLevel(Point playerPosition)
+        {
+            CurrentLevel.ClearAllTilesAndEntities();
+            this.previouslyLoadedData.Item1.LoadForPlay(CurrentLevel, this.previouslyLoadedData.Item2);
+
+            foreach (var entity in CurrentLevel.AllEntities())
+            {
+                if (entity.Tags.TryGetTag(out PlayerTag playerTag))
+                {
+                    entity.WarpToPosition(playerPosition);
+                }
+            }
         }
 
         public void StartFresh()
