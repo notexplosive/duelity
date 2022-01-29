@@ -72,7 +72,7 @@ namespace Duel
             var emptyConvo = new Conversation(new List<IDialogEvent>());
 
             this.chapters = new List<Chapter>();
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, level1LaunchConvo));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, level1LaunchConvo)); // Screenplay.GetConversation("convo_key")
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, level2LaunchConvo));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));

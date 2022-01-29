@@ -29,12 +29,12 @@ namespace DuelEditor.Data
             this.templateSelection = new TemplateSelection();
             var viewportPixels = new Point((Room.Size.X + 2) * Grid.TileSize, (Room.Size.Y + 2) * Grid.TileSize);
             var layout = LayoutNode.HorizontalParent("root", LayoutSize.Pixels(editorScene.camera.UnscaledViewportSize), LayoutStyle.Empty,
-                LayoutNode.VerticalParent("left-sidebar", LayoutSize.StretchedBoth(), LayoutStyle.Empty),
+                LayoutNode.Leaf("left-sidebar", LayoutSize.StretchedBoth()),
                 LayoutNode.VerticalParent("editor", LayoutSize.StretchedVertically(viewportPixels.X), LayoutStyle.Empty,
                     LayoutNode.Leaf("tile-editor", LayoutSize.Pixels(viewportPixels)),
                     LayoutNode.Leaf("bottom-section", LayoutSize.StretchedBoth())
                 ),
-                LayoutNode.VerticalParent("right-sidebar", LayoutSize.StretchedVertically(Grid.TileSize * 2), LayoutStyle.Empty)
+                LayoutNode.VerticalParent("right-sidebar", LayoutSize.StretchedVertically(Grid.TileSize * 3), LayoutStyle.Empty)
             );
 
 
@@ -201,65 +201,149 @@ namespace DuelEditor.Data
 
         private void BecomeTileSelectorPane(Actor sidebarActor, NodePositionAndSize node, Scene scene, TooltipText tooltip)
         {
-            BecomeBasicPane(sidebarActor);
-            var headerSize = 40;
-            var horizontalMargin = 16;
-            var availableHeight = node.Size.Y - headerSize;
-            var availableWidth = node.Size.X - horizontalMargin;
-            var rowCount = availableHeight / Grid.TileSize;
-            var colCount = availableWidth / Grid.TileSize;
-
-            var rows = new List<LayoutNode>();
-            var itemNames = new List<string>();
-
-            rows.Add(LayoutNode.Leaf("header", LayoutSize.StretchedHorizontally(headerSize)));
-
-            for (int i = 0; i < rowCount; i++)
-            {
-                var rowContent = new List<LayoutNode>();
-
-                rowContent.Add(LayoutNode.StretchedSpacer());
-
-
-                for (int j = 0; j < colCount; j++)
-                {
-                    var itemName = $"item {i},{j}";
-                    rowContent.Add(LayoutNode.Leaf(itemName, LayoutSize.Pixels(Grid.TileSize, Grid.TileSize)));
-                    rowContent.Add(LayoutNode.StretchedSpacer());
-
-                    itemNames.Add(itemName);
-                }
-
-                rows.Add(LayoutNode.HorizontalParent($"row{i}", LayoutSize.StretchedHorizontally(Grid.TileSize), LayoutStyle.Empty,
-                    rowContent.ToArray()
-                ));
-                rows.Add(LayoutNode.StretchedSpacer());
-            }
-
-            var layout = LayoutNode.VerticalParent("root", LayoutSize.Pixels(node.Size), new LayoutStyle(new Point(16, 0)),
-                rows.ToArray()
-            );
-
-
-            var layoutActors = new LayoutActors(scene, layout);
-            layoutActors.GetActor("root").transform.SetParent(sidebarActor);
-            new SignalIndicator(layoutActors.GetActor("header"), this.game.CurrentLevel);
-
             var templateLibrary = TemplateLibrary.Build();
             var templates = templateLibrary.GetAllTemplates().GetEnumerator();
+            var finishedLastPage = false;
+            var pageNumber = 0;
+            int currentPageNumber = 0;
 
-            foreach (var itemName in itemNames)
+            BecomeBasicPane(sidebarActor);
+
+            while (!finishedLastPage)
             {
-                if (!templates.MoveNext())
+                var headerSize = 40;
+                var footerSize = 80;
+                var horizontalMargin = 16;
+                var availableHeight = node.Size.Y - headerSize;
+                var availableWidth = node.Size.X - horizontalMargin;
+                var rowCount = 8;
+                var colCount = availableWidth / Grid.TileSize;
+
+                var rows = new List<LayoutNode>();
+                var itemNames = new List<string>();
+
+                rows.Add(LayoutNode.Leaf("header", LayoutSize.StretchedHorizontally(headerSize)));
+
+                for (int i = 0; i < rowCount; i++)
                 {
-                    templates.Dispose();
-                    break;
+                    var rowContent = new List<LayoutNode>();
+
+                    rowContent.Add(LayoutNode.StretchedSpacer());
+
+
+                    for (int j = 0; j < colCount; j++)
+                    {
+                        var itemName = $"item {i},{j}";
+                        rowContent.Add(LayoutNode.Leaf(itemName, LayoutSize.Pixels(Grid.TileSize, Grid.TileSize)));
+                        rowContent.Add(LayoutNode.StretchedSpacer());
+
+                        itemNames.Add(itemName);
+                    }
+
+                    rows.Add(LayoutNode.HorizontalParent($"row{i}", LayoutSize.StretchedHorizontally(Grid.TileSize), new LayoutStyle(padding: 8),
+                        rowContent.ToArray()
+                    ));
+                    rows.Add(LayoutNode.StretchedSpacer());
                 }
 
-                var template = templates.Current;
-                CreateSelectorCell(layoutActors, itemName, template, tooltip);
+                rows.Add(LayoutNode.Leaf("footer", LayoutSize.StretchedHorizontally(footerSize)));
+                rows.Add(LayoutNode.Spacer(20));
+
+                var layout = LayoutNode.VerticalParent("sidebar-root", LayoutSize.Pixels(node.Size), new LayoutStyle(new Point(16, 0), padding: 8),
+                    rows.ToArray()
+                );
+
+
+                var layoutActors = new LayoutActors(scene, layout);
+                var pageBakedLayout = layout.Bake();
+                var pageActor = layoutActors.GetActor("sidebar-root");
+                pageActor.transform.SetParent(sidebarActor);
+                pageActor.transform.LocalDepth -= 10 * (pageNumber + 1);
+
+                new SignalIndicator(layoutActors.GetActor("header"), this.game.CurrentLevel);
+
+                var savedPageNumber = pageNumber;
+                new AdHoc(pageActor).onUpdate += (dt) =>
+                {
+                    if (currentPageNumber == savedPageNumber)
+                    {
+                        pageActor.transform.LocalPosition = Vector2.Zero;
+                    }
+                    else
+                    {
+                        pageActor.transform.LocalPosition = new Vector2(10000, 10000);
+                    }
+                };
+
+                foreach (var itemName in itemNames)
+                {
+                    if (!templates.MoveNext())
+                    {
+                        finishedLastPage = true;
+                        templates.Dispose();
+                        break;
+                    }
+
+                    var template = templates.Current;
+                    CreateSelectorCell(layoutActors, itemName, template, tooltip);
+                }
+
+                GetNavButtonActors(pageBakedLayout, scene, layoutActors.GetActor("footer"), () =>
+                {
+                    if (currentPageNumber < pageNumber - 1)
+                    {
+                        currentPageNumber++;
+                    }
+                }, () =>
+                {
+                    if (currentPageNumber >= 1)
+                    {
+                        currentPageNumber--;
+                    }
+                });
+
+                pageNumber++;
+            }
+        }
+
+        private LayoutActors GetNavButtonActors(BakedLayout pageBakedLayout, Scene scene, Actor parent, Action NextPage, Action PrevPage)
+        {
+            var layout = LayoutNode.HorizontalParent("buttons", LayoutSize.Pixels(pageBakedLayout.GetNode("footer").Size), LayoutStyle.Empty,
+                LayoutNode.Leaf("left-button", LayoutSize.StretchedBoth()),
+                LayoutNode.Leaf("right-button", LayoutSize.StretchedBoth())
+            );
+
+            var bakedLayout = layout.Bake();
+            var layoutActors = new LayoutActors(scene, layout);
+
+            var i = 0;
+            foreach (var buttonActor in layoutActors.GetActors("left-button", "right-button"))
+            {
+                buttonActor.transform.SetParent(parent);
+                buttonActor.transform.LocalPosition = bakedLayout.GetNode(buttonActor.name).PositionRelativeToRoot.ToVector2();
+                buttonActor.transform.LocalDepth -= 10;
+
+                if (i == 0)
+                {
+                    var clickable = MakeButton(buttonActor, "<<");
+                    clickable.OnClick += (mb) =>
+                    {
+                        PrevPage();
+                    };
+                }
+                else
+                {
+                    var clickable = MakeButton(buttonActor, ">>");
+                    clickable.OnClick += (mb) =>
+                    {
+                        NextPage();
+                    };
+                }
+
+                i++;
             }
 
+            return layoutActors;
         }
 
         private void CreateSelectorCell(LayoutActors layoutActors, string itemName, ITemplate template, TooltipText tooltip)
