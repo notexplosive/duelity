@@ -82,27 +82,27 @@ namespace Duel.Data
             var templateLibrary = new TemplateLibrary();
 
             // Props
-            templateLibrary.AddTemplate("large_cactus", new PropTemplate("props_large_cactus"));
-            templateLibrary.AddTemplate("house", new PropTemplate("props_house"));
-            templateLibrary.AddTemplate("large_rock", new PropTemplate("props_large_rock"));
-            templateLibrary.AddTemplate("sloon", new PropTemplate("props_sloon"));
-            templateLibrary.AddTemplate("small_cactus", new PropTemplate("props_small_cactus"));
-            templateLibrary.AddTemplate("small_rock", new PropTemplate("props_small_rock"));
-            templateLibrary.AddTemplate("thistown_sign", new PropTemplate("props_thistown_sign"));
-            templateLibrary.AddTemplate("aloe", new PropTemplate("props_aloe"));
-            templateLibrary.AddTemplate("barn", new PropTemplate("props_barn"));
-            templateLibrary.AddTemplate("conveyor", new PropTemplate("props_conveyor"));
-            templateLibrary.AddTemplate("crates", new PropTemplate("props_crates"));
-            templateLibrary.AddTemplate("horse", new PropTemplate("props_horse"));
-            templateLibrary.AddTemplate("house_2", new PropTemplate("props_house_2"));
-            templateLibrary.AddTemplate("machinery", new PropTemplate("props_machinery"));
-            templateLibrary.AddTemplate("palm_tree", new PropTemplate("props_palm_tree"));
+            templateLibrary.AddTemplate("large_cactus", new PropTemplate("props_large_cactus", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("house", new PropTemplate("props_house", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("large_rock", new PropTemplate("props_large_rock", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("sloon", new PropTemplate("props_sloon", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("small_cactus", new PropTemplate("props_small_cactus", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("small_rock", new PropTemplate("props_small_rock", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("thistown_sign", new PropTemplate("props_thistown_sign", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("aloe", new PropTemplate("props_aloe", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("barn", new PropTemplate("props_barn", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("conveyor", new PropTemplate("props_conveyor", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("crates", new PropTemplate("props_crates", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("horse", new PropTemplate("props_horse", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("house_2", new PropTemplate("props_house_2", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("machinery", new PropTemplate("props_machinery", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("palm_tree", new PropTemplate("props_palm_tree", PropTemplate.PropLayeringRule.Front));
 
             // Props that appear below entities
-            templateLibrary.AddTemplate("city_limits", new PropTemplate("props_city_limits"));
-            templateLibrary.AddTemplate("wave1", new PropTemplate("props_wave1"));
-            templateLibrary.AddTemplate("wave2", new PropTemplate("props_wave2"));
-            templateLibrary.AddTemplate("wave3", new PropTemplate("props_wave3"));
+            templateLibrary.AddTemplate("city_limits", new PropTemplate("props_city_limits", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("wave1", new PropTemplate("props_wave1", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("wave2", new PropTemplate("props_wave2", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("wave3", new PropTemplate("props_wave3", PropTemplate.PropLayeringRule.Behind));
 
             // Tiles
             templateLibrary.AddTemplate("empty_tile", new TileTemplate());

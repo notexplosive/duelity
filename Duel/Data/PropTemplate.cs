@@ -5,12 +5,20 @@ namespace Duel.Data
 {
     public class PropTemplate : ITemplate
     {
-        public PropTemplate(string imageName)
+        public enum PropLayeringRule
+        {
+            Behind,
+            Front
+        }
+
+        public PropTemplate(string imageName, PropLayeringRule layeringRule)
         {
             Texture = MachinaClient.Assets.GetTexture(imageName);
+            LayeringRule = layeringRule;
         }
 
         public Texture2D Texture { get; }
+        public PropLayeringRule LayeringRule { get; }
 
         public TagCollection Tags => new TagCollection();
 

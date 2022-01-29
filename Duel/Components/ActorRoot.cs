@@ -66,9 +66,17 @@ namespace Duel.Components
         {
             var propActor = transform.AddActorAsChild("Prop");
             propActor.transform.LocalPosition = worldPosition;
-            propActor.transform.LocalDepth -= 250;
             var boundingRect = new BoundingRect(propActor, Point.Zero);
             new TextureRenderer(propActor, propTemplate.Texture).SetupBoundingRect();
+
+            if (propTemplate.LayeringRule == PropTemplate.PropLayeringRule.Front)
+            {
+                propActor.transform.LocalDepth -= 250;
+            }
+            else
+            {
+                propActor.transform.LocalDepth += 20;
+            }
 
             propActor.transform.LocalPosition -= boundingRect.SizeF / 2;
 
