@@ -17,7 +17,7 @@ namespace DuelEditor
             var gameScene = SceneLayers.AddNewScene();
             var game = new Sokoban(gameScene);
 
-            game.StartFresh();
+            game.StartFresh(ZoneTileset.Thistown);
             new EditorCore(SceneLayers.AddNewScene(), game);
         }
     }

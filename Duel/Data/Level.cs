@@ -21,6 +21,8 @@ namespace Duel.Data
         public event Action<Point, Point> RoomTransitionAttempted;
         public event Action<Entity, Entity, Point> RoomTransitionFinished;
 
+        public ZoneTileset ZoneTileset = ZoneTileset.Thistown;
+
         private readonly List<Entity> entities = new List<Entity>();
 
         private readonly Dictionary<Point, TileTemplate> tileMap = new Dictionary<Point, TileTemplate>();

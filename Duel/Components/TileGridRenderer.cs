@@ -38,23 +38,10 @@ namespace Duel.Components
                 TileFrame.Bramble0,
                 TileFrame.Bramble1,
             };
+
+
             this.groundTiles = new TileFrame[] {
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor0,
-                TileFrame.Floor1,
-                TileFrame.Floor2,
-                TileFrame.Floor3,
-                TileFrame.Floor4
+                level.ZoneTileset == ZoneTileset.Mines ? TileFrame.Minefloor : TileFrame.Floor0
             };
 
         }
@@ -92,7 +79,19 @@ namespace Duel.Components
                 switch (imageTag.Image)
                 {
                     case TileImageTag.TileImage.Wall:
-                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Wall, realPos, tileDepth, color);
+                        var wall = TileFrame.Wall;
+
+                        if (this.level.ZoneTileset == ZoneTileset.Oasis)
+                        {
+                            wall = TileFrame.OasisWall;
+                        }
+
+                        if (this.level.ZoneTileset == ZoneTileset.Mines)
+                        {
+                            wall = TileFrame.Minewall;
+                        }
+
+                        this.tilesheet.DrawFrame(spriteBatch, (int)wall, realPos, tileDepth, color);
                         DrawFloorTile(spriteBatch, color, realPos, location, floorDepth);
                         break;
                     case TileImageTag.TileImage.Hook:

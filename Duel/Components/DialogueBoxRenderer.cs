@@ -120,7 +120,7 @@ namespace Duel.Components
 
                 void DrawSpeakerName(Color color, Vector2 offset, Depth depthOffset)
                 {
-                    spriteBatch.DrawString(this.font, say.Speaker.Name, bakedLayout.GetNode("speaker-name").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition - new Vector2(20, this.font.LineSpacing / 2) + offset + new Vector2(this.namePositionX.CurrentValue, 0), color, 0, Vector2.Zero, 1f, SpriteEffects.None, new Depth(50) + depthOffset);
+                    spriteBatch.DrawString(this.font, say.Speaker.Name, bakedLayout.GetNode("speaker-name").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition + new Vector2(20, -this.font.LineSpacing / 2) + offset + new Vector2(this.namePositionX.CurrentValue, 0), color, 0, Vector2.Zero, 1f, SpriteEffects.None, new Depth(50) + depthOffset);
                 }
 
                 DrawSpeakerName(Color.White, Vector2.Zero, 0);

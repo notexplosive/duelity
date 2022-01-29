@@ -6,13 +6,23 @@ using System.Text;
 
 namespace Duel.Data
 {
+    public enum ZoneTileset
+    {
+        Thistown,
+        Oasis,
+        Mines
+    }
+
     public class Chapter
     {
-        public Chapter(string levelName, PlayerTag.Type player, Conversation conversationOnStartup)
+        private readonly ZoneTileset zoneTileset;
+
+        public Chapter(string levelName, PlayerTag.Type player, ZoneTileset zoneTileset, Conversation conversationOnStartup)
         {
             LevelName = levelName;
             Player = player;
             ConversationOnStartup = conversationOnStartup;
+            this.zoneTileset = zoneTileset;
         }
 
         public string LevelName { get; }
@@ -21,7 +31,7 @@ namespace Duel.Data
 
         public void Load(Scene scene)
         {
-            var game = new Sokoban(scene);
+            var game = new Sokoban(scene, this.zoneTileset);
             game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>(LevelName), Player);
             game.StartDialogue(ConversationOnStartup);
         }

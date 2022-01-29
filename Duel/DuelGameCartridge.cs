@@ -70,9 +70,9 @@ namespace Duel
 
             // Chapter sequence for the whole game
             this.chapters = new List<Chapter>();
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, level1LaunchConvo));
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, level2LaunchConvo));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, /*should be something else*/level2LaunchConvo));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, level1LaunchConvo));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, level2LaunchConvo));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, /*should be something else*/level2LaunchConvo));
             // todo: the rest of them
         }
 

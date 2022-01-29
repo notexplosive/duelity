@@ -52,11 +52,12 @@ namespace Duel.Data
             ReloadLevelAndPutPlayerAtPosition(SavedPlayerPosition.Value, SavedPlayerPosition.Value);
         }
 
-        public Sokoban(Scene scene)
+        public Sokoban(Scene scene, ZoneTileset zoneTileset = ZoneTileset.Thistown)
         {
+
             this.templateLibraryWithPlayers = TemplateLibrary.BuildWithPlayers();
             Scene = scene;
-            StartFresh();
+            StartFresh(zoneTileset);
         }
 
         public void PlayLevel(LevelData levelData, PlayerTag.Type playerCharacter)
@@ -179,11 +180,12 @@ namespace Duel.Data
             }
         }
 
-        public void StartFresh()
+        public void StartFresh(ZoneTileset zoneTileset)
         {
             this.rootActor?.Delete();
 
             CurrentLevel = new Level();
+            CurrentLevel.ZoneTileset = zoneTileset;
             CurrentLevel.ConversationStarted += RunConversationFromScreenplay;
             CurrentLevel.RoomTransitionAttempted += DoRoomTransitionIfApplicable;
             CurrentLevel.GoToNextLevel += AdvanceToNextLevel;
