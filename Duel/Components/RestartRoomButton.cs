@@ -34,7 +34,7 @@ namespace Duel.Components
         {
             if (key == Keys.R && modifiers.None && state == ButtonState.Pressed && launchCooldown < 0 && this.entity.BusySignal.IsFree())
             {
-                this.game.ReloadLevelAndPutPlayerAtPosition(this.game.SavedPlayerPosition.Value, this.game.SavedPlayerPosition.Value);
+                this.game.RestartRoom();
             }
         }
     }

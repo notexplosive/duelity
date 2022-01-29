@@ -42,6 +42,11 @@ namespace Duel.Data
             }
         }
 
+        public void RestartRoom()
+        {
+            ReloadLevelAndPutPlayerAtPosition(SavedPlayerPosition.Value, SavedPlayerPosition.Value);
+        }
+
         public Sokoban(Scene scene)
         {
             Scene = scene;

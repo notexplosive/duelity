@@ -13,19 +13,21 @@ namespace Duel.Components
         private readonly BufferedKeyboardListener keyboard;
         private readonly Entity entity;
         private readonly LevelSolidProvider solidProvider;
+        private readonly Sokoban game;
 
-        public CowboyMovement(Actor actor, Entity entity, LevelSolidProvider solidProvider) : base(actor)
+        public CowboyMovement(Actor actor, Entity entity, LevelSolidProvider solidProvider, Sokoban game) : base(actor)
         {
             this.keyboard = RequireComponent<BufferedKeyboardListener>();
             this.entity = entity;
             this.solidProvider = solidProvider;
-            this.keyboard.LeftPressed += Move(Direction.Left, true);
-            this.keyboard.RightPressed += Move(Direction.Right, true);
-            this.keyboard.DownPressed += Move(Direction.Down, true);
-            this.keyboard.UpPressed += Move(Direction.Up, true);
+            this.game = game;
+            this.keyboard.LeftPressed += Move(Direction.Left);
+            this.keyboard.RightPressed += Move(Direction.Right);
+            this.keyboard.DownPressed += Move(Direction.Down);
+            this.keyboard.UpPressed += Move(Direction.Up);
         }
 
-        private Action Move(Direction direction, bool wasInitiatedByKeyboard)
+        private Action Move(Direction direction)
         {
             return
                 () =>
@@ -50,8 +52,39 @@ namespace Duel.Components
                     this.entity.ChargeToPosition(chargeHit.StandingPosition, chargeHit.Direction);
                     yield return new WaitUntil(() => this.entity.BusySignal.Exists("ChargeTween"));
                     yield return new WaitUntil(this.entity.BusySignal.GetSpecific("ChargeTween").IsFree);
+
+                    if (this.solidProvider.HasTagAt<UnfilledWater>(this.entity.Position))
+                    {
+                        // play splash sound
+                    }
+
+                    if (this.solidProvider.HasTagAt<Ravine>(this.entity.Position))
+                    {
+                        // play fall down ravine sound
+                        break;
+                    }
                 }
                 this.solidProvider.ApplyHitAt(chargeHit.RammedPosition, chargeHit.Direction);
+            }
+
+            var fellInWater = this.solidProvider.HasTagAt<UnfilledWater>(this.entity.Position);
+            var fellInRavine = this.solidProvider.HasTagAt<Ravine>(this.entity.Position);
+
+            if (fellInWater || fellInRavine)
+            {
+                this.actor.Visible = false;
+
+                if (fellInWater)
+                {
+                    // play gloop sound
+                    yield return new WaitSeconds(1f);
+                }
+
+                if (fellInRavine)
+                {
+                    yield return new WaitSeconds(1f);
+                }
+                this.game.RestartRoom();
             }
         }
 

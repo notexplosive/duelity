@@ -221,7 +221,7 @@ namespace Duel.Components
                     if (playerTag.MovementType == PlayerTag.Type.Cowboy)
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
-                        this.playerMovementComponent = new CowboyMovement(entityActor, entity, new LevelSolidProvider(this.level));
+                        this.playerMovementComponent = new CowboyMovement(entityActor, entity, new LevelSolidProvider(this.level), this.game);
 
                         if (!Sokoban.Headless)
                         {

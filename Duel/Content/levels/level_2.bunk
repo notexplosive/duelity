@@ -137,6 +137,9 @@ tile wall 11,-6
 tile wall 12,-6
 tile wall 13,-5
 tile wall 4,-8
+tile ravine 9,-4
+tile ravine 10,-4
+tile water 9,-1
 entt spawn-bennigan 3,7
 entt crate 3,4
 entt spawn-steven 5,7
