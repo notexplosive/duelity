@@ -40,7 +40,8 @@ namespace Duel.Components
                 var offset2 = this.movement.LongLeg.Previous.ToPoint();
                 var possibleLandingSpots = new Point[] {
                     this.entity.Position + longLeg + offset1,
-                    this.entity.Position + longLeg + offset2
+                    this.entity.Position + longLeg + offset2,
+                    this.entity.Position
                 };
 
                 foreach (var spot in possibleLandingSpots)

@@ -24,6 +24,7 @@ namespace Duel.Components
         private readonly IFrameAnimation landingAnimation;
         private TweenAccessors<float> knightHeightTweenable;
         private TweenChain tween;
+        private float timer;
 
         public KnightCharacterRenderer(Actor actor) : base(actor)
         {
@@ -80,6 +81,7 @@ namespace Duel.Components
 
             this.spriteRenderer.SetAnimation(this.hoverAnimation);
 
+            this.timer = 0;
             this.tween.Clear();
             this.tween.AppendFloatTween(10, 0.25f, EaseFuncs.CubicEaseIn, this.knightHeightTweenable);
         }
@@ -92,6 +94,7 @@ namespace Duel.Components
 
         public override void Update(float dt)
         {
+            this.timer += dt * 5;
             BindSpritePosToRenderOffset();
             this.tween.Update(dt);
 
@@ -109,7 +112,12 @@ namespace Duel.Components
 
         private Vector2 RenderOffset()
         {
-            return -this.renderInfo.renderOffsetTweenable.getter() + new Vector2(0, this.knightHeightTweenable.getter());
+            return -this.renderInfo.renderOffsetTweenable.getter() + new Vector2(0, this.knightHeightTweenable.getter()) + LongLegOffset();
+        }
+
+        private Vector2 LongLegOffset()
+        {
+            return -this.knightMovement.LongLeg.ToGridCellSizedVector() * 4 * EaseFuncs.EaseOutBack(Math.Clamp(this.timer, 0, 1));
         }
     }
 }

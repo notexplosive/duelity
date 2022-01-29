@@ -66,6 +66,7 @@ namespace Duel.Components
                         if (!this.solidProvider.IsNotWalkableAt(this.entity, targetPosition))
                         {
                             MoveComplete?.Invoke();
+                            this.entity.WarpToPosition(this.entity.Position + LongLeg.ToPoint() + LongLeg.ToPoint());
                             this.entity.JumpToPosition(targetPosition);
                         }
                         else
