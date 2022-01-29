@@ -17,7 +17,7 @@ namespace Duel.Components
         private float timer;
         private int letterIndex;
 
-        public event Action StartedRun;
+        public event Action<IDialogEvent> StartedRun;
         public IDialogEvent PendingEvent { get; private set; }
         public string CurrentText { get; private set; } = "";
 
@@ -64,7 +64,7 @@ namespace Duel.Components
 
         internal void Run(IDialogEvent pendingAction)
         {
-            StartedRun?.Invoke();
+            StartedRun?.Invoke(pendingAction);
             this.letterIndex = 0;
             PendingEvent = pendingAction;
         }

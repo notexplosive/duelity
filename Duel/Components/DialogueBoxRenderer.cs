@@ -4,6 +4,7 @@ using Machina.Components;
 using Machina.Data;
 using Machina.Data.Layout;
 using Machina.Engine;
+using Machina.ThirdParty;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -17,10 +18,15 @@ namespace Duel.Components
     {
         private readonly BakedLayout bakedLayout;
         private readonly DialogueRunner dialogueRunner;
-        private BoundedTextRenderer textRenderer;
-        private SpriteSheet portraitSheet;
-        private SpriteFont font;
-
+        private readonly BoundedTextRenderer textRenderer;
+        private readonly SpriteSheet portraitSheet;
+        private readonly SpriteFont font;
+        private TweenAccessors<float> faceHeight;
+        private TweenAccessors<float> namePositionX;
+        private TweenChain faceTween;
+        private TweenChain nameTween;
+        private string cachedName;
+        private int cachedPortraitIndex;
 
         public DialogueBoxRenderer(Actor actor) : base(actor)
         {
@@ -57,16 +63,47 @@ namespace Duel.Components
             MachinaClient.Print(bakedLayout.GetNode("text").PositionRelativeToRoot);
 
             new LayoutActors(actor.scene, layout);
+
+
+            this.faceHeight = new TweenAccessors<float>(0);
+            this.namePositionX = new TweenAccessors<float>(0);
+
+            this.faceTween = new TweenChain()
+                .AppendFloatTween(-10f, 0.15f, EaseFuncs.QuadraticEaseOut, this.faceHeight)
+                .AppendFloatTween(0f, 0.15f, EaseFuncs.QuadraticEaseIn, this.faceHeight);
+
+            this.nameTween = new TweenChain();
+
+            this.nameTween = new TweenChain()
+                .AppendFloatTween(10f, 0.10f, EaseFuncs.CubicEaseIn, this.namePositionX)
+                .AppendFloatTween(0f, 0.10f, EaseFuncs.CubicEaseIn, this.namePositionX);
         }
 
-        private void ClearText()
+        private void ClearText(IDialogEvent dialogEvent)
         {
-            this.textRenderer.Text = "Test";
+            if (dialogEvent is Say say)
+            {
+                this.textRenderer.Text = "";
+
+                if (this.cachedName != say.Speaker.Name)
+                {
+                    this.nameTween.Refresh();
+                }
+
+                if (this.cachedPortraitIndex != say.Speaker.PortraitIndex)
+                {
+                    this.faceTween.Refresh();
+                }
+
+                this.cachedName = say.Speaker.Name;
+                this.cachedPortraitIndex = say.Speaker.PortraitIndex;
+            }
         }
 
         public override void Update(float dt)
         {
-
+            this.faceTween.Update(dt);
+            this.nameTween.Update(dt);
         }
 
 
@@ -79,12 +116,11 @@ namespace Duel.Components
                 dialogBox.Location += this.actor.scene.camera.UnscaledPosition.ToPoint();
 
                 spriteBatch.FillRectangle(dialogBox, new Color(10, 10, 10), new Depth(100));
-                this.portraitSheet.DrawFrame(spriteBatch, say.Speaker.PortraitIndex, bakedLayout.GetNode("speaker-face").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition + new Vector2(64), new Depth(50));
-
+                this.portraitSheet.DrawFrame(spriteBatch, say.Speaker.PortraitIndex, bakedLayout.GetNode("speaker-face").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition + new Vector2(64) + new Vector2(0, this.faceHeight.CurrentValue), new Depth(50));
 
                 void DrawSpeakerName(Color color, Vector2 offset, Depth depthOffset)
                 {
-                    spriteBatch.DrawString(this.font, say.Speaker.Name, bakedLayout.GetNode("speaker-name").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition - new Vector2(0, this.font.LineSpacing / 2) + offset, color, 0, Vector2.Zero, 1f, SpriteEffects.None, new Depth(50) + depthOffset);
+                    spriteBatch.DrawString(this.font, say.Speaker.Name, bakedLayout.GetNode("speaker-name").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition - new Vector2(20, this.font.LineSpacing / 2) + offset + new Vector2(this.namePositionX.CurrentValue, 0), color, 0, Vector2.Zero, 1f, SpriteEffects.None, new Depth(50) + depthOffset);
                 }
 
                 DrawSpeakerName(Color.White, Vector2.Zero, 0);

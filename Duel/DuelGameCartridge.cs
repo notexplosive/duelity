@@ -62,7 +62,7 @@ namespace Duel
                 {
                     new Say(Speaker.SheriffNormal, "Tarnation's gonna be a pretty long walk. Guess I better get walking."),
                     new Say(Speaker.SheriffNormal, "Oh I just remembered! I can press R to restart levels."),
-                    new Say(Speaker.SheriffSpooked, "Unless there are any heavy barrels or anvils that I can't grapple to."),
+                    new Say(Speaker.SheriffSpooked, "Unless there are any heavy barrels or anvils that I can't grapple onto."),
                 });
 
 
