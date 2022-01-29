@@ -327,6 +327,7 @@ namespace Duel.Data
         }
     }
 
+    // this keys into the npc spritesheet
     public enum NpcSprite
     {
         Sar,
@@ -334,10 +335,35 @@ namespace Duel.Data
 
     public class NpcTag : Tag
     {
+        private readonly string sheriffConvoKey;
+        private readonly string renegadeConvoKey;
+        private readonly string cowboyConvoKey;
+        private readonly string knightConvoKey;
 
         public NpcTag(NpcSprite sprite, string sheriffConvoKey, string renegadeConvoKey, string cowboyConvoKey, string knightConvoKey)
         {
             Sprite = sprite;
+            this.sheriffConvoKey = sheriffConvoKey;
+            this.renegadeConvoKey = renegadeConvoKey;
+            this.cowboyConvoKey = cowboyConvoKey;
+            this.knightConvoKey = knightConvoKey;
+        }
+
+        public string GetConversationKey(PlayerTag.Type type)
+        {
+            switch (type)
+            {
+                case PlayerTag.Type.Sheriff:
+                    return sheriffConvoKey;
+                case PlayerTag.Type.Renegade:
+                    return renegadeConvoKey;
+                case PlayerTag.Type.Cowboy:
+                    return cowboyConvoKey;
+                case PlayerTag.Type.Knight:
+                    return knightConvoKey;
+            }
+
+            throw new System.Exception("pththppppththphh");
         }
 
         public NpcSprite Sprite { get; }

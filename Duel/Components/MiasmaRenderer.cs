@@ -19,6 +19,7 @@ namespace Duel.Components
 
         public MiasmaRenderer(Actor actor) : base(actor)
         {
+            RequireComponent<EntityRenderInfo>().DisableDebugGraphic();
             this.spriteFrame = new SpriteFrame(MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("entities-sheet"), (int)EntityFrame.Miasma);
             this.random = new NoiseBasedRNG((uint)MachinaClient.RandomDirty.Next());
         }

@@ -184,6 +184,7 @@ namespace Duel.Data
             this.rootActor?.Delete();
 
             CurrentLevel = new Level();
+            CurrentLevel.ConversationStarted += RunConversationFromScreenplay;
             CurrentLevel.RoomTransitionAttempted += DoRoomTransitionIfApplicable;
             CurrentLevel.GoToNextLevel += AdvanceToNextLevel;
 
@@ -201,6 +202,9 @@ namespace Duel.Data
         private void AdvanceToNextLevel()
         {
             CurrentLevel.GoToNextLevel -= AdvanceToNextLevel;
+            CurrentLevel.ConversationStarted -= RunConversationFromScreenplay;
+            CurrentLevel.RoomTransitionAttempted -= DoRoomTransitionIfApplicable;
+
             var sceneLayers = Scene.sceneLayers;
             sceneLayers.RemoveScene(Scene);
 
@@ -235,6 +239,11 @@ namespace Duel.Data
                 }
             }
             return data;
+        }
+
+        public void RunConversationFromScreenplay(string key)
+        {
+            StartDialogue(DuelGameCartridge.Instance.Screenplay.GetConversation(key));
         }
 
         public void SetRootActorPosition(Vector2 position)

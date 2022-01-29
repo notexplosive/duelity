@@ -24,6 +24,8 @@ namespace Duel.Components
 
         public DialogueBoxRenderer(Actor actor) : base(actor)
         {
+            this.font = MachinaClient.Assets.GetSpriteFont("DialogueFont");
+
             this.dialogueRunner = RequireComponent<DialogueRunner>();
             this.dialogueRunner.StartedRun += ClearText;
 
@@ -31,18 +33,17 @@ namespace Duel.Components
                 LayoutNode.StretchedSpacer(),
                 LayoutNode.HorizontalParent("dialogueBox", LayoutSize.StretchedHorizontally(200), new LayoutStyle(margin: new Point(20, 20), padding: 15),
                     LayoutNode.VerticalParent("speaker", LayoutSize.StretchedVertically(128), new LayoutStyle(padding: 5),
-                        LayoutNode.Leaf("speaker-face", LayoutSize.Pixels(128, 128)),
-                        LayoutNode.Leaf("speaker-name", LayoutSize.StretchedBoth())
+                        LayoutNode.Leaf("speaker-face", LayoutSize.Pixels(128, 128))
                     ),
                     LayoutNode.Leaf("text", LayoutSize.StretchedBoth())
-                )
+                ),
+                LayoutNode.Leaf("speaker-name", LayoutSize.StretchedHorizontally(this.font.LineSpacing))
             );
 
             this.bakedLayout = layout.Bake();
 
             var child = this.actor.transform.AddActorAsChild("textActor");
 
-            this.font = MachinaClient.Assets.GetSpriteFont("DialogueFont");
 
             new BoundingRect(actor, bakedLayout.GetNode("text").Size);
             this.textRenderer = new BoundedTextRenderer(actor, "Hello world", this.font, Color.White);
@@ -79,10 +80,18 @@ namespace Duel.Components
 
                 spriteBatch.FillRectangle(dialogBox, Color.Black, new Depth(100));
                 this.portraitSheet.DrawFrame(spriteBatch, say.Speaker.PortraitIndex, bakedLayout.GetNode("speaker-face").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition + new Vector2(64), new Depth(50));
-                spriteBatch.DrawString(this.font, say.Speaker.Name, bakedLayout.GetNode("speaker-name").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, new Depth(50));
 
-                this.textRenderer.Text = this.dialogueRunner.CurrentText;
+
+                void DrawSpeakerName(Color color, Vector2 offset, Depth depthOffset)
+                {
+                    spriteBatch.DrawString(this.font, say.Speaker.Name, bakedLayout.GetNode("speaker-name").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition - new Vector2(0, this.font.LineSpacing / 2) + offset, color, 0, Vector2.Zero, 1f, SpriteEffects.None, new Depth(50) + depthOffset);
+                }
+
+                DrawSpeakerName(Color.White, Vector2.Zero, 0);
+                DrawSpeakerName(Color.Black, new Vector2(3), 1);
             }
+
+            this.textRenderer.Text = this.dialogueRunner.CurrentText;
         }
     }
 }

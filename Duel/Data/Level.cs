@@ -14,6 +14,7 @@ namespace Duel.Data
         public event Action TilemapChanged;
         public event Action<Vector2, PropTemplate> PropAdded;
         public event Action GoToNextLevel;
+        public event Action<string> ConversationStarted;
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
         public event Action RemoveAllProps;
@@ -230,6 +231,29 @@ namespace Duel.Data
             FillWaterIfApplicable(stepper, position);
 
             TransitionLevelIfApplicable(stepper, position);
+
+            TalkToNpcIfApplicable(stepper, position);
+        }
+
+        private void TalkToNpcIfApplicable(Entity stepper, Point position)
+        {
+            foreach (var entity in AllEntities())
+            {
+                if (entity.Tags.TryGetTag(out NpcTag npcTag))
+                {
+                    if (Math.Abs(entity.Position.X - position.X) <= 1 && Math.Abs(entity.Position.Y - position.Y) <= 1) // is within one square
+                    {
+                        if (stepper.Tags.TryGetTag(out PlayerTag player))
+                        {
+                            var key = npcTag.GetConversationKey(player.MovementType);
+                            if (!DuelGameCartridge.Instance.Screenplay.HasConversationAlreadyHappened(key))
+                            {
+                                ConversationStarted?.Invoke(key);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void TransitionLevelIfApplicable(Entity stepper, Point position)

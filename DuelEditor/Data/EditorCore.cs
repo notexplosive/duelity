@@ -277,7 +277,11 @@ namespace DuelEditor.Data
 
             foreach (var tag in template.Tags)
             {
-                if (tag is TileImageTag imageTag)
+                if (tag is NpcTag npcTag)
+                {
+                    new NpcImageRenderer(gridItemActor, npcTag.Sprite);
+                }
+                else if (tag is TileImageTag imageTag)
                 {
                     new TileImageRenderer(gridItemActor, imageTag.Image);
                 }

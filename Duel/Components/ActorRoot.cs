@@ -178,6 +178,13 @@ namespace Duel.Components
                         new SimpleEntityRenderer(entityActor, EntityFrameSet.KeyDoor(keyDoor.Color), entity);
                     }
                 }
+                else if (tag is NpcTag npcTag)
+                {
+                    if (!Sokoban.Headless)
+                    {
+                        new NpcRenderer(entityActor, npcTag.Sprite);
+                    }
+                }
                 else if (tag is LeverImageTag leverImage)
                 {
                     if (!Sokoban.Headless)

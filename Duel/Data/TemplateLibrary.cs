@@ -127,7 +127,7 @@ namespace Duel.Data
             templateLibrary.AddTemplate("hook", new TileTemplate(new Grapplable(Grapplable.Type.Static), new TileImageTag(TileImageTag.TileImage.Hook)));
 
             // NPCs
-            templateLibrary.AddTemplate("sar", new EntityTemplate(new NpcTag(NpcSprite.Sar, "sheriff_convo", "renegade_convo", "cowboy_convo", "knight_convo")));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.Sar, "sar_sheriff", "sar_renegade", "sar_cowboy", "sar_knight"));
 
             // Entities
             templateLibrary.AddTemplate("glass", new EntityTemplate(
@@ -239,6 +239,11 @@ namespace Duel.Data
             }
 
             return templateLibrary;
+        }
+
+        private void AddNpc(NpcTag npcTag)
+        {
+            AddTemplate("sar", new EntityTemplate(npcTag, new Solid()));
         }
 
         public IEnumerable<ITemplate> GetAllTemplates()
