@@ -78,7 +78,7 @@ namespace Duel.Components
                 var dialogBox = bakedLayout.GetNode("dialogueBox").Rectangle;
                 dialogBox.Location += this.actor.scene.camera.UnscaledPosition.ToPoint();
 
-                spriteBatch.FillRectangle(dialogBox, Color.Black, new Depth(100));
+                spriteBatch.FillRectangle(dialogBox, new Color(10, 10, 10), new Depth(100));
                 this.portraitSheet.DrawFrame(spriteBatch, say.Speaker.PortraitIndex, bakedLayout.GetNode("speaker-face").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition + new Vector2(64), new Depth(50));
 
 

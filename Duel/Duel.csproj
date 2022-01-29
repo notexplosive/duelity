@@ -32,5 +32,10 @@
     <ProjectReference Include="..\machina\Machina\Machina.csproj" />
     <ProjectReference Include="..\machina\MachinaDesktop\MachinaDesktop.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\screenplay.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="..\machina\MachinaAssets\MachinaAssets.projitems" Label="Shared" />
 </Project>

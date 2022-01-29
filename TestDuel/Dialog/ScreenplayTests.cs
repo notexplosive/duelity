@@ -3,6 +3,7 @@ using Duel.Data;
 using Duel.Data.Dialog;
 using FluentAssertions;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TestDuel.Dialog
 {
@@ -11,7 +12,8 @@ namespace TestDuel.Dialog
         [Fact]
         public void happy_path()
         {
-            Screenplay screenplay = new Screenplay("Content/test_dialog.tsv");
+            var text = File.OpenText("Content/test_dialog.tsv");
+            Screenplay screenplay = new Screenplay(text.ReadToEnd());
 
 
             screenplay.GetConversation("test_conversation").Should().BeEquivalentTo(new Conversation(new List<IDialogEvent> {

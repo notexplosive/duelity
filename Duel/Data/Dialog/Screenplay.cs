@@ -14,14 +14,13 @@ namespace Duel.Data.Dialog
             // empty constructor to make testing easier
         }
 
-        public Screenplay(string screenplayFilePath)
+        public Screenplay(string screenplayFileContent)
         {
-            StreamReader reader = File.OpenText(screenplayFilePath);
             string currentConversationName = "";
             List<IDialogEvent> currentConversationEventList = null;
-            while (!reader.EndOfStream)
+            var lines = screenplayFileContent.Split('\n');
+            foreach (var line in lines)
             {
-                string line = reader.ReadLine();
                 if (line != "")
                 {
                     string[] parts = line.Split("\t");
