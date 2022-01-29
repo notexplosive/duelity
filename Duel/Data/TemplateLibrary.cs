@@ -89,6 +89,20 @@ namespace Duel.Data
             templateLibrary.AddTemplate("small_cactus", new PropTemplate("props_small_cactus"));
             templateLibrary.AddTemplate("small_rock", new PropTemplate("props_small_rock"));
             templateLibrary.AddTemplate("thistown_sign", new PropTemplate("props_thistown_sign"));
+            templateLibrary.AddTemplate("aloe", new PropTemplate("props_aloe"));
+            templateLibrary.AddTemplate("barn", new PropTemplate("props_barn"));
+            templateLibrary.AddTemplate("conveyor", new PropTemplate("props_conveyor"));
+            templateLibrary.AddTemplate("crates", new PropTemplate("props_crates"));
+            templateLibrary.AddTemplate("horse", new PropTemplate("props_horse"));
+            templateLibrary.AddTemplate("house_2", new PropTemplate("props_house_2"));
+            templateLibrary.AddTemplate("machinery", new PropTemplate("props_machinery"));
+            templateLibrary.AddTemplate("palm_tree", new PropTemplate("props_palm_tree"));
+
+            // Props that appear below entities
+            templateLibrary.AddTemplate("city_limits", new PropTemplate("props_city_limits"));
+            templateLibrary.AddTemplate("wave1", new PropTemplate("props_wave1"));
+            templateLibrary.AddTemplate("wave2", new PropTemplate("props_wave2"));
+            templateLibrary.AddTemplate("wave3", new PropTemplate("props_wave3"));
 
             // Tiles
             templateLibrary.AddTemplate("empty_tile", new TileTemplate());
