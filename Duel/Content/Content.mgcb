@@ -20,8 +20,8 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/DialogueFont.spritefont
 
-#begin fonts/GoldleafBoldPersonal.ttf
-/copy:fonts/GoldleafBoldPersonal.ttf
+#begin fonts/MochiyPopPOne-Regular.ttf
+/copy:fonts/MochiyPopPOne-Regular.ttf
 
 #begin images/characters.png
 /importer:TextureImporter
