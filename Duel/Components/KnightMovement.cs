@@ -15,7 +15,6 @@ namespace Duel.Components
     {
         private readonly SolidProvider solidProvider;
         private readonly Entity entity;
-        private readonly Sokoban game;
         private readonly BufferedKeyboardListener keyboard;
         public Direction LongLeg { get; private set; } = Direction.None;
         public event Action MoveStarted;

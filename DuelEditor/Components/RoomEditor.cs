@@ -156,6 +156,11 @@ namespace DuelEditor.Components
                         spriteBatch.DrawRectangle(new RectangleF(realPos, new Vector2(Grid.TileSize)), Color.Red, 1f, transform.Depth + 5);
                     }
                 }
+
+                if (this.level.GetTileAt(position).Tags.HasTag<ZoneTransitionTrigger>())
+                {
+                    spriteBatch.DrawRectangle(new RectangleF(realPos, new Vector2(Grid.TileSize)), Color.Green, 5f, transform.Depth + 5);
+                }
             }
         }
 

@@ -150,6 +150,10 @@ namespace Duel.Data
         Yellow
     }
 
+    public class ZoneTransitionTrigger : Tag
+    {
+    }
+
     public class EditorImage : Tag
     {
         public EditorImage(EntityFrame frame)

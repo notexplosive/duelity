@@ -43,6 +43,14 @@ namespace Duel.Components
             }
         }
 
+        public override void OnDeleteFinished()
+        {
+            if (!Sokoban.Headless)
+            {
+                this.game.RoomChanged -= MoveCameraToRoom;
+            }
+        }
+
         private void MovePlayerToNewRoom(Entity playerFromPreviousRoom, Entity playerFromCurrentRoom, Point newPlayerPosition)
         {
             this.playerMovementComponent.ResumeMoveFromOldInstance(playerFromPreviousRoom, newPlayerPosition);

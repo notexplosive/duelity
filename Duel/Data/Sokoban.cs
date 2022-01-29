@@ -16,6 +16,9 @@ namespace Duel.Data
         public Point? SavedPlayerPosition { get; private set; }
 
         public Point? CurrentRoomPos { get; set; } = null;
+
+        private TemplateLibrary templateLibraryWithPlayers;
+
         public Scene Scene { get; }
         public Grid Grid { get; private set; }
 
@@ -49,6 +52,7 @@ namespace Duel.Data
 
         public Sokoban(Scene scene)
         {
+            this.templateLibraryWithPlayers = TemplateLibrary.BuildWithPlayers();
             Scene = scene;
             StartFresh();
         }
@@ -92,7 +96,7 @@ namespace Duel.Data
                 // There won't be any player spawners to activate
                 this.previouslyLoadedData.Item1.LoadAndActivatePlayerSpawners(this, this.previouslyLoadedData.Item2);
 
-                var playerTemplate = TemplateLibrary.GetPlayerTemplate(this.previouslyLoadedData.Item2);
+                var playerTemplate = this.templateLibraryWithPlayers.GetPlayerTemplateForMoveType(this.previouslyLoadedData.Item2);
                 var player = CurrentLevel.PutEntityAt(playerPreviousPosition, playerTemplate);
 
                 if (playerPreviousPosition != playerPosition)
@@ -130,7 +134,6 @@ namespace Duel.Data
 
         public void EnterRoom(Point roomPos, Point previousPosition, Point newPosition)
         {
-
             if (CurrentRoomPos != roomPos)
             {
                 SavedPlayerPosition = newPosition;
@@ -146,6 +149,7 @@ namespace Duel.Data
 
             CurrentLevel = new Level();
             CurrentLevel.RoomTransitionAttempted += DoRoomTransitionIfApplicable;
+            CurrentLevel.GoToNextLevel += AdvanceToNextLevel;
 
             this.rootActor = Scene.AddActor("Level");
 
@@ -156,6 +160,17 @@ namespace Duel.Data
             {
                 TileRenderer = new TileGridRenderer(this.rootActor, CurrentLevel);
             }
+        }
+
+        private void AdvanceToNextLevel()
+        {
+            CurrentLevel.GoToNextLevel -= AdvanceToNextLevel;
+            var sceneLayers = Scene.sceneLayers;
+            sceneLayers.RemoveScene(Scene);
+
+            var gameScene = sceneLayers.AddNewScene();
+            var game = DuelGameCartridge.LoadGame(gameScene);
+            game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_1"), PlayerTag.Type.Sheriff);
         }
 
         public Actor FindActor(Entity entity)

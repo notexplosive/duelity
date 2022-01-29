@@ -26,20 +26,31 @@ namespace Duel.Data
             throw new Exception($"Template not found: {templateName}");
         }
 
-        public static EntityTemplate GetPlayerTemplate(PlayerTag.Type type)
+        public EntityTemplate GetPlayerTemplateForMoveType(PlayerTag.Type type)
         {
-            return new EntityTemplate(new PlayerTag(type));
+            switch (type)
+            {
+                case PlayerTag.Type.Sheriff:
+                    return GetTemplate("sheriff") as EntityTemplate;
+                case PlayerTag.Type.Renegade:
+                    return GetTemplate("renegade") as EntityTemplate;
+                case PlayerTag.Type.Cowboy:
+                    return GetTemplate("cowboy") as EntityTemplate;
+                case PlayerTag.Type.Knight:
+                    return GetTemplate("knight") as EntityTemplate;
+            }
 
+            throw new Exception("flrooop");
         }
 
         public static TemplateLibrary BuildWithPlayers()
         {
             var library = Build();
 
-            library.AddTemplate("sheriff", GetPlayerTemplate(PlayerTag.Type.Sheriff));
-            library.AddTemplate("renegade", GetPlayerTemplate(PlayerTag.Type.Renegade));
-            library.AddTemplate("cowboy", GetPlayerTemplate(PlayerTag.Type.Cowboy));
-            library.AddTemplate("knight", GetPlayerTemplate(PlayerTag.Type.Knight));
+            library.AddTemplate("sheriff", new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
+            library.AddTemplate("renegade", new EntityTemplate(new PlayerTag(PlayerTag.Type.Renegade)));
+            library.AddTemplate("cowboy", new EntityTemplate(new PlayerTag(PlayerTag.Type.Cowboy)));
+            library.AddTemplate("knight", new EntityTemplate(new PlayerTag(PlayerTag.Type.Knight)));
 
             return library;
         }
@@ -108,6 +119,7 @@ namespace Duel.Data
             templateLibrary.AddTemplate("empty_tile", new TileTemplate());
             templateLibrary.AddTemplate("wall", new TileTemplate(new Solid(), new TileImageTag(TileImageTag.TileImage.Wall), new BlockProjectileTag()));
             templateLibrary.AddTemplate("invisible_wall", new TileTemplate(new Solid(), new BlockProjectileTag(), new EditorImage(EntityFrame.CrateBreak)));
+            templateLibrary.AddTemplate("next_level_trigger", new TileTemplate(new EditorImage(EntityFrame.BlueKeyBroken), new ZoneTransitionTrigger()));
             templateLibrary.AddTemplate("water", new TileTemplate(new TileImageTag(TileImageTag.TileImage.Water), new UnfilledWater()));
             templateLibrary.AddTemplate("bridge", new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bridge), new Collapses(templateLibrary.GetTileTemplate("water"))));
             templateLibrary.AddTemplate("ravine", new TileTemplate(new TileImageTag(TileImageTag.TileImage.Ravine), new Ravine()));

@@ -13,6 +13,7 @@ namespace Duel.Data
     {
         public event Action TilemapChanged;
         public event Action<Vector2, PropTemplate> PropAdded;
+        public event Action GoToNextLevel;
         public event EntityEvent EntityAdded;
         public event DestroyEvent EntityDestroyRequested;
         public event Action RemoveAllProps;
@@ -227,6 +228,17 @@ namespace Duel.Data
         private void EntityJustSteppedOn(Entity stepper, Point position)
         {
             FillWaterIfApplicable(stepper, position);
+
+            TransitionLevelIfApplicable(stepper, position);
+        }
+
+        private void TransitionLevelIfApplicable(Entity stepper, Point position)
+        {
+            var solidProvider = new LevelSolidProvider(this);
+            if (solidProvider.HasTagAt<ZoneTransitionTrigger>(position) && stepper.Tags.HasTag<PlayerTag>())
+            {
+                GoToNextLevel?.Invoke();
+            }
         }
 
         private void ChangeRoomsIfApplicable(Entity stepper, Point previousPosition, Point position)
