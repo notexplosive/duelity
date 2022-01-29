@@ -19,7 +19,7 @@ namespace Duel.Components
         public NpcImageRenderer(Actor actor, NpcSprite sprite) : base(actor)
         {
             this.npcSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("npcs-sheet");
-            this.frame = (int)sprite;
+            this.frame = (int)sprite * 2;
         }
 
         public override void Update(float dt)

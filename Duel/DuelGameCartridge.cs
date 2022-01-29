@@ -104,7 +104,7 @@ namespace Duel
                 () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("tiles-sheet", () => new GridBasedSpriteSheet("tiles", new Point(64)));
             loader.AddMachinaAssetCallback("entities-sheet", () => new GridBasedSpriteSheet("entities", new Point(64)));
-            loader.AddMachinaAssetCallback("npcs-sheet", () => new GridBasedSpriteSheet("portraits", new Point(64))); // replace with NPCs sheet once we have it
+            loader.AddMachinaAssetCallback("npcs-sheet", () => new GridBasedSpriteSheet("npcs", new Point(64))); // replace with NPCs sheet once we have it
             loader.AddMachinaAssetCallback("portraits", () => new GridBasedSpriteSheet("portraits", new Point(128)));
 
             loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));

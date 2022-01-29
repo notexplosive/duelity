@@ -331,6 +331,18 @@ namespace Duel.Data
     public enum NpcSprite
     {
         Sar,
+        MirandaMom,
+        Farmer,
+        Cactus,
+        Jackalope,
+        EggMan,
+        CoolHair,
+        WhiteDressLady,
+        Miner,
+        Moleman,
+        Mime,
+        FourMan,
+        King
     }
 
     public class NpcTag : Tag
