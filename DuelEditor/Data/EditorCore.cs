@@ -107,7 +107,7 @@ namespace DuelEditor.Data
                         var builder = new WindowBuilder(new Point(960, 540))
                             .OnLaunch((win) =>
                             {
-                                var game = DuelGameCartridge.LoadGame(win.PrimaryScene);
+                                var game = new Sokoban(win.PrimaryScene);
                                 game.PlayLevel(this.saver.GetCurrentLevel(), (PlayerTag.Type)capturedIndex);
                                 win.rootTransform.Depth -= 500;
                                 // HaltControl();
@@ -125,7 +125,7 @@ namespace DuelEditor.Data
             }
 
             var levelIndex = 0;
-            foreach (var levelName in Sokoban.LevelNames)
+            foreach (var levelName in Sokoban.LevelContentNames)
             {
                 var buttonActor = layoutActors.GetActor(levelButtonNodes[levelIndex].Name.Text);
                 var clickable = MakeButton(buttonActor, levelName);

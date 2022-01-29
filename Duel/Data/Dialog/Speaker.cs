@@ -1,11 +1,14 @@
-namespace Duel.Data.Dialog {
+namespace Duel.Data.Dialog
+{
     public class Speaker
     {
 
         // static instances
 
-        public static Speaker getSpeaker(string name) {
-            switch(name) {
+        public static Speaker getSpeaker(string name)
+        {
+            switch (name)
+            {
                 case "SheriffNormal": return SheriffNormal;
                 case "SheriffSpooked": return SheriffSpooked;
                 default: return null;
@@ -40,9 +43,9 @@ namespace Duel.Data.Dialog {
 
         public string Name { get; }
         public int PortraitIndex { get; }
-        
 
-        public Speaker(string name, int portraitIndex)
+
+        private Speaker(string name, int portraitIndex)
         {
             this.Name = name;
             this.PortraitIndex = portraitIndex;

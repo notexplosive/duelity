@@ -1,4 +1,6 @@
 ﻿using Duel.Components;
+using Duel.Data.Dialog;
+using Machina.Data;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
 using System;
@@ -29,7 +31,7 @@ namespace Duel.Data
         // Set to true for tests (ughhhhhhhhhhhhhhhhh)
         public static bool Headless { get; set; }
         public TileGridRenderer TileRenderer { get; private set; }
-        public static IEnumerable<string> LevelNames
+        public static IEnumerable<string> LevelContentNames
         {
             get
             {
@@ -115,6 +117,40 @@ namespace Duel.Data
             }
         }
 
+        public void StartDialogue(Conversation conversation)
+        {
+            var coroutine = Scene.StartCoroutine(ShowDialogueConversation(conversation));
+
+            var busyFunction = new BusyFunction("Dialogue", coroutine.IsDone);
+
+            foreach (var entity in CurrentLevel.AllEntities())
+            {
+                if (entity.Tags.HasTag<PlayerTag>())
+                {
+                    entity.BusySignal.Add(busyFunction);
+                }
+            }
+        }
+
+        private IEnumerator<ICoroutineAction> ShowDialogueConversation(Conversation conversation)
+        {
+            // create dialogue box (layout etc)
+            var actor = Scene.AddActor("Dialogue");
+            var dialogueRunner = new DialogueRunner(actor);
+            new DialogueBoxRenderer(actor);
+
+            foreach (var conversationEvent in conversation.Events)
+            {
+                if (conversationEvent is Say say)
+                {
+                    dialogueRunner.Run(say);
+                    yield return new WaitUntil(dialogueRunner.IsReady);
+                }
+            }
+
+            actor.Destroy();
+        }
+
         private void DoRoomTransitionIfApplicable(Point previousPlayerPosition, Point playerPosition)
         {
             var newRoom = new Room(Room.LevelPosToRoomPos(playerPosition));
@@ -169,8 +205,7 @@ namespace Duel.Data
             sceneLayers.RemoveScene(Scene);
 
             var gameScene = sceneLayers.AddNewScene();
-            var game = DuelGameCartridge.LoadGame(gameScene);
-            game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_1"), PlayerTag.Type.Sheriff);
+            DuelGameCartridge.Instance.GetCurrentChapterAndIncrement().Load(gameScene);
         }
 
         public Actor FindActor(Entity entity)

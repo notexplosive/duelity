@@ -12,8 +12,11 @@ namespace DuelEditor
         {
         }
 
-        protected override void PostLoad(Sokoban game)
+        protected override void LoadGameOrEditor()
         {
+            var gameScene = SceneLayers.AddNewScene();
+            var game = new Sokoban(gameScene);
+
             game.StartFresh();
             new EditorCore(SceneLayers.AddNewScene(), game);
         }

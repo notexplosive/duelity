@@ -1,5 +1,6 @@
 ﻿using Duel.Components;
 using Duel.Data;
+using Duel.Data.Dialog;
 using Machina.Data;
 using Machina.Engine;
 using Machina.Engine.Assets;
@@ -13,35 +14,61 @@ namespace Duel
 {
     public class DuelGameCartridge : GameCartridge
     {
-        public DuelGameCartridge(Point renderResolution /*arg so it can be exposed to the editor*/) : base(renderResolution, ResizeBehavior.KeepAspectRatio)
+        private readonly List<Chapter> chapters = new List<Chapter>();
+        private int chapterIndex = 0;
+
+        public static DuelGameCartridge Instance { get; private set; } // ew i stepped in a singleton
+
+        public DuelGameCartridge(Point renderResolution) : base(renderResolution, ResizeBehavior.KeepAspectRatio)
         {
+            Instance = this;
+            this.chapters = new List<Chapter>();
+
+            // once I have CSVs these can be totally data-driven, but for now here's some inline dialogue for testing
+
+            var level1LaunchConvo = new Conversation(new List<IDialogEvent>
+            {
+                new Say(Speaker.SheriffNormal, "......"),
+
+                new Say(Speaker.SheriffNormal, "Check out my hat..."),
+                new Say(Speaker.SheriffDeepBow, "...do you like it?"),
+                new Say(Speaker.SheriffNormal, "Pretty cool huh?"),
+                new Say(Speaker.SheriffNormal, "...."),
+                new Say(Speaker.SheriffSpooked, "You don't like it?!"),
+            });
+
+            var level2LaunchConvo = new Conversation(new List<IDialogEvent>
+            {
+                new Say(Speaker.SheriffNormal, "Tarnation is about 50 miles north. Guess I better get walking."),
+                new Say(Speaker.SheriffNormal, "As long as I have my trusty Lasso I should have no problem!"),
+                new Say(Speaker.SheriffSpooked, "Unless there are any heavy barrels or anvils that I can't grapple to."),
+            });
+
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, level1LaunchConvo));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, level2LaunchConvo));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, /*should be something else*/level2LaunchConvo));
         }
 
         public override void OnGameLoad(GameSpecification specification, MachinaRuntime runtime)
         {
             SceneLayers.BackgroundColor = Color.Black;
+            LoadGameOrEditor();
+        }
 
+        protected virtual void LoadGameOrEditor()
+        {
             var gameScene = SceneLayers.AddNewScene();
-            var game = LoadGame(gameScene);
-
-            PostLoad(game);
+            GetCurrentChapterAndIncrement().Load(gameScene);
         }
 
-        public static Sokoban LoadGame(Scene gameScene)
+        public Chapter GetCurrentChapterAndIncrement()
         {
-            var game = new Sokoban(gameScene);
-
-            return game;
-        }
-
-        protected virtual void PostLoad(Sokoban game)
-        {
-            game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_1"), PlayerTag.Type.Cowboy);
+            return this.chapters[this.chapterIndex++];
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
         {
-            foreach (var levelName in Sokoban.LevelNames)
+            foreach (var levelName in Sokoban.LevelContentNames)
             {
                 loader.AddMachinaAssetCallback(levelName, () => LevelData.LoadLevelDataFromDisk(levelName));
             }
@@ -50,6 +77,7 @@ namespace Duel
                 () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("tiles-sheet", () => new GridBasedSpriteSheet("tiles", new Point(64)));
             loader.AddMachinaAssetCallback("entities-sheet", () => new GridBasedSpriteSheet("entities", new Point(64)));
+            loader.AddMachinaAssetCallback("portraits", () => new GridBasedSpriteSheet("portraits", new Point(128)));
 
             loader.AddMachinaAssetCallback("ernesto-idle", () => new LinearFrameAnimation(0, 2));
             loader.AddMachinaAssetCallback("ernesto-move", () => new LinearFrameAnimation(2, 1));
