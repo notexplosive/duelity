@@ -103,7 +103,14 @@ namespace Duel.Components
         {
             if (!this.knownDestroyedActors.Contains(entity))
             {
-                new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal, type);
+                if (type == DestroyType.Vanish)
+                {
+                    FindActor(entity).Delete();
+                }
+                else
+                {
+                    new DestroyWhenBusySignalFree(FindActor(entity), entity.BusySignal, type);
+                }
                 this.knownDestroyedActors.Add(entity);
             }
         }
@@ -192,6 +199,7 @@ namespace Duel.Components
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Ernesto);
                             new PlayerDirectionRenderer(entityActor, entity, Color.Crimson);
                             new LassoAnimation(entityActor, entity);
+                            new RestartRoomButton(entityActor, entity, game);
                         }
                     }
 
@@ -206,6 +214,7 @@ namespace Duel.Components
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Miranda);
                             new PlayerDirectionRenderer(entityActor, entity, Color.Purple);
                             new GunAnimation(entityActor, entity, this.grid);
+                            new RestartRoomButton(entityActor, entity, game);
                         }
                     }
 
@@ -217,6 +226,7 @@ namespace Duel.Components
                         if (!Sokoban.Headless)
                         {
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Steven);
+                            new RestartRoomButton(entityActor, entity, game);
                         }
                     }
 
@@ -228,9 +238,9 @@ namespace Duel.Components
 
                         if (!Sokoban.Headless)
                         {
-                            new KnightPreviewRenderer(entityActor, entity, this.grid,
-                                new LevelSolidProvider(this.level));
+                            new KnightPreviewRenderer(entityActor, entity, this.grid, new LevelSolidProvider(this.level));
                             new KnightCharacterRenderer(entityActor);
+                            new RestartRoomButton(entityActor, entity, game);
                         }
                     }
                 }

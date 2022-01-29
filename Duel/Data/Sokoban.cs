@@ -13,8 +13,9 @@ namespace Duel.Data
         public event Action<Room> RoomChanged;
         private Actor rootActor;
         private Tuple<LevelData, PlayerTag.Type> previouslyLoadedData;
+        public Point? SavedPlayerPosition { get; private set; }
 
-        public Point? CurrentRoomPos { get; private set; } = null;
+        public Point? CurrentRoomPos { get; set; } = null;
         public Scene Scene { get; }
         public Grid Grid { get; private set; }
 
@@ -68,6 +69,8 @@ namespace Duel.Data
 
         public void ReloadLevelAndPutPlayerAtPosition(Point playerPreviousPosition, Point playerPosition)
         {
+            SavedPlayerPosition = playerPosition;
+
             if (this.previouslyLoadedData != null)
             {
                 Entity previousPlayer = null;
@@ -87,7 +90,11 @@ namespace Duel.Data
                 var playerTemplate = TemplateLibrary.GetPlayerTemplate(this.previouslyLoadedData.Item2);
                 var player = CurrentLevel.PutEntityAt(playerPreviousPosition, playerTemplate);
 
-                CurrentLevel.OnPlayerRoomTransition(previousPlayer, player, this.previouslyLoadedData.Item2, playerPosition);
+                if (playerPreviousPosition != playerPosition)
+                {
+                    // only do this if this is a room transition and not a reset
+                    CurrentLevel.OnPlayerRoomTransition(previousPlayer, player, this.previouslyLoadedData.Item2, playerPosition);
+                }
             }
 
             foreach (var entity in CurrentLevel.AllEntities())
@@ -104,7 +111,7 @@ namespace Duel.Data
             var newRoom = new Room(Room.LevelPosToRoomPos(playerPosition));
             if (!CurrentRoomPos.HasValue)
             {
-                SetCurrentRoomPos(newRoom.Position, previousPlayerPosition, playerPosition);
+                EnterRoom(newRoom.Position, previousPlayerPosition, playerPosition);
                 return;
             }
 
@@ -112,17 +119,19 @@ namespace Duel.Data
 
             if (previousRoom != newRoom)
             {
-                SetCurrentRoomPos(newRoom.Position, previousPlayerPosition, playerPosition);
+                EnterRoom(newRoom.Position, previousPlayerPosition, playerPosition);
             }
         }
 
-        public void SetCurrentRoomPos(Point roomPos, Point previousPosition, Point levelPosition)
+        public void EnterRoom(Point roomPos, Point previousPosition, Point newPosition)
         {
+
             if (CurrentRoomPos != roomPos)
             {
+                SavedPlayerPosition = newPosition;
                 CurrentRoomPos = roomPos;
                 RoomChanged?.Invoke(new Room(roomPos));
-                ReloadLevelAndPutPlayerAtPosition(previousPosition, levelPosition);
+                ReloadLevelAndPutPlayerAtPosition(previousPosition, newPosition);
             }
         }
 

@@ -19,13 +19,13 @@ namespace Duel.Components
             this.keyboard = RequireComponent<BufferedKeyboardListener>();
             this.entity = entity;
             this.solidProvider = solidProvider;
-            this.keyboard.LeftPressed += Move(Direction.Left);
-            this.keyboard.RightPressed += Move(Direction.Right);
-            this.keyboard.DownPressed += Move(Direction.Down);
-            this.keyboard.UpPressed += Move(Direction.Up);
+            this.keyboard.LeftPressed += Move(Direction.Left, true);
+            this.keyboard.RightPressed += Move(Direction.Right, true);
+            this.keyboard.DownPressed += Move(Direction.Down, true);
+            this.keyboard.UpPressed += Move(Direction.Up, true);
         }
 
-        private Action Move(Direction direction)
+        private Action Move(Direction direction, bool wasInitiatedByKeyboard)
         {
             return
                 () =>
@@ -43,7 +43,6 @@ namespace Duel.Components
 
         public IEnumerator<ICoroutineAction> ChargeCoroutine(Charge projectedMove)
         {
-
             foreach (var chargeHit in projectedMove.Path)
             {
                 if (chargeHit.StandingPosition != this.entity.Position)
@@ -56,14 +55,9 @@ namespace Duel.Components
             }
         }
 
-        public void Charge(Direction direction)
-        {
-            Move(direction)(); // exec a Move (only useful for tests)
-        }
-
         public void ResumeMoveFromOldInstance(Entity playerFromPreviousRoom, Point newPlayerPosition)
         {
-            Move(playerFromPreviousRoom.FacingDirection)();
+            this.entity.JumpToPosition(newPlayerPosition);
         }
     }
 }

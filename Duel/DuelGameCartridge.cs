@@ -36,7 +36,7 @@ namespace Duel
 
         protected virtual void PostLoad(Sokoban game)
         {
-            game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_2"), PlayerTag.Type.Renegade);
+            game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>("level_2"), PlayerTag.Type.Cowboy);
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
