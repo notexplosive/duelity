@@ -74,16 +74,25 @@ namespace Duel.Components
             {
                 this.actor.Visible = false;
 
+                var debrisActor = this.actor.scene.AddActor("DeadSprite");
+                var debrisSpriteRenderer = new SpriteRenderer(debrisActor, MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("characters-sheet"));
+                debrisSpriteRenderer.FramesPerSecond = 0;
+                debrisSpriteRenderer.SetFrame(16);
+                debrisActor.transform.Position = transform.Position;
+                debrisActor.transform.Depth = transform.Depth - 1;
+                new DebrisDestroy(debrisActor, DestroyType.Fall);
+
                 if (fellInWater)
                 {
                     // play gloop sound
-                    yield return new WaitSeconds(1f);
                 }
 
                 if (fellInRavine)
                 {
-                    yield return new WaitSeconds(1f);
+                    // play fall down ravine sound
                 }
+
+                yield return new WaitSeconds(1f);
                 this.game.RestartRoom();
             }
         }
