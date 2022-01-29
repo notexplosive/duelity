@@ -56,6 +56,8 @@ namespace DuelEditor.Components
                     return TileFrame.Bramble0;
                 case TileImageTag.TileImage.Bridge:
                     return TileFrame.Bridge;
+                case TileImageTag.TileImage.BridgeOverRavine:
+                    return TileFrame.BridgeOverRavine;
                 default:
                     return TileFrame.Wall;
             }

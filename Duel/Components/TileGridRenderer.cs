@@ -93,21 +93,29 @@ namespace Duel.Components
                 {
                     case TileImageTag.TileImage.Wall:
                         this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Wall, realPos, tileDepth, color);
+                        DrawFloorTile(spriteBatch, color, realPos, location, floorDepth);
                         break;
                     case TileImageTag.TileImage.Hook:
-                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Hook, realPos, floorDepth, color); // hooks are floorDepth
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Hook, realPos, floorDepth - new Depth(10), color);
+                        DrawFloorTile(spriteBatch, color, realPos, location, floorDepth);
                         break;
                     case TileImageTag.TileImage.Water:
                         this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToWaterFrame(this.grid.GetWaterClassAt(location)), realPos, tileDepth, color);
+                        DrawFloorTile(spriteBatch, color, realPos, location, floorDepth);
                         break;
                     case TileImageTag.TileImage.Ravine:
                         this.tilesheet.DrawFrame(spriteBatch, (int)AutoTileClassToRavineFrame(this.grid.GetRavineClassAt(location)), realPos, tileDepth, color);
+                        DrawFloorTile(spriteBatch, color, realPos, location, floorDepth);
                         break;
                     case TileImageTag.TileImage.Bramble:
                         this.tilesheet.DrawFrame(spriteBatch, GetRandomBrambleTile(location), realPos, tileDepth, color);
+                        DrawFloorTile(spriteBatch, color, realPos, location, floorDepth);
                         break;
                     case TileImageTag.TileImage.Bridge:
                         this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.Bridge, realPos, tileDepth, color);
+                        break;
+                    case TileImageTag.TileImage.BridgeOverRavine:
+                        this.tilesheet.DrawFrame(spriteBatch, (int)TileFrame.BridgeOverRavine, realPos, tileDepth, color);
                         break;
                 }
             }
