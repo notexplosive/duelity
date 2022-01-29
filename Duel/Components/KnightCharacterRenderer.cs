@@ -83,7 +83,7 @@ namespace Duel.Components
 
             this.timer = 0;
             this.tween.Clear();
-            this.tween.AppendFloatTween(10, 0.25f, EaseFuncs.CubicEaseIn, this.knightHeightTweenable);
+            this.tween.AppendFloatTween(20, 0.15f, EaseFuncs.CubicEaseIn, this.knightHeightTweenable);
         }
 
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
