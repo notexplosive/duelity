@@ -27,16 +27,8 @@ namespace Duel.Data.Dialog
                         currentConversationEventList = new List<IDialogEvent>();
                     } else if (type == "say") {
                         currentConversationEventList.Add(new Say(Speaker.getSpeaker(parts[1]), parts[2]));
-                    } else if (type == "left") {
-                        currentConversationEventList.Add(new Move(Direction.Left, (Character) Enum.Parse(typeof(Character), parts[1])));
-                    } else if (type == "right") {
-                        currentConversationEventList.Add(new Move(Direction.Right, (Character) Enum.Parse(typeof(Character), parts[1])));
-                    } else if (type == "up") {
-                        currentConversationEventList.Add(new Move(Direction.Up, (Character) Enum.Parse(typeof(Character), parts[1])));
-                    } else if (type == "down") {
-                        currentConversationEventList.Add(new Move(Direction.Down, (Character) Enum.Parse(typeof(Character), parts[1])));
-                    } else if (type == "z") {
-                        currentConversationEventList.Add(new PressZ((Character) Enum.Parse(typeof(Character), parts[1])));
+                    } else if (type == "invoke") {
+                        currentConversationEventList.Add(new Invoke(parts[1]));
                     }
                 }
             }

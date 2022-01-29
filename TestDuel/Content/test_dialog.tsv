@@ -1,9 +1,7 @@
 conversation	test_conversation	
 say	SheriffNormal	....
-left	Sheriff	
-down	Sheriff	
-down	Sheriff	
+invoke	invoke_string	
 say	SheriffSpooked	.........!!
 		
 conversation	test_conversation_2	
-z	Renegade	
+invoke	invoke_string_2	

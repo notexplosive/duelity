@@ -16,14 +16,12 @@ namespace TestDuel.Dialog
 
             screenplay.Conversations["test_conversation"].Should().BeEquivalentTo(new Conversation(new List<IDialogEvent> {
                 new Say(Speaker.SheriffNormal, "...."),
-                new Move(Direction.Left, Character.Sheriff),
-                new Move(Direction.Down, Character.Sheriff),
-                new Move(Direction.Down, Character.Sheriff),
+                new Invoke("invoke_string"),
                 new Say(Speaker.SheriffSpooked, ".........!!")
             }));
 
             screenplay.Conversations["test_conversation_2"].Should().BeEquivalentTo(new Conversation(new List<IDialogEvent> {
-                new PressZ(Character.Renegade)
+                new Invoke("invoke_string_2")
             }));
         }
     }
