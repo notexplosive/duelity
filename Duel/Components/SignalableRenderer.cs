@@ -30,7 +30,7 @@ namespace Duel.Components
         public override void Draw(SpriteBatch spriteBatch)
         {
             var frame = this.signalState.IsOn(this.color) ? this.images.OnImage : this.images.OffImage;
-            this.spriteSheet.DrawFrame(spriteBatch, (int)frame, transform.Position, transform.Depth + 10);
+            this.spriteSheet.DrawFrame(spriteBatch, (int)frame, transform.Position, 1f, 0, XYBool.False, transform.Depth + 10, Color.White);
         }
     }
 }
