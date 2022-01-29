@@ -27,7 +27,7 @@ namespace TestDuel
             this.level = this.game.CurrentLevel;
 
             this.level.PutTileAt(new Point(0, 0), new TileTemplate());
-            this.level.PutTileAt(new Point(10, 10), new TileTemplate());
+            this.level.PutTileAt(new Point(9, 9), new TileTemplate());
         }
 
         private void DoChargeDown()
@@ -44,7 +44,7 @@ namespace TestDuel
         {
             var subject = new Charge(new Point(5, 5), Direction.Down, new LevelSolidProvider(this.level));
 
-            subject.Path.Should().Contain(new ChargeHit(new Point(5, 9), Direction.Down));
+            subject.Path.Should().Contain(new ChargeHit(new Point(5, 8), Direction.Down));
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace TestDuel
 
             this.level.PutTileAt(new Point(5, 8), new TileTemplate(new UnfilledWater()));
 
-            subject.Path.Should().Contain(new ChargeHit(new Point(5, 9), Direction.Down));
+            subject.Path.Should().Contain(new ChargeHit(new Point(5, 8), Direction.Down));
         }
 
         [Fact]
@@ -62,7 +62,10 @@ namespace TestDuel
         {
             var glass = new EntityTemplate(new DestroyOnHit(), new Solid().PushOnBump());
             var destroyedEntities = new List<Entity>();
-            this.level.EntityDestroyRequested += (e, t) => { destroyedEntities.Add(e); };
+            this.level.EntityDestroyRequested += (e, t) =>
+            {
+                destroyedEntities.Add(e);
+            };
 
             var actor1 = this.level.PutEntityAt(new Point(0, 6), glass);
             var actor2 = this.level.PutEntityAt(new Point(0, 7), glass);

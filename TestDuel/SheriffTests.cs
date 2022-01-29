@@ -19,6 +19,9 @@ namespace TestDuel
             var scene = new Scene(null);
             var game = new Sokoban(scene);
 
+            game.CurrentLevel.PutTileAt(new Point(-10, -10), new TileTemplate());
+            game.CurrentLevel.PutTileAt(new Point(10, 10), new TileTemplate());
+
             this.playerEntity = game.CurrentLevel.PutEntityAt(new Point(0, 0), new EntityTemplate(new PlayerTag(PlayerTag.Type.Sheriff)));
             this.lassoComponent = game.FindActor(this.playerEntity).GetComponent<UseLasso>();
             this.level = game.CurrentLevel;

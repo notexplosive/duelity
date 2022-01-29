@@ -35,9 +35,9 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
-            bullet.WasBlocked.Should().BeFalse();
-            bullet.HitLocations.Should().Contain(new Point(0, 10)).And.HaveCount(1);
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
+            bullet.HitLocations.Should().Contain(new Point(0, 9)).And.HaveCount(1);
         }
 
         [Fact]
@@ -50,8 +50,8 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
-            bullet.WasBlocked.Should().BeFalse();
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
         }
 
         [Fact]
@@ -79,9 +79,9 @@ namespace TestDuel
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
             bullet.HitAtLeastOneThing.Should().BeTrue();
-            bullet.WasBlocked.Should().BeFalse();
+            bullet.WasBlocked.Should().BeTrue();
             bullet.HitLocations.Should().ContainInOrder(new Point(0, 3), new Point(0, 4), new Point(0, 5));
-            bullet.LastHitLocation.Should().Be(new Point(0, 10));
+            bullet.LastHitLocation.Should().Be(new Point(0, 9));
         }
 
         [Fact]
@@ -193,9 +193,9 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
-            bullet.WasBlocked.Should().BeFalse();
-            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 10));
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 9));
         }
 
         [Fact]
@@ -207,9 +207,9 @@ namespace TestDuel
             var bullet = this.gunComponent.CreateBullet();
 
             bullet.StartPosition.Should().Be(new Point(0, 0));
-            bullet.HitAtLeastOneThing.Should().BeFalse();
-            bullet.WasBlocked.Should().BeFalse();
-            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 10));
+            bullet.HitAtLeastOneThing.Should().BeTrue();
+            bullet.WasBlocked.Should().BeTrue();
+            bullet.HitLocations.Should().HaveCount(1).And.Contain(new Point(0, 9));
         }
 
         [Fact]
