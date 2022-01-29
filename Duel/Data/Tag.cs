@@ -327,6 +327,22 @@ namespace Duel.Data
         }
     }
 
+    public enum NpcSprite
+    {
+        Sar,
+    }
+
+    public class NpcTag : Tag
+    {
+
+        public NpcTag(NpcSprite sprite, string sheriffConvoKey, string renegadeConvoKey, string cowboyConvoKey, string knightConvoKey)
+        {
+            Sprite = sprite;
+        }
+
+        public NpcSprite Sprite { get; }
+    }
+
     public class Grapplable : Tag
     {
         public Type HookType { get; }

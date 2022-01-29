@@ -126,6 +126,9 @@ namespace Duel.Data
             templateLibrary.AddTemplate("bramble", new TileTemplate(new TileImageTag(TileImageTag.TileImage.Bramble), new Solid()));
             templateLibrary.AddTemplate("hook", new TileTemplate(new Grapplable(Grapplable.Type.Static), new TileImageTag(TileImageTag.TileImage.Hook)));
 
+            // NPCs
+            templateLibrary.AddTemplate("sar", new EntityTemplate(new NpcTag(NpcSprite.Sar, "sheriff_convo", "renegade_convo", "cowboy_convo", "knight_convo")));
+
             // Entities
             templateLibrary.AddTemplate("glass", new EntityTemplate(
                 new DestroyOnHit(),
