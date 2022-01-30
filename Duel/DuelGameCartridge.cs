@@ -19,6 +19,7 @@ namespace Duel
         private int chapterIndex = 0;
 
         public static DuelGameCartridge Instance { get; private set; } // ew i stepped in a singleton
+        public MusicPlayer MusicPlayer { get; private set; }
 
         public DuelGameCartridge(Point renderResolution) : base(renderResolution, ResizeBehavior.KeepAspectRatio)
         {
@@ -31,36 +32,38 @@ namespace Duel
 
             this.chapters = new List<Chapter>();
 
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, Screenplay.GetConversation("sheriff_intro_1A")));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, Screenplay.GetConversation("renegade_intro_1A")));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, Screenplay.GetConversation("cowboy_intro_1A")));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, Screenplay.GetConversation("knight_intro_1A")));
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, Screenplay.GetConversation("sheriff_intro_1B")));
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, emptyConvo));
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Knight, ZoneTileset.Thistown, emptyConvo));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("sheriff_intro_1A")));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("renegade_intro_1A")));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("cowboy_intro_1A")));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("knight_intro_1A")));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, TrackName.ThistownB, Screenplay.GetConversation("sheriff_intro_1B")));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, TrackName.ThistownB, emptyConvo));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, TrackName.ThistownB, emptyConvo));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Knight, ZoneTileset.Thistown, TrackName.ThistownB, emptyConvo));
 
-            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Sheriff, ZoneTileset.Oasis, Screenplay.GetConversation("sheriff_intro_oasis")));
-            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Renegade, ZoneTileset.Oasis, emptyConvo));
-            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Cowboy, ZoneTileset.Oasis, emptyConvo));
-            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Knight, ZoneTileset.Oasis, emptyConvo));
+            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Sheriff, ZoneTileset.Oasis, TrackName.Oasis, Screenplay.GetConversation("sheriff_intro_oasis")));
+            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Renegade, ZoneTileset.Oasis, TrackName.Oasis, emptyConvo));
+            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Cowboy, ZoneTileset.Oasis, TrackName.Oasis, emptyConvo));
+            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Knight, ZoneTileset.Oasis, TrackName.Oasis, emptyConvo));
 
-            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Sheriff, ZoneTileset.Mines, Screenplay.GetConversation("sheriff_intro_mine")));
-            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Renegade, ZoneTileset.Mines, emptyConvo));
-            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Cowboy, ZoneTileset.Mines, emptyConvo));
-            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Knight, ZoneTileset.Mines, emptyConvo));
+            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Sheriff, ZoneTileset.Mines, TrackName.Mines, Screenplay.GetConversation("sheriff_intro_mine")));
+            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Renegade, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
+            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Cowboy, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
+            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Knight, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
 
             // this.chapters.Add(new EndCinematicChapter());
         }
 
         public override void OnGameLoad(GameSpecification specification, MachinaRuntime runtime)
         {
+            MusicPlayer = new MusicPlayer();
             SceneLayers.BackgroundColor = Color.Black;
             LoadGameOrEditor();
         }
 
         protected virtual void LoadGameOrEditor()
         {
+            // GAME ONLY -- Editor overrides this function
             var gameScene = SceneLayers.AddNewScene();
             GetCurrentChapterAndIncrement().Load(gameScene);
         }

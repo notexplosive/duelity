@@ -54,7 +54,6 @@ namespace Duel.Data
 
         public Sokoban(Scene scene, ZoneTileset zoneTileset = ZoneTileset.Thistown)
         {
-
             this.templateLibraryWithPlayers = TemplateLibrary.BuildWithPlayers();
             Scene = scene;
             StartFresh(zoneTileset);

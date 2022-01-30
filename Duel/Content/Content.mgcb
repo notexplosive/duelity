@@ -479,6 +479,36 @@
 /processorParam:Quality=Best
 /build:sounds/banjo_blip.ogg
 
+#begin sounds/bgm_1a.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bgm_1a.ogg
+
+#begin sounds/bgm_1b.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bgm_1b.ogg
+
+#begin sounds/bgm_knight.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bgm_knight.ogg
+
+#begin sounds/bgm_mines.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bgm_mines.ogg
+
+#begin sounds/bgm_title.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bgm_title.ogg
+
 #begin sounds/deep_blip.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
