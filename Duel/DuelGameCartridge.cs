@@ -70,6 +70,11 @@ namespace Duel
             return this.chapters[this.chapterIndex++];
         }
 
+        public Chapter PeekNextChapter()
+        {
+            return this.chapters[this.chapterIndex];
+        }
+
         public Chapter GetCurrentChapter()
         {
             return this.chapters[this.chapterIndex - 1];
@@ -84,6 +89,7 @@ namespace Duel
 
             loader.AddMachinaAssetCallback("characters-sheet",
                 () => new GridBasedSpriteSheet("characters", new Point(64)));
+            loader.AddMachinaAssetCallback("silos-sheet", () => new GridBasedSpriteSheet("silos", new Point(250)));
             loader.AddMachinaAssetCallback("tiles-sheet", () => new GridBasedSpriteSheet("tiles", new Point(64)));
             loader.AddMachinaAssetCallback("entities-sheet", () => new GridBasedSpriteSheet("entities", new Point(64)));
             loader.AddMachinaAssetCallback("npcs-sheet", () => new GridBasedSpriteSheet("npcs", new Point(64))); // replace with NPCs sheet once we have it

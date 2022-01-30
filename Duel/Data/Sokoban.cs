@@ -210,10 +210,10 @@ namespace Duel.Data
             CurrentLevel.RoomTransitionAttempted -= DoRoomTransitionIfApplicable;
 
             var sceneLayers = Scene.sceneLayers;
-            sceneLayers.RemoveScene(Scene);
+            var overlay = sceneLayers.AddNewScene();
+            new LevelTransitionOverlayAnimation(overlay.AddActor("LevelTransitionActor"), Scene);
 
-            var gameScene = sceneLayers.AddNewScene();
-            DuelGameCartridge.Instance.GetCurrentChapterAndIncrement().Load(gameScene);
+
         }
 
         public Actor FindActor(Entity entity)

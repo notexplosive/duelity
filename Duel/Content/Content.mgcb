@@ -419,6 +419,18 @@
 /processorParam:TextureFormat=Color
 /build:images/steven_dust.png
 
+#begin images/silos.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/silos.png
+
 #begin images/tiles.png
 /importer:TextureImporter
 /processor:TextureProcessor
