@@ -33,6 +33,10 @@ namespace Duel.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            var currentRoom = new Room(Room.LevelPosToRoomPos(entity.Position));
+            var cameraNormalPos = this.grid.TileToLocalPosition(currentRoom.GetBounds().TopLeft);
+            var cameraAdjustedPos = cameraNormalPos;
+
             if (this.movement.LongLeg != Direction.None)
             {
                 var longLeg = this.movement.LongLeg.ToPoint() + this.movement.LongLeg.ToPoint();
@@ -50,7 +54,41 @@ namespace Duel.Components
                     var isSolid = this.solidProvider.IsNotWalkableAt(this.entity, spot);
                     spriteBatch.DrawCircle(new CircleF(this.grid.TileToLocalPosition(spot), radius), 25, isSolid ? Color.OrangeRed : Color.White, isSolid ? radius / 4 : radius / 2, transform.Depth - 10);
                 }
+
+                var difference = Vector2.Zero;
+
+                foreach (var possibleLandingSpot in possibleLandingSpots)
+                {
+                    var worldPos = this.grid.TileToLocalPosition(possibleLandingSpot, true) + this.grid.transform.Position;
+                    var viewportRect = new RectangleF(cameraNormalPos, this.actor.scene.camera.UnscaledViewportSize);
+                    if (!viewportRect.Contains(worldPos))
+                    {
+                        if (worldPos.Y > viewportRect.Bottom)
+                        {
+                            difference = new Vector2(0, viewportRect.Bottom - worldPos.Y);
+                        }
+
+                        if (worldPos.Y < viewportRect.Top)
+                        {
+                            difference = new Vector2(0, viewportRect.Top - worldPos.Y + Grid.TileSize / 2); // just for the top
+                        }
+
+                        if (worldPos.X < viewportRect.Left)
+                        {
+                            difference = new Vector2(viewportRect.Left - worldPos.X, 0);
+                        }
+
+                        if (worldPos.X > viewportRect.Right)
+                        {
+                            difference = new Vector2(viewportRect.Right - worldPos.X, 0);
+                        }
+                    }
+                }
+
+                cameraAdjustedPos -= difference;
             }
+
+            this.actor.scene.camera.UnscaledPosition = cameraAdjustedPos;
         }
     }
 }
