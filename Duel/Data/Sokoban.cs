@@ -63,7 +63,7 @@ namespace Duel.Data
         public void PlayLevel(LevelData levelData, PlayerTag.Type playerCharacter)
         {
             CurrentLevel.ClearAllTilesAndEntities();
-            levelData.LoadAndActivatePlayerSpawners(this, playerCharacter);
+            var spawnPosition = levelData.LoadAndGetSpawnPosition(this, playerCharacter);
 
             // We get the loaded level's data minus the player
             var dataMinusPlayer = BuildDataFromCurrentLevel("live-from-gameplay");
@@ -71,6 +71,8 @@ namespace Duel.Data
             dataMinusPlayer.Entities.Remove(player);
 
             this.previouslyLoadedData = new Tuple<LevelData, PlayerTag.Type>(dataMinusPlayer, playerCharacter);
+
+            EnterRoom(Room.LevelPosToRoomPos(spawnPosition), spawnPosition, spawnPosition);
         }
 
         public void LoadLevelData(LevelData levelData)
@@ -97,7 +99,7 @@ namespace Duel.Data
                 CurrentLevel.ClearAllTilesAndEntities();
 
                 // There won't be any player spawners to activate
-                this.previouslyLoadedData.Item1.LoadAndActivatePlayerSpawners(this, this.previouslyLoadedData.Item2);
+                this.previouslyLoadedData.Item1.LoadAndGetSpawnPosition(this, this.previouslyLoadedData.Item2);
 
                 var playerTemplate = this.templateLibraryWithPlayers.GetPlayerTemplateForMoveType(this.previouslyLoadedData.Item2);
                 var player = CurrentLevel.PutEntityAt(playerPreviousPosition, playerTemplate);

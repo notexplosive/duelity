@@ -11,5 +11,10 @@ namespace Duel.Data
             Position = position;
             Template = template;
         }
+
+        public override string ToString()
+        {
+            return $"{Template.NameInLibrary} instance at ({Position.X}, {Position.Y})";
+        }
     }
 }
