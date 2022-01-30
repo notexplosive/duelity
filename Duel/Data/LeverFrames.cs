@@ -37,5 +37,7 @@ namespace Duel.Data
         public EntityFrame OffImage => RightImage;
 
         public SignalColor SignalColor { get; }
+
+        public float Scale => 1f;
     }
 }

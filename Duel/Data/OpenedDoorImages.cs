@@ -14,5 +14,7 @@ namespace Duel.Data
         public SignalColor SignalColor => this.oppositeImpl.SignalColor;
         public EntityFrame OnImage => this.oppositeImpl.OffImage;
         public EntityFrame OffImage => this.oppositeImpl.OnImage;
+
+        public float Scale => 1f;
     }
 }

@@ -8,5 +8,6 @@ namespace Duel.Data
         public EntityFrame OffImage { get; }
 
         public SignalColor SignalColor { get; }
+        public float Scale { get; }
     }
 }
