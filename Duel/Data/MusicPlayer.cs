@@ -100,11 +100,15 @@ namespace Duel.Data
                 {
                     this.sound.Volume = 0.35f;
                 }
+
+                if (trackName != "bgm_title")
+                {
+                    this.sound.IsLooped = true;
+                }
             }
 
             public void Play()
             {
-                this.sound.IsLooped = true;
                 this.sound.Play();
             }
 

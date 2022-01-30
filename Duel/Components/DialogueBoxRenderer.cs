@@ -35,7 +35,7 @@ namespace Duel.Components
             this.dialogueRunner = RequireComponent<DialogueRunner>();
             this.dialogueRunner.StartedRun += ClearText;
 
-            var layout = LayoutNode.VerticalParent("screen", LayoutSize.Pixels(actor.scene.camera.UnscaledViewportSize), new LayoutStyle(margin: new Point(64, 64)),
+            var layout = LayoutNode.VerticalParent("screen", LayoutSize.Pixels(actor.scene.camera.UnscaledViewportSize), new LayoutStyle(margin: new Point(64, 0)),
                 LayoutNode.StretchedSpacer(),
                 LayoutNode.HorizontalParent("dialogueBox", LayoutSize.StretchedHorizontally(200), new LayoutStyle(margin: new Point(20, 20), padding: 15),
                     LayoutNode.VerticalParent("speaker", LayoutSize.StretchedVertically(128), new LayoutStyle(padding: 5),

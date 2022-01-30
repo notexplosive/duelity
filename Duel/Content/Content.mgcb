@@ -71,18 +71,6 @@
 /processorParam:TextureFormat=Color
 /build:images/portraits.png
 
-#begin images/props_cubepig.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:images/props_cubepig.png
-
 #begin images/props_aloe.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -226,6 +214,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:images/props_crates.png
+
+#begin images/props_cubepig.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/props_cubepig.png
 
 #begin images/props_horse.png
 /importer:TextureImporter
@@ -407,18 +407,6 @@
 /processorParam:TextureFormat=Color
 /build:images/ricochet.png
 
-#begin images/steven_dust.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:images/steven_dust.png
-
 #begin images/silos.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -431,6 +419,18 @@
 /processorParam:TextureFormat=Color
 /build:images/silos.png
 
+#begin images/steven_dust.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/steven_dust.png
+
 #begin images/tiles.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -442,6 +442,114 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:images/tiles.png
+
+#begin images/title_screen_andrfw.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_andrfw.png
+
+#begin images/title_screen_cowboy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_cowboy.png
+
+#begin images/title_screen_duelity.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_duelity.png
+
+#begin images/title_screen_ggj.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_ggj.png
+
+#begin images/title_screen_knight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_knight.png
+
+#begin images/title_screen_notexplosive.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_notexplosive.png
+
+#begin images/title_screen_press_space.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_press_space.png
+
+#begin images/title_screen_renegade.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_renegade.png
+
+#begin images/title_screen_sheriff.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/title_screen_sheriff.png
 
 #begin levels/level_1.bunk
 /copy:levels/level_1.bunk
@@ -473,6 +581,12 @@
 #begin levels/level_9.bunk
 /copy:levels/level_9.bunk
 
+#begin sounds/anvil.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/anvil.ogg
+
 #begin sounds/banjo_blip.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
@@ -497,23 +611,35 @@
 /processorParam:Quality=Best
 /build:sounds/bgm_knight.ogg
 
-#begin sounds/bgm_oasis.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/bgm_oasis.ogg
-
 #begin sounds/bgm_mines.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/bgm_mines.ogg
 
+#begin sounds/bgm_oasis.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bgm_oasis.ogg
+
 #begin sounds/bgm_title.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/bgm_title.ogg
+
+#begin sounds/boot_step.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/boot_step.ogg
+
+#begin sounds/clank.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/clank.ogg
 
 #begin sounds/deep_blip.ogg
 /importer:OggImporter
@@ -527,74 +653,11 @@
 /processorParam:Quality=Best
 /build:sounds/default_blip.ogg
 
-#begin sounds/harpsichord_blip.ogg
+#begin sounds/eh.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sounds/harpsichord_blip.ogg
-
-#begin sounds/scrape.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/scrape.ogg
-
-#begin sounds/horse.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/horse.ogg
-
-
-#begin sounds/boot_step.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/boot_step.ogg
-
-
-#begin sounds/shoe_step.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/shoe_step.ogg
-
-#begin sounds/anvil.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/anvil.ogg
-
-#begin sounds/gun_blip.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/gun_blip.ogg
-
-#begin sounds/shoot.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/shoot.ogg
-
-#begin sounds/whip.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/whip.ogg
-
-#begin sounds/woosh.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/woosh.ogg
-
-#begin sounds/wood-break.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/wood-break.ogg
-
+/build:sounds/eh.ogg
 
 #begin sounds/glass-break.ogg
 /importer:OggImporter
@@ -602,11 +665,23 @@
 /processorParam:Quality=Best
 /build:sounds/glass-break.ogg
 
-#begin sounds/startled_cow.ogg
+#begin sounds/gun_blip.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sounds/startled_cow.ogg
+/build:sounds/gun_blip.ogg
+
+#begin sounds/harpsichord_blip.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/harpsichord_blip.ogg
+
+#begin sounds/horse.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/horse.ogg
 
 #begin sounds/oa.ogg
 /importer:OggImporter
@@ -614,17 +689,35 @@
 /processorParam:Quality=Best
 /build:sounds/oa.ogg
 
-#begin sounds/eh.ogg
+#begin sounds/scrape.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sounds/eh.ogg
+/build:sounds/scrape.ogg
 
-#begin sounds/clank.ogg
+#begin sounds/shoe_step.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sounds/clank.ogg
+/build:sounds/shoe_step.ogg
+
+#begin sounds/shoot.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/shoot.ogg
+
+#begin sounds/splorp.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/splorp.ogg
+
+#begin sounds/startled_cow.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/startled_cow.ogg
 
 #begin sounds/unlock.ogg
 /importer:OggImporter
@@ -632,8 +725,21 @@
 /processorParam:Quality=Best
 /build:sounds/unlock.ogg
 
-#begin sounds/splorp.ogg
+#begin sounds/whip.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sounds/splorp.ogg
+/build:sounds/whip.ogg
+
+#begin sounds/wood-break.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/wood-break.ogg
+
+#begin sounds/woosh.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/woosh.ogg
+

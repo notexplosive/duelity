@@ -14,7 +14,7 @@ namespace Duel
 {
     public class DuelGameCartridge : GameCartridge
     {
-        private readonly List<Chapter> chapters = new List<Chapter>();
+        private readonly List<IChapter> chapters = new List<IChapter>();
         public Screenplay Screenplay { get; }
         private int chapterIndex = 0;
 
@@ -23,6 +23,7 @@ namespace Duel
 
         public DuelGameCartridge(Point renderResolution) : base(renderResolution, ResizeBehavior.KeepAspectRatio)
         {
+            MachinaRuntime.SkipIntro = true;
             Instance = this;
 
             Screenplay = new Screenplay(MachinaClient.FileSystem.ReadTextAppDataThenLocal("screenplay.tsv").Result);
@@ -30,8 +31,9 @@ namespace Duel
             // Chapter sequence for the whole game
             var emptyConvo = new Conversation(new List<IDialogEvent>());
 
-            this.chapters = new List<Chapter>();
+            this.chapters = new List<IChapter>();
 
+            this.chapters.Add(new TitleScreen());
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("sheriff_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("renegade_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("cowboy_intro_1A")));
@@ -50,6 +52,7 @@ namespace Duel
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Renegade, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Cowboy, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Knight, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
+            this.chapters.Add(new Finale());
 
             // this.chapters.Add(new EndCinematicChapter());
         }
@@ -68,25 +71,31 @@ namespace Duel
             GetCurrentChapterAndIncrement().Load(gameScene);
         }
 
-        public Chapter GetCurrentChapterAndIncrement()
+        public IChapter GetCurrentChapterAndIncrement()
         {
             return this.chapters[this.chapterIndex++];
         }
 
         public Chapter PeekNextChapter()
         {
-            return this.chapters[this.chapterIndex];
+            return this.chapters[this.chapterIndex] as Chapter;
         }
 
         public Chapter GetCurrentChapter()
         {
             try
             {
-                return this.chapters[this.chapterIndex - 1];
+                var chapter = this.chapters[this.chapterIndex - 1] as Chapter;
+
+                if (chapter == null)
+                {
+                    return this.chapters[1] as Chapter;
+                }
+                return chapter;
             }
             catch (Exception)
             {
-                return this.chapters[0];
+                return this.chapters[1] as Chapter;
             }
         }
 

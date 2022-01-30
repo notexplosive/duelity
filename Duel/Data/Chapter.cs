@@ -1,7 +1,6 @@
 ﻿using Duel.Data.Dialog;
 using Machina.Engine;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Duel.Data
@@ -13,7 +12,19 @@ namespace Duel.Data
         Mines
     }
 
-    public class Chapter
+    public interface IChapter
+    {
+        void Load(Scene gameScene);
+    }
+
+    public class Finale : IChapter
+    {
+        public void Load(Scene gameScene)
+        {
+        }
+    }
+
+    public class Chapter : IChapter
     {
         private readonly ZoneTileset zoneTileset;
 
