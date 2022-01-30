@@ -1,1 +1,103 @@
-test test does this file exist?
+conversation	sar_sheriff	
+say	Sar	Howdy, Sir! Welcome to Thistown. I'm Sar Saparilla, the resident.
+say	SheriffNormal	.....
+say	Sar	What can I do for you on this fine day? You lookin' to stay, or just passing through?
+say	SheriffNormal	..... Just passing through.
+say	Sar	Good to hear! After all, Thistown ain't big enough for the both of us.
+say	Sar	... on account of the city limits being about 8 square feet!
+say	SheriffNormal	I'm looking for the deadliest gunslinger around.
+say	Sar	Best gunslinger? That'd be RED DEATH KILLER.
+say	Sar	I hear he's been hanging out in the city of Tarnation.
+say	SheriffSpooked	What?!? In Tarnation??
+say	Sar	Afraid so. I know it's a long way, but there's a trail up north that'll put you on the right track.
+say	SheriffDeepBow	..... Fair enough. Thank you, sir.
+		
+conversation	mom_sheriff	
+say	Mom	What's a Sheriff doing in these parts? Come to lock up my good-for-nothing daughter?
+		
+conversation	farmer_sheriff	
+say	Farmer	Shucks howdy, sher'f!
+		
+conversation	renegade_intro_1A	
+say	Mom	Miranda!!! Stop shooting so close to the house!
+say	Mom	You're going to destroy one of the windows!
+say	RenegadeEw	Mom you are SO lame. There is literally nothing else to do here.
+say	Mom	Come now, Miranda! There's plenty to do here. And Thistown is only like two screens away.
+say	RenegadeSmirk	Wait that's it! I'll leave and find somewhere where there's more to do!
+say	RenegadeLaugh	Maybe I'll even find a DUEL.
+say	Mom	Miranda, DUELs are dangerous!
+say	RenegadeEw	Sorry Mom, I'm leaving.
+		
+conversation	sar_renegade	
+say	Sar	Howdy, Miranda! What brings you into Thistown?
+say	RenegadeEw	I'm leaving, Sar. Running away from home.
+say	Sar	Leaving? Probably for the best. As they say, Thistown ain't-
+say	RenegadeGun	Sar, if I have to hear that joke one more time I am going to lose it.
+say	RenegadeEw	I'm looking for a DUEL. Any leads?
+say	Sar	Well, a mysterious Sheriff just passed through here not too long ago.
+say	Sar	He was looking for RED DEATH KILLER. Sounds like a DUEL in the making to me.
+say	RenegadeSmirk	RED DEATH KILLER, eh? Sounds promising.
+say	Sar	They're bound to meet up in Tarnation. Just head north and you'll get there for sure.
+say	RenegadeLaugh	Just head north? I can handle that.
+		
+conversation	farmer_renegade	
+say	Farmer	Shucks howdy, Mirander!
+say	Farmer	Please don't shoot me.
+		
+conversation	cowboy_intro_1A	
+say	CowboyNormal	Ah, what a wonderful day it is for this boy.
+say	Farmer	Hey, shuddup. You're not a boy. You're a cow.
+say	CowboySkeptical	WOW. Hurtful.
+say	Farmer	It's just the facts, if ya don' like em', you can shove 'me up yer-
+say	CowboyDetermined	I'll just have to prove to the world that I'm a real boy.
+say	Farmer	but you-
+say	CowboyHope	An epic adventure to prove my humanity.
+say	Farmer	*sigh*
+		
+conversation	sar_cowboy	
+say	Sar	Howdy, Steven! You hear about the DUEL happening soon?
+say	CowboyHope	A DUEL???
+say	CowboyDetermined	This is the perfect chance to prove I'm a real boy. 
+say	Sar	Well, the folks involved are headed up north to Tarnation and-
+say	CowboyDetermined	Say no more! I'm on my way!!
+		
+conversation	mom_cowboy	
+say	CowboyNormal	Howdy!
+say	Mom	"Howdy"? Shouldn't you be saying things like "Moo"?
+say	CowboySkeptical	Yeesh, talk about a harmful stereotype.
+		
+conversation	knight_intro_1A	
+say	KnightGrin	Hear this all who shalt listen!
+say	KnightSalute	Tis I, Sir Bennigan! The noble knight in service of the King.
+say	KnightGrin	Many treacherous journeys hath I faced on this road I tarry upon...
+say	KnightGrin	... yet I feel that I draw close!
+say	KnightGrin	"Close to what?" thine might asketh.
+say	KnightGrin	Why prithee ye: a DUEL of course!
+		
+conversation	farmer_knight	
+say	KnightSalute	Ah! A humble peasant.
+say	KnightGrin	Working thine fields for the sake of King and Kingdom, how quaint!
+say	Farmer	Hey feller I'm gonna need you to get off mah property.
+say	KnightGasp	Property! Dost thou a LORD??
+		
+conversation	mom_knight	
+say	KnightSalute	Prithee thee!
+say	Mom	Uh... yes?
+say	KnightGrin	Verily, verily!!
+		
+conversation	sar_knight	
+say	KnightSalute	Prithee thee, sir! Dost thou knoweth where I can find a DUEL in these lands?
+say	Sar	There's going to be a pretty big DUEL happening in Tarnation soon.
+say	Sar	It's the talk of the whole region! Everyone's who's anyone is going to be there.
+say	Sar	You should just be able to head north and-
+say	KnightGrin	Hark! I've heard enough. I shalt findeth and wineth this DUEL.
+say	KnightSalute	For the King!
+		
+conversation	sheriff_intro_1A	
+say	SheriffNormal	Welp, here I go, time to find the deadliest gunslinger around.
+say	SheriffNormal	I can use trusty my arrow keys (or WASD keys) to move around.
+say	SheriffNormal	And if I need to lasso objects, I've got the Space key for that.
+		
+conversation	mom_renegade	
+		
+conversation	farmer_cowboy	

@@ -114,6 +114,11 @@ namespace Duel.Data
             templateLibrary.AddTemplate("wave1", new PropTemplate("props_wave1", PropTemplate.PropLayeringRule.Behind));
             templateLibrary.AddTemplate("wave2", new PropTemplate("props_wave2", PropTemplate.PropLayeringRule.Behind));
             templateLibrary.AddTemplate("wave3", new PropTemplate("props_wave3", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("bgscuff1", new PropTemplate("props_bgscuff1", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("bgscuff2", new PropTemplate("props_bgscuff2", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("bgscuff3", new PropTemplate("props_bgscuff3", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("bgrocks1", new PropTemplate("props_bgrocks1", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("bgrocks2", new PropTemplate("props_bgrocks2", PropTemplate.PropLayeringRule.Behind));
 
             // Tiles
             templateLibrary.AddTemplate("empty_tile", new TileTemplate());
@@ -129,6 +134,8 @@ namespace Duel.Data
 
             // NPCs
             templateLibrary.AddNpc(new NpcTag(NpcSprite.Sar, "sar_sheriff", "sar_renegade", "sar_cowboy", "sar_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.MirandaMom, "mom_sheriff", "mom_renegade", "mom_cowboy", "mom_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.Farmer, "farmer_sheriff", "farmer_renegade", "farmer_cowboy", "farmer_knight"));
 
             // Entities
             templateLibrary.AddTemplate("glass", new EntityTemplate(
@@ -244,7 +251,7 @@ namespace Duel.Data
 
         private void AddNpc(NpcTag npcTag)
         {
-            AddTemplate("sar", new EntityTemplate(npcTag, new Solid()));
+            AddTemplate(npcTag.Sprite.ToString().ToLower(), new EntityTemplate(npcTag, new Solid()));
         }
 
         public IEnumerable<ITemplate> GetAllTemplates()

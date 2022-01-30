@@ -24,61 +24,20 @@ namespace Duel
         {
             Instance = this;
 
-            // When screenplay is ready, replace with commented out constructor and remove the `new Conversation` lines below
-            Screenplay = new Screenplay(); // new Screenplay(MachinaClient.FileSystem.ReadTextAppDataThenLocal("screenplay.tsv").Result);
-
-            // Remove all of this when screenplay is ready
-            var sarAndSheriff = new Conversation(new List<IDialogEvent>
-                {
-                    new Say(Speaker.Sar, "Thistown ain't big enough for the both of us..."),
-                    new Say(Speaker.Sar, "...on account of the city limits being about 8 square feet."),
-                    new Say(Speaker.SheriffNormal, "..."),
-                    new Say(Speaker.Sar, "The name's Sar, what can I do ya for?"),
-                    new Say(Speaker.SheriffNormal, "I'm looking for..."),
-                    new Say(Speaker.SheriffDeepBow, ".... ..... ......"),
-                    new Say(Speaker.Sar, "Oh! Him. Last I heard he was in Tarnation."),
-                    new Say(Speaker.SheriffSpooked, "What?! In Tarnation?"),
-                    new Say(Speaker.Sar, "Afraid so. I know it's a long ways away but there's a trail up north that'll put you on the right track."),
-                    new Say(Speaker.SheriffNormal, "..."),
-                    new Say(Speaker.SheriffDeepBow, "..."),
-                    new Say(Speaker.SheriffNormal, "Thanks."),
-                });
-            Screenplay.AddConversation("sar_sheriff", sarAndSheriff);
-
-            // once I have CSVs these can be totally data-driven, but for now here's some inline dialogue for testing
-
-            var level1LaunchConvo = new Conversation(new List<IDialogEvent>
-                {
-                    new Say(Speaker.SheriffNormal, "......"),
-
-                    new Say(Speaker.SheriffNormal, "Check out my hat..."),
-                    new Say(Speaker.SheriffDeepBow, "...do you like it?"),
-                    new Say(Speaker.SheriffNormal, "Pretty cool huh?"),
-                    new Say(Speaker.SheriffNormal, "...."),
-                    new Say(Speaker.SheriffSpooked, "You don't like it?!"),
-                });
-
-            var level2LaunchConvo = new Conversation(new List<IDialogEvent>
-                {
-                    new Say(Speaker.SheriffNormal, "Tarnation's gonna be a pretty long walk. Guess I better get walking."),
-                    new Say(Speaker.SheriffNormal, "Oh I just remembered! I can press R to restart levels."),
-                    new Say(Speaker.SheriffSpooked, "Unless there are any heavy barrels or anvils that I can't grapple onto."),
-                });
-
-
-
+            Screenplay = new Screenplay(MachinaClient.FileSystem.ReadTextAppDataThenLocal("screenplay.tsv").Result);
 
             // Chapter sequence for the whole game
             var emptyConvo = new Conversation(new List<IDialogEvent>());
 
             this.chapters = new List<Chapter>();
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, level1LaunchConvo)); // Screenplay.GetConversation("convo_key")
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, level2LaunchConvo));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));
+
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, Screenplay.GetConversation("sheriff_intro_1A")));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, Screenplay.GetConversation("renegade_intro_1A")));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, Screenplay.GetConversation("cowboy_intro_1A"))); 
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, Screenplay.GetConversation("knight_intro_1A"))); 
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, emptyConvo));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Knight, ZoneTileset.Thistown, emptyConvo));
 
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Sheriff, ZoneTileset.Oasis, emptyConvo));
