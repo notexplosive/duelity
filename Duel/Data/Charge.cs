@@ -9,13 +9,24 @@ namespace Duel.Data
         {
             Direction = travelDirection;
             StartPosition = startPosition;
-            var hitScanPosition = startPosition;
+            var currentPosition = startPosition;
 
-            while (!solidProvider.IsOutOfBounds(hitScanPosition))
+            while (!solidProvider.IsOutOfBounds(currentPosition))
             {
-                Path.Add(new ChargeHit(hitScanPosition, travelDirection));
+                Path.Add(new ChargeHit(currentPosition, travelDirection));
 
-                var nextPos = hitScanPosition + travelDirection.ToPoint();
+                var nextPos = currentPosition + travelDirection.ToPoint();
+
+                if (solidProvider.IsClosedDoorAt(nextPos))
+                {
+                    return;
+                }
+
+                if (solidProvider.IsRavineAt(currentPosition))
+                {
+                    return;
+                }
+
                 if (solidProvider.HasTagAt<Solid>(nextPos))
                 {
                     var hitSolidEntity = solidProvider.IsEntityWithTagAt<Solid>(nextPos) && !solidProvider.IsEntityWithTagAt<DestroyOnHit>(nextPos);
@@ -27,7 +38,7 @@ namespace Duel.Data
                     }
                 }
 
-                hitScanPosition = nextPos;
+                currentPosition = nextPos;
             }
         }
 
