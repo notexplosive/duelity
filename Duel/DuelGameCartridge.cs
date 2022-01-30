@@ -77,7 +77,14 @@ namespace Duel
 
         public Chapter GetCurrentChapter()
         {
-            return this.chapters[this.chapterIndex - 1];
+            try
+            {
+                return this.chapters[this.chapterIndex - 1];
+            }
+            catch (Exception)
+            {
+                return this.chapters[0];
+            }
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)
