@@ -50,6 +50,15 @@ namespace Duel.Components
                         DuelGameCartridge.Instance.GetCurrentChapter().Load(gameScene);
                     }
                 }
+
+                if (key == Keys.P && modifiers.ControlShift)
+                {
+                    var sceneLayers = this.actor.scene.sceneLayers;
+                    sceneLayers.RemoveScene(this.actor.scene);
+
+                    var gameScene = sceneLayers.AddNewScene();
+                    DuelGameCartridge.Instance.GetCurrentChapterAndIncrement().Load(gameScene);
+                }
             }
         }
     }
