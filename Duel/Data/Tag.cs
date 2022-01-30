@@ -1,5 +1,6 @@
 ﻿using Duel.Components;
 using Machina.Engine;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Duel.Data
 {
@@ -23,6 +24,24 @@ namespace Duel.Data
 
     public class BlockProjectileTag : Tag
     {
+        private readonly SoundEffectInstance onProjectileHitSound;
+
+        public BlockProjectileTag(string hitSoundName = null)
+        {
+            if (hitSoundName != null)
+            {
+                this.onProjectileHitSound = MachinaClient.Assets.GetSoundEffectInstance(hitSoundName);
+            }
+        }
+
+        public void PlayHitSound()
+        {
+            if (this.onProjectileHitSound != null)
+            {
+                this.onProjectileHitSound.Stop();
+                this.onProjectileHitSound.Play();
+            }
+        }
     }
 
     public class WaterFiller : Tag
@@ -182,6 +201,8 @@ namespace Duel.Data
 
     public class Solid : Tag
     {
+        private SoundEffectInstance pushSound;
+
         public bool IsPushOnBump { get; private set; }
         public bool IsPushOnHit { get; private set; }
 
@@ -195,6 +216,21 @@ namespace Duel.Data
         {
             IsPushOnHit = true;
             return this;
+        }
+
+        public Solid SetPushSound(string pushSoundName)
+        {
+            this.pushSound = MachinaClient.Assets.GetSoundEffectInstance(pushSoundName);
+            return this;
+        }
+
+        public void PlayPushSound()
+        {
+            if (this.pushSound != null)
+            {
+                this.pushSound.Stop();
+                this.pushSound.Play();
+            }
         }
     }
 
@@ -403,8 +439,24 @@ namespace Duel.Data
     /// </summary>
     public class DestroyOnHit : Tag
     {
-        public DestroyOnHit()
+        private readonly SoundEffectInstance destroySound;
+
+        public DestroyOnHit(string destroySound = null)
         {
+            if (destroySound != null)
+            {
+                this.destroySound = MachinaClient.Assets.GetSoundEffectInstance(destroySound);
+            }
+        }
+
+        public void PlaySound()
+        {
+            if (this.destroySound != null)
+            {
+                this.destroySound.Volume = 0.5f;
+                this.destroySound.Stop();
+                this.destroySound.Play();
+            }
         }
     }
 

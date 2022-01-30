@@ -100,6 +100,9 @@ namespace Duel.Data
                     {
                         RequestDestroyEntity(doorEntity, DestroyType.Vanish);
                         RequestDestroyEntity(entity, DestroyType.Break);
+                        var unlockSound = MachinaClient.Assets.GetSoundEffectInstance("unlock");
+                        unlockSound.Pitch = 1f;
+                        unlockSound.Play();
                     }
                 }
             }
@@ -305,6 +308,10 @@ namespace Duel.Data
                         PutTileAt(position, new TileTemplate(tags));
                     }
 
+                    var sound = MachinaClient.Assets.GetSoundEffectInstance("splorp");
+                    sound.Volume = 0.5f;
+                    sound.Play();
+
                     RequestDestroyEntity(stepper, DestroyType.Sink);
                 }
             }
@@ -366,10 +373,24 @@ namespace Duel.Data
 
                 if (pressurePlateIsDown.Contains(color) || leverIsOn.Contains(color))
                 {
+                    if (!SignalState.IsOn(color))
+                    {
+                        var unlockSound = MachinaClient.Assets.GetSoundEffectInstance("unlock");
+                        unlockSound.Pitch = 0f;
+                        unlockSound.Play();
+                    }
+
                     SignalState.TurnOn(color);
                 }
                 else
                 {
+                    if (SignalState.IsOn(color))
+                    {
+                        var unlockSound = MachinaClient.Assets.GetSoundEffectInstance("unlock");
+                        unlockSound.Pitch = 0.25f;
+                        unlockSound.Play();
+                    }
+
                     SignalState.TurnOff(color);
                 }
             }

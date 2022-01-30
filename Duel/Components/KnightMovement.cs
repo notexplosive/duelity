@@ -4,6 +4,7 @@ using Machina.Components;
 using Machina.Data;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace Duel.Components
         private readonly SolidProvider solidProvider;
         private readonly Entity entity;
         private readonly BufferedKeyboardListener keyboard;
+        private SoundEffectInstance ehSound;
+        private SoundEffectInstance oaSound;
+        private SoundEffectInstance clankSound;
+
         public Direction LongLeg { get; private set; } = Direction.None;
         public event Action MoveStarted;
         public event Action MoveCanceled;
@@ -31,12 +36,42 @@ namespace Duel.Components
             this.keyboard.RightPressed += BuildCallback(Direction.Right);
             this.keyboard.DownPressed += BuildCallback(Direction.Down);
             this.keyboard.UpPressed += BuildCallback(Direction.Up);
+
+            this.ehSound = MachinaClient.Assets.GetSoundEffectInstance("eh");
+            this.oaSound = MachinaClient.Assets.GetSoundEffectInstance("oa");
+            this.clankSound = MachinaClient.Assets.GetSoundEffectInstance("clank");
+
+            MoveStarted += PlayEh;
+            MoveFailed += PlayOa;
+            MoveComplete += PlayClank;
+        }
+
+        private void PlayClank()
+        {
+            this.clankSound.Stop();
+            this.clankSound.Play();
+        }
+
+        private void PlayOa()
+        {
+            this.oaSound.Stop();
+            this.oaSound.Play();
+        }
+
+        private void PlayEh()
+        {
+            this.ehSound.Stop();
+            this.ehSound.Volume = 0.5f;
+            this.ehSound.Play();
         }
 
         private Action BuildCallback(Direction direction)
         {
             return () =>
             {
+                if (this.entity.BusySignal.IsBusy())
+                    return;
+
                 if (LongLeg == Direction.None)
                 {
                     LongLeg = direction;

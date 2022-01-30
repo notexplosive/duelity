@@ -22,6 +22,7 @@ namespace Duel.Data
                 {
                     if (solidTag.IsPushOnBump)
                     {
+                        solidTag.PlayPushSound();
                         entity.WalkAndPushInDirection(direction);
                     }
                     else
@@ -56,7 +57,15 @@ namespace Duel.Data
 
         public bool BlocksBulletsAt(Point shooterPosition, Point bulletPosition)
         {
-            return HasTagAt<BlockProjectileTag>(bulletPosition) || IsClosedDoorAt(bulletPosition) || IsOutOfBoundsOfCurrentRoomOrLevel(shooterPosition, bulletPosition);
+            var result = HasTagAt<BlockProjectileTag>(bulletPosition) || IsClosedDoorAt(bulletPosition) || IsOutOfBoundsOfCurrentRoomOrLevel(shooterPosition, bulletPosition);
+
+            // this is a WEEEIRD place to play a sound. this should be a harmless getter with no side effects but whatever
+            if (result && TryGetFirstEntityWithTagAt(bulletPosition, out Entity entity, out BlockProjectileTag tag))
+            {
+                tag.PlayHitSound();
+            }
+
+            return result;
         }
 
         public bool TryGetTagFromTileAt<T>(Point position, out T foundTileTag) where T : Tag
@@ -158,15 +167,18 @@ namespace Duel.Data
             var entities = new List<Entity>(this.level.AllEntitiesAt(hitLocation));
             foreach (var entity in entities)
             {
-                if (entity.Tags.HasTag<DestroyOnHit>())
+                if (entity.Tags.TryGetTag(out DestroyOnHit destroyOnHit))
                 {
                     this.level.RequestDestroyEntity(entity, DestroyType.Break);
+                    destroyOnHit.PlaySound();
+
                 }
 
                 if (entity.Tags.TryGetTag(out Solid solid))
                 {
                     if (solid.IsPushOnHit)
                     {
+                        solid.PlayPushSound();
                         entity.WalkAndPushInDirection(attackDirection);
                     }
                 }

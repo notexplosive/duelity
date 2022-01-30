@@ -27,6 +27,7 @@ namespace Duel.Data
                 {
                     if (solid.IsPushOnHit)
                     {
+                        solid.PlayPushSound();
                         HitLocations.Add(hitScanPosition);
                         HitAtLeastOneThing = true;
                     }

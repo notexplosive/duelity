@@ -4,6 +4,7 @@ using Machina.Components;
 using Machina.Data;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -16,8 +17,9 @@ namespace Duel.Components
     {
         private readonly Entity entity;
         private readonly BufferedKeyboardListener keyboard;
+        private SoundEffectInstance walkSound;
 
-        public NormalKeyboardMovement(Actor actor, Entity entity) : base(actor)
+        public NormalKeyboardMovement(Actor actor, Entity entity, string walkSoundName) : base(actor)
         {
             this.keyboard = RequireComponent<BufferedKeyboardListener>();
             this.entity = entity;
@@ -26,6 +28,16 @@ namespace Duel.Components
             this.keyboard.RightPressed += Move(Direction.Right);
             this.keyboard.DownPressed += Move(Direction.Down);
             this.keyboard.UpPressed += Move(Direction.Up);
+
+            this.walkSound = MachinaClient.Assets.GetSoundEffectInstance(walkSoundName);
+
+            this.entity.PositionChanged += PlayWalkSound;
+        }
+
+        private void PlayWalkSound(Entity mover, MoveType moveType, Point previousPosition)
+        {
+            this.walkSound.Stop();
+            this.walkSound.Play();
         }
 
         public void ResumeMoveFromOldInstance(Entity playerFromPreviousRoom, Point newPlayerPosition)
@@ -37,7 +49,10 @@ namespace Duel.Components
         private Action Move(Direction direction)
         {
             return
-                () => { this.entity.WalkAndPushInDirection(direction); };
+                () =>
+                {
+                    this.entity.WalkAndPushInDirection(direction);
+                };
         }
     }
 }

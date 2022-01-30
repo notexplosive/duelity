@@ -139,31 +139,31 @@ namespace Duel.Data
 
             // Entities
             templateLibrary.AddTemplate("glass", new EntityTemplate(
-                new DestroyOnHit(),
+                new DestroyOnHit("glass-break"),
                 new SimpleEntityImage(EntityFrameSet.GlassBottle),
-                new Solid().PushOnBump(),
+                new Solid().PushOnBump().SetPushSound("scrape"),
                 new Grapplable(Grapplable.Type.PulledByLasso),
                 new WaterFiller(WaterFiller.Type.Floats)
             ));
 
             templateLibrary.AddTemplate("anvil", new EntityTemplate(
-                new Solid().PushOnHit(),
-                new BlockProjectileTag(),
+                new Solid().PushOnHit().SetPushSound("scrape"),
+                new BlockProjectileTag("anvil"),
                 new SimpleEntityImage(EntityFrameSet.Anvil),
                 new WaterFiller(WaterFiller.Type.Sinks)
             ));
 
             templateLibrary.AddTemplate("crate", new EntityTemplate(
-                new Solid().PushOnBump(),
+                new Solid().PushOnBump().SetPushSound("scrape"),
                 new BlockProjectileTag(),
                 new Grapplable(Grapplable.Type.PulledByLasso),
                 new SimpleEntityImage(EntityFrameSet.Crate),
-                new DestroyOnHit(),
+                new DestroyOnHit("wood-break"),
                 new WaterFiller(WaterFiller.Type.Floats)
             ));
 
             templateLibrary.AddTemplate("barrel", new EntityTemplate(
-                new Solid().PushOnBump().PushOnHit(),
+                new Solid().PushOnBump().PushOnHit().SetPushSound("scrape"),
                 new BlockProjectileTag(),
                 new SimpleEntityImage(EntityFrameSet.Barrel),
                 new WaterFiller(WaterFiller.Type.Floats)
@@ -233,7 +233,7 @@ namespace Duel.Data
 
                 // all 3 keys
                 templateLibrary.AddTemplate($"{colorName}Key", new EntityTemplate(
-                    new Solid().PushOnBump().PushOnHit(),
+                    new Solid().PushOnBump().PushOnHit().SetPushSound("scrape"),
                     new BlockProjectileTag(),
                     new WaterFiller(WaterFiller.Type.Sinks),
                     new Key(color),

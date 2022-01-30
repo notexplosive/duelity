@@ -449,12 +449,6 @@
 #begin levels/level_9.bunk
 /copy:levels/level_9.bunk
 
-#begin sounds/default_blip.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/default_blip.ogg
-
 #begin sounds/banjo_blip.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
@@ -467,8 +461,119 @@
 /processorParam:Quality=Best
 /build:sounds/deep_blip.ogg
 
+#begin sounds/default_blip.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/default_blip.ogg
+
 #begin sounds/harpsichord_blip.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/harpsichord_blip.ogg
+
+#begin sounds/scrape.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/scrape.ogg
+
+#begin sounds/horse.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/horse.ogg
+
+
+#begin sounds/boot_step.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/boot_step.ogg
+
+
+#begin sounds/shoe_step.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/shoe_step.ogg
+
+#begin sounds/anvil.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/anvil.ogg
+
+#begin sounds/gun_blip.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/gun_blip.ogg
+
+#begin sounds/shoot.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/shoot.ogg
+
+#begin sounds/whip.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/whip.ogg
+
+#begin sounds/woosh.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/woosh.ogg
+
+#begin sounds/wood-break.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/wood-break.ogg
+
+
+#begin sounds/glass-break.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/glass-break.ogg
+
+#begin sounds/startled_cow.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/startled_cow.ogg
+
+#begin sounds/oa.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/oa.ogg
+
+#begin sounds/eh.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/eh.ogg
+
+#begin sounds/clank.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/clank.ogg
+
+#begin sounds/unlock.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/unlock.ogg
+
+#begin sounds/splorp.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/splorp.ogg
