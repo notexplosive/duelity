@@ -87,7 +87,14 @@ namespace Duel.Data
 
             public Track(string trackName)
             {
+
                 this.sound = MachinaClient.Assets.GetSoundEffectInstance(trackName);
+
+                // this is the most "Jam Code" code I've ever written.
+                if (trackName == "bgm_knight")
+                {
+                    this.sound.Volume = 0.35f;
+                }
             }
 
             public void Play()
