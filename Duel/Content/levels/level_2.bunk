@@ -729,6 +729,7 @@ tile next_level_trigger 47,6
 tile wall 48,-1
 tile wall 49,-1
 tile next_level_trigger 48,7
+tile wall 36,7
 entt spawn-ernesto 1,4
 entt spawn-miranda 2,3
 entt spawn-bennigan 2,5
