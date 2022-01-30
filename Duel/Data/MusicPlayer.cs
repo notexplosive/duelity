@@ -32,7 +32,7 @@ namespace Duel.Data
             this.thistownATrack = new Track("bgm_1a");
             this.thistownBTrack = new Track("bgm_1b");
             this.minesTrack = new Track("bgm_mines");
-            this.oasisTrack = new Track("bgm_mines"); // TODO: use oasis
+            this.oasisTrack = new Track("bgm_oasis");
             this.knightTrack = new Track("bgm_knight");
 
             this.allTracks = new List<Track>
@@ -92,6 +92,11 @@ namespace Duel.Data
 
                 // this is the most "Jam Code" code I've ever written.
                 if (trackName == "bgm_knight")
+                {
+                    this.sound.Volume = 0.35f;
+                }
+
+                if (trackName == "bgm_mines")
                 {
                     this.sound.Volume = 0.35f;
                 }

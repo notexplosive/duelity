@@ -497,6 +497,12 @@
 /processorParam:Quality=Best
 /build:sounds/bgm_knight.ogg
 
+#begin sounds/bgm_oasis.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bgm_oasis.ogg
+
 #begin sounds/bgm_mines.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
