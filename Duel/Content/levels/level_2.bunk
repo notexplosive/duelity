@@ -240,6 +240,7 @@ tile wall 6,-4
 tile wall 14,-8
 tile wall 9,-2
 tile wall 13,-2
+tile hook 2,-2
 tile water 11,-7
 tile water 8,-6
 tile wall 10,-2
@@ -290,7 +291,6 @@ entt glass 12,5
 entt glass 11,5
 entt glass 10,5
 entt glass 9,5
-entt spawn-ernesto 5,-1
 entt crate 3,-2
 entt crate 1,-5
 entt crate 2,-5
