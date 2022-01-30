@@ -233,7 +233,9 @@ namespace Duel.Data
 
                 // all 3 keys
                 templateLibrary.AddTemplate($"{colorName}Key", new EntityTemplate(
-                    new Solid().PushOnBump(),
+                    new Solid().PushOnBump().PushOnHit(),
+                    new BlockProjectileTag(),
+                    new WaterFiller(WaterFiller.Type.Sinks),
                     new Key(color),
                     new Grapplable(Grapplable.Type.PulledByLasso)
                 ));
