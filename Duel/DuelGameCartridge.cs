@@ -35,17 +35,17 @@ namespace Duel
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, Screenplay.GetConversation("renegade_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, Screenplay.GetConversation("cowboy_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, Screenplay.GetConversation("knight_intro_1A")));
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, emptyConvo));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, Screenplay.GetConversation("sheriff_intro_1B")));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Knight, ZoneTileset.Thistown, emptyConvo));
 
-            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Sheriff, ZoneTileset.Oasis, emptyConvo));
+            this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Sheriff, ZoneTileset.Oasis, Screenplay.GetConversation("sheriff_intro_oasis")));
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Renegade, ZoneTileset.Oasis, emptyConvo));
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Cowboy, ZoneTileset.Oasis, emptyConvo));
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Knight, ZoneTileset.Oasis, emptyConvo));
 
-            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Sheriff, ZoneTileset.Mines, emptyConvo));
+            this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Sheriff, ZoneTileset.Mines, Screenplay.GetConversation("sheriff_intro_mine")));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Renegade, ZoneTileset.Mines, emptyConvo));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Cowboy, ZoneTileset.Mines, emptyConvo));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Knight, ZoneTileset.Mines, emptyConvo));

@@ -762,9 +762,9 @@ entt anvil 24,14
 entt anvil 32,10
 entt anvil 36,-3
 entt anvil 41,-3
+entt jackalope 5,5
+entt cactus 34,4
 prop large_cactus 2658,761
 prop small_cactus 2733,948
 prop small_cactus 2201,1125
 prop small_rock 2473,1060
-prop small_cactus 355,355
-prop small_cactus 2202,323
