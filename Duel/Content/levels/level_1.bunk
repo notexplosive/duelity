@@ -791,6 +791,7 @@ entt crate 20,5
 entt crate 26,7
 entt crate -5,7
 entt spawn-bennigan 2,44
+entt anvil 23,6
 prop large_cactus 1517,974
 prop small_cactus 1098,-210
 prop large_cactus 1417,-99
