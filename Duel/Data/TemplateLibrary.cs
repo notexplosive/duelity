@@ -142,6 +142,8 @@ namespace Duel.Data
             templateLibrary.AddNpc(new NpcTag(NpcSprite.EggMan, "egg_sheriff", "egg_renegade", "egg_cowboy", "egg_knight"));
             templateLibrary.AddNpc(new NpcTag(NpcSprite.CoolHair, "hair_sheriff", "hair_renegade", "hair_cowboy", "hair_knight"));
             templateLibrary.AddNpc(new NpcTag(NpcSprite.Mime, "mime_sheriff", "mime_renegade", "mime_cowboy", "mime_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.FourMan, "fourman_sheriff", "fourman_renegade", "fourman_cowboy", "fourman_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.Moleman, "moleman_sheriff", "moleman_renegade", "moleman_cowboy", "moleman_knight"));
 
             // Entities
             templateLibrary.AddTemplate("glass", new EntityTemplate(
