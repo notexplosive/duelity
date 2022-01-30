@@ -266,6 +266,7 @@ namespace Duel.Data
             var solidProvider = new LevelSolidProvider(this);
             if (solidProvider.HasTagAt<ZoneTransitionTrigger>(position) && stepper.Tags.HasTag<PlayerTag>())
             {
+                stepper.BusySignal.Add(new BusyFunction("LevelOver", () => false));
                 GoToNextLevel?.Invoke();
             }
         }
