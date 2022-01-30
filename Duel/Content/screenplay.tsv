@@ -230,3 +230,53 @@ conversation	sheriff_intro_mine
 say	SheriffNormal	Ah, the Mines of Danger.
 say	SheriffNormal	Once I get through these, I should finally make it to Tarnation.
 say	SheriffDeepBow	I've got to find the deadliest gunslinger...
+		
+conversation	steven_intro_1B	
+say	CowboyNormal	Alright! Some puzzles!
+say	CowboyDetermined	I can use R to restrart a room or I can use ctrl + R to restart this entire area.
+		
+conversation	moleman_sheriff	
+say	Moleman	I am within the earth.
+say	SheriffNormal	.... okay?
+say	Moleman	It's comfy.
+		
+conversation	moleman_cowboy	
+say	Moleman	I'm Moleman.
+say	CowboySkeptical	What is it? Are you a mole? Or are you a man?
+say	Moleman	I'm Moleman.
+		
+conversation	moleman_renegade	
+say	Moleman	Mmm... I found some nice loam today.
+say	RenegadeEw	Uh... that's gross, dude.
+say	Moleman	What would you prefer? Clay? Silt? Sand?
+say	RenegadeEw	uh...
+say	Moleman	Sandy clay? Clay loam? Silty clay loam? Loamy Sand?
+		
+conversation	moleman_knight	
+say	KnightGasp	Great Gatsbies! A severed head!
+say	Moleman	No, I'm Moleman.
+say	Moleman	My body is in the earth.
+		
+conversation	fourman_renegade	
+say	Fourman	Welcome to my mines! I'm the foreman, I call the shots around here.
+say	RenegadeSmirk	Shots??
+say	Fourman	Uh... please refrain from actually shooting anything though.
+say	Fourman	There's some delicate machinery here.
+say	RenegadeLaugh	I'm being rebelious today, so no promises!
+		
+conversation	fourman_sheriff	
+say	Fourman	Welcome to the mines! I'm the foreman. You looking for a job?
+say	SheriffNormal	Just passing through...
+say	Fourman	Oh come on, we could use a strong man like yourself down here!
+say	Fourman	Or anyone sane really, my only employee likes to eat dirt.
+		
+conversation	fourman_cowboy	
+say	Fourman	Welcome to the mines! I'm the foreman. You looking for a job?
+say	CowboyHope	You'd consider me for a job???
+say	Fourman	Sure! We could tie a harness to you and have you march around to power this here machinery. 
+say	CowboySkeptical	What, like some kind of animal?
+		
+conversation	fourman_knight	
+say	Fourman	Welcome to the mines! I'm the foreman. You looking for a job?
+say	KnightSalute	Nay- no job for I, for I am already employed, in service of the king!!
+say	Fourman	Yeah actually I take back my offer anyway...

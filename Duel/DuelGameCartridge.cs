@@ -37,7 +37,7 @@ namespace Duel
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, Screenplay.GetConversation("knight_intro_1A")));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, Screenplay.GetConversation("sheriff_intro_1B")));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));
-            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, emptyConvo));
+            this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, Screenplay.GetConversation("steven_intro_1B")));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Knight, ZoneTileset.Thistown, emptyConvo));
 
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Sheriff, ZoneTileset.Oasis, Screenplay.GetConversation("sheriff_intro_oasis")));
