@@ -60,8 +60,6 @@ namespace Duel.Components
 
             this.portraitSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("portraits");
 
-            MachinaClient.Print(bakedLayout.GetNode("text").PositionRelativeToRoot);
-
             new LayoutActors(actor.scene, layout);
 
 

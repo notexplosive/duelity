@@ -16,6 +16,7 @@ namespace Duel.Components
     {
         private float timer;
         private int letterIndex;
+        private int blipIndex;
 
         public event Action<IDialogEvent> StartedRun;
         public IDialogEvent PendingEvent { get; private set; }
@@ -29,9 +30,10 @@ namespace Duel.Components
         {
             this.timer += dt;
 
-            if (this.timer > 0.08f)
+            if (this.timer > 0.02f)
             {
                 ShowNextLetter();
+                this.timer = 0;
             }
         }
 
@@ -43,6 +45,15 @@ namespace Duel.Components
 
                 if (letterIndex <= say.Text.Length)
                 {
+                    var letter = say.Text[this.letterIndex - 1];
+                    if (!char.IsPunctuation(letter) && !char.IsWhiteSpace(letter))
+                    {
+                        if (this.blipIndex % 2 == 0)
+                        {
+                            say.Speaker.Blip.Play();
+                        }
+                        this.blipIndex++;
+                    }
                     CurrentText = say.Text.Substring(0, this.letterIndex);
                 }
             }
@@ -58,14 +69,20 @@ namespace Duel.Components
                     {
                         BecomeReady();
                     }
+                    else
+                    {
+                        letterIndex = say.Text.Length - 1;
+                        ShowNextLetter();
+                    }
                 }
             }
         }
 
-        internal void Run(IDialogEvent pendingAction)
+        public void Run(IDialogEvent pendingAction)
         {
             StartedRun?.Invoke(pendingAction);
             this.letterIndex = 0;
+            this.blipIndex = 0;
             PendingEvent = pendingAction;
         }
 
