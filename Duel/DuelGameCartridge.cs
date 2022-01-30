@@ -33,8 +33,8 @@ namespace Duel
 
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, Screenplay.GetConversation("sheriff_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, Screenplay.GetConversation("renegade_intro_1A")));
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, Screenplay.GetConversation("cowboy_intro_1A"))); 
-            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, Screenplay.GetConversation("knight_intro_1A"))); 
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, Screenplay.GetConversation("cowboy_intro_1A")));
+            this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, Screenplay.GetConversation("knight_intro_1A")));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, emptyConvo));
@@ -68,6 +68,11 @@ namespace Duel
         public Chapter GetCurrentChapterAndIncrement()
         {
             return this.chapters[this.chapterIndex++];
+        }
+
+        public Chapter GetCurrentChapter()
+        {
+            return this.chapters[this.chapterIndex - 1];
         }
 
         public override void PrepareDynamicAssets(AssetLoader loader, MachinaRuntime runtime)

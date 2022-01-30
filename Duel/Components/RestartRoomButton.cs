@@ -32,9 +32,24 @@ namespace Duel.Components
 
         public override void OnKey(Keys key, ButtonState state, ModifierKeys modifiers)
         {
-            if (key == Keys.R && modifiers.None && state == ButtonState.Pressed && launchCooldown < 0 && this.entity.BusySignal.IsFree())
+            if (state == ButtonState.Pressed && launchCooldown < 0 && this.entity.BusySignal.IsFree())
             {
-                this.game.RestartRoom();
+                if (key == Keys.R)
+                {
+                    if (modifiers.None)
+                    {
+                        this.game.RestartRoom();
+                    }
+
+                    if (modifiers.Control)
+                    {
+                        var sceneLayers = this.actor.scene.sceneLayers;
+                        sceneLayers.RemoveScene(this.actor.scene);
+
+                        var gameScene = sceneLayers.AddNewScene();
+                        DuelGameCartridge.Instance.GetCurrentChapter().Load(gameScene);
+                    }
+                }
             }
         }
     }
