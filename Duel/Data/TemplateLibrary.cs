@@ -108,6 +108,7 @@ namespace Duel.Data
             templateLibrary.AddTemplate("house_2", new PropTemplate("props_house_2", PropTemplate.PropLayeringRule.Front));
             templateLibrary.AddTemplate("machinery", new PropTemplate("props_machinery", PropTemplate.PropLayeringRule.Front));
             templateLibrary.AddTemplate("palm_tree", new PropTemplate("props_palm_tree", PropTemplate.PropLayeringRule.Front));
+            templateLibrary.AddTemplate("cubepig", new PropTemplate("props_cubepig", PropTemplate.PropLayeringRule.Front));
 
             // Props that appear below entities
             templateLibrary.AddTemplate("city_limits", new PropTemplate("props_city_limits", PropTemplate.PropLayeringRule.Behind));
@@ -136,6 +137,11 @@ namespace Duel.Data
             templateLibrary.AddNpc(new NpcTag(NpcSprite.Sar, "sar_sheriff", "sar_renegade", "sar_cowboy", "sar_knight"));
             templateLibrary.AddNpc(new NpcTag(NpcSprite.MirandaMom, "mom_sheriff", "mom_renegade", "mom_cowboy", "mom_knight"));
             templateLibrary.AddNpc(new NpcTag(NpcSprite.Farmer, "farmer_sheriff", "farmer_renegade", "farmer_cowboy", "farmer_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.Cactus, "sneakman_sheriff", "sneakman_renegade", "sneakman_cowboy", "sneakman_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.Jackalope, "jackalope_sheriff", "jackalope_renegade", "jackalope_cowboy", "jackalope_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.EggMan, "egg_sheriff", "egg_renegade", "egg_cowboy", "egg_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.CoolHair, "hair_sheriff", "hair_renegade", "hair_cowboy", "hair_knight"));
+            templateLibrary.AddNpc(new NpcTag(NpcSprite.Mime, "mime_sheriff", "mime_renegade", "mime_cowboy", "mime_knight"));
 
             // Entities
             templateLibrary.AddTemplate("glass", new EntityTemplate(

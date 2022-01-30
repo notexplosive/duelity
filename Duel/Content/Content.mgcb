@@ -71,6 +71,18 @@
 /processorParam:TextureFormat=Color
 /build:images/portraits.png
 
+#begin images/props_cubepig.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/props_cubepig.png
+
 #begin images/props_aloe.png
 /importer:TextureImporter
 /processor:TextureProcessor

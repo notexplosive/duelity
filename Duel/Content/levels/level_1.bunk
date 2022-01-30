@@ -777,6 +777,7 @@ tile bramble 13,31
 tile bramble 13,28
 tile bramble 13,29
 tile bramble 13,30
+tile invisible_wall -8,14
 entt spawn-steven -12,12
 entt spawn-miranda 21,14
 entt mirandamom 22,12
@@ -786,7 +787,6 @@ entt spawn-ernesto 7,33
 entt crate 7,31
 entt crate 17,13
 entt crate 19,15
-entt barrel -8,14
 entt crate 20,5
 entt crate 26,7
 entt crate -5,7
@@ -843,3 +843,4 @@ prop bgscuff2 -697,839
 prop bgscuff3 -798,844
 prop bgscuff1 -672,760
 prop bgscuff3 -704,672
+prop cubepig -479,931

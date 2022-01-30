@@ -21,12 +21,13 @@ say	Farmer	Shucks howdy, sher'f!
 conversation	renegade_intro_1A	
 say	Mom	Miranda!!! Stop shooting so close to the house!
 say	Mom	You're going to destroy one of the windows!
-say	RenegadeEw	Mom you are SO lame. There is literally nothing else to do here.
+say	RenegadeEw	Mom you are SO lame. We don't even have windows!
+say	RenegadeEw	I gotta shoot! There is LITERALLY nothing else to do here.
 say	Mom	Come now, Miranda! There's plenty to do here. And Thistown is only like two screens away.
 say	RenegadeSmirk	Wait that's it! I'll leave and find somewhere where there's more to do!
 say	RenegadeLaugh	Maybe I'll even find a DUEL.
 say	Mom	Miranda, DUELs are dangerous!
-say	RenegadeEw	Sorry Mom, I'm leaving.
+say	RenegadeLaugh	Sorry Mom, I'm running away!
 		
 conversation	sar_renegade	
 say	Sar	Howdy, Miranda! What brings you into Thistown?
@@ -101,3 +102,131 @@ say	SheriffNormal	And if I need to lasso objects, I've got the Space key for tha
 conversation	mom_renegade	
 		
 conversation	farmer_cowboy	
+		
+conversation	sneakman_sheriff	
+say	Sneakman	psst... hey... you wanna hear a secret??
+say	SheriffNormal	uh.... not really.
+say	Sneakman	oh, okay.
+		
+conversation	sneakman_renegade	
+say	Sneakman	psst... hey... you wanna hear a secret??
+say	RenegadeEw	My mom told me not to talk to strange men!
+say	RenegadeEw	Especially if they're hiding in a cactus.
+say	Sneakman	oh, okay.
+say	RenegadeShook	WAIT I JUST REMEMBERED I'M REBELLING CAN YOU TELL ME THE SECRET
+say	Sneakman	nope, too late.
+		
+conversation	sneakman_cowboy	
+say	Sneakman	psst... hey... you wanna hear a secret??
+say	CowboySkeptical	uh... sure?
+say	Sneakman	I am in extreme pain.
+say	CowboyNormal	oh..... cool?
+say	Sneakman	not really
+		
+conversation	sneakman_knight	
+say	KnightSalute	Hark!
+say	Sneakman	yo what, how'd you see me?
+say	KnightGrin	Mine eyes doth piece even the shrewdest disguise, for I am a knight!
+say	Sneakman	oh you're a weirdo, okay
+		
+conversation	jackalope_sheriff	
+say	SheriffNormal	A jackalope? I thought these were fake.
+		
+conversation	jackalope_renegade	
+say	RenegadeSmirk	A jackalope! I knew these were real.
+say	RenegadeLaugh	Mom is going to be so embarrassed when she learns I was right!
+say	RenegadeEw	If.... I ever see her again....
+		
+conversation	jackalope_cowboy	
+say	CowboyNormal	Howdy feller!
+say	CowboySkeptical	Oh... you don't talk?
+		
+conversation	jackalope_knight	
+say	KnightGasp	What dost this fair creature be??
+say	Jackalope	I'm a Jackalope.
+		
+conversation	egg_sheriff	
+say	Egg	You can lead a horse to water, but you can't make it drink.
+say	Horse	I'm not thirsty.
+		
+conversation	egg_renegade	
+say	Egg	Young girl, have you been practicing your spelling?
+say	Egg	Always remember: "i before e, except after c"
+say	Horse	Neigh
+		
+conversation	egg_cowboy	
+say	Egg	Want to hear a joke?
+say	CowboyHope	I'd love to!
+say	Egg	A horse walks into the bar and the bartender aks "Why the long face?"
+say	Horse	Gets better every time...
+		
+conversation	egg_knight	
+say	KnightSalute	Ah, a fair steed and her noble rider!
+say	Egg	Sorry, pal. We're all out of horse jokes.
+say	Horse	You should be glad, honestly.
+		
+conversation	hair_sheriff	
+say	CoolHairguy	Hey, slick!
+say	SheriffNormal	....
+say	CoolHairguy	What, you're not even going to comment on my Nice Hair?
+say	SheriffDeepBow	............
+		
+conversation	hair_renegade	
+say	RenegadeSmirk	Hey, nice hair!!
+say	CoolHairguy	Thank you!! At least SOMEONE understands.
+		
+conversation	hair_cowboy	
+say	CoolHairguy	Oh hey, it's a cow!
+say	CowboyDetermined	I'm not a cow, I'm a boy. Take that back!
+say	CoolHairguy	What are you gonna do about it, make some milk?
+say	CowboySkeptical	.....
+		
+conversation	hair_knight	
+say	KnightSalute	Hark thee!
+say	CoolHairguy	Why are you talking like that?
+say	KnightGasp	Darest I say I know not what thy mean?
+say	CoolHairguy	Is that supposed to be Old English? You're not even doing it right.
+say	KnightRascal	Taketh that back! I shalt say again: take it back!
+say	CoolHairguy	Dude, stop. You're being a huge nerd.
+say	KnightRascal	You're a rascal! You're a rascal with no respect for knights!!
+		
+conversation	mime_sheriff	
+say	Mime	...... . .. . .....
+say	SheriffNormal	........
+say	Mime	... ... .... . .....
+say	SheriffNormal	(finally, someone who can match my pace of conversation)
+		
+conversation	mime_renegade	
+say	Mime	...... . .. . .....
+say	RenegadeShook	Hey, are you a mime?
+say	Mime	.... . .. . .....
+say	RenegadeEw	Uh, hate to break it to you but this is a *mine*. With an "n."
+say	RenegadeEw	This must be so embarassing for you....
+		
+conversation	mime_cowboy	
+say	Mime	...... . .. . .....
+say	CowboySkeptical	Hmm... you're all black and white.
+say	CowboyHope	Are you a cow???
+		
+conversation	mime_knight	
+say	KnightSalute	Hark ye, man of hat and paint!
+say	Mime	...... . .. . .....
+say	KnightGrin	Ah, a man of silence. Are thee a monk perhaps?
+say	MimeBroken	Dude, c'mon. You're making us actors look bad.
+say	KnightGasp	I know not what ye meaneth? What is an "actor"?
+say	MimeBroken	Oh no. He's actually just insane.
+		
+conversation	sheriff_intro_1B	
+say	SheriffNormal	Oh yeah, just remembered.
+say	SheriffNormal	I can use my R key to restart a room, in case I need that.
+say	SheriffNormal	Might come in handy if there are any puzzles up ahead.
+say	SheriffDeepBow	*sigh*... I sure hope there aren't too many puzzles.
+		
+conversation	sheriff_intro_oasis	
+say	SheriffNormal	The town of Oasis... Halfway between Thistown and Tarnation.
+say	SheriffNormal	It's pretty lush here, at least for the desert.
+		
+conversation	sheriff_intro_mine	
+say	SheriffNormal	Ah, the Mines of Danger.
+say	SheriffNormal	Once I get through these, I should finally make it to Tarnation.
+say	SheriffDeepBow	I've got to find the deadliest gunslinger...

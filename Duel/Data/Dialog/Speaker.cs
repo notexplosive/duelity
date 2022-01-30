@@ -16,6 +16,7 @@ namespace Duel.Data.Dialog
                 case "RenegadeGun": return RenegadeGun;
                 case "RenegadeSmirk": return RenegadeSmirk;
                 case "RenegadeEw": return RenegadeEw;
+                case "RenegadeShook": return RenegadeShook;
                 case "CowboyNormal": return CowboyNormal;
                 case "CowboySkeptical": return CowboySkeptical;
                 case "CowboyHope": return CowboyHope;
@@ -36,8 +37,11 @@ namespace Duel.Data.Dialog
                 case "Moleman": return Moleman;
                 case "Mime": return Mime;
                 case "Fourman": return Fourman;
-                default: return null;
+                case "Horse": return Horse;
+                case "MimeBroken": return MimeBroken;
+                default: throw new System.Exception("Invalid Speaker Name: " + name);
             }
+
         }
 
         public static Speaker SheriffNormal = new Speaker("Ernesto", 0, new DialogBlip("banjo_blip", 0.5f, 0));
@@ -47,6 +51,7 @@ namespace Duel.Data.Dialog
         public static Speaker RenegadeGun = new Speaker("Miranda", 7, new DialogBlip("gun_blip", 0.5f, -0.5f));
         public static Speaker RenegadeSmirk = new Speaker("Miranda", 8, new DialogBlip("gun_blip", 0.5f, 0.5f));
         public static Speaker RenegadeEw = new Speaker("Miranda", 8, new DialogBlip("gun_blip", 0.5f, 0.5f));
+        public static Speaker RenegadeShook = new Speaker("Miranda", 9, new DialogBlip("gun_blip", 0.5f, 0.5f));
         public static Speaker CowboyNormal = new Speaker("Steven", 12, new DialogBlip("deep_blip", 0.5f, 0f));
         public static Speaker CowboySkeptical = new Speaker("Steven", 13, new DialogBlip("deep_blip", 0.5f, -0.25f));
         public static Speaker CowboyHope = new Speaker("Steven", 14, new DialogBlip("deep_blip", 0.5f, 0.25f));
@@ -68,6 +73,8 @@ namespace Duel.Data.Dialog
         public static Speaker Moleman = new Speaker("Moleman", 34);
         public static Speaker Mime = new Speaker("????", 34);
         public static Speaker Fourman = new Speaker("Gary", 35);
+        public static Speaker Horse = new Speaker("Horse", 36);
+        public static Speaker MimeBroken = new Speaker("????", 40);
 
         // class def
 
