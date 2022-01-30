@@ -1,7 +1,9 @@
-﻿using Machina.Components;
+﻿using Duel.Components;
+using Machina.Components;
 using Machina.Data;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -9,11 +11,11 @@ namespace Duel.Data
 {
     public class TitleScreen : IChapter
     {
-        private Scene gameScene;
+        private Scene introScene;
 
         public void Load(Scene gameScene)
         {
-            this.gameScene = gameScene;
+            this.introScene = gameScene;
             gameScene.sceneLayers.BackgroundColor = new Color(255, 89, 68);
             gameScene.StartCoroutine(IntroCoroutine());
         }
@@ -61,7 +63,44 @@ namespace Duel.Data
 
             yield return WaitBeat();
 
-            PutTextureActor("title_screen_press_space");
+            var pressSpace = PutTextureActor("title_screen_press_space");
+
+            var adHoc = new AdHoc(pressSpace);
+
+            var blinkTimer = 0f;
+            var waitTimer = 2f;
+            adHoc.onUpdate = (dt) =>
+            {
+                if (waitTimer > 0)
+                {
+                    waitTimer -= dt;
+                }
+
+                blinkTimer += dt * 4;
+                pressSpace.Visible = MathF.Sin(blinkTimer) > 0;
+            };
+
+            adHoc.onKey = (Keys key, ButtonState state, ModifierKeys modifier) =>
+            {
+                if (modifier.None && key == Keys.Space && state == ButtonState.Released)
+                {
+                    /*
+                    var sceneLayers = this.introScene.sceneLayers;
+                    sceneLayers.RemoveScene(this.introScene);
+                    var newScene = sceneLayers.AddNewScene();
+                    DuelGameCartridge.Instance.GetCurrentChapterAndIncrement().Load(newScene);
+                    */
+
+                    pressSpace.Destroy();
+                    var sceneLayers = this.introScene.sceneLayers;
+                    var newScene = sceneLayers.AddNewScene();
+                    var overlay = sceneLayers.AddNewScene();
+                    new LevelTransitionOverlayAnimation(overlay.AddActor("LevelTransitionActor"), newScene, () =>
+                    {
+                        sceneLayers.RemoveScene(this.introScene);
+                    });
+                }
+            };
         }
 
         private ICoroutineAction WaitBeat()
@@ -76,7 +115,7 @@ namespace Duel.Data
 
         public Actor PutTextureActor(string textureName)
         {
-            var actor = this.gameScene.AddActor(textureName);
+            var actor = this.introScene.AddActor(textureName);
 
             new TextureRenderer(actor, MachinaClient.Assets.GetTexture(textureName));
             return actor;
