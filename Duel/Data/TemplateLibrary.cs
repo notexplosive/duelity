@@ -120,6 +120,8 @@ namespace Duel.Data
             templateLibrary.AddTemplate("bgscuff3", new PropTemplate("props_bgscuff3", PropTemplate.PropLayeringRule.Behind));
             templateLibrary.AddTemplate("bgrocks1", new PropTemplate("props_bgrocks1", PropTemplate.PropLayeringRule.Behind));
             templateLibrary.AddTemplate("bgrocks2", new PropTemplate("props_bgrocks2", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("bgplant1", new PropTemplate("props_bgplant1", PropTemplate.PropLayeringRule.Behind));
+            templateLibrary.AddTemplate("bgplant2", new PropTemplate("props_bgplant2", PropTemplate.PropLayeringRule.Behind));
 
             // Tiles
             templateLibrary.AddTemplate("empty_tile", new TileTemplate());
