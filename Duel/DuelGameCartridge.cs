@@ -33,7 +33,7 @@ namespace Duel
 
             this.chapters = new List<IChapter>();
 
-            // this.chapters.Add(new TitleScreen());
+            this.chapters.Add(new TitleScreen());
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("sheriff_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("renegade_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("cowboy_intro_1A")));
