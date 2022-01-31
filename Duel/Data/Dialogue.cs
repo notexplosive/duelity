@@ -10,22 +10,15 @@ namespace Duel.Data
     public class Dialogue
     {
         public event Action<string> InvokeHappened;
-        private readonly Entity playerEntity;
 
         public Scene Scene { get; }
 
+        private readonly Level level;
 
         public Dialogue(Scene scene, Level level)
         {
             Scene = scene;
-
-            foreach (var entity in level.AllEntities())
-            {
-                if (entity.Tags.HasTag<PlayerTag>())
-                {
-                    this.playerEntity = entity;
-                }
-            }
+            this.level = level;
         }
 
 
@@ -34,7 +27,16 @@ namespace Duel.Data
             var coroutine = Scene.StartCoroutine(ShowDialogueConversation(conversation));
 
             var busyFunction = new BusyFunction("Dialogue", coroutine.IsDone);
-            this.playerEntity?.BusySignal.Add(busyFunction);
+
+            foreach (var entity in level.AllEntities())
+            {
+                if (entity.Tags.HasTag<PlayerTag>())
+                {
+                    entity.BusySignal.Add(busyFunction);
+                }
+            }
+
+
 
             return coroutine;
         }
