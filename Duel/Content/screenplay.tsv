@@ -96,7 +96,7 @@ say	KnightSalute	For the King!
 		
 conversation	sheriff_intro_1A	
 say	SheriffNormal	Welp, here I go, time to find the deadliest gunslinger around.
-say	SheriffNormal	I can use trusty my arrow keys (or WASD keys) to move around.
+say	SheriffNormal	I can use my trusty arrow keys (or WASD keys) to move around.
 say	SheriffNormal	And if I need to lasso objects, I've got the Space key for that.
 		
 conversation	mom_renegade	
@@ -126,7 +126,7 @@ say	Sneakman	not really
 conversation	sneakman_knight	
 say	KnightSalute	Hark!
 say	Sneakman	yo what, how'd you see me?
-say	KnightGrin	Mine eyes doth piece even the shrewdest disguise, for I am a knight!
+say	KnightGrin	Mine eyes doth pierce even the shrewdest disguise, for I am a knight!
 say	Sneakman	oh you're a weirdo, okay
 		
 conversation	jackalope_sheriff	
@@ -233,7 +233,7 @@ say	SheriffDeepBow	I've got to find the deadliest gunslinger...
 		
 conversation	steven_intro_1B	
 say	CowboyNormal	Alright! Some puzzles!
-say	CowboyDetermined	I can use R to restrart a room or I can use ctrl + R to restart this entire area.
+say	CowboyDetermined	I can use R to restart a room or I can use ctrl + R to restart this entire area.
 		
 conversation	moleman_sheriff	
 say	Moleman	I am within the earth.
@@ -268,7 +268,7 @@ conversation	fourman_sheriff
 say	Fourman	Welcome to the mines! I'm the foreman. You looking for a job?
 say	SheriffNormal	Just passing through...
 say	Fourman	Oh come on, we could use a strong man like yourself down here!
-say	Fourman	Or anyone sane really, my only employee likes to eat dirt.
+say	Fourman	Or anyone really, my only employee likes to eat dirt.
 		
 conversation	fourman_cowboy	
 say	Fourman	Welcome to the mines! I'm the foreman. You looking for a job?
@@ -331,7 +331,7 @@ say	CowboyHope	A COWBOY?? I like the sound of that.
 say	CowboyDetermined	The answer has been in front of me all along. 
 say	CowboyDetermined	Rather than running from my past, I just had to-
 say	Sar	Welp, looks like that's all settled.
-	Sar	Still, I wonder what happened to that other guy...
+say	Sar	Still, I wonder what happened to that other guy...
 invoke	cb_9	// switch to bennigan scene
 say	KnightSalute	I salute you, good sir. 
 say	KnightSalute	You fought well, but for the service of the King 
