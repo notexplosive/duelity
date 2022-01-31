@@ -214,7 +214,7 @@ say	Mime	...... . .. . .....
 say	KnightGrin	Ah, a man of silence. Are thee a monk perhaps?
 say	MimeBroken	Dude, c'mon. You're making us actors look bad.
 say	KnightGasp	I know not what ye meaneth? What is an "actor"?
-say	MimeBroken	Oh no. He's actually just insane.
+say	MimeBroken	Oh no. He actually believes it.
 		
 conversation	sheriff_intro_1B	
 say	SheriffNormal	Oh yeah, just remembered.
