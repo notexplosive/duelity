@@ -281,7 +281,7 @@ tile wall 29,7
 tile wall 27,7
 tile wall 24,2
 tile wall 25,2
-tile wall 25,3
+tile wall 2,6
 tile ravine 30,-3
 tile wall 29,-3
 tile wall 29,-4
@@ -907,6 +907,12 @@ tile ravine 26,14
 tile ravine 25,14
 tile ravine 22,16
 tile ravine 27,14
+tile hook 25,5
+tile wall 1,6
+tile wall 2,7
+tile water 27,3
+tile water 28,3
+tile water 29,3
 entt spawn-bennigan 3,4
 entt redPressurePlate 9,5
 entt anvil 8,5
