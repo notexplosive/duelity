@@ -334,7 +334,7 @@ say	Sar	Welp, looks like that's all settled.
 say	Sar	Still, I wonder what happened to that other guy...
 invoke	cb_9	// switch to bennigan scene
 say	KnightSalute	I salute you, good sir. 
-say	KnightSalute	You fought well, but for the service of the King 
+say	KnightSalute	You fought well, but I do what I must for the service of the King
 say	KnightSalute	Rest in peace... RED DEATH KILLER.
 invoke	cb_10	// King appears
 say	King	Oh, Bennigan, reliable as always!
