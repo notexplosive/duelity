@@ -44,22 +44,22 @@ namespace Duel.Data.Dialog
 
         }
 
-        public static Speaker SheriffNormal = new Speaker("Ernesto", 0, new DialogBlip("banjo_blip", 0.5f, 0));
-        public static Speaker SheriffSpooked = new Speaker("Ernesto", 1, new DialogBlip("banjo_blip", 0.75f, 0.5f));
-        public static Speaker SheriffDeepBow = new Speaker("Ernesto", 2, new DialogBlip("banjo_blip", 0.25f, -0.25f));
-        public static Speaker RenegadeLaugh = new Speaker("Miranda", 6, new DialogBlip("gun_blip", 0.5f, 0.5f));
-        public static Speaker RenegadeGun = new Speaker("Miranda", 7, new DialogBlip("gun_blip", 0.5f, -0.5f));
-        public static Speaker RenegadeSmirk = new Speaker("Miranda", 8, new DialogBlip("gun_blip", 0.5f, 0.5f));
-        public static Speaker RenegadeEw = new Speaker("Miranda", 8, new DialogBlip("gun_blip", 0.5f, 0.5f));
-        public static Speaker RenegadeShook = new Speaker("Miranda", 9, new DialogBlip("gun_blip", 0.5f, 0.5f));
-        public static Speaker CowboyNormal = new Speaker("Steven", 12, new DialogBlip("deep_blip", 0.5f, 0f));
-        public static Speaker CowboySkeptical = new Speaker("Steven", 13, new DialogBlip("deep_blip", 0.5f, -0.25f));
+        public static Speaker SheriffNormal = new Speaker("Ernesto", 0, new DialogBlip("oa", 0.5f, 0));
+        public static Speaker SheriffSpooked = new Speaker("Ernesto", 1, new DialogBlip("oa", 0.75f, 0.8f));
+        public static Speaker SheriffDeepBow = new Speaker("Ernesto", 2, new DialogBlip("oa", 0.25f, 0f));
+        public static Speaker RenegadeLaugh = new Speaker("Miranda", 6, new DialogBlip("blem_sound", 0.5f, 0.8f));
+        public static Speaker RenegadeGun = new Speaker("Miranda", 7, new DialogBlip("blem_sound", 0.5f, 0f));
+        public static Speaker RenegadeSmirk = new Speaker("Miranda", 8, new DialogBlip("blem_sound", 0.5f, 0.8f));
+        public static Speaker RenegadeEw = new Speaker("Miranda", 8, new DialogBlip("blem_sound", 0.5f, 0.8f));
+        public static Speaker RenegadeShook = new Speaker("Miranda", 9, new DialogBlip("blem_sound", 0.5f, 0.8f));
+        public static Speaker CowboyNormal = new Speaker("Steven", 12, new DialogBlip("deep_blip", 0.5f, 0.25f));
+        public static Speaker CowboySkeptical = new Speaker("Steven", 13, new DialogBlip("deep_blip", 0.5f, 0f));
         public static Speaker CowboyHope = new Speaker("Steven", 14, new DialogBlip("deep_blip", 0.5f, 0.25f));
         public static Speaker CowboyDetermined = new Speaker("Steven", 15, new DialogBlip("deep_blip", 0.75f, 0.5f));
-        public static Speaker KnightGrin = new Speaker("Bennigan", 18, new DialogBlip("harpsichord_blip", 0.5f, 0f));
-        public static Speaker KnightRascal = new Speaker("Bennigan", 19, new DialogBlip("harpsichord_blip", 0.5f, 0f));
-        public static Speaker KnightSalute = new Speaker("Bennigan", 20, new DialogBlip("harpsichord_blip", 0.5f, 0f));
-        public static Speaker KnightGasp = new Speaker("Bennigan", 21, new DialogBlip("harpsichord_blip", 0.5f, 0f));
+        public static Speaker KnightGrin = new Speaker("Bennigan", 18, new DialogBlip("eh", 0.5f, 0f));
+        public static Speaker KnightRascal = new Speaker("Bennigan", 19, new DialogBlip("eh", 0.5f, 0f));
+        public static Speaker KnightSalute = new Speaker("Bennigan", 20, new DialogBlip("eh", 0.5f, 0f));
+        public static Speaker KnightGasp = new Speaker("Bennigan", 21, new DialogBlip("eh", 0.5f, 0f));
 
         public static Speaker Sar = new Speaker("Sar Saparilla", 24);
         public static Speaker Mom = new Speaker("Mom", 25);
@@ -70,7 +70,7 @@ namespace Duel.Data.Dialog
         public static Speaker CoolHairguy = new Speaker("Cool Hairguy", 30);
         public static Speaker Jackalope = new Speaker("Jackalope", 31);
         public static Speaker Hardy = new Speaker("Hardy", 32);
-        public static Speaker Moleman = new Speaker("Moleman", 34);
+        public static Speaker Moleman = new Speaker("Moleman", 33);
         public static Speaker Mime = new Speaker("????", 34);
         public static Speaker Fourman = new Speaker("Gary", 35);
         public static Speaker Horse = new Speaker("Horse", 36);

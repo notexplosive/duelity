@@ -587,6 +587,12 @@
 /processorParam:Quality=Best
 /build:sounds/anvil.ogg
 
+#begin sounds/blem_sound.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/blem_sound.ogg
+
 #begin sounds/banjo_blip.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
