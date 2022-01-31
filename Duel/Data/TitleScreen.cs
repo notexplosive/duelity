@@ -13,6 +13,8 @@ namespace Duel.Data
     {
         private Scene introScene;
 
+        public PlayerTag.Type Player => PlayerTag.Type.Sheriff;
+
         public void Load(Scene gameScene)
         {
             this.introScene = gameScene;

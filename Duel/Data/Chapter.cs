@@ -12,18 +12,6 @@ namespace Duel.Data
         Mines
     }
 
-    public interface IChapter
-    {
-        void Load(Scene gameScene);
-    }
-
-    public class Finale : IChapter
-    {
-        public void Load(Scene gameScene)
-        {
-        }
-    }
-
     public class Chapter : IChapter
     {
         private readonly ZoneTileset zoneTileset;
@@ -46,8 +34,7 @@ namespace Duel.Data
         {
             var game = new Sokoban(scene, this.zoneTileset);
             game.PlayLevel(MachinaClient.Assets.GetMachinaAsset<LevelData>(LevelName), Player);
-            game.StartDialogue(ConversationOnStartup);
-
+            game.Dialogue.StartDialogue(ConversationOnStartup);
 
             if (Player == PlayerTag.Type.Knight)
             {

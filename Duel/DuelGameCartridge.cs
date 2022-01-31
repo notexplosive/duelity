@@ -33,7 +33,7 @@ namespace Duel
 
             this.chapters = new List<IChapter>();
 
-            this.chapters.Add(new TitleScreen());
+            // this.chapters.Add(new TitleScreen());
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("sheriff_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("renegade_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("cowboy_intro_1A")));
@@ -53,8 +53,6 @@ namespace Duel
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Cowboy, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Knight, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
             this.chapters.Add(new Finale());
-
-            // this.chapters.Add(new EndCinematicChapter());
         }
 
         public override void OnGameLoad(GameSpecification specification, MachinaRuntime runtime)
@@ -76,26 +74,26 @@ namespace Duel
             return this.chapters[this.chapterIndex++];
         }
 
-        public Chapter PeekNextChapter()
+        public IChapter PeekNextChapter()
         {
-            return this.chapters[this.chapterIndex] as Chapter;
+            return this.chapters[this.chapterIndex];
         }
 
-        public Chapter GetCurrentChapter()
+        public IChapter GetCurrentChapter()
         {
             try
             {
-                var chapter = this.chapters[this.chapterIndex - 1] as Chapter;
+                var chapter = this.chapters[this.chapterIndex - 1];
 
                 if (chapter == null)
                 {
-                    return this.chapters[1] as Chapter;
+                    return this.chapters[1];
                 }
                 return chapter;
             }
             catch (Exception)
             {
-                return this.chapters[1] as Chapter;
+                return this.chapters[1];
             }
         }
 

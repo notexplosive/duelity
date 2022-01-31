@@ -1,6 +1,4 @@
 ﻿using Duel.Components;
-using Duel.Data.Dialog;
-using Machina.Data;
 using Machina.Engine;
 using Microsoft.Xna.Framework;
 using System;
@@ -14,6 +12,9 @@ namespace Duel.Data
     {
         public event Action<Room> RoomChanged;
         private Actor rootActor;
+
+        public Dialogue Dialogue { get; private set; }
+
         private Tuple<LevelData, PlayerTag.Type> previouslyLoadedData;
         public Point? SavedPlayerPosition { get; private set; }
 
@@ -119,40 +120,6 @@ namespace Duel.Data
             }
         }
 
-        public void StartDialogue(Conversation conversation)
-        {
-            var coroutine = Scene.StartCoroutine(ShowDialogueConversation(conversation));
-
-            var busyFunction = new BusyFunction("Dialogue", coroutine.IsDone);
-
-            foreach (var entity in CurrentLevel.AllEntities())
-            {
-                if (entity.Tags.HasTag<PlayerTag>())
-                {
-                    entity.BusySignal.Add(busyFunction);
-                }
-            }
-        }
-
-        private IEnumerator<ICoroutineAction> ShowDialogueConversation(Conversation conversation)
-        {
-            // create dialogue box (layout etc)
-            var actor = Scene.AddActor("Dialogue");
-            var dialogueRunner = new DialogueRunner(actor);
-            new DialogueBoxRenderer(actor);
-
-            foreach (var conversationEvent in conversation.Events)
-            {
-                if (conversationEvent is Say say)
-                {
-                    dialogueRunner.Run(say);
-                    yield return new WaitUntil(dialogueRunner.IsReady);
-                }
-            }
-
-            actor.Destroy();
-        }
-
         private void DoRoomTransitionIfApplicable(Point previousPlayerPosition, Point playerPosition)
         {
             var newRoom = new Room(Room.LevelPosToRoomPos(playerPosition));
@@ -193,6 +160,7 @@ namespace Duel.Data
 
             this.rootActor = Scene.AddActor("Level");
 
+            Dialogue = new Dialogue(Scene, CurrentLevel);
             Grid = new Grid(this.rootActor, CurrentLevel);
             ActorRoot = new ActorRoot(this.rootActor, this);
 
@@ -200,6 +168,7 @@ namespace Duel.Data
             {
                 TileRenderer = new TileGridRenderer(this.rootActor, CurrentLevel);
             }
+
         }
 
         private void AdvanceToNextLevel()
@@ -246,7 +215,7 @@ namespace Duel.Data
 
         public void RunConversationFromScreenplay(string key)
         {
-            StartDialogue(DuelGameCartridge.Instance.Screenplay.GetConversation(key));
+            Dialogue.StartDialogue(DuelGameCartridge.Instance.Screenplay.GetConversation(key));
         }
 
         public void SetRootActorPosition(Vector2 position)
