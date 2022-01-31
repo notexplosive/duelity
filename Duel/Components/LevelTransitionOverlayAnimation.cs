@@ -24,7 +24,7 @@ namespace Duel.Components
         private SpriteSheet spriteSheet;
         private TweenChain tween;
 
-        public LevelTransitionOverlayAnimation(Actor actor, Scene originalScene) : base(actor)
+        public LevelTransitionOverlayAnimation(Actor actor, Scene originalScene, Action midwayCallback = null) : base(actor)
         {
             this.circleRadiusTweenable = new TweenAccessors<float>(0);
             this.imageSizeTweenable = new TweenAccessors<float>(0);
@@ -62,6 +62,8 @@ namespace Duel.Components
 
             this.tween.AppendCallback(() =>
             {
+                midwayCallback?.Invoke();
+
                 var i = sceneLayers.IndexOf(originalScene);
                 gameScene = new Scene(sceneLayers, MachinaClient.GlobalFrameStep);
                 sceneLayers.Set(i, gameScene);
