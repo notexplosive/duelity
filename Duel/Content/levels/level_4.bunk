@@ -941,7 +941,6 @@ entt yellowClosedDoor 24,-8
 entt redClosedDoor 38,-6
 entt blueClosedDoor 37,6
 entt yellowClosedDoor 37,7
-entt miasma 2,5
 entt blueClosedDoor 35,4
 entt redClosedDoor 43,6
 entt mime 39,3
@@ -968,7 +967,6 @@ entt bluePressurePlate 33,1
 entt spawn-ernesto 4,6
 entt spawn-steven 5,5
 entt redPressurePlate 37,-6
-entt spawn-miranda 19,8
 entt redOpenDoor 20,13
 entt blueOpenDoor 22,13
 entt redClosedDoor 24,13
@@ -987,3 +985,4 @@ entt bluePressurePlate 20,14
 entt yellowClosedDoor 23,13
 entt anvil 25,10
 entt bluePressurePlate 26,9
+entt spawn-miranda 2,5
