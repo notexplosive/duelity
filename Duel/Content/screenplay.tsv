@@ -280,3 +280,64 @@ conversation	fourman_knight
 say	Fourman	Welcome to the mines! I'm the foreman. You looking for a job?
 say	KnightSalute	Nay- no job for I, for I am already employed, in service of the king!!
 say	Fourman	Yeah actually I take back my offer anyway...
+		
+conversation	comic_book	
+invoke	cb_1	
+say	SheriffNormal	Finally... I've made it to Tarnation.
+invoke	cb_2	// ernesto and excited sar
+say	Sar	Howdy, Sheriff! Glad you could make it!
+say	SheriffNormal	Sar?? How'd you get here so fast?
+say	Sar	I took the train!
+say	Sar	Wait, did you take the path with all the puzzles??
+say	SheriffDeepBow	... yeah
+say	Sar	Gee, buddy, that's rough.
+say	Sar	Anyway, you ready for your big DUEL?
+say	SheriffNormal	DUEL?? Who said anything about a DUEL?
+invoke	cb_3	// have ernesto hold up the ribbon, sar gets spooked
+say	SheriffNormal	I'm here to give out this Best Gunslinger award
+say	Sar	O-Oh...
+say	SheriffNormal	Now, where's RED DEATH MURDER?
+say	Sar	Well, that's just the thing, I've been asking around and...
+say	Sar	He actually died in a gun-related accident just before you arrived!
+say	SheriffNormal	What? Then who am I supposed to give this award to?
+invoke	cb_4	// add miranda, everyone is spooked
+say	RenegadeLaugh	PEW PEW PEW BAM BAM What's up, Miranda is here!
+say	Sar	Miranda, watch where you're pointing that gun!
+say	RenegadeLaugh	Don't worry, this isn't for you, this is for RED DEATH MURDER, where is he?
+invoke	cb_5	// sar and ernesto go solemn
+say	SheriffNormal	Apparently, he died in a gun-related accident.
+invoke	cb_6	// miranda gets spooked
+say	RenegadeShook	WAIT GUNS CAN KILL PEOPLE???
+say	Sar	Yeah? That's like the whole point?
+say	RenegadeShook	I THOUGHT THEY WERE JUST USED FOR PUZZLES?
+say	SheriffNormal	Wait, did you get through all those puzzles by shooting?
+say	RenegadeShook	Yes... I did....
+say	SheriffNormal	Well, you've earned this then.
+invoke	cb_7	// ernesto presents the ribbon to miranda
+say	RenegadeShook	Wow, at the beginning of this journey I would have loved to receive this...
+say	RenegadeShook	but knowing what I know now...
+say	Sar	(That guns kill people?)
+say	RenegadeShook	... I can't feel good about it.
+invoke	cb_8	// steven arives
+say	CowboyHope	Hey what's up, where's the DUEL?
+say	Sar	No DUEL...
+say	Sar	Turns out it was all just a big misunderstanding.
+say	CowboySkeptical	What? How am I supposed to prove I'm a real boy?
+say	RenegadeLaugh	You're not a boy, you're a cow!
+say	CowboyDetermined	I'm a boy!
+say	RenegadeShook	What are you then... some sort of cow.... boy....?
+say	SheriffNormal	A cowboy?
+say	CowboyHope	A COWBOY?? I like the sound of that.
+say	CowboyDetermined	The answer has been in front of me all along. 
+say	CowboyDetermined	Rather than running from my past, I just had to-
+say	Sar	Welp, looks like that's all settled.
+	Sar	Still, I wonder what happened to that other guy...
+invoke	cb_9	// switch to bennigan scene
+say	KnightSalute	I salute you, good sir. 
+say	KnightSalute	You fought well, but for the service of the King 
+say	KnightSalute	Rest in peace... RED DEATH MURDER.
+invoke	cb_10	// King appears
+say	King	Oh, Bennigan, reliable as always!
+say	King	I'll go ahead and cover this up. I've been telling people he died of a gun related accident.
+say	King	Thank you for your service to the crown!
+say	KnightGrin	Anything for you, dear King!
