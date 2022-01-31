@@ -296,14 +296,14 @@ say	SheriffNormal	DUEL?? Who said anything about a DUEL?
 invoke	cb_3	// have ernesto hold up the ribbon, sar gets spooked
 say	SheriffNormal	I'm here to give out this Best Gunslinger award
 say	Sar	O-Oh...
-say	SheriffNormal	Now, where's RED DEATH MURDER?
+say	SheriffNormal	Now, where's RED DEATH KILLER?
 say	Sar	Well, that's just the thing, I've been asking around and...
 say	Sar	He actually died in a gun-related accident just before you arrived!
 say	SheriffNormal	What? Then who am I supposed to give this award to?
 invoke	cb_4	// add miranda, everyone is spooked
 say	RenegadeLaugh	PEW PEW PEW BAM BAM What's up, Miranda is here!
 say	Sar	Miranda, watch where you're pointing that gun!
-say	RenegadeLaugh	Don't worry, this isn't for you, this is for RED DEATH MURDER, where is he?
+say	RenegadeLaugh	Don't worry, this isn't for you, this is for RED DEATH KILLER, where is he?
 invoke	cb_5	// sar and ernesto go solemn
 say	SheriffNormal	Apparently, he died in a gun-related accident.
 invoke	cb_6	// miranda gets spooked
@@ -335,7 +335,7 @@ say	Sar	Welp, looks like that's all settled.
 invoke	cb_9	// switch to bennigan scene
 say	KnightSalute	I salute you, good sir. 
 say	KnightSalute	You fought well, but for the service of the King 
-say	KnightSalute	Rest in peace... RED DEATH MURDER.
+say	KnightSalute	Rest in peace... RED DEATH KILLER.
 invoke	cb_10	// King appears
 say	King	Oh, Bennigan, reliable as always!
 say	King	I'll go ahead and cover this up. I've been telling people he died of a gun related accident.
