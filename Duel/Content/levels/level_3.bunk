@@ -418,7 +418,7 @@ tile wall 22,-3
 tile wall 23,-3
 tile wall 19,-2
 tile wall 19,-8
-tile invisible_wall 20,-8
+tile wall 20,-8
 tile wall 18,-8
 tile wall 17,-8
 tile wall 16,-8
@@ -690,6 +690,8 @@ tile water 50,6
 tile invisible_wall 47,1
 tile invisible_wall 47,2
 tile invisible_wall 51,7
+tile wall 23,8
+tile water 30,-5
 entt spawn-ernesto 1,3
 entt spawn-bennigan 1,4
 entt redKeyDoor 4,4
@@ -734,7 +736,6 @@ entt yellowKey 34,-5
 entt redKeyDoor 41,-3
 entt blueKey 36,-5
 entt eggman 52,5
-prop palm_tree 1323,-540
 prop palm_tree 3525,428
 prop palm_tree 3581,63
 prop small_rock 3219,561
@@ -752,7 +753,6 @@ prop wave2 1861,-168
 prop wave2 2025,-115
 prop wave1 2044,-342
 prop wave1 2204,-225
-prop palm_tree 1518,480
 prop wave2 1200,994
 prop wave2 1554,738
 prop wave1 1652,990

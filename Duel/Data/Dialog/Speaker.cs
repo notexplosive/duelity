@@ -45,7 +45,7 @@ namespace Duel.Data.Dialog
         }
 
         public static Speaker SheriffNormal = new Speaker("Ernesto", 0, new DialogBlip("oa", 0.5f, 0));
-        public static Speaker SheriffSpooked = new Speaker("Ernesto", 1, new DialogBlip("oa", 0.75f, 0.8f));
+        public static Speaker SheriffSpooked = new Speaker("Ernesto", 1, new DialogBlip("oa", 0.75f, 0.1f));
         public static Speaker SheriffDeepBow = new Speaker("Ernesto", 2, new DialogBlip("oa", 0.25f, 0f));
         public static Speaker RenegadeLaugh = new Speaker("Miranda", 6, new DialogBlip("blem_sound", 0.5f, 0.8f));
         public static Speaker RenegadeGun = new Speaker("Miranda", 7, new DialogBlip("blem_sound", 0.5f, 0f));
