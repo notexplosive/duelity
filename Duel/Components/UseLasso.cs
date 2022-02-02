@@ -77,7 +77,7 @@ namespace Duel.Components
 
 
                         yield return lasso.PullEntity();
-                        DuelGameCartridge.PlaySound(this.connectSound, pitch: 0.5f, volume: 0.5f, stopFirst: true);
+                        DuelGameCartridge.PlaySound(this.deploySound, pitch: 0.75f, volume: 0.5f, stopFirst: true);
 
                     }
                     else
@@ -86,7 +86,7 @@ namespace Duel.Components
                         JumpStart?.Invoke();
 
                         yield return lasso.JumpToDestination();
-                        DuelGameCartridge.PlaySound(this.connectSound, pitch: 0.5f, volume: 0.5f, stopFirst: true);
+                        DuelGameCartridge.PlaySound(this.deploySound, pitch: 0.5f, volume: 0.5f, stopFirst: true);
                     }
 
                     lasso.UnwrapGrappledEntity();
