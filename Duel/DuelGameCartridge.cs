@@ -33,25 +33,34 @@ namespace Duel
 
             this.chapters = new List<IChapter>();
 
+#if DEBUG
+#else
             this.chapters.Add(new TitleScreen());
+#endif
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("sheriff_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Renegade, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("renegade_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("cowboy_intro_1A")));
             this.chapters.Add(new Chapter("level_1", PlayerTag.Type.Knight, ZoneTileset.Thistown, TrackName.ThistownA, Screenplay.GetConversation("knight_intro_1A")));
+
+            // Thistown B
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Sheriff, ZoneTileset.Thistown, TrackName.ThistownB, Screenplay.GetConversation("sheriff_intro_1B")));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Renegade, ZoneTileset.Thistown, TrackName.ThistownB, emptyConvo));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Cowboy, ZoneTileset.Thistown, TrackName.ThistownB, Screenplay.GetConversation("steven_intro_1B")));
             this.chapters.Add(new Chapter("level_2", PlayerTag.Type.Knight, ZoneTileset.Thistown, TrackName.ThistownB, emptyConvo));
 
+            // Oasis
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Sheriff, ZoneTileset.Oasis, TrackName.Oasis, Screenplay.GetConversation("sheriff_intro_oasis")));
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Renegade, ZoneTileset.Oasis, TrackName.Oasis, emptyConvo));
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Cowboy, ZoneTileset.Oasis, TrackName.Oasis, emptyConvo));
             this.chapters.Add(new Chapter("level_3", PlayerTag.Type.Knight, ZoneTileset.Oasis, TrackName.Oasis, emptyConvo));
 
+            // Mines
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Sheriff, ZoneTileset.Mines, TrackName.Mines, Screenplay.GetConversation("sheriff_intro_mine")));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Renegade, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Cowboy, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
             this.chapters.Add(new Chapter("level_4", PlayerTag.Type.Knight, ZoneTileset.Mines, TrackName.Mines, emptyConvo));
+
+            // Tarnation
             this.chapters.Add(new Finale());
         }
 
