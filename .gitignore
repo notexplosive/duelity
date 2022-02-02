@@ -362,7 +362,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Extra stuff
-todo.txt
+*todo.txt
 screenshots
 launchSettings.json
 *.demo
