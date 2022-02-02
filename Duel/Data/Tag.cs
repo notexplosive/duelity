@@ -24,23 +24,16 @@ namespace Duel.Data
 
     public class BlockProjectileTag : Tag
     {
-        private readonly SoundEffectInstance onProjectileHitSound;
+        private readonly string onProjectileHitSound;
 
         public BlockProjectileTag(string hitSoundName = null)
         {
-            if (hitSoundName != null)
-            {
-                this.onProjectileHitSound = MachinaClient.Assets.GetSoundEffectInstance(hitSoundName);
-            }
+            this.onProjectileHitSound = hitSoundName;
         }
 
         public void PlayHitSound()
         {
-            if (this.onProjectileHitSound != null)
-            {
-                this.onProjectileHitSound.Stop();
-                this.onProjectileHitSound.Play();
-            }
+            DuelGameCartridge.PlaySound(this.onProjectileHitSound, stopFirst: true);
         }
     }
 

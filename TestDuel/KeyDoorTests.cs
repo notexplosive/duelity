@@ -14,6 +14,7 @@ namespace TestDuel
 
         public KeyDoorTests()
         {
+            Sokoban.Headless = true;
             this.level = new Level(new Corners(new Point(-10, 10), new Point(10, 10)));
             this.door = new EntityTemplate(new KeyDoor(SignalColor.Blue), new Solid());
             this.key = new EntityTemplate(new Key(SignalColor.Blue));

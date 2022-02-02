@@ -15,6 +15,7 @@ namespace TestDuel
 
         public WaterTests()
         {
+            Sokoban.Headless = true;
             this.level = new Level(new Corners(new Point(-10, 10), new Point(10, 10)));
             this.water = new TileTemplate(new UnfilledWater());
             this.sinkable = new EntityTemplate(new WaterFiller(WaterFiller.Type.Sinks));

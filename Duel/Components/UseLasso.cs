@@ -19,8 +19,8 @@ namespace Duel.Components
         private readonly Level level;
         private readonly BufferedKeyboardListener keyboard;
         private readonly LevelSolidProvider solidProvider;
-        private SoundEffectInstance deploySound;
-        private SoundEffectInstance connectSound;
+        private readonly string deploySound;
+        private readonly string connectSound;
 
         public event Action Deployed;
         public event Action YankStart;
@@ -39,17 +39,14 @@ namespace Duel.Components
 
             if (!Sokoban.Headless)
             {
-                this.deploySound = MachinaClient.Assets.GetSoundEffectInstance("woosh");
-                this.connectSound = MachinaClient.Assets.GetSoundEffectInstance("whip");
-                this.deploySound.Volume = 0.5f;
+                this.deploySound = "woosh";
+                this.connectSound = "whip";
             }
         }
 
         private void DeployLasso()
         {
-            this.deploySound.Pitch = 0.25f;
-            this.deploySound.Stop();
-            this.deploySound.Play();
+            DuelGameCartridge.PlaySound(this.deploySound, pitch: 0.25f, volume: 0.5f, stopFirst: true);
             var lasso = CreateProjectile();
             var lassoAnimation = this.actor.scene.StartCoroutine(LassoCoroutine(lasso));
             this.userEntity.BusySignal.Add(new BusyFunction("Lasso", lassoAnimation.IsDone));
@@ -70,9 +67,7 @@ namespace Duel.Components
                 if (lasso.FoundGrapplable)
                 {
                     lasso.WrapGrappledEntity();
-                    this.connectSound.Pitch = 0;
-                    this.connectSound.Stop();
-                    this.connectSound.Play();
+                    DuelGameCartridge.PlaySound(this.connectSound, volume: 0.5f, stopFirst: true);
 
                     if (lasso.FoundPullableEntity)
                     {
@@ -82,9 +77,7 @@ namespace Duel.Components
 
 
                         yield return lasso.PullEntity();
-                        this.deploySound.Pitch = 0.5f;
-                        this.deploySound.Stop();
-                        this.deploySound.Play();
+                        DuelGameCartridge.PlaySound(this.connectSound, pitch: 0.5f, volume: 0.5f, stopFirst: true);
 
                     }
                     else
@@ -93,9 +86,7 @@ namespace Duel.Components
                         JumpStart?.Invoke();
 
                         yield return lasso.JumpToDestination();
-                        this.deploySound.Pitch = 0.5f;
-                        this.deploySound.Stop();
-                        this.deploySound.Play();
+                        DuelGameCartridge.PlaySound(this.connectSound, pitch: 0.5f, volume: 0.5f, stopFirst: true);
                     }
 
                     lasso.UnwrapGrappledEntity();
@@ -105,9 +96,7 @@ namespace Duel.Components
                 {
                     if (lasso.WasBlocked)
                     {
-                        this.connectSound.Pitch = 0.5f;
-                        this.connectSound.Stop();
-                        this.connectSound.Play();
+                        DuelGameCartridge.PlaySound(this.connectSound, pitch: 0.5f, volume: 0.5f, stopFirst: true);
 
                         this.solidProvider.BumpWithLassoAt(lasso.FailPoint);
                         this.level.NudgeAt(lasso.FailPoint, this.userEntity.FacingDirection);

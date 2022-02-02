@@ -64,6 +64,20 @@ namespace Duel
             this.chapters.Add(new Finale());
         }
 
+        public static void PlaySound(string soundName, float pitch = 0, bool stopFirst = false, float volume = 1)
+        {
+            if (!Sokoban.Headless)
+            {
+                var soundEffect = MachinaClient.Assets.GetSoundEffectInstance(soundName);
+                if (stopFirst)
+                {
+                    soundEffect.Stop();
+                }
+                soundEffect.Pitch = pitch;
+                soundEffect.Play();
+            }
+        }
+
         public override void OnGameLoad(GameSpecification specification, MachinaRuntime runtime)
         {
             MusicPlayer = new MusicPlayer();

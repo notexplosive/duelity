@@ -13,6 +13,7 @@ namespace TestDuel
 
         public SignalDoorTests()
         {
+            Sokoban.Headless = true;
             this.level = new Level(new Corners(new Point(-10, 10), new Point(10, 10)));
             this.openDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, true));
             this.closedDoor = new EntityTemplate(new SignalDoor(SignalColor.Red, false));

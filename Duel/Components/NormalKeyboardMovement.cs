@@ -17,7 +17,7 @@ namespace Duel.Components
     {
         private readonly Entity entity;
         private readonly BufferedKeyboardListener keyboard;
-        private SoundEffectInstance walkSound;
+        private readonly string walkSoundName;
 
         public NormalKeyboardMovement(Actor actor, Entity entity, string walkSoundName) : base(actor)
         {
@@ -29,15 +29,14 @@ namespace Duel.Components
             this.keyboard.DownPressed += Move(Direction.Down);
             this.keyboard.UpPressed += Move(Direction.Up);
 
-            this.walkSound = MachinaClient.Assets.GetSoundEffectInstance(walkSoundName);
+            this.walkSoundName = walkSoundName;
 
             this.entity.PositionChanged += PlayWalkSound;
         }
 
         private void PlayWalkSound(Entity mover, MoveType moveType, Point previousPosition)
         {
-            this.walkSound.Stop();
-            this.walkSound.Play();
+            DuelGameCartridge.PlaySound(this.walkSoundName, stopFirst: true);
         }
 
         public void ResumeMoveFromOldInstance(Entity playerFromPreviousRoom, Point newPlayerPosition)

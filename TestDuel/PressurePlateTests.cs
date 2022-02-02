@@ -12,6 +12,7 @@ namespace TestDuel
 
         public PressurePlateTests()
         {
+            Sokoban.Headless = true;
             this.level = new Level(new Corners(new Point(-10, 10), new Point(10, 10)));
             this.pressurePlateTemplate = new EntityTemplate(new EnableSignalWhenSteppedOn(SignalColor.Red));
         }

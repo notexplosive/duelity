@@ -9,7 +9,6 @@ namespace Duel.Components
     public class UseGun : BaseComponent
     {
         private readonly Entity entity;
-        private readonly SoundEffectInstance shootSound;
         private readonly LevelSolidProvider solidProvider;
         private readonly BufferedKeyboardListener keyboard;
         public event Action<FiredBullet> Fired;
@@ -19,15 +18,13 @@ namespace Duel.Components
             this.solidProvider = new LevelSolidProvider(level);
             this.keyboard = RequireComponent<BufferedKeyboardListener>();
             this.entity = entity;
-            this.shootSound = MachinaClient.Assets.CreateSoundEffectInstance("shoot");
             keyboard.ActionPressed += Shoot;
 
         }
 
         public void Shoot()
         {
-            this.shootSound.Stop();
-            this.shootSound.Play();
+            DuelGameCartridge.PlaySound("shoot", stopFirst: true);
             var bullet = CreateBullet();
 
             if (bullet.HitAtLeastOneThing)
