@@ -33,7 +33,10 @@ namespace Duel.Data
 
         public void PlayHitSound()
         {
-            DuelGameCartridge.PlaySound(this.onProjectileHitSound, stopFirst: true);
+            if (this.onProjectileHitSound != null)
+            {
+                DuelGameCartridge.PlaySound(this.onProjectileHitSound, stopFirst: true);
+            }
         }
     }
 
