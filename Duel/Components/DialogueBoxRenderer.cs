@@ -53,7 +53,7 @@ namespace Duel.Components
 
 
             var bbox = new BoundingRect(actor, bakedLayout.GetNode("text").Size);
-            this.textRenderer = new BoundedFormattedTextRenderer(actor, Alignment.Center, text: new ITextInputFragment[] { });
+            this.textRenderer = new BoundedFormattedTextRenderer(actor, Alignment.Center);
 
             actor.transform.Depth = 50;
 
