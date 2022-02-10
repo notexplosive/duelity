@@ -51,12 +51,13 @@ namespace Duel.Components
             var child = this.actor.transform.AddActorAsChild("textActor");
 
 
-            new BoundingRect(actor, bakedLayout.GetNode("text").Size);
-            this.textRenderer = new BoundedTextRenderer(actor, "Hello world", this.font, Color.White);
+            var bbox = new BoundingRect(actor, bakedLayout.GetNode("text").Size);
+            this.textRenderer = new BoundedTextRenderer(actor, "Hello world", this.font, Color.White, horizontalAlignment: HorizontalAlignment.Center, verticalAlignment: VerticalAlignment.Center);
 
             actor.transform.Depth = 50;
 
             actor.transform.Position = bakedLayout.GetNode("text").PositionRelativeToRoot.ToVector2() + this.actor.scene.camera.UnscaledPosition;
+            bbox.CenterToBounds();
 
             this.portraitSheet = MachinaClient.Assets.GetMachinaAsset<SpriteSheet>("portraits");
 
@@ -81,7 +82,8 @@ namespace Duel.Components
         {
             if (dialogEvent is Say say)
             {
-                this.textRenderer.Text = "";
+                this.textRenderer.Text = say.Text;
+                this.textRenderer.OccludeAll();
 
                 if (this.cachedName != say.Speaker.Name)
                 {
@@ -125,7 +127,7 @@ namespace Duel.Components
                 DrawSpeakerName(Color.Black, new Vector2(3), 1);
             }
 
-            this.textRenderer.Text = this.dialogueRunner.CurrentText;
+            this.textRenderer.OccludedIndex = this.textRenderer.Text.Length - this.dialogueRunner.LetterIndex;
         }
     }
 }

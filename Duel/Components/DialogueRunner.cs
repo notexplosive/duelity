@@ -15,12 +15,11 @@ namespace Duel.Components
     public class DialogueRunner : BaseComponent
     {
         private float timer;
-        private int letterIndex;
+        public int LetterIndex { get; private set; }
         private int blipIndex;
 
         public event Action<IDialogEvent> StartedRun;
         public IDialogEvent PendingEvent { get; private set; }
-        public string CurrentText { get; private set; } = "";
 
         public DialogueRunner(Actor actor) : base(actor)
         {
@@ -41,11 +40,11 @@ namespace Duel.Components
         {
             if (PendingEvent is Say say)
             {
-                this.letterIndex++;
+                LetterIndex++;
 
-                if (letterIndex <= say.Text.Length)
+                if (LetterIndex <= say.Text.Length)
                 {
-                    var letter = say.Text[this.letterIndex - 1];
+                    var letter = say.Text[LetterIndex - 1];
                     if (!char.IsPunctuation(letter) && !char.IsWhiteSpace(letter))
                     {
                         if (this.blipIndex % 2 == 0)
@@ -54,7 +53,6 @@ namespace Duel.Components
                         }
                         this.blipIndex++;
                     }
-                    CurrentText = say.Text.Substring(0, this.letterIndex);
                 }
             }
         }
@@ -65,13 +63,13 @@ namespace Duel.Components
             {
                 if ((key == Keys.Space || key == Keys.Z) && state == ButtonState.Pressed)
                 {
-                    if (letterIndex > say.Text.Length)
+                    if (LetterIndex > say.Text.Length)
                     {
                         BecomeReady();
                     }
                     else
                     {
-                        letterIndex = say.Text.Length - 1;
+                        LetterIndex = say.Text.Length - 1;
                         ShowNextLetter();
                     }
                 }
@@ -81,7 +79,7 @@ namespace Duel.Components
         public void Run(IDialogEvent pendingAction)
         {
             StartedRun?.Invoke(pendingAction);
-            this.letterIndex = 0;
+            LetterIndex = 0;
             this.blipIndex = 0;
             PendingEvent = pendingAction;
         }
