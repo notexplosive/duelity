@@ -60,7 +60,7 @@ namespace DuelEditor.Data
             }
         }
 
-        private void BecomeLevelSelector(Actor levelSelectorActor, NodePositionAndSize node, Scene scene)
+        private void BecomeLevelSelector(Actor levelSelectorActor, BakedLayoutNode node, Scene scene)
         {
             BecomeBasicPane(levelSelectorActor);
 
@@ -162,7 +162,7 @@ namespace DuelEditor.Data
             new PropKeyComponent_DeleteThis(propActor, this.templateSelection); // unique tag that only applies to props
         }
 
-        private void BecomeInfoBox(Actor infoBoxActor, NodePositionAndSize node, Scene scene)
+        private void BecomeInfoBox(Actor infoBoxActor, BakedLayoutNode node, Scene scene)
         {
             BecomeBasicPane(infoBoxActor);
             var headerSize = 40;
@@ -199,7 +199,7 @@ namespace DuelEditor.Data
             new NinepatchRenderer(sidebarActor, MachinaClient.DefaultStyle.windowSheet, NinepatchSheet.GenerationDirection.Inner);
         }
 
-        private void BecomeTileSelectorPane(Actor sidebarActor, NodePositionAndSize node, Scene scene, TooltipText tooltip)
+        private void BecomeTileSelectorPane(Actor sidebarActor, BakedLayoutNode node, Scene scene, TooltipText tooltip)
         {
             var templateLibrary = TemplateLibrary.Build();
             var templates = templateLibrary.GetAllTemplates().GetEnumerator();
