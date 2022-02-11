@@ -18,7 +18,7 @@ namespace Duel.Data.Dialog
 
         public FormattedText GetFormattedText()
         {
-            return new FormattedText(new FormattedTextFragment(RawText, (SpriteFontMetrics)Speaker.Font, Color));
+            return FormattedText.FromParseString(RawText, (SpriteFontMetrics)Speaker.Font, Color);
         }
     }
 }
