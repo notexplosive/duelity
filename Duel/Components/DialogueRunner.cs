@@ -42,9 +42,9 @@ namespace Duel.Components
             {
                 LetterIndex++;
 
-                if (LetterIndex <= say.Text.Length)
+                if (LetterIndex <= say.GetFormattedTextNoFont().TotalCharacterCount)
                 {
-                    var letter = say.Text[LetterIndex - 1];
+                    var letter = say.GetFormattedTextNoFont().GetCharacterAt(LetterIndex - 1);
                     if (!char.IsPunctuation(letter) && !char.IsWhiteSpace(letter))
                     {
                         if (this.blipIndex % 2 == 0)
@@ -63,13 +63,13 @@ namespace Duel.Components
             {
                 if ((key == Keys.Space || key == Keys.Z) && state == ButtonState.Pressed)
                 {
-                    if (LetterIndex > say.Text.Length)
+                    if (LetterIndex > say.GetFormattedTextNoFont().TotalCharacterCount)
                     {
                         BecomeReady();
                     }
                     else
                     {
-                        LetterIndex = say.Text.Length - 1;
+                        LetterIndex = say.GetFormattedTextNoFont().TotalCharacterCount - 1;
                         ShowNextLetter();
                     }
                 }

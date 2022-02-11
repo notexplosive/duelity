@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace Duel.Data.Dialog
 {
@@ -36,7 +37,7 @@ namespace Duel.Data.Dialog
                     }
                     else if (type == "say")
                     {
-                        currentConversationEventList.Add(new Say(Speaker.getSpeaker(parts[1]), parts[2]));
+                        currentConversationEventList.Add(new Say(Speaker.getSpeaker(parts[1]), parts[2], Color.White));
                     }
                     else if (type == "invoke")
                     {
