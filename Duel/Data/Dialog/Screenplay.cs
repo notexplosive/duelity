@@ -37,7 +37,7 @@ namespace Duel.Data.Dialog
                     }
                     else if (type == "say")
                     {
-                        currentConversationEventList.Add(new Say(Speaker.getSpeaker(parts[1]), parts[2], Color.White));
+                        currentConversationEventList.Add(new Say(Speaker.GetSpeaker(parts[1]), parts[2], Color.White));
                     }
                     else if (type == "invoke")
                     {

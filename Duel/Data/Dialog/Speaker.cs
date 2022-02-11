@@ -5,7 +5,7 @@ namespace Duel.Data.Dialog
 
         // static instances
 
-        public static Speaker getSpeaker(string name)
+        public static Speaker GetSpeaker(string name)
         {
             switch (name)
             {

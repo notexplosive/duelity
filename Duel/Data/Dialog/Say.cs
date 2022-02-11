@@ -18,12 +18,12 @@ namespace Duel.Data.Dialog
 
         public FormattedText GetFormattedText(SpriteFontMetrics font)
         {
-            return new FormattedText(new TextInputFragment(RawText, font, Color));
+            return new FormattedText(new FormattedTextFragment(RawText, font, Color));
         }
 
         public FormattedText GetFormattedTextNoFont()
         {
-            return new FormattedText(new TextInputFragment(RawText, new MonospacedFontMetrics(new Point(1)), Color));
+            return new FormattedText(new FormattedTextFragment(RawText, new MonospacedFontMetrics(new Point(1)), Color));
         }
     }
 }
