@@ -127,6 +127,8 @@ namespace Duel
                 loader.AddMachinaAssetCallback(levelName, () => LevelData.LoadLevelDataFromDisk(levelName));
             }
 
+            loader.AddMachinaAssetCallback("button-prompts-sheet",
+                () => new GridBasedSpriteSheet("button_prompts", new Point(50, 48)));
             loader.AddMachinaAssetCallback("characters-sheet",
                 () => new GridBasedSpriteSheet("characters", new Point(64)));
             loader.AddMachinaAssetCallback("silos-sheet", () => new GridBasedSpriteSheet("silos", new Point(250)));
