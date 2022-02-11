@@ -1,3 +1,6 @@
+using Machina.Engine;
+using Microsoft.Xna.Framework.Graphics;
+
 namespace Duel.Data.Dialog
 {
     public class Speaker
@@ -81,6 +84,8 @@ namespace Duel.Data.Dialog
         public string Name { get; }
         public int PortraitIndex { get; }
         public DialogBlip Blip { get; }
+        public string FontName => "DialogueFont";
+        public SpriteFont Font => MachinaClient.Assets.GetSpriteFont(FontName);
 
         private Speaker(string name, int portraitIndex, DialogBlip dialogBlip = null)
         {

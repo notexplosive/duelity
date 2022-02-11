@@ -16,9 +16,9 @@ namespace Duel.Data.Dialog
             Color = color;
         }
 
-        public FormattedText GetFormattedText(SpriteFontMetrics font)
+        public FormattedText GetFormattedText()
         {
-            return new FormattedText(new FormattedTextFragment(RawText, font, Color));
+            return new FormattedText(new FormattedTextFragment(RawText, (SpriteFontMetrics)Speaker.Font, Color));
         }
 
         public FormattedText GetFormattedTextNoFont()

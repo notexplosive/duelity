@@ -83,7 +83,7 @@ namespace Duel.Components
         {
             if (dialogEvent is Say say)
             {
-                this.textRenderer.SetText(say.GetFormattedText(this.font));
+                this.textRenderer.SetText(say.GetFormattedText());
                 this.textRenderer.OccludeAll();
 
                 if (this.cachedName != say.Speaker.Name)
