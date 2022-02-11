@@ -5,11 +5,11 @@ say	Sar	What can I do for you on this fine day? You lookin' to stay, or just pas
 say	SheriffNormal	..... Just passing through.
 say	Sar	Good to hear! After all, Thistown ain't big enough for the both of us.
 say	Sar	... on account of the city limits being about 8 square feet!
-say	SheriffNormal	I'm looking for the deadliest gunslinger around.
-say	Sar	Best gunslinger? That'd be RED DEATH KILLER.
+say	SheriffNormal	I'm looking for the [#color:ffaaaa]deadliest gunslinger[#color:ffffff] around.
+say	Sar	[#color:ffaaaa]Best gunslinger[#color:ffffff]? That'd be [#color:ffaaaa]RED DEATH KILLER[#color:ffffff].
 say	Sar	I hear he's been hanging out in the city of Tarnation.
 say	SheriffSpooked	What?!? In Tarnation??
-say	Sar	Afraid so. I know it's a long way, but there's a trail up north that'll put you on the right track.
+say	Sar	Afraid so. I know it's a long way, but there's a trail up [#color:ffff44]north[#color:ffffff] that'll put you on the right track.
 say	SheriffDeepBow	..... Fair enough. Thank you, sir.
 		
 conversation	mom_sheriff	
@@ -36,10 +36,10 @@ say	Sar	Leaving? Probably for the best. As they say, Thistown ain't-
 say	RenegadeGun	Sar, if I have to hear that joke one more time I am going to lose it.
 say	RenegadeEw	I'm looking for a DUEL. Any leads?
 say	Sar	Well, a mysterious Sheriff just passed through here not too long ago.
-say	Sar	He was looking for RED DEATH KILLER. Sounds like a DUEL in the making to me.
-say	RenegadeSmirk	RED DEATH KILLER, eh? Sounds promising.
-say	Sar	They're bound to meet up in Tarnation. Just head north and you'll get there for sure.
-say	RenegadeLaugh	Just head north? I can handle that.
+say	Sar	He was looking for [#color:ffaaaa]RED DEATH KILLER[#color:ffffff]. Sounds like a DUEL in the making to me.
+say	RenegadeSmirk	[#color:ffaaaa]RED DEATH KILLER[#color:ffffff], eh? Sounds promising.
+say	Sar	They're bound to meet up in Tarnation. Just head [#color:ffff44]north[#color:ffffff] and you'll get there for sure.
+say	RenegadeLaugh	Just head [#color:ffff44]north[#color:ffffff]? I can handle that.
 		
 conversation	farmer_renegade	
 say	Farmer	Shucks howdy, Mirander!
@@ -59,7 +59,7 @@ conversation	sar_cowboy
 say	Sar	Howdy, Steven! You hear about the DUEL happening soon?
 say	CowboyHope	A DUEL???
 say	CowboyDetermined	This is the perfect chance to prove I'm a real boy. 
-say	Sar	Well, the folks involved are headed up north to Tarnation and-
+say	Sar	Well, the folks involved are headed up [#color:ffff44]north[#color:ffffff] to Tarnation and-
 say	CowboyDetermined	Say no more! I'm on my way!!
 		
 conversation	mom_cowboy	
@@ -90,12 +90,12 @@ conversation	sar_knight
 say	KnightSalute	Prithee thee, sir! Dost thou knoweth where I can find a DUEL in these lands?
 say	Sar	There's going to be a pretty big DUEL happening in Tarnation soon.
 say	Sar	It's the talk of the whole region! Everyone's who's anyone is going to be there.
-say	Sar	You should just be able to head north and-
+say	Sar	You should just be able to head [#color:ffff44]north[#color:ffffff] and-
 say	KnightGrin	Hark! I've heard enough. I shalt findeth and wineth this DUEL.
 say	KnightSalute	For the King!
 		
 conversation	sheriff_intro_1A	
-say	SheriffNormal	Welp, here I go, time to find the deadliest gunslinger around.
+say	SheriffNormal	Welp, here I go, time to find the [#color:ffaaaa]deadliest gunslinger[#color:ffffff] around.
 say	SheriffNormal	I can use my trusty arrow keys (or WASD keys) to move around.
 say	SheriffNormal	And if I need to lasso objects, I've got the Space key for that.
 		
@@ -229,7 +229,7 @@ say	SheriffNormal	It's pretty lush here, at least for the desert.
 conversation	sheriff_intro_mine	
 say	SheriffNormal	Ah, the Mines of Danger.
 say	SheriffNormal	Once I get through these, I should finally make it to Tarnation.
-say	SheriffDeepBow	I've got to find the deadliest gunslinger...
+say	SheriffDeepBow	I've got to find the [#color:ffaaaa]deadliest gunslinger[#color:ffffff]...
 		
 conversation	steven_intro_1B	
 say	CowboyNormal	Alright! Some puzzles!
@@ -294,16 +294,16 @@ say	Sar	Gee, buddy, that's rough.
 say	Sar	Anyway, you ready for your big DUEL?
 say	SheriffNormal	DUEL?? Who said anything about a DUEL?
 invoke	cb_3	// have ernesto hold up the ribbon, sar gets spooked
-say	SheriffNormal	I'm here to give out this Best Gunslinger award
+say	SheriffNormal	I'm here to give out this [#color:ffaaaa]Best Gunslinger[#color:ffffff] award
 say	Sar	O-Oh...
-say	SheriffNormal	Now, where's RED DEATH KILLER?
+say	SheriffNormal	Now, where's [#color:ffaaaa]RED DEATH KILLER[#color:ffffff]?
 say	Sar	Well, that's just the thing, I've been asking around and...
 say	Sar	He actually died in a gun-related accident just before you arrived!
 say	SheriffNormal	What? Then who am I supposed to give this award to?
 invoke	cb_4	// add miranda, everyone is spooked
 say	RenegadeLaugh	PEW PEW PEW BAM BAM What's up, Miranda is here!
 say	Sar	Miranda, watch where you're pointing that gun!
-say	RenegadeLaugh	Don't worry, this isn't for you, this is for RED DEATH KILLER, where is he?
+say	RenegadeLaugh	Don't worry, this isn't for you, this is for [#color:ffaaaa]RED DEATH KILLER[#color:ffffff], where is he?
 invoke	cb_5	// sar and ernesto go solemn
 say	SheriffNormal	Apparently, he died in a gun-related accident.
 invoke	cb_6	// miranda gets spooked
@@ -335,7 +335,7 @@ say	Sar	Still, I wonder what happened to that other guy...
 invoke	cb_9	// switch to bennigan scene
 say	KnightSalute	I salute you, good sir. 
 say	KnightSalute	You fought well, but I do what I must for the service of the King
-say	KnightSalute	Rest in peace... RED DEATH KILLER.
+say	KnightSalute	Rest in peace... [#color:ffaaaa]RED DEATH KILLER[#color:ffffff].
 invoke	cb_10	// King appears
 say	King	Oh, Bennigan, reliable as always!
 say	King	I'll go ahead and cover this up. I've been telling people he died of a gun related accident.
