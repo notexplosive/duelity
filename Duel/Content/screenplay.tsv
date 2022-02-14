@@ -25,8 +25,8 @@ say	RenegadeEw	Mom you are SO lame. We don't even have windows!
 say	RenegadeEw	I gotta shoot! There is LITERALLY nothing else to do here.
 say	Mom	Come now, Miranda! There's plenty to do here. And Thistown is only like two screens away.
 say	RenegadeSmirk	Wait that's it! I'll leave and find somewhere where there's more to do!
-say	RenegadeLaugh	Maybe I'll even find a DUEL.
-say	Mom	Miranda, DUELs are dangerous!
+say	RenegadeLaugh	Maybe I'll even find a [#color:ff5944]DUEL[#color:ffffff].
+say	Mom	Miranda, [#color:ff5944]DUEL[#color:ffffff]s are dangerous!
 say	RenegadeLaugh	Sorry Mom, I'm running away!
 		
 conversation	sar_renegade	
@@ -34,9 +34,9 @@ say	Sar	Howdy, Miranda! What brings you into Thistown?
 say	RenegadeEw	I'm leaving, Sar. Running away from home.
 say	Sar	Leaving? Probably for the best. As they say, Thistown ain't-
 say	RenegadeGun	Sar, if I have to hear that joke one more time I am going to lose it.
-say	RenegadeEw	I'm looking for a DUEL. Any leads?
-say	Sar	Well, a mysterious Sheriff just passed through here not too long ago.
-say	Sar	He was looking for [#color:ffaaaa]RED DEATH KILLER[#color:ffffff]. Sounds like a DUEL in the making to me.
+say	RenegadeEw	I'm looking for a [#color:ff5944]DUEL[#color:ffffff]. Any leads?
+say	Sar	Well, a mysterious Sheriff [#spriteframe:characters-sheet 0] just passed through here not too long ago.
+say	Sar	He was looking for [#color:ffaaaa]RED DEATH KILLER[#color:ffffff]. Sounds like a [#color:ff5944]DUEL[#color:ffffff] in the making to me.
 say	RenegadeSmirk	[#color:ffaaaa]RED DEATH KILLER[#color:ffffff], eh? Sounds promising.
 say	Sar	They're bound to meet up in Tarnation. Just head [#color:ffff44]north[#color:ffffff] and you'll get there for sure.
 say	RenegadeLaugh	Just head [#color:ffff44]north[#color:ffffff]? I can handle that.
@@ -56,8 +56,8 @@ say	CowboyHope	An epic adventure to prove my humanity.
 say	Farmer	*sigh*
 		
 conversation	sar_cowboy	
-say	Sar	Howdy, Steven! You hear about the DUEL happening soon?
-say	CowboyHope	A DUEL???
+say	Sar	Howdy, Steven! You hear about the [#color:ff5944]DUEL[#color:ffffff] happening soon?
+say	CowboyHope	A [#color:ff5944]DUEL[#color:ffffff]???
 say	CowboyDetermined	This is the perfect chance to prove I'm a real boy. 
 say	Sar	Well, the folks involved are headed up [#color:ffff44]north[#color:ffffff] to Tarnation and-
 say	CowboyDetermined	Say no more! I'm on my way!!
@@ -73,7 +73,7 @@ say	KnightSalute	Tis I, Sir Bennigan! The noble knight in service of the King.
 say	KnightGrin	Many treacherous journeys hath I faced on this road I tarry upon...
 say	KnightGrin	... yet I feel that I draw close!
 say	KnightGrin	"Close to what?" thine might asketh.
-say	KnightGrin	Why prithee ye: a DUEL of course!
+say	KnightGrin	Why prithee ye: a [#color:ff5944]DUEL[#color:ffffff] of course!
 		
 conversation	farmer_knight	
 say	KnightSalute	Ah! A humble peasant.
@@ -87,16 +87,16 @@ say	Mom	Uh... yes?
 say	KnightGrin	Verily, verily!!
 		
 conversation	sar_knight	
-say	KnightSalute	Prithee thee, sir! Dost thou knoweth where I can find a DUEL in these lands?
-say	Sar	There's going to be a pretty big DUEL happening in Tarnation soon.
+say	KnightSalute	Prithee thee, sir! Dost thou knoweth where I can find a [#color:ff5944]DUEL[#color:ffffff] in these lands?
+say	Sar	There's going to be a pretty big [#color:ff5944]DUEL[#color:ffffff] happening in Tarnation soon.
 say	Sar	It's the talk of the whole region! Everyone's who's anyone is going to be there.
 say	Sar	You should just be able to head [#color:ffff44]north[#color:ffffff] and-
-say	KnightGrin	Hark! I've heard enough. I shalt findeth and wineth this DUEL.
+say	KnightGrin	Hark! I've heard enough. I shalt findeth and wineth this [#color:ff5944]DUEL[#color:ffffff].
 say	KnightSalute	For the King!
 		
 conversation	sheriff_intro_1A	
 say	SheriffNormal	Welp, here I go, time to find the [#color:ffaaaa]deadliest gunslinger[#color:ffffff] around.
-say	SheriffNormal	I can use my trusty arrow keys (or WASD keys) to move around.
+say	SheriffNormal	I can use my trusty arrow keys (or [#spriteframe:button-prompts-sheet 0][#spriteframe:button-prompts-sheet 1][#spriteframe:button-prompts-sheet 2][#spriteframe:button-prompts-sheet 3] keys) to move around.
 say	SheriffNormal	And if I need to lasso objects, I've got the Space key for that.
 		
 conversation	mom_renegade	
@@ -233,7 +233,7 @@ say	SheriffDeepBow	I've got to find the [#color:ffaaaa]deadliest gunslinger[#col
 		
 conversation	steven_intro_1B	
 say	CowboyNormal	Alright! Some puzzles!
-say	CowboyDetermined	I can use R to restart a room or I can use ctrl + R to restart this entire area.
+say	CowboyDetermined	I can use [#spriteframe:button-prompts-sheet 4] to restart a room or I can use [#spriteframe:button-prompts-sheet 6][#spriteframe:button-prompts-sheet 4] to restart this entire area.
 		
 conversation	moleman_sheriff	
 say	Moleman	I am within the earth.
@@ -243,7 +243,7 @@ say	Moleman	It's comfy.
 conversation	moleman_cowboy	
 say	Moleman	I'm Moleman.
 say	CowboySkeptical	What is it? Are you a mole? Or are you a man?
-say	Moleman	I'm Moleman.
+say	Moleman	I'm Moleman [#spriteframe:npcs-sheet 18].
 		
 conversation	moleman_renegade	
 say	Moleman	Mmm... I found some nice loam today.
@@ -291,8 +291,8 @@ say	Sar	I took the train!
 say	Sar	Wait, did you take the path with all the puzzles??
 say	SheriffDeepBow	... yeah
 say	Sar	Gee, buddy, that's rough.
-say	Sar	Anyway, you ready for your big DUEL?
-say	SheriffNormal	DUEL?? Who said anything about a DUEL?
+say	Sar	Anyway, you ready for your big [#color:ff5944]DUEL[#color:ffffff]?
+say	SheriffNormal	[#color:ff5944]DUEL[#color:ffffff]?? Who said anything about a [#color:ff5944]DUEL[#color:ffffff]?
 invoke	cb_3	// have ernesto hold up the ribbon, sar gets spooked
 say	SheriffNormal	I'm here to give out this [#color:ffaaaa]Best Gunslinger[#color:ffffff] award
 say	Sar	O-Oh...
@@ -319,8 +319,8 @@ say	RenegadeShook	but knowing what I know now...
 say	Sar	(That guns kill people?)
 say	RenegadeShook	... I can't feel good about it.
 invoke	cb_8	// steven arives
-say	CowboyHope	Hey what's up, where's the DUEL?
-say	Sar	No DUEL...
+say	CowboyHope	Hey what's up, where's the [#color:ff5944]DUEL[#color:ffffff]?
+say	Sar	No [#color:ff5944]DUEL[#color:ffffff]...
 say	Sar	Turns out it was all just a big misunderstanding.
 say	CowboySkeptical	What? How am I supposed to prove I'm a real boy?
 say	RenegadeLaugh	You're not a boy, you're a cow!
