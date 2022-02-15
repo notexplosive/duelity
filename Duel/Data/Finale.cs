@@ -1,5 +1,6 @@
 ﻿using Machina.Components;
 using Machina.Data;
+using Machina.Data.TextRendering;
 using Machina.Engine;
 using Machina.ThirdParty;
 using Microsoft.Xna.Framework;
@@ -61,8 +62,8 @@ namespace Duel.Data
             credits.AppendLine("NOTEXPLOSIVE.NET and ANDRFW.COM");
 
             this.scene.sceneLayers.BackgroundColor = Color.Black; //new Color(255, 89, 68);
-            new BoundedTextRenderer(actor, credits.ToString(), MachinaClient.Assets.GetSpriteFont("CreditsFont"), /*new Color(255, 216, 182)*/ Color.White, HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Ignore);
 
+            new BoundedFormattedTextRenderer(actor, Alignment.Center, Overflow.Ignore, formattedText: FormattedText.FromString(credits.ToString(), MachinaClient.Assets.GetSpriteFont("CreditsFont"), Color.White));
             actor.transform.Position += new Vector2(0, scene.camera.UnscaledViewportSize.Y * 1.25f);
 
             var tween = new TweenChainComponent(actor);
