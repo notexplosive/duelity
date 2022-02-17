@@ -152,7 +152,7 @@ namespace DuelEditor.Data
             new Hoverable(buttonActor);
             var clickable = new Clickable(buttonActor);
             new ButtonNinepatchHandler(buttonActor, MachinaClient.DefaultStyle.buttonHover, MachinaClient.DefaultStyle.buttonPress);
-            new BoundedTextRenderer(buttonActor, levelName, MachinaClient.DefaultStyle.uiElementFont, Color.White, HorizontalAlignment.Center, VerticalAlignment.Center, Overflow.Elide, depthOffset: -10);
+            new BoundedTextRenderer(buttonActor, levelName, MachinaClient.DefaultStyle.uiElementFont, Color.White, Alignment.Center, Overflow.Elide, depthOffset: -10);
             return clickable;
         }
 
