@@ -844,7 +844,7 @@ tile ravine 32,15
 tile wall 55,11
 tile wall 56,10
 tile ravine 32,13
-tile ravine 36,13
+tile wall 36,13
 tile ravine 33,15
 tile ravine 33,11
 tile ravine 32,11
