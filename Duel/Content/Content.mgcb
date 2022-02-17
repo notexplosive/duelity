@@ -822,11 +822,23 @@
 /processorParam:Quality=Best
 /build:sounds/harpsichord_blip.ogg
 
+#begin sounds/hehehe.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/hehehe.ogg
+
 #begin sounds/horse.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/horse.ogg
+
+#begin sounds/moo.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/moo.ogg
 
 #begin sounds/oa.ogg
 /importer:OggImporter

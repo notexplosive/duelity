@@ -18,7 +18,7 @@ namespace Duel.Components
         private readonly Entity entity;
         private readonly BufferedKeyboardListener keyboard;
         private SoundEffectInstance ehSound;
-        private SoundEffectInstance oaSound;
+        private SoundEffectInstance ouchSound;
         private SoundEffectInstance clankSound;
 
         public Direction LongLeg { get; private set; } = Direction.None;
@@ -38,11 +38,11 @@ namespace Duel.Components
             this.keyboard.UpPressed += BuildCallback(Direction.Up);
 
             this.ehSound = MachinaClient.Assets.GetSoundEffectInstance("eh");
-            this.oaSound = MachinaClient.Assets.GetSoundEffectInstance("oa");
+            this.ouchSound = MachinaClient.Assets.GetSoundEffectInstance("ouch");
             this.clankSound = MachinaClient.Assets.GetSoundEffectInstance("clank");
 
             MoveStarted += PlayEh;
-            MoveFailed += PlayOa;
+            MoveFailed += PlayOuch;
             MoveComplete += PlayClank;
         }
 
@@ -52,10 +52,11 @@ namespace Duel.Components
             this.clankSound.Play();
         }
 
-        private void PlayOa()
+        private void PlayOuch()
         {
-            this.oaSound.Stop();
-            this.oaSound.Play();
+            this.ouchSound.Stop();
+            this.ouchSound.Volume = 0.5f;
+            this.ouchSound.Play();
         }
 
         private void PlayEh()

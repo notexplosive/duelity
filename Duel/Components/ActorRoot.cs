@@ -250,6 +250,7 @@ namespace Duel.Components
                         {
                             new PlayerCharacterRenderer(entityActor, entity, PlayerAnimations.Steven);
                             new RestartRoomButton(entityActor, entity, game);
+                            new PlaySoundOnAction(entityActor, "moo");
                         }
                     }
 
@@ -257,7 +258,7 @@ namespace Duel.Components
                     {
                         new BufferedKeyboardListener(entityActor, entity.BusySignal);
                         this.playerMovementComponent = new KnightMovement(entityActor, entity, new LevelSolidProvider(this.level));
-                        new KnightSwing(entityActor, entity);
+                        new PlaySoundOnAction(entityActor, "hehehe");
 
                         if (!Sokoban.Headless)
                         {
